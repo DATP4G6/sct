@@ -1,0 +1,111 @@
+// The cool thing we could do is the syntax for finding other entities given a predicate.
+// This could be incredibly versatile
+
+// find(Town::Stable(?,50))
+// /Town::\w+\(\d+,50\)/
+
+// find,exists,count
+
+// not using a string "name" as that would be an extra type to implement
+
+
+function countCitizens(int id) -> int {
+    return count(Citizen::?(townId: id));
+}
+
+agent Town(int id, int space, int clocktowers) {
+
+    function countCitizens() {
+        return count(Citizen::?(id));
+    }
+
+    state Growing {
+        int population = count(Citizen::?(id));
+
+        if (population > space * 0.9) {
+            enter Stable;
+        }
+    }
+
+    state Stable {
+        int population = count(Citizen::(id));
+        if (population(id) > space) {
+            enter Critical;
+        }
+
+        if (population < space * 0.9) {
+            enter Growing;
+        }
+    }
+
+    state Critical {
+        int population = count(Citizen::?(id));
+        if (population < space * 0.6) {
+            enter Stable;
+        }
+        if (population == 0) {
+            exit;
+        }
+    }
+}
+
+agent Citizen(int townId) {
+
+    state Child {
+
+        if (exists(Town::Critical(townId,?))) {
+            // Likely dies. Probabilistic
+        }
+
+        // Insert other small chance of dying
+
+        if (rand() < 0.05) {
+            enter Adult;
+        }
+    }
+
+    state Adult {
+        
+        if (rand() < 0.05) {
+            create Citizen::Child(townId);
+        }
+
+        if (rand() < 0.01) {
+            destroy;
+        }
+
+
+    }
+}
+
+agent Weapon(int target) {
+
+    state Killing {
+        if (!exists(Citizen::?(townid: target))) {
+            destroy;
+        }
+    }
+}
+
+agent Counter(int time) {
+    state Running {
+        if (time >= 100) {
+            exit;
+        }
+        create Counter(time+1);
+        destroy;
+    }
+}
+
+function Setup() -> void {
+    create Town::Growing(1, 50)
+
+    int i = 1;
+    while (i < 20) {
+        create Citizen::Child(townId: 1)
+        create Citizen::Child(townId: 1)
+        i = i + 1;
+    }
+
+    seed(100);
+}
