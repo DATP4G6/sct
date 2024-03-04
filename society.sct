@@ -1,63 +1,44 @@
-// The cool thing we could do is the syntax for finding other entities given a predicate.
-// This could be incredibly versatile
+agent Town(int id, int space) {
 
-// find(Town::Stable(?,50))
-// /Town::\w+\(\d+,50\)/
-
-// find,exists,count
-
-// not using a string "name" as that would be an extra type to implement
-
-
-function countCitizens(int id) -> int {
-    return count(Citizen::?(townId: id));
-}
-
-agent Town(int id, int space, int clocktowers) {
-
-    function countCitizens() {
-        return count(Citizen::?(id));
-    }
-
-    state Growing {
-        int population = count(Citizen::?(id));
-
-        if (population > space * 0.9) {
-            enter Stable;
-        }
+    // Define a local function on the Town agent that returns an int
+    // Note that these functions are non-static
+    function countCitizens() -> int {
+        // Return the number of Citizens in any state, where the field `townId` is equal to `id`
+        return count(Citizen::?(townId: id));
     }
 
     state Stable {
-        int population = count(Citizen::(id));
-        if (population(id) > space) {
+        int population = countCitizens();
+        if (population > space) {
+            // Change the state of the Town to Critical. This means that the next tick, the `state Critical` block will be executed
             enter Critical;
         }
-
-        if (population < space * 0.9) {
-            enter Growing;
-        }
+        
+        // If no enter keyword is executed during a tick, the entity will simply stay in the same state.
     }
 
     state Critical {
-        int population = count(Citizen::?(id));
+        int population = countCitizens();
         if (population < space * 0.6) {
             enter Stable;
         }
+
+        // If the population reaches zero, terminate the simulation
         if (population == 0) {
-            exit;
+            quit();
         }
     }
 }
 
 agent Citizen(int townId) {
-
     state Child {
-
-        if (exists(Town::Critical(townId,?))) {
-            // Likely dies. Probabilistic
+        // If a child lives in a Town in the Critical state, it has a 2% chance to die
+        // Note that since the `space` field on Town is omitted, it can be any value and still match
+        if (exists(Town::Critical(id: townId))) {
+            if (rand() < 0.02) {
+                destroy;
+            }
         }
-
-        // Insert other small chance of dying
 
         if (rand() < 0.05) {
             enter Adult;
@@ -65,47 +46,29 @@ agent Citizen(int townId) {
     }
 
     state Adult {
-        
         if (rand() < 0.05) {
-            create Citizen::Child(townId);
+            create Citizen::Child(townId: townId);
         }
 
         if (rand() < 0.01) {
             destroy;
         }
-
-
     }
 }
 
-agent Weapon(int target) {
-
-    state Killing {
-        if (!exists(Citizen::?(townid: target))) {
-            destroy;
-        }
-    }
-}
-
-agent Counter(int time) {
-    state Running {
-        if (time >= 100) {
-            exit;
-        }
-        create Counter(time+1);
-        destroy;
-    }
-}
-
+// This function is run before the simulation starts
+// After this function returns, the simulation begins
+// While the simulation is running, the code in the state block for the entities current state will run
 function Setup() -> void {
-    create Town::Growing(1, 50)
+    // Create a town in the state growing with the id of 1 and space for 50 people
+    create Town::Growing(id: 1, space: 50);
 
-    int i = 1;
+    int i = 0;
+    // Create 20 children
+    // These children are related to the town by having the `townId` field
     while (i < 20) {
-        create Citizen::Child(townId: 1)
-        create Citizen::Child(townId: 1)
+        create Citizen::Child(townId: 1);
         i = i + 1;
     }
-
-    seed(100);
+    seed(123);
 }
