@@ -1,4 +1,4 @@
-grammar sct;
+grammar Sct;
 
 start: program EOF;
 program: function program | agent_def program |;
