@@ -1,23 +1,33 @@
 grammar sct;
 
-program: function program | agent_def program | EOF;
+start: program EOF;
+program: function program | agent_def program |;
 
+// Functions
 function:
-	'function ' ID '(' args_def ') ->' type ' {' statement '}';
+	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement RCURLY;
 
+FUNCTION: 'function';
+RIGHT_ARROW: '->';
+
+// All argument definitions are here
 args_def: args_def_p |;
-args_def_p: type ID | type ID ', ' args_def_p;
+args_def_p: type ID | type ID COMMA args_def_p;
 
 args_entity: args_entity_p |;
-args_entity_p: ID ':' expression args_entity_pp;
-args_entity_pp: ',' args_entity_p |;
+args_entity_p: ID COLON expression args_entity_pp;
+args_entity_pp: COMMA args_entity_p |;
 
 args_call: args_call_p |;
 args_call_p: expression args_call_pp;
-args_call_pp: ',' args_call_p |;
+args_call_pp: COMMA args_call_p |;
 
-type: 'int' | 'float' | 'void';
+type: T_INT | T_FLOAT | T_VOID;
+T_INT: 'int';
+T_FLOAT: 'float';
+T_VOID: 'void';
 
+// Statements
 statement: statement_p statement_pp;
 statement_pp: statement |;
 statement_p:
@@ -32,54 +42,100 @@ statement_p:
 	| destroy
 	| exit;
 
-// Sub statements
-
-declaration: type ID '=' expression ';';
-assignment: ID '=' expression ';';
-if: 'if' '(' expression ')' '{' statement '}' else;
-else: 'else' '{' statement '}' |;
-while: 'while' '(' expression ')' '{' statement '}';
-enter: 'enter' ID ';';
-return: 'return' return_p ';';
+declaration: type ID ASSIGN expression SEMI;
+assignment: ID ASSIGN expression SEMI;
+if: IF LPAREN expression RPAREN LCURLY statement RCURLY else;
+else: ELSE LCURLY statement RCURLY |;
+while: WHILE LPAREN expression RPAREN LCURLY statement RCURLY;
+enter: ENTER ID SEMI;
+return: RETURN return_p SEMI;
 return_p: expression |;
-create: 'create' entity_create ';';
-destroy: 'destroy;';
-exit: 'exit;';
+create: CREATE entity_create SEMI;
+destroy: DESTROY SEMI;
+exit: EXIT SEMI;
 
-// end sub statement expression[int pr]: ID | Num | ;
+ASSIGN: '=';
+IF: 'if';
+ELSE: 'else';
+WHILE: 'while';
+RETURN: 'return';
+ENTER: 'enter';
+CREATE: 'create';
+DESTROY: 'destroy';
+EXIT: 'exit';
+// Societal Construction Tool 
+
+// Expressions
 expression: exp;
 exp:
-	exp mult = '*' exp
-	| exp div = '/' exp
-	| exp plus = '+' exp
-	| exp minus = '-' exp
-	| exp eq = '==' exp
-	| exp neq = '!=' exp
-	| exp gt = '>' exp
-	| exp lt = '<' exp
-	| exp gte = '>=' exp
-	| exp lte = '<=' exp
-	| unary_minus = '-' exp
-	| not = '!' exp
-	| call
-	| '(' exp ')'
+	LIT
 	| ID
-	| LIT;
+	| LPAREN exp RPAREN
+	| call
+	| unary_minus = MINUS exp
+	| not = NOT exp
+	| exp mult = MULT exp
+	| exp div = DIV exp
+	| exp mod = MOD exp
+	| exp plus = PLUS exp
+	| exp minus = MINUS exp
+	| exp gt = GT exp
+	| exp lt = LT exp
+	| exp gte = GTE exp
+	| exp lte = LTE exp
+	| exp eq = EQ exp
+	| exp neq = NEQ exp
+	| exp and = AND exp
+	| exp or = OR exp
+	| entity_predicate;
 
-call: ID '(' args_call ')';
+MULT: '*';
+DIV: '/';
+PLUS: '+';
+MINUS: '-';
+MOD: '%';
+AND: '&&';
+OR: '||';
+EQ: '==';
+NEQ: '!=';
+GT: '>';
+LT: '<';
+GTE: '>=';
+LTE: '<=';
+NOT: '!';
 
-agent_def: 'agent' ID '(' args_def ') {' agent_body '}';
+call: ID LPAREN args_call RPAREN;
+
+// Agents
+agent_def:
+	AGENT ID LPAREN args_def RPAREN LCURLY agent_body RCURLY;
 agent_body: state agent_body | function agent_body |;
-state: 'state' ID '{' statement '}';
+state: STATE ID LCURLY statement RCURLY;
 
-entity_create: ID '::' ID '(' args_entity ')';
-entity_predicate: ID '::' ID_p '(' args_entity ')';
+AGENT: 'agent';
+STATE: 'state';
 
+// Not using literals probably allows WS arround '::'
+entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
+entity_predicate:
+	ID DBL_COLON (ID | QUESTION) LPAREN args_entity RPAREN;
+
+// Current implementation allows '?' to be used as an ID instead of only in predicate states
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
-ID_p: ID | '?';
+// ID: [a-zA-Z_][a-zA-Z_0-9]* | [?];
 LIT: INT | FLOAT;
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;
 
 WS: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
+
+QUESTION: '?';
+LPAREN: '(';
+RPAREN: ')';
+LCURLY: '{';
+RCURLY: '}';
+SEMI: ';';
+COMMA: ',';
+COLON: ':';
+DBL_COLON: '::';
