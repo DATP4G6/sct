@@ -2,7 +2,7 @@
   "antlr4.generation": {
     "mode": "external",
     "language": "CSharp",
-    "listeners": false,
+    "listeners": true,
     "visitors": true,
     "outputDir": "out"
   }
