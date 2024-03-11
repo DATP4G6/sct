@@ -77,8 +77,8 @@ agent_body:
 	| decorator agent_body
 	|;
 decorator: DECORATOR ID LCURLY statement_list RCURLY;
-state: state_decorator STATE ID LCURLY statement_list RCURLY;
-state_decorator: AT ID state_decorator |;
+state: (state_decorator)* STATE ID LCURLY statement_list RCURLY;
+state_decorator: AT ID;
 
 // Not using literals probably allows WS arround '::'
 entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
