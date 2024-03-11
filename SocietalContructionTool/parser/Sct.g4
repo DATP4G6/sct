@@ -5,26 +5,19 @@ program: function program | agent_def program |;
 
 // Functions
 function:
-	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement RCURLY;
+	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement_list RCURLY;
 
 // All argument definitions are here
-args_def: args_def_p |;
-args_def_p: type ID | type ID COMMA args_def_p;
-
-args_entity: args_entity_p |;
-args_entity_p: ID COLON expression args_entity_pp;
-args_entity_pp: COMMA args_entity_p |;
-
-args_call: args_call_p |;
-args_call_p: expression args_call_pp;
-args_call_pp: COMMA args_call_p |;
+// Maybe these should have seperate list and element rules like statement_list?
+args_def: (type ID (COMMA type ID)*)?;
+args_entity: (ID COLON expression (COMMA ID COLON expression)*)?;
+args_call: (expression (COMMA expression)*)?;
 
 type: T_INT | T_FLOAT | T_VOID;
 
 // Statements
-statement: statement_p statement_pp;
-statement_pp: statement |;
-statement_p:
+statement_list: statement+;
+statement:
 	expression ';'
 	| declaration
 	| assignment
@@ -38,12 +31,11 @@ statement_p:
 
 declaration: type ID ASSIGN expression SEMI;
 assignment: ID ASSIGN expression SEMI;
-if: IF LPAREN expression RPAREN LCURLY statement RCURLY else;
-else: ELSE LCURLY statement RCURLY |;
-while: WHILE LPAREN expression RPAREN LCURLY statement RCURLY;
+if: IF LPAREN expression RPAREN LCURLY statement_list RCURLY else;
+else: ELSE LCURLY statement_list RCURLY |;
+while: WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
 enter: ENTER ID SEMI;
-return: RETURN return_p SEMI;
-return_p: expression |;
+return: RETURN (expression)? SEMI;
 create: CREATE entity_create SEMI;
 destroy: DESTROY SEMI;
 exit: EXIT SEMI;
@@ -84,8 +76,8 @@ agent_body:
 	| function agent_body
 	| decorator agent_body
 	|;
-decorator: DECORATOR ID LCURLY statement RCURLY;
-state: state_decorator STATE ID LCURLY statement RCURLY;
+decorator: DECORATOR ID LCURLY statement_list RCURLY;
+state: state_decorator STATE ID LCURLY statement_list RCURLY;
 state_decorator: AT ID state_decorator |;
 
 // Not using literals probably allows WS arround '::'
@@ -145,7 +137,6 @@ SEMI: ';';
 COMMA: ',';
 COLON: ':';
 DBL_COLON: '::';
-
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
 LIT: INT | FLOAT;
 INT: [0-9]+;
