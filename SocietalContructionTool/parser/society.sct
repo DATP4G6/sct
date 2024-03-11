@@ -1,3 +1,7 @@
+function emptyReturn() -> void {
+    return;
+}
+
 agent Town(int id, int space) {
 
     // Define a local function on the Town agent that returns an int
@@ -52,7 +56,7 @@ agent Citizen(int townId) {
             enter Adult;
         }
     }
-    
+
     @randomDeath
     state Adult {
         if (rand() < 0.05) {

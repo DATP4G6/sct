@@ -7,13 +7,11 @@ program: function program | agent_def program |;
 function:
 	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement_list RCURLY;
 
-// All argument definitions are here
-// Maybe these should have seperate list and element rules like statement_list?
+// All argument definitions are here Maybe these should have seperate list and element rules like
+// statement_list?
 args_def: (type ID (COMMA type ID)*)?;
 args_entity: (ID COLON expression (COMMA ID COLON expression)*)?;
 args_call: (expression (COMMA expression)*)?;
-
-type: T_INT | T_FLOAT | T_VOID;
 
 // Statements
 statement_list: statement+;
@@ -31,9 +29,11 @@ statement:
 
 declaration: type ID ASSIGN expression SEMI;
 assignment: ID ASSIGN expression SEMI;
-if: IF LPAREN expression RPAREN LCURLY statement_list RCURLY else;
+if:
+	IF LPAREN expression RPAREN LCURLY statement_list RCURLY else;
 else: ELSE LCURLY statement_list RCURLY |;
-while: WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
+while:
+	WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
 enter: ENTER ID SEMI;
 return: RETURN (expression)? SEMI;
 create: CREATE entity_create SEMI;
@@ -42,29 +42,28 @@ exit: EXIT SEMI;
 // Societal Construction Tool 
 
 // Expressions
-expression: exp;
-exp:
-	LIT							# LitteralExpression
-	| ID						# IDExpression
-	| LPAREN exp RPAREN			# ParenthesisExpression
-	| LPAREN type RPAREN exp	# TypecastExpression
-	| call						# CallExpression
-	| unary_minus = MINUS exp	# UnaryMinusExpression
-	| not = NOT exp				# LogicalNotExpression
-	| exp mult = MULT exp		# MultiplicationExpression
-	| exp div = DIV exp			# DivisionExpression
-	| exp mod = MOD exp			# ModExpression
-	| exp plus = PLUS exp		# PlusExpression
-	| exp minus = MINUS exp		# MinusExpression
-	| exp gt = GT exp			# GreaterThanExpression
-	| exp lt = LT exp			# LessThanExpression
-	| exp gte = GTE exp			# GreaterThanEqualExpression
-	| exp lte = LTE exp			# LessThanEqualExpression
-	| exp eq = EQ exp			# EqualExpression
-	| exp neq = NEQ exp			# NotEqualExpression
-	| exp and = AND exp			# LogicalAndExpression
-	| exp or = OR exp			# LogicalOrExpression
-	| entity_predicate			# EntityPredicateExpression;
+expression:
+	LIT										# LitteralExpression
+	| ID									# IDExpression
+	| LPAREN expression RPAREN				# ParenthesisExpression
+	| LPAREN type RPAREN expression			# TypecastExpression
+	| call									# CallExpression
+	| unary_minus = MINUS expression		# UnaryMinusExpression
+	| not = NOT expression					# LogicalNotExpression
+	| expression mult = MULT expression		# MultiplicationExpression
+	| expression div = DIV expression		# DivisionExpression
+	| expression mod = MOD expression		# ModExpression
+	| expression plus = PLUS expression		# PlusExpression
+	| expression minus = MINUS expression	# MinusExpression
+	| expression gt = GT expression			# GreaterThanExpression
+	| expression lt = LT expression			# LessThanExpression
+	| expression gte = GTE expression		# GreaterThanEqualExpression
+	| expression lte = LTE expression		# LessThanEqualExpression
+	| expression eq = EQ expression			# EqualExpression
+	| expression neq = NEQ expression		# NotEqualExpression
+	| expression and = AND expression		# LogicalAndExpression
+	| expression or = OR expression			# LogicalOrExpression
+	| entity_predicate						# EntityPredicateExpression;
 
 call: ID LPAREN args_call RPAREN;
 
@@ -85,11 +84,10 @@ entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
 entity_predicate:
 	ID DBL_COLON (ID | QUESTION) LPAREN args_entity RPAREN;
 
-// Current implementation allows '?' to be used as an ID instead of only in predicate states
-
 FUNCTION: 'function';
 RIGHT_ARROW: '->';
 
+type: T_INT | T_FLOAT | T_VOID;
 T_INT: 'int';
 T_FLOAT: 'float';
 T_VOID: 'void';
@@ -104,7 +102,6 @@ CREATE: 'create';
 DESTROY: 'destroy';
 EXIT: 'exit';
 
-CAST: 'cast';
 MULT: '*';
 DIV: '/';
 PLUS: '+';
