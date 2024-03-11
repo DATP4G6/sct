@@ -2,9 +2,9 @@ function emptyReturn() -> void {
     return;
 }
 
-agent Town(int id, int space) {
+class Town(int id, int space) {
 
-    // Define a local function on the Town agent that returns an int
+    // Define a local function on the Town class that returns an int
     // Note that these functions are non-static
     function countCitizens() -> int {
         // Return the number of Citizens in any state, where the field `townId` is equal to `id`
@@ -18,7 +18,7 @@ agent Town(int id, int space) {
             enter Critical;
         }
         
-        // If no enter keyword is executed during a tick, the entity will simply stay in the same state.
+        // If no enter keyword is executed during a tick, the agent will simply stay in the same state.
     }
 
     state Critical {
@@ -34,7 +34,7 @@ agent Town(int id, int space) {
     }
 }
 
-agent Citizen(int townId) {
+class Citizen(int townId) {
 
     decorator randomDeath {
         if (rand() < 0.005) {

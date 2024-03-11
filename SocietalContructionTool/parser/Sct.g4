@@ -1,7 +1,7 @@
 grammar Sct;
 
 start: program EOF;
-program: function program | agent_def program |;
+program: function program | class_def program |;
 
 // Functions
 function:
@@ -10,7 +10,7 @@ function:
 // All argument definitions are here Maybe these should have seperate list and element rules like
 // statement_list?
 args_def: (type ID (COMMA type ID)*)?;
-args_entity: (ID COLON expression (COMMA ID COLON expression)*)?;
+args_agent: (ID COLON expression (COMMA ID COLON expression)*)?;
 args_call: (expression (COMMA expression)*)?;
 
 // Statements
@@ -36,7 +36,7 @@ while:
 	WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
 enter: ENTER ID SEMI;
 return: RETURN (expression)? SEMI;
-create: CREATE entity_create SEMI;
+create: CREATE agent_create SEMI;
 destroy: DESTROY SEMI;
 exit: EXIT SEMI;
 // Societal Construction Tool 
@@ -63,26 +63,26 @@ expression:
 	| expression neq = NEQ expression		# NotEqualExpression
 	| expression and = AND expression		# LogicalAndExpression
 	| expression or = OR expression			# LogicalOrExpression
-	| entity_predicate						# EntityPredicateExpression;
+	| agent_predicate						# AgentPredicateExpression;
 
 call: ID LPAREN args_call RPAREN;
 
-// Agents
-agent_def:
-	AGENT ID LPAREN args_def RPAREN LCURLY agent_body RCURLY;
-agent_body:
-	state agent_body
-	| function agent_body
-	| decorator agent_body
+// Class
+class_def:
+	CLASS ID LPAREN args_def RPAREN LCURLY class_body RCURLY;
+class_body:
+	state class_body
+	| function class_body
+	| decorator class_body
 	|;
 decorator: DECORATOR ID LCURLY statement_list RCURLY;
 state: (state_decorator)* STATE ID LCURLY statement_list RCURLY;
 state_decorator: AT ID;
 
 // Not using literals probably allows WS arround '::'
-entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
-entity_predicate:
-	ID DBL_COLON (ID | QUESTION) LPAREN args_entity RPAREN;
+agent_create: ID DBL_COLON ID LPAREN args_agent RPAREN;
+agent_predicate:
+	ID DBL_COLON (ID | QUESTION) LPAREN args_agent RPAREN;
 
 FUNCTION: 'function';
 RIGHT_ARROW: '->';
@@ -117,7 +117,7 @@ GTE: '>=';
 LTE: '<=';
 NOT: '!';
 
-AGENT: 'agent';
+CLASS: 'class';
 STATE: 'state';
 DECORATOR: 'decorator';
 AT: '@';
