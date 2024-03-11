@@ -40,7 +40,7 @@ agent Citizen(int townId) {
             }
         }
 
-        if (rand() < 0.05) {
+        if ((int) rand() < 0.05) {
             enter Adult;
         }
     }

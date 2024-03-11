@@ -68,27 +68,29 @@ EXIT: 'exit';
 // Expressions
 expression: exp;
 exp:
-	LIT
-	| ID
-	| LPAREN exp RPAREN
-	| call
-	| unary_minus = MINUS exp
-	| not = NOT exp
-	| exp mult = MULT exp
-	| exp div = DIV exp
-	| exp mod = MOD exp
-	| exp plus = PLUS exp
-	| exp minus = MINUS exp
-	| exp gt = GT exp
-	| exp lt = LT exp
-	| exp gte = GTE exp
-	| exp lte = LTE exp
-	| exp eq = EQ exp
-	| exp neq = NEQ exp
-	| exp and = AND exp
-	| exp or = OR exp
-	| entity_predicate;
+	LIT							# LitteralExpression
+	| ID						# IDExpression
+	| LPAREN exp RPAREN			# ParenthesisExpression
+	| LPAREN type RPAREN exp	# TypecastExpression
+	| call						# CallExpression
+	| unary_minus = MINUS exp	# UnaryMinusExpression
+	| not = NOT exp				# LogicalNotExpression
+	| exp mult = MULT exp		# MultiplicationExpression
+	| exp div = DIV exp			# DivisionExpression
+	| exp mod = MOD exp			# ModExpression
+	| exp plus = PLUS exp		# PlusExpression
+	| exp minus = MINUS exp		# MinusExpression
+	| exp gt = GT exp			# GreaterThanExpression
+	| exp lt = LT exp			# LessThanExpression
+	| exp gte = GTE exp			# GreaterThanEqualExpression
+	| exp lte = LTE exp			# LessThanEqualExpression
+	| exp eq = EQ exp			# EqualExpression
+	| exp neq = NEQ exp			# NotEqualExpression
+	| exp and = AND exp			# LogicalAndExpression
+	| exp or = OR exp			# LogicalOrExpression
+	| entity_predicate			# EntityPredicateExpression;
 
+CAST: 'cast';
 MULT: '*';
 DIV: '/';
 PLUS: '+';
