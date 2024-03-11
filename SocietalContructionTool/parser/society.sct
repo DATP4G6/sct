@@ -2,6 +2,18 @@ function emptyReturn() -> void {
     return;
 }
 
+function ifelseifelseif() -> void {
+    if (a) {
+        x = 7;
+    } else if (b) {
+        x = 8;
+    } else if (C) {
+        x = 9;
+    } else {
+        x = 10;
+    }
+}
+
 class Town(int id, int space) {
 
     // Define a local function on the Town class that returns an int
