@@ -7,9 +7,6 @@ program: function program | agent_def program |;
 function:
 	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement RCURLY;
 
-FUNCTION: 'function';
-RIGHT_ARROW: '->';
-
 // All argument definitions are here
 args_def: args_def_p |;
 args_def_p: type ID | type ID COMMA args_def_p;
@@ -23,9 +20,6 @@ args_call_p: expression args_call_pp;
 args_call_pp: COMMA args_call_p |;
 
 type: T_INT | T_FLOAT | T_VOID;
-T_INT: 'int';
-T_FLOAT: 'float';
-T_VOID: 'void';
 
 // Statements
 statement: statement_p statement_pp;
@@ -53,16 +47,6 @@ return_p: expression |;
 create: CREATE entity_create SEMI;
 destroy: DESTROY SEMI;
 exit: EXIT SEMI;
-
-ASSIGN: '=';
-IF: 'if';
-ELSE: 'else';
-WHILE: 'while';
-RETURN: 'return';
-ENTER: 'enter';
-CREATE: 'create';
-DESTROY: 'destroy';
-EXIT: 'exit';
 // Societal Construction Tool 
 
 // Expressions
@@ -90,6 +74,44 @@ exp:
 	| exp or = OR exp			# LogicalOrExpression
 	| entity_predicate			# EntityPredicateExpression;
 
+call: ID LPAREN args_call RPAREN;
+
+// Agents
+agent_def:
+	AGENT ID LPAREN args_def RPAREN LCURLY agent_body RCURLY;
+agent_body:
+	state agent_body
+	| function agent_body
+	| decorator agent_body
+	|;
+decorator: DECORATOR ID LCURLY statement RCURLY;
+state: state_decorator STATE ID LCURLY statement RCURLY;
+state_decorator: AT ID state_decorator |;
+
+// Not using literals probably allows WS arround '::'
+entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
+entity_predicate:
+	ID DBL_COLON (ID | QUESTION) LPAREN args_entity RPAREN;
+
+// Current implementation allows '?' to be used as an ID instead of only in predicate states
+
+FUNCTION: 'function';
+RIGHT_ARROW: '->';
+
+T_INT: 'int';
+T_FLOAT: 'float';
+T_VOID: 'void';
+
+ASSIGN: '=';
+IF: 'if';
+ELSE: 'else';
+WHILE: 'while';
+RETURN: 'return';
+ENTER: 'enter';
+CREATE: 'create';
+DESTROY: 'destroy';
+EXIT: 'exit';
+
 CAST: 'cast';
 MULT: '*';
 DIV: '/';
@@ -106,28 +128,10 @@ GTE: '>=';
 LTE: '<=';
 NOT: '!';
 
-call: ID LPAREN args_call RPAREN;
-
-// Agents
-agent_def:
-	AGENT ID LPAREN args_def RPAREN LCURLY agent_body RCURLY;
-agent_body: state agent_body | function agent_body |;
-state: STATE ID LCURLY statement RCURLY;
-
 AGENT: 'agent';
 STATE: 'state';
-
-// Not using literals probably allows WS arround '::'
-entity_create: ID DBL_COLON ID LPAREN args_entity RPAREN;
-entity_predicate:
-	ID DBL_COLON (ID | QUESTION) LPAREN args_entity RPAREN;
-
-// Current implementation allows '?' to be used as an ID instead of only in predicate states
-ID: [a-zA-Z_][a-zA-Z_0-9]*;
-// ID: [a-zA-Z_][a-zA-Z_0-9]* | [?];
-LIT: INT | FLOAT;
-INT: [0-9]+;
-FLOAT: [0-9]+ '.' [0-9]+;
+DECORATOR: 'decorator';
+AT: '@';
 
 WS: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
@@ -141,3 +145,8 @@ SEMI: ';';
 COMMA: ',';
 COLON: ':';
 DBL_COLON: '::';
+
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
+LIT: INT | FLOAT;
+INT: [0-9]+;
+FLOAT: [0-9]+ '.' [0-9]+;

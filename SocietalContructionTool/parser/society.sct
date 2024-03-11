@@ -31,6 +31,14 @@ agent Town(int id, int space) {
 }
 
 agent Citizen(int townId) {
+
+    decorator randomDeath {
+        if (rand() < 0.005) {
+                destroy;
+        }
+    }
+
+    @randomDeath
     state Child {
         // If a child lives in a Town in the Critical state, it has a 2% chance to die
         // Note that since the `space` field on Town is omitted, it can be any value and still match
@@ -44,7 +52,8 @@ agent Citizen(int townId) {
             enter Adult;
         }
     }
-
+    
+    @randomDeath
     state Adult {
         if (rand() < 0.05) {
             create Citizen::Child(townId: townId);
