@@ -12,9 +12,9 @@ args_agent: (ID COLON expression (COMMA ID COLON expression)*)?;
 args_call: (expression (COMMA expression)*)?;
 
 // Statements
-statement_list: statement+;
+statement_list: statement*;
 statement:
-	expression ';'
+	expression SEMI
 	| declaration
 	| assignment
 	| if
@@ -48,11 +48,11 @@ exit: EXIT SEMI;
 
 // Expressions
 expression:
-	LIT									# LitteralExpression
+	LIT									# LiteralExpression
 	| ID								# IDExpression
 	| LPAREN expression RPAREN			# ParenthesisExpression
 	| LPAREN type RPAREN expression		# TypecastExpression
-	| call								# CallExpression
+	| ID LPAREN args_call RPAREN		# CallExpression
 	| unary_minus = MINUS expression	# UnaryMinusExpression
 	| not = NOT expression				# LogicalNotExpression
 	| expression op = MULT expression	# BinaryExpression
@@ -69,8 +69,6 @@ expression:
 	| expression op = AND expression	# BinaryExpression
 	| expression op = OR expression		# BinaryExpression
 	| agent_predicate					# AgentPredicateExpression;
-
-call: ID LPAREN args_call RPAREN;
 
 // Class
 class_def:
