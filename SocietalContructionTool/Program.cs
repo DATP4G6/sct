@@ -1,7 +1,12 @@
 ﻿
 
 using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
+
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+using Sct;
 
 void SctParseMethod()
 {
@@ -10,8 +15,16 @@ void SctParseMethod()
     ITokenSource lexer = new SctLexer(stream);
     ITokenStream tokens = new CommonTokenStream(lexer);
     SctParser parser = new SctParser(tokens);
-    IParseTree tree = parser.start();
-    Console.WriteLine(tree.ToStringTree(parser));
+    var listener = new SctListener();
+    parser.AddParseListener(listener);
+    parser.start();
+    WriteNamespace(listener.Namespace);
+}
+
+static void WriteNamespace(NamespaceDeclarationSyntax ns)
+{
+    using var writer = new StreamWriter("MyClass.cs", false);
+    ns.NormalizeWhitespace().WriteTo(writer);
 }
 
 SctParseMethod();
