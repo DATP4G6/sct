@@ -1,6 +1,7 @@
 .antlr
 *venv
 .mono
+**/*.ignore*
 
 .direnv
 result
