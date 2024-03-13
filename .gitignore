@@ -2,7 +2,8 @@
 *venv
 .mono
 
-
+.direnv
+result
 
 
 
