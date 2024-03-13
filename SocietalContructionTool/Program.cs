@@ -17,7 +17,7 @@ static void SctParseMethod()
     SctParser parser = new SctParser(tokens);
     var listener = new SctListener();
     parser.AddParseListener(listener);
-    parser.start();
+    _ = parser.start();
     if (listener.Root is not null)
         WriteNamespace(listener.Root);
 }

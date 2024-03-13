@@ -19,14 +19,7 @@ namespace Sct
         {
             var namespaceNode = _stack.Pop();
 
-            if (namespaceNode is NamespaceDeclarationSyntax @namespace)
-            {
-                Root = @namespace;
-            }
-            else
-            {
-                throw new Exception("Node was of an unrecognized type");
-            }
+            Root = namespaceNode is NamespaceDeclarationSyntax @namespace ? @namespace : throw new Exception("Node was of an unrecognized type");
         }
 
         public override void EnterClass_def([NotNull] SctParser.Class_defContext context)
@@ -61,7 +54,7 @@ namespace Sct
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 "tmp"
             );
-            method = method.AddBodyStatements([]);
+            method = method.AddBodyStatements([ ]);
             method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
             _stack.Push(method);
         }
@@ -91,7 +84,7 @@ namespace Sct
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 "tmp"
             );
-            method = method.AddBodyStatements([]);
+            method = method.AddBodyStatements([ ]);
             method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
             _stack.Push(method);
         }
