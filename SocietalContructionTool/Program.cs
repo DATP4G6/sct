@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct;
 
-void SctParseMethod()
+static void SctParseMethod()
 {
     string input = File.ReadAllText("parser/society.sct");
     ICharStream stream = CharStreams.fromString(input);
@@ -18,12 +18,13 @@ void SctParseMethod()
     var listener = new SctListener();
     parser.AddParseListener(listener);
     parser.start();
-    WriteNamespace(listener.Namespace);
+    if (listener.Root is not null)
+        WriteNamespace(listener.Root);
 }
 
 static void WriteNamespace(NamespaceDeclarationSyntax ns)
 {
-    using var writer = new StreamWriter("MyClass.cs", false);
+    using var writer = new StreamWriter("MyClass.ignore.cs", false);
     ns.NormalizeWhitespace().WriteTo(writer);
 }
 
