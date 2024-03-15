@@ -1,0 +1,1 @@
+﻿(start (class_def class Citizen ( (args_def (type int) townId , (type float) latitude) ) { class_body }) <EOF>)

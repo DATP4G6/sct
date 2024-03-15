@@ -1,0 +1,1 @@
+﻿(start (class_def class Citizen ( args_def ) { (class_body (state state Adult { (statement_list (statement (exit exit ;))) })) }) <EOF>)
