@@ -11,13 +11,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.2.2" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Verify.MSTest" Version="23.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SocietalContructionTool\SocietalContructionTool.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="TestFiles/*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

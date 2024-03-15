@@ -54,7 +54,7 @@ namespace Sct
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 "tmp"
             );
-            method = method.AddBodyStatements([ ]);
+            method = method.AddBodyStatements([]);
             method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
             _stack.Push(method);
         }
@@ -84,7 +84,7 @@ namespace Sct
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 "tmp"
             );
-            method = method.AddBodyStatements([ ]);
+            method = method.AddBodyStatements([]);
             method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
             _stack.Push(method);
         }
