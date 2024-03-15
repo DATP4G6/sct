@@ -15,14 +15,6 @@ indent_size = 4
 trim_trailing_whitespace = true
 end_of_line = lf
 
-[project.json]
-indent_size = 2
-
-# C# files
-[*.cs]
-
-# Analyzers
-# dotnet_code_quality.ca1802.api_surface = private, internal
 
 #### .NET Coding Conventions ####
 [*.{cs,vb}]
@@ -364,3 +356,7 @@ dotnet_naming_style.s_camelcase.required_prefix = s_
 dotnet_naming_style.s_camelcase.required_suffix =
 dotnet_naming_style.s_camelcase.word_separator =
 dotnet_naming_style.s_camelcase.capitalization = camel_case
+
+
+# ignore antlr warning
+dotnet_diagnostic.CS3021.severity = none

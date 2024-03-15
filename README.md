@@ -6,8 +6,8 @@ Short name: _SCT_
 
 The repository is split into two distinct projects
 
-| Project                      | Description                                              |
-| ---------------------------- | -------------------------------------------------------- |
+| Project                       | Description                                              |
+| ----------------------------- | -------------------------------------------------------- |
 | SocietalConstructionTool      | The main project containing the compiler                 |
 | SocietalConstructionToolTests | The test suite, ensuring the correctness of the compiler |
 
@@ -23,7 +23,8 @@ Install the required system dependencies;
 Then invoke antlr4 to generate the parser files required by the rest of the project
 
 ```sh
-antlr4 -Dlanguage=CSharp ./SocietalConstructionTool/parser/Sct.g4 -o ./SocietalConstructionTool/parser/out
+cd SocietalConstructionTool/parser
+antlr4 -Dlanguage=CSharp Sct.g4 -o out
 ```
 
 ### Dotnet commands
@@ -31,6 +32,7 @@ antlr4 -Dlanguage=CSharp ./SocietalConstructionTool/parser/Sct.g4 -o ./SocietalC
 To run tests:
 
 ```sh
+cd SocietalConstructionToolTests
 dotnet test
 ```
 
