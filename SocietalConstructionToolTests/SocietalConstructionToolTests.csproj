@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocietalContructionTool\SocietalContructionTool.csproj" />
+    <ProjectReference Include="..\SocietalConstructionTool\SocietalConstructionTool.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestFiles/*.*">

@@ -8,8 +8,8 @@ The repository is split into two distinct projects
 
 | Project                      | Description                                              |
 | ---------------------------- | -------------------------------------------------------- |
-| SocietalContructionTool      | The main project containing the compiler                 |
-| SocietalContructionToolTests | The test suite, ensuring the correctness of the compiler |
+| SocietalConstructionTool      | The main project containing the compiler                 |
+| SocietalConstructionToolTests | The test suite, ensuring the correctness of the compiler |
 
 ## Getting started
 
@@ -23,7 +23,7 @@ Install the required system dependencies;
 Then invoke antlr4 to generate the parser files required by the rest of the project
 
 ```sh
-antlr4 -Dlanguage=CSharp ./SocietalContructionTool/parser/Sct.g4 -o ./SocietalContructionTool/parser/out
+antlr4 -Dlanguage=CSharp ./SocietalConstructionTool/parser/Sct.g4 -o ./SocietalConstructionTool/parser/out
 ```
 
 ### Dotnet commands
@@ -37,6 +37,6 @@ dotnet test
 To run the project, current code structure doesn't handle paths from the project root, so a directory change is required
 
 ```sh
-cd SocietalContructionTool
+cd SocietalConstructionTool
 dotnet run
 ```

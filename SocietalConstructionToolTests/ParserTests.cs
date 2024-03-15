@@ -1,7 +1,7 @@
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 
-namespace SocietalContructionToolTests
+namespace SocietalConstructionToolTests
 {
     [TestClass]
     public class ParserTests : VerifyBase
