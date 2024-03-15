@@ -32,10 +32,5 @@ namespace SocietalConstructionToolTests
             IParseTree result = parser.start();
             _ = await Verify(result.ToStringTree(parser)).UseMethodName("TestParseAST." + Path.GetFileNameWithoutExtension(testFile));
         }
-
-        private static string GetTestFile(string testName)
-        {
-            return Path.Join(TestFilesDirectory, testName);
-        }
     }
 }
