@@ -11,17 +11,20 @@ namespace Sct
     {
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly Stack<CSharpSyntaxNode> _stack = new();
-        public override void EnterStart(SctParser.StartContext context)
-        {
-            var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
-            _stack.Push(@namespace);
-        }
-
         public override void ExitStart(SctParser.StartContext context)
         {
-            var namespaceNode = _stack.Pop();
+            var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
+            var @class = SyntaxFactory.ClassDeclaration("GlobalClass")
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+            var children = _stack.ToArray();
+            var members = children.OfType<MemberDeclarationSyntax>().ToArray();
+            if (members.Length != children.Length)
+            {
+                throw new Exception("Not all children were of type MemberDeclarationSyntax");
+            }
 
-            Root = namespaceNode is NamespaceDeclarationSyntax @namespace ? @namespace : throw new Exception("Node was of an unrecognized type");
+            @class = @class.AddMembers(members);
+            Root = @namespace.AddMembers(@class);
         }
 
         public override void EnterClass_def([NotNull] SctParser.Class_defContext context)
@@ -45,46 +48,22 @@ namespace Sct
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
         {
-            var classNode = _stack.Pop();
-            var namespaceNode = _stack.Pop();
-
-            if (classNode is ClassDeclarationSyntax @class && namespaceNode is NamespaceDeclarationSyntax @namespace)
-            {
-                @class = @class.WithIdentifier(SyntaxFactory.Identifier(
-                    context.ID().GetText()
-                ));
-                @namespace = @namespace.AddMembers(@class);
-                _stack.Push(@namespace);
-            }
-            else
-            {
-                throw new Exception("Node was of an unrecognized type");
-            }
-        }
-
-        public override void EnterDecorator([NotNull] SctParser.DecoratorContext context)
-        {
-            var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                "tmp"
-            );
-            method = method.AddBodyStatements([]);
-            method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
-            _stack.Push(method);
+            var members = PopUntil<ClassDeclarationSyntax, MemberDeclarationSyntax>(out var @class);
+            @class = @class.WithIdentifier(SyntaxFactory.Identifier(context.ID().GetText()))
+                .AddMembers(members);
+            _stack.Push(@class);
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
-            var methodNode = _stack.Pop();
-            var classNode = _stack.Pop();
-
-            if (methodNode is MethodDeclarationSyntax method && classNode is ClassDeclarationSyntax @class)
+            if (_stack.Pop() is BlockSyntax childBlock)
             {
-                method = method.WithIdentifier(SyntaxFactory.Identifier(
+                var method = SyntaxFactory.MethodDeclaration(
+                    SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                     context.ID().GetText()
-                ));
-                @class = @class.AddMembers(method);
-                _stack.Push(@class);
+                );
+                method = method.WithBody(childBlock);
+                _stack.Push(method);
             }
             else
             {
@@ -92,29 +71,34 @@ namespace Sct
             }
         }
 
-        public override void EnterState([NotNull] SctParser.StateContext context)
+        public override void ExitFunction([NotNull] SctParser.FunctionContext context)
         {
-            var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                "tmp"
-            );
-            method = method.AddBodyStatements([]);
-            method = method.AddBodyStatements(SyntaxFactory.ParseStatement("throw new NotImplementedException();"));
-            _stack.Push(method);
+            if (_stack.Pop() is BlockSyntax childBlock)
+            {
+                var method = SyntaxFactory.MethodDeclaration(
+                    SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                    context.ID().GetText()
+                );
+                method = method.WithBody(childBlock);
+                _stack.Push(method);
+            }
+            else
+            {
+                throw new Exception("Node was of an unrecognized type");
+            }
         }
 
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
-            var methodNode = _stack.Pop();
-            var classNode = _stack.Pop();
-
-            if (methodNode is MethodDeclarationSyntax method && classNode is ClassDeclarationSyntax @class)
+            // TODO: Expand with preprending decorator calls
+            if (_stack.Pop() is BlockSyntax childBlock)
             {
-                method = method.WithIdentifier(SyntaxFactory.Identifier(
+                var method = SyntaxFactory.MethodDeclaration(
+                    SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                     context.ID().GetText()
-                ));
-                @class = @class.AddMembers(method);
-                _stack.Push(@class);
+                );
+                method = method.WithBody(childBlock);
+                _stack.Push(method);
             }
             else
             {
@@ -122,45 +106,83 @@ namespace Sct
             }
         }
 
-        public override void EnterWhile([NotNull] SctParser.WhileContext context)
+        public override void EnterStatement_list([NotNull] SctParser.Statement_listContext context)
         {
-            var @while = SyntaxFactory.WhileStatement(
-                SyntaxFactory.ParseExpression("true"),
-                SyntaxFactory.ParseStatement("throw new NotImplementedException();")
-            );
+            var block = SyntaxFactory.Block();
+            _stack.Push(block);
+        }
 
-            _stack.Push(@while);
+        public override void ExitStatement_list([NotNull] SctParser.Statement_listContext context)
+        {
+            var statements = PopUntil<BlockSyntax, StatementSyntax>(out var parentBlock);
+            parentBlock = parentBlock.AddStatements(statements);
+            _stack.Push(parentBlock);
         }
 
         public override void ExitWhile([NotNull] SctParser.WhileContext context)
         {
-            var whileNode = _stack.Pop();
-            var parentNode = _stack.Pop();
-
-            if (whileNode is WhileStatementSyntax @while)
+            // TODO: Expand with expression from stack
+            var childBlockNode = _stack.Pop();
+            if (childBlockNode is BlockSyntax childBlock)
             {
-                switch (parentNode)
-                {
-                    case MethodDeclarationSyntax method:
-                        method = method.AddBodyStatements(@while);
-                        _stack.Push(method);
-                        break;
-                    case WhileStatementSyntax parentWhile:
-                        parentWhile = parentWhile.WithStatement(@while);
-                        _stack.Push(parentWhile);
-                        break;
-                    case IfStatementSyntax parentIf:
-                        parentIf = parentIf.WithStatement(@while);
-                        _stack.Push(parentIf);
-                        break;
-                    default:
-                        throw new Exception("While-loop defined outside valid scope");
-                }
+                var @while = SyntaxFactory.WhileStatement(
+                    SyntaxFactory.ParseExpression("true"),
+                    childBlock
+                );
+                _stack.Push(@while);
             }
             else
             {
                 throw new Exception("Node was of an unrecognized type");
             }
+        }
+
+        /// <summary>
+        /// Pops items from the stack until it finds an element of type TParent
+        /// </summary>
+        /// <typeparam name="TParent"></typeparam>
+        /// <typeparam name="TItem"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private TItem[] PopUntil<TParent, TItem>(out TParent parent)
+            where TParent : CSharpSyntaxNode
+            where TItem : CSharpSyntaxNode
+        {
+            List<TItem> items = [];
+            while (_stack.Peek() is TItem item and not TParent)
+            {
+                items.Add(item);
+                _ = _stack.Pop();
+            }
+
+            if (_stack.Pop() is TParent parentNode)
+            {
+                parent = parentNode;
+            }
+            else
+            {
+                throw new Exception("Node was of an unrecognized type");
+            }
+
+            // Popping stack reversed order of items
+            items.Reverse();
+            return items.ToArray();
+        }
+
+        // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
+        // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
+        public override void ExitIf([NotNull] SctParser.IfContext context)
+        {
+            _ = _stack.Pop();
+        }
+        public override void ExitElseif([NotNull] SctParser.ElseifContext context)
+        {
+            _ = _stack.Pop();
+        }
+        public override void ExitElse([NotNull] SctParser.ElseContext context)
+        {
+            _ = _stack.Pop();
         }
     }
 }
