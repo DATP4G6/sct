@@ -1,0 +1,7 @@
+class Citizen() {
+
+    state Adult {
+        int age = 5;
+        age = 10;
+    }
+}

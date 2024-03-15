@@ -1,0 +1,7 @@
+function testFunction() -> void {
+    testFunctionArgs(1, 1.5);
+}
+
+function testFunctionArgs(int intArgument, float floatArgument) -> void {
+
+}

@@ -1,0 +1,1 @@
+﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (expression exists ( (args_call (expression (agent_predicate Town :: Growing ( args_agent )))) )) ;)) }) <EOF>)

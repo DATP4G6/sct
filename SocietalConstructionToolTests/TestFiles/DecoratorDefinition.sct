@@ -1,0 +1,11 @@
+class Town() {
+
+    decorator testDecorator42 {
+
+    }
+
+    @testDecorator42
+    state Stable {
+
+    }
+}

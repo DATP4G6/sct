@@ -1,0 +1,3 @@
+class Citizen(int townId, float latitude) {
+    
+}
