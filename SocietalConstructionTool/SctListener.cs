@@ -25,7 +25,19 @@ namespace Sct
         public override void EnterClass_def([NotNull] SctParser.Class_defContext context)
         {
             var @class = SyntaxFactory.ClassDeclaration("tmp")
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+                .WithBaseList(SyntaxFactory.BaseList(
+                    SyntaxFactory.SeparatedList(
+                        (IEnumerable<BaseTypeSyntax>)[SyntaxFactory.SimpleBaseType(
+                            SyntaxFactory.QualifiedName(
+                                // If namespace = null this could produce invalid code
+                                SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? ""),
+                                SyntaxFactory.IdentifierName(typeof(BaseAgent).Name)
+                                )
+                            )]
+                        )
+                    )
+                );
             _stack.Push(@class);
         }
 
