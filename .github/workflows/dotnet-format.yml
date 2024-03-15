@@ -21,6 +21,7 @@ jobs:
               uses: xt0rted/dotnet-tool-restore@v1
 
             - name: Run dotnet format
-              uses: xt0rted/dotnet-format@v1.2.0
-              with:
-                  only-changed-files: "true"
+              #   uses: xt0rted/dotnet-format@v1.2.0
+              #   with:
+              #       only-changed-files: "true"
+              run: dotnet format --verify-no-changes
