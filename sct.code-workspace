@@ -6,17 +6,17 @@
     },
     {
       "name": "Sct",
-      "path": "./SocietalContructionTool"
+      "path": "./SocietalConstructionTool"
     },
     {
       "name": "Tests",
-      "path": "./SocietalContructionToolTests"
+      "path": "./SocietalConstructionToolTests"
     }
   ],
   "settings": {
     "files.exclude": {
-      "SocietalContructionTool": true,
-      "SocietalContructionToolTests": true
+      "SocietalConstructionTool": true,
+      "SocietalConstructionToolTests": true
     }
   },
   "extensions": {

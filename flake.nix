@@ -14,9 +14,9 @@
   flake-utils.lib.eachDefaultSystem (
     system: let
       pkgs = import nixpkgs { inherit system;};
-      projectFile = "./SocietalContructionTool/SocietalContructionTool.csproj";
-      testProjectFile = "./SocietalContructionToolTests/SocietalContructionToolTests.csproj";
-      parserDir = "./SocietalContructionTool/parser";
+      projectFile = "./SocietalConstructionTool/SocietalConstructionTool.csproj";
+      testProjectFile = "./SocietalConstructionToolTests/SocietalConstructionToolTests.csproj";
+      parserDir = "./SocietalConstructionTool/parser";
       parserOutDir = "${parserDir}/out";
       grammarFile = "${parserDir}/Sct.g4";
       # TODO: Find some way to put this in the shell so you can manually generate sources for LSP
@@ -48,7 +48,7 @@
         default = pkgs.buildDotnetModule {
           inherit version dotnet-sdk dotnet-runtime;
           projectFile = "./sct.sln";
-          pname = "SocietalContructionTool";
+          pname = "SocietalConstructionTool";
           src = ./.;
           doCheck = true;
           nugetDeps = ./nix/deps.nix;
