@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "name": "Root",
+      "path": "."
+    },
+    {
+      "name": "Sct",
+      "path": "./SocietalContructionTool"
+    },
+    {
+      "name": "Tests",
+      "path": "./SocietalContructionToolTests"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "SocietalContructionTool": true,
+      "SocietalContructionToolTests": true
+    }
+  },
+  "extensions": {
+    "recommendations": ["mike-lischke.vscode-antlr4"]
+  }
+}
