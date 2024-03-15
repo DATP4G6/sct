@@ -107,5 +107,46 @@ namespace Sct
                 throw new Exception("Node was of an unrecognized type");
             }
         }
+
+        public override void EnterWhile([NotNull] SctParser.WhileContext context)
+        {
+            var @while = SyntaxFactory.WhileStatement(
+                SyntaxFactory.ParseExpression("true"),
+                SyntaxFactory.ParseStatement("throw new NotImplementedException();")
+            );
+
+            _stack.Push(@while);
+        }
+
+        public override void ExitWhile([NotNull] SctParser.WhileContext context)
+        {
+            var whileNode = _stack.Pop();
+            var parentNode = _stack.Pop();
+
+            if (whileNode is WhileStatementSyntax @while)
+            {
+                switch (parentNode)
+                {
+                    case MethodDeclarationSyntax method:
+                        method = method.AddBodyStatements(@while);
+                        _stack.Push(method);
+                        break;
+                    case WhileStatementSyntax parentWhile:
+                        parentWhile = parentWhile.WithStatement(@while);
+                        _stack.Push(parentWhile);
+                        break;
+                    case IfStatementSyntax parentIf:
+                        parentIf = parentIf.WithStatement(@while);
+                        _stack.Push(parentIf);
+                        break;
+                    default:
+                        throw new Exception("While-loop defined outside valid scope");
+                }
+            }
+            else
+            {
+                throw new Exception("Node was of an unrecognized type");
+            }
+        }
     }
 }
