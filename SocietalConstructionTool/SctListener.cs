@@ -3,6 +3,8 @@ using Antlr4.Runtime.Misc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Sct.Runtime;
+
 namespace Sct
 {
     public class SctListener : SctBaseListener
