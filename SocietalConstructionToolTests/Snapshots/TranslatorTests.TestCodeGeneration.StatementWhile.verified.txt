@@ -1,0 +1,12 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        void Setup()
+        {
+            while (true)
+            {
+            }
+        }
+    }
+}
