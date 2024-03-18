@@ -1,0 +1,13 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        void testFunctionArgs()
+        {
+        }
+
+        void testFunction()
+        {
+        }
+    }
+}
