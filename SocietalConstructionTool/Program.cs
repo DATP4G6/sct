@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using Sct;
+using Sct.Compiler;
 
 static void SctParseMethod()
 {
@@ -15,7 +15,7 @@ static void SctParseMethod()
     ITokenSource lexer = new SctLexer(stream);
     ITokenStream tokens = new CommonTokenStream(lexer);
     SctParser parser = new SctParser(tokens);
-    var listener = new SctListener();
+    var listener = new SctTranslator();
     parser.AddParseListener(listener);
     _ = parser.start();
     if (listener.Root is not null)
