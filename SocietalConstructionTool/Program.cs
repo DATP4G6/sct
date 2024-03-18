@@ -10,7 +10,7 @@ using Sct.Compiler;
 
 static void SctParseMethod()
 {
-    string input = File.ReadAllText("parser/society.sct");
+    string input = File.ReadAllText("Compiler/Parser/society.sct");
     ICharStream stream = CharStreams.fromString(input);
     ITokenSource lexer = new SctLexer(stream);
     ITokenStream tokens = new CommonTokenStream(lexer);
