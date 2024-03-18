@@ -23,7 +23,7 @@ Install the required system dependencies;
 Then invoke antlr4 to generate the parser files required by the rest of the project
 
 ```sh
-cd SocietalConstructionTool/parser
+cd SocietalConstructionTool/Compiler/Parser
 antlr4 -Dlanguage=CSharp Sct.g4 -o out
 ```
 

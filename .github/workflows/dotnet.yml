@@ -23,7 +23,7 @@ jobs:
               uses: siacodelabs/setup-antlr4@v2
             - name: Generate parser
               run: |
-                  cd SocietalConstructionTool/parser
+                  cd SocietalConstructionTool/Compiler/Parser
                   antlr4 -Dlanguage=CSharp Sct.g4 -o out
             - name: Restore dependencies
               run: dotnet restore

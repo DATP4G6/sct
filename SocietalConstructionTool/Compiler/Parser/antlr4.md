@@ -13,7 +13,7 @@ python -m venv scr-venv
 Enter the environment
 
 ```sh
-source scr-venv/bin/activate
+source sct-venv/bin/activate
 ```
 
 Install dependencies
