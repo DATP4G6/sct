@@ -1,27 +1,14 @@
 using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 
 namespace SocietalConstructionToolTests
 {
     [TestClass]
-    public class ParserTests : VerifyBase
+    public class ParserTests : AbstractSnapshotTests
     {
-        private static string TestFilesDirectory => Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles");
+        private static new IEnumerable<string[]> Files => AbstractSnapshotTests.Files;
 
-        [ClassInitialize]
-        public static void Setup(TestContext _)
-        {
-            DiffEngine.DiffRunner.Disabled = true;
-            UseProjectRelativeDirectory("Snapshots");
-        }
-
-        [TestMethod]
-        public Task TestParseAST()
-        {
-            string[] testFiles = Directory.GetFiles(TestFilesDirectory);
-            return Task.WhenAll(testFiles.AsParallel().Select(TestFile));
-        }
-
+        [DataTestMethod]
+        [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
         public async Task TestFile(string testFile)
         {
             string input = await File.ReadAllTextAsync(testFile);
@@ -29,7 +16,7 @@ namespace SocietalConstructionToolTests
             ITokenSource lexer = new SctLexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
             SctParser parser = new(tokens);
-            IParseTree result = parser.start();
+            SctParser.StartContext result = parser.start();
             _ = await Verify(result.ToStringTree(parser)).UseMethodName("TestParseAST." + Path.GetFileNameWithoutExtension(testFile));
         }
     }

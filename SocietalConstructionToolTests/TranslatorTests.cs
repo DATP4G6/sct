@@ -7,25 +7,14 @@ using Sct.Compiler;
 namespace SocietalConstructionToolTests
 {
     [TestClass]
-    public class TranslatorTests : VerifyBase
+    public class TranslatorTests : AbstractSnapshotTests
     {
-        private static string TestFilesDirectory => Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles");
+        private static new IEnumerable<string[]> Files => AbstractSnapshotTests.Files;
 
-        [ClassInitialize]
-        public static void Setup(TestContext _)
-        {
-            DiffEngine.DiffRunner.Disabled = true;
-            UseProjectRelativeDirectory("Snapshots");
-        }
-
-        [TestMethod]
-        public Task TestCodeGeneration()
-        {
-            string[] testFiles = Directory.GetFiles(TestFilesDirectory);
-            return Task.WhenAll(testFiles.AsParallel().Select(TranslateFile));
-        }
-
-        private async Task TranslateFile(string file)
+        // Run each file as a seperate test
+        [DataTestMethod]
+        [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
+        public async Task TranslateFile(string file)
         {
             string input = File.ReadAllText(file);
             ICharStream stream = CharStreams.fromString(input);
