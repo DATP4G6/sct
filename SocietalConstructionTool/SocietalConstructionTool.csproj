@@ -1,17 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsAotCompatible>true</IsAotCompatible>
+        <PublishAot>true</PublishAot>
+        <BuildDependsOn>
+            generateParser;
+            $(BuildDependsOn)
+        </BuildDependsOn>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsAotCompatible>true</IsAotCompatible>
-    <PublishAot>true</PublishAot>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0 "/>
-  </ItemGroup>
-
+    <ItemGroup>
+        <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0 "/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="../SctBuildTasks/SctBuildTasks.csproj" />
+    </ItemGroup>
 </Project>

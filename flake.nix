@@ -16,11 +16,6 @@
       pkgs = import nixpkgs { inherit system;};
       projectFile = "./SocietalConstructionTool/SocietalConstructionTool.csproj";
       testProjectFile = "./SocietalConstructionToolTests/SocietalConstructionToolTests.csproj";
-      parserDir = "./SocietalConstructionTool/parser";
-      parserOutDir = "${parserDir}/out";
-      grammarFile = "${parserDir}/Sct.g4";
-      # TODO: Find some way to put this in the shell so you can manually generate sources for LSP
-      generateSources = ''"${pkgs.antlr4}/bin/antlr4" -Dlanguage=CSharp ${grammarFile} -o ${parserOutDir}'';
       pname = "societal-construction-tool";
       dotnet-sdk = pkgs.dotnet-sdk_8;
       dotnet-runtime = pkgs.dotnetCorePackages.runtime_8_0;
@@ -52,9 +47,9 @@
           src = ./.;
           doCheck = true;
           nugetDeps = ./nix/deps.nix;
-          preBuild = ''
-            ${generateSources}
-          '';
+          nativeBuildInputs = with pkgs; [
+            antlr4
+          ];
         };
       };
       devShells.default = import ./nix/shell.nix { inherit pkgs; };
