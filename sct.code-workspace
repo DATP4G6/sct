@@ -18,13 +18,13 @@
       "SocietalConstructionTool": true,
       "SocietalConstructionToolTests": true
     },
-      "antlr4.generation": {
-        "mode": "external",
-        "language": "CSharp",
-        "listeners": true,
-        "visitors": true,
-        "outputDir": "out"
-      }
+    "antlr4.generation": {
+      "mode": "external",
+      "language": "CSharp",
+      "listeners": true,
+      "visitors": true,
+      "outputDir": "out"
+    }
   },
   "extensions": {
     "recommendations": ["mike-lischke.vscode-antlr4"]

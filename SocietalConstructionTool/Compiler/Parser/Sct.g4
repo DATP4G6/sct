@@ -60,14 +60,14 @@ expression:
 	| expression op = MOD expression	# BinaryExpression
 	| expression op = PLUS expression	# BinaryExpression
 	| expression op = MINUS expression	# BinaryExpression
-	| expression op = GT expression		# BinaryExpression
-	| expression op = LT expression		# BinaryExpression
-	| expression op = GTE expression	# BinaryExpression
-	| expression op = LTE expression	# BinaryExpression
-	| expression op = EQ expression		# BinaryExpression
-	| expression op = NEQ expression	# BinaryExpression
-	| expression op = AND expression	# BinaryExpression
-	| expression op = OR expression		# BinaryExpression
+	| expression op = GT expression		# BooleanExpression
+	| expression op = LT expression		# BooleanExpression
+	| expression op = GTE expression	# BooleanExpression
+	| expression op = LTE expression	# BooleanExpression
+	| expression op = EQ expression		# BooleanExpression
+	| expression op = NEQ expression	# BooleanExpression
+	| expression op = AND expression	# BooleanExpression
+	| expression op = OR expression		# BooleanExpression
 	| agent_predicate					# AgentPredicateExpression;
 
 // Class
