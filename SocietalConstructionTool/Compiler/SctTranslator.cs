@@ -170,6 +170,35 @@ namespace Sct.Compiler
             _stack.Push(state);
         }
 
+        public override void ExitDeclaration([NotNull] SctParser.DeclarationContext context)
+        {
+            switch (context.children[0].GetText())
+            {
+                case "int":
+                    var intVariable = SyntaxFactory.VariableDeclaration(
+                        SyntaxFactory.PredefinedType(
+                            SyntaxFactory.Token(SyntaxKind.IntKeyword)
+                        )
+                    ).AddVariables(
+                        SyntaxFactory.VariableDeclarator(context.ID().GetText())
+                    );
+                    _stack.Push(intVariable);
+                    break;
+                case "float":
+                    var floatVariable = SyntaxFactory.VariableDeclaration(
+                        SyntaxFactory.PredefinedType(
+                            SyntaxFactory.Token(SyntaxKind.FloatKeyword)
+                        )
+                    ).AddVariables(
+                        SyntaxFactory.VariableDeclarator(context.ID().GetText())
+                    );
+                    _stack.Push(floatVariable);
+                    break;
+                default:
+                    throw new Exception("Unknown type");
+            }
+        }
+
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
             var stateLogic = _stack.Pop<BlockSyntax>();
