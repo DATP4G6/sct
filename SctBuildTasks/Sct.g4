@@ -27,7 +27,8 @@ statement:
     | break
     | continue;
 
-declaration: type ID ASSIGN expression SEMI;
+declaration:
+    type ID ASSIGN expression SEMI # variableDeclaration;
 assignment: ID ASSIGN expression SEMI;
 if:
     IF LPAREN expression RPAREN LCURLY statement_list RCURLY (

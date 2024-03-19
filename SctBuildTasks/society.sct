@@ -3,6 +3,8 @@ function emptyReturn() -> void {
 }
 
 function ifelseifelseif() -> void {
+    int x = 10;
+    float y = 5;
     if (a) {
         x = 7;
     } else if (b) {
@@ -29,7 +31,7 @@ class Town(int id, int space) {
             // Change the state of the Town to Critical. This means that the next tick, the `state Critical` block will be executed
             enter Critical;
         }
-        
+
         // If no enter keyword is executed during a tick, the agent will simply stay in the same state.
     }
 
