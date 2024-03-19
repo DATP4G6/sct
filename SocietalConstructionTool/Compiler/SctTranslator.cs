@@ -43,10 +43,56 @@ namespace Sct.Compiler
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
         {
-            var members = _stack.PopUntil<ClassDeclarationSyntax, MemberDeclarationSyntax>(out var @class);
+            var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
+            var @class = _stack.Pop<ClassDeclarationSyntax>();
+            var constructor = CreateConstructor(context.ID().GetText());
+
             @class = @class.WithIdentifier(SyntaxFactory.Identifier(context.ID().GetText()))
+                .AddMembers(constructor)
                 .AddMembers(members);
+
             _stack.Push(@class);
+        }
+
+        private ConstructorDeclarationSyntax CreateConstructor(string className)
+        {
+            var parameters = SyntaxFactory.ParameterList(
+                SyntaxFactory.SeparatedList(new[]
+                {
+                    SyntaxFactory.Parameter(SyntaxFactory.Identifier("state"))
+                        .WithType(SyntaxFactory.ParseTypeName("string")),
+                    SyntaxFactory.Parameter(SyntaxFactory.Identifier("fields"))
+                        .WithType(SyntaxFactory.ParseTypeName("IDictionary<string, dynamic>"))
+                })
+            );
+
+            return SyntaxFactory.ConstructorDeclaration(className)
+                .WithParameterList(parameters) // Add parameters
+                .WithBody(SyntaxFactory.Block()) // Add empty body
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)) // Make public
+                .WithInitializer(SyntaxFactory.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, // Add base constructor call
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new[]
+                        {
+                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("state")),
+                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("fields"))
+                        })
+                    )
+                ));
+        }
+
+        public override void ExitArgs_def([NotNull] SctParser.Args_defContext context)
+        {
+            // create list of parameters by zipping ID and type
+            var @params = context.ID().Zip(context.type(), (id, type) =>
+                SyntaxFactory.Parameter(SyntaxFactory.Identifier(id.GetText())) // set name
+                    .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
+            );
+
+            // add to parameter list
+            _stack.Push(SyntaxFactory.ParameterList(
+                SyntaxFactory.SeparatedList(@params)
+            ));
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
@@ -63,11 +109,13 @@ namespace Sct.Compiler
         public override void ExitFunction([NotNull] SctParser.FunctionContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
+            var @params = _stack.Pop<ParameterListSyntax>();
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // change to actual type
                 context.ID().GetText()
-            );
-            method = method.WithBody(childBlock);
+            )
+            .WithParameterList(@params)
+            .WithBody(childBlock);
             _stack.Push(method);
         }
 
