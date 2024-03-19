@@ -3,6 +3,7 @@ using Antlr4.Runtime.Misc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Sct.Compiler.Exceptions;
 using Sct.Runtime;
 
 namespace Sct.Compiler
@@ -20,7 +21,7 @@ namespace Sct.Compiler
             var members = children.OfType<MemberDeclarationSyntax>().ToArray();
             if (members.Length != children.Length)
             {
-                throw new Exception("Not all children were of type MemberDeclarationSyntax");
+                throw new UnrecognizedNodeException("Not all children were of type MemberDeclarationSyntax");
             }
 
             @class = @class.AddMembers(members);
@@ -56,7 +57,8 @@ namespace Sct.Compiler
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
-            if (_stack.Pop() is BlockSyntax childBlock)
+            var node = _stack.Pop();
+            if (node is BlockSyntax childBlock)
             {
                 var method = SyntaxFactory.MethodDeclaration(
                     SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -67,13 +69,14 @@ namespace Sct.Compiler
             }
             else
             {
-                throw new Exception("Node was of an unrecognized type");
+                throw new UnrecognizedNodeException(nameof(BlockSyntax), node.GetType().Name);
             }
         }
 
         public override void ExitFunction([NotNull] SctParser.FunctionContext context)
         {
-            if (_stack.Pop() is BlockSyntax childBlock)
+            var node = _stack.Pop();
+            if (node is BlockSyntax childBlock)
             {
                 var method = SyntaxFactory.MethodDeclaration(
                     SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -84,14 +87,15 @@ namespace Sct.Compiler
             }
             else
             {
-                throw new Exception("Node was of an unrecognized type");
+                throw new UnrecognizedNodeException(nameof(BlockSyntax), node.GetType().Name);
             }
         }
 
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
             // TODO: Expand with preprending decorator calls
-            if (_stack.Pop() is BlockSyntax childBlock)
+            var node = _stack.Pop();
+            if (node is BlockSyntax childBlock)
             {
                 var method = SyntaxFactory.MethodDeclaration(
                     SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -102,7 +106,7 @@ namespace Sct.Compiler
             }
             else
             {
-                throw new Exception("Node was of an unrecognized type");
+                throw new UnrecognizedNodeException(nameof(BlockSyntax), node.GetType().Name);
             }
         }
 
@@ -122,8 +126,8 @@ namespace Sct.Compiler
         public override void ExitWhile([NotNull] SctParser.WhileContext context)
         {
             // TODO: Expand with expression from stack
-            var childBlockNode = _stack.Pop();
-            if (childBlockNode is BlockSyntax childBlock)
+            var node = _stack.Pop();
+            if (node is BlockSyntax childBlock)
             {
                 var @while = SyntaxFactory.WhileStatement(
                     SyntaxFactory.ParseExpression("true"),
@@ -133,7 +137,7 @@ namespace Sct.Compiler
             }
             else
             {
-                throw new Exception("Node was of an unrecognized type");
+                throw new UnrecognizedNodeException(nameof(BlockSyntax), node.GetType().Name);
             }
         }
 
@@ -156,13 +160,15 @@ namespace Sct.Compiler
                 _ = _stack.Pop();
             }
 
-            if (_stack.Pop() is TParent parentNode)
+            var node = _stack.Pop();
+            if (node is TParent parentNode)
             {
                 parent = parentNode;
             }
             else
             {
-                throw new Exception("Node was of an unrecognized type");
+                // throw new Exception("Node was of an unrecognized type");
+                throw new UnrecognizedNodeException(nameof(TParent), node.GetType().Name);
             }
 
             // Popping stack reversed order of items
