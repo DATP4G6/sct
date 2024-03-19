@@ -167,6 +167,19 @@ namespace Sct.Compiler
             _stack.Push(SyntaxFactory.ConditionalExpression(condition, trueValue, falseValue));
         }
 
+        public override void ExitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
+        {
+            var node = _stack.Pop<ExpressionSyntax>();
+            _stack.Push(SyntaxFactory.ParenthesizedExpression(node));
+        }
+
+        public override void ExitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
+        {
+            var node = _stack.Pop<ExpressionSyntax>();
+            var type = SyntaxFactory.ParseTypeName(context.type().GetText());
+            _stack.Push(SyntaxFactory.CastExpression(type, node));
+        }
+
         /// <summary>
         /// Pops items from the stack until it finds an element of type TParent
         /// </summary>
