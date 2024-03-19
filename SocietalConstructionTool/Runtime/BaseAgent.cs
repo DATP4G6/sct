@@ -1,11 +1,7 @@
 namespace Sct.Runtime;
-public abstract class BaseAgent
+public abstract class BaseAgent(string state, IDictionary<string, dynamic> fields)
 {
-    public string State { get; set; }
-    public IDictionary<string, dynamic> Fields { get; set; }
-    public BaseAgent(string state, IDictionary<string, dynamic> fields)
-    {
-        State = state;
-        Fields = fields;
-    }
+    public string State { get; set; } = state;
+    public IDictionary<string, dynamic> Fields { get; set; } = fields;
+    public abstract void Update(IRuntimeContext ctx);
 }
