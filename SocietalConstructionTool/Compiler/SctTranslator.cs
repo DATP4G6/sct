@@ -137,6 +137,52 @@ namespace Sct.Compiler
             }
         }
 
+        public override void ExitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
+        {
+            var exp2 = (ExpressionSyntax)_stack.Pop();
+            var exp1 = (ExpressionSyntax)_stack.Pop();
+
+            var expOperator = SyntaxKind.None;
+            if (context.GT() != null)
+            {
+                expOperator = SyntaxKind.GreaterThanExpression;
+            }
+            else if (context.LT() != null)
+            {
+                expOperator = SyntaxKind.GreaterThanExpression;
+            }
+            else if (context.GTE() != null)
+            {
+                expOperator = SyntaxKind.GreaterThanOrEqualExpression;
+            }
+            else if (context.LTE() != null)
+            {
+                expOperator = SyntaxKind.LessThanOrEqualExpression;
+            }
+            else if (context.EQ() != null)
+            {
+                expOperator = SyntaxKind.EqualsExpression;
+            }
+            else if (context.NEQ() != null)
+            {
+                expOperator = SyntaxKind.NotEqualsExpression;
+            }
+            else if (context.AND() != null)
+            {
+                expOperator = SyntaxKind.LogicalAndExpression;
+            }
+            else if (context.OR() != null)
+            {
+                expOperator = SyntaxKind.LogicalOrExpression;
+            }
+
+            var trueValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
+            var falseValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+
+            var condition = SyntaxFactory.BinaryExpression(expOperator, exp1, exp2);
+            _stack.Push(SyntaxFactory.ConditionalExpression(condition, trueValue, falseValue));
+        }
+
         /// <summary>
         /// Pops items from the stack until it finds an element of type TParent
         /// </summary>

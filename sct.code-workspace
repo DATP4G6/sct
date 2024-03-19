@@ -17,6 +17,13 @@
     "files.exclude": {
       "SocietalConstructionTool": true,
       "SocietalConstructionToolTests": true
+    },
+    "antlr4.generation": {
+      "mode": "external",
+      "language": "CSharp",
+      "listeners": true,
+      "visitors": true,
+      "outputDir": "out"
     }
   },
   "extensions": {
