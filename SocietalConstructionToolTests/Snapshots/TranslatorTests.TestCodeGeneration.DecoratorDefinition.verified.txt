@@ -1,0 +1,16 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        public class Town : Sct.Runtime.BaseAgent
+        {
+            void testDecorator42()
+            {
+            }
+
+            void Stable()
+            {
+            }
+        }
+    }
+}

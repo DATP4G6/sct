@@ -1,0 +1,12 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        public class Citizen : Sct.Runtime.BaseAgent
+        {
+            void Adult()
+            {
+            }
+        }
+    }
+}
