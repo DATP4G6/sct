@@ -107,6 +107,20 @@ namespace Sct.Compiler
             _stack.Push(@while);
         }
 
+        public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
+        {
+            var contxt = context.LIT();
+            var litExp = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(contxt.GetText()));
+            _stack.Push(litExp);
+        }
+
+        public override void ExitIDExpression([NotNull] SctParser.IDExpressionContext context)
+        {
+            var contxt = context.ID();
+            var idExp = SyntaxFactory.IdentifierName(contxt.GetText());
+            _stack.Push(idExp);
+        }
+
         /// <summary>
         /// Pops items from the stack until it finds an element of type TParent
         /// </summary>
