@@ -23,11 +23,14 @@ Install the required system dependencies;
 - `dotnet` v8+
 - `antlr4`
 
-Then invoke antlr4 to generate the parser files required by the rest of the project
+On Unix-like systems, the parser files are automatically generated after cleaning as part of the build process.
+
+On Windows, the parser code must first be generated:
 
 ```sh
-cd SocietalConstructionTool/Compiler/Parser
+cd SctBuildTasks
 antlr4 -Dlanguage=CSharp Sct.g4 -o out
+cd ..
 ```
 
 ### Dotnet commands
@@ -44,4 +47,9 @@ To run the project, current code structure doesn't handle paths from the project
 ```sh
 cd SocietalConstructionTool
 dotnet run
+```
+
+Or with Nix with flakes enables:
+```sh
+nix run
 ```

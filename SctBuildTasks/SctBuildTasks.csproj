@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+        <PackageReference
+            Include="Microsoft.Build.Utilities.Core"
+            Version="17.0.0"
+            PrivateAssets="all" />
+        <GeneratedParserFiles Include="$(MSBuildProjectDirectory)/out/*.*"/>
+    </ItemGroup>
+
+    <Target Name="generateParser" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)/Sct.g4" Outputs="$(MSBuildProjectDirectory)/out/" Condition=" '$(OS)' != 'Windows_NT' ">
+        <Message Text="Running generate parser" Importance="high"/>
+        <Exec Command="bash $(MSBuildProjectDirectory)/generateParser.sh" ConsoleToMSBuild="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+        </Exec>
+        <Message Text="Parser generated" Importance="high"/>
+        <ItemGroup>
+            <Compile Include="$(MSBuildProjectDirectory)/out/*.cs"/>
+        </ItemGroup>
+        <PropertyGroup>
+            <NoWarn>$(NoWarn);CS3021</NoWarn>
+        </PropertyGroup>
+    </Target>
+    <Target Name="forceReGenerationOnRebuild" AfterTargets="CoreClean">
+        <Delete Files="@(GeneratedParserFiles)"></Delete>
+        <Message Text="Cleaning parser in $(MSBuildProjectDirectory)/out/*.*"/>
+    </Target>
+
+</Project>
