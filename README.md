@@ -1,3 +1,6 @@
+![alt text](https://github.com/DATP4G6/sct/actions/workflows/dotnet.yml/badge.svg)
+![alt text](https://github.com/DATP4G6/sct/actions/workflows/dotnet-format.yml/badge.svg)
+
 # Societal Construction Tool
 
 Short name: _SCT_
