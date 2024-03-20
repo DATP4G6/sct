@@ -43,6 +43,8 @@ namespace Sct.Compiler
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
         {
+            // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
+            // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
             var @class = _stack.Pop<ClassDeclarationSyntax>();
             var constructor = CreateConstructor(context.ID().GetText());

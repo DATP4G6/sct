@@ -4,6 +4,10 @@
     {
         public class Town : Sct.Runtime.BaseAgent
         {
+            public Town(string state, IDictionary<string, dynamic> fields): base(state, fields)
+            {
+            }
+
             void testDecorator42()
             {
             }

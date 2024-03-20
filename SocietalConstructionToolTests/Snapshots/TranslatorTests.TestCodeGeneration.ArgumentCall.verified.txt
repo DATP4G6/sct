@@ -2,7 +2,7 @@
 {
     public class GlobalClass
     {
-        void testFunctionArgs()
+        void testFunctionArgs(int intArgument, float floatArgument)
         {
         }
 
