@@ -4,6 +4,10 @@
     {
         public class Citizen : Sct.Runtime.BaseAgent
         {
+            public Citizen(string state, IDictionary<string, dynamic> fields): base(state, fields)
+            {
+            }
+
             void Adult()
             {
             }
