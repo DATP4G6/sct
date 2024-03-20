@@ -243,6 +243,26 @@ namespace Sct.Compiler
             _stack.Push(SyntaxFactory.CastExpression(type, node));
         }
 
+        public override void ExitLogicalNotExpression([NotNull] SctParser.LogicalNotExpressionContext context)
+        {
+            var expression = _stack.Pop<ExpressionSyntax>();
+            var @operator = SyntaxKind.NotEqualsExpression;
+            var falseValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+            var trueValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
+            var condition = SyntaxFactory.BinaryExpression(@operator, expression, falseValue);
+            _stack.Push(SyntaxFactory.ConditionalExpression(condition, falseValue, trueValue));
+        }
+
+
+        public override void ExitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
+        {
+            var expression = _stack.Pop<ExpressionSyntax>();
+            _stack.Push(SyntaxFactory.PrefixUnaryExpression(
+                SyntaxKind.UnaryMinusExpression,
+                expression
+            ));
+        }
+
         /// <summary>
         /// Pops items from the stack until it finds an element of type TParent
         /// </summary>
