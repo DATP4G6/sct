@@ -4,7 +4,7 @@ start: (function | class_def)* EOF;
 
 // Functions
 function:
-	FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement_list RCURLY;
+    FUNCTION ID LPAREN args_def RPAREN RIGHT_ARROW type LCURLY statement_list RCURLY;
 
 // All argument definitions are here
 args_def: (type ID (COMMA type ID)*)?;
@@ -14,65 +14,69 @@ args_call: (expression (COMMA expression)*)?;
 // Statements
 statement_list: statement*;
 statement:
-	expression SEMI
-	| declaration
-	| assignment
-	| if
-	| while
-	| enter
-	| return
-	| create
-	| destroy
-	| exit;
+    expression SEMI
+    | declaration
+    | assignment
+    | if
+    | while
+    | enter
+    | return
+    | create
+    | destroy
+    | exit
+    | break
+    | continue;
 
 declaration: type ID ASSIGN expression SEMI;
 assignment: ID ASSIGN expression SEMI;
 if:
-	IF LPAREN expression RPAREN LCURLY statement_list RCURLY (
-		elseif
-		| else
-	)?;
+    IF LPAREN expression RPAREN LCURLY statement_list RCURLY (
+        elseif
+        | else
+    )?;
 elseif:
-	ELSE IF LPAREN expression RPAREN LCURLY statement_list RCURLY (
-		elseif
-		| else
-	)?;
+    ELSE IF LPAREN expression RPAREN LCURLY statement_list RCURLY (
+        elseif
+        | else
+    )?;
 else: ELSE LCURLY statement_list RCURLY;
 while:
-	WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
+    WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
 enter: ENTER ID SEMI;
 return: RETURN expression? SEMI;
 create: CREATE agent_create SEMI;
 destroy: DESTROY SEMI;
 exit: EXIT SEMI;
+break: BREAK SEMI;
+continue: CONTINUE SEMI;
 
 // Expressions
 expression:
-	LIT									# LiteralExpression
-	| ID								# IDExpression
-	| LPAREN expression RPAREN			# ParenthesisExpression
-	| LPAREN type RPAREN expression		# TypecastExpression
-	| ID LPAREN args_call RPAREN		# CallExpression
-	| unary_minus = MINUS expression	# UnaryMinusExpression
-	| not = NOT expression				# LogicalNotExpression
-	| expression op = MULT expression	# BinaryExpression
-	| expression op = DIV expression	# BinaryExpression
-	| expression op = MOD expression	# BinaryExpression
-	| expression op = PLUS expression	# BinaryExpression
-	| expression op = MINUS expression	# BinaryExpression
-	| expression op = GT expression		# BooleanExpression
-	| expression op = LT expression		# BooleanExpression
-	| expression op = GTE expression	# BooleanExpression
-	| expression op = LTE expression	# BooleanExpression
-	| expression op = EQ expression		# BooleanExpression
-	| expression op = NEQ expression	# BooleanExpression
-	| expression op = AND expression	# BooleanExpression
-	| expression op = OR expression		# BooleanExpression
-	| agent_predicate					# AgentPredicateExpression;
+    LIT                                    # LiteralExpression
+    | ID                                   # IDExpression
+    | LPAREN expression RPAREN             # ParenthesisExpression
+    | LPAREN type RPAREN expression        # TypecastExpression
+    | ID LPAREN args_call RPAREN           # CallExpression
+    | unary_minus = MINUS expression       # UnaryMinusExpression
+    | not = NOT expression                 # LogicalNotExpression
+    | expression op = MULT expression      # BinaryExpression
+    | expression op = DIV expression       # BinaryExpression
+    | expression op = MOD expression       # BinaryExpression
+    | expression op = PLUS expression      # BinaryExpression
+    | expression op = MINUS expression     # BinaryExpression
+    | expression op = GT expression        # BooleanExpression
+    | expression op = LT expression        # BooleanExpression
+    | expression op = GTE expression       # BooleanExpression
+    | expression op = LTE expression       # BooleanExpression
+    | expression op = EQ expression        # BooleanExpression
+    | expression op = NEQ expression       # BooleanExpression
+    | expression op = AND expression       # BooleanExpression
+    | expression op = OR expression        # BooleanExpression
+    | agent_predicate                      # AgentPredicateExpression;
 
 // Class
 class_def:
-	CLASS ID LPAREN args_def RPAREN LCURLY class_body RCURLY;
+    CLASS ID LPAREN args_def RPAREN LCURLY class_body RCURLY;
 class_body: (state | function | decorator)*;
 
 decorator: DECORATOR ID LCURLY statement_list RCURLY;
@@ -82,7 +86,7 @@ state_decorator: AT ID;
 // Not using literals probably allows WS arround '::'
 agent_create: ID DBL_COLON ID LPAREN args_agent RPAREN;
 agent_predicate:
-	ID DBL_COLON (ID | QUESTION) LPAREN args_agent RPAREN;
+    ID DBL_COLON (ID | QUESTION) LPAREN args_agent RPAREN;
 
 FUNCTION: 'function';
 RIGHT_ARROW: '->';
@@ -101,6 +105,8 @@ ENTER: 'enter';
 CREATE: 'create';
 DESTROY: 'destroy';
 EXIT: 'exit';
+CONTINUE: 'continue';
+BREAK: 'break';
 
 MULT: '*';
 DIV: '/';
