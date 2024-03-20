@@ -190,83 +190,35 @@ namespace Sct.Compiler
         /// <exception cref="Exception"></exception>
 
 
-        // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
-        // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
         public override void ExitIf([NotNull] SctParser.IfContext context)
         {
-            var childBlockNode = _stack.Pop();
-            //var expressionNode = _stack.Pop();
-            var expressionNode = SyntaxFactory.ParseExpression("true");
-
-            if (expressionNode is ExpressionSyntax expression)
-            {
-                if (childBlockNode is BlockSyntax childBlock)
-                {
-                    var @if = SyntaxFactory.IfStatement(expression, childBlock);
-                    _stack.Push(@if);
-                }
-                else if (childBlockNode is ElseClauseSyntax @else)
-                {
-                    var blockNode = _stack.Pop();
-                    if (blockNode is BlockSyntax block)
-                    {
-                        var @if = SyntaxFactory.IfStatement(expression, block, @else);
-                        _stack.Push(@if);
-                    }
-
-                }
-            }
-            else
-            {
-                throw new Exception("Node was of an unrecognized type");
-            }
-
-
+            var @if = IfHelper();
+            _stack.Push(@if);
         }
         public override void ExitElseif([NotNull] SctParser.ElseifContext context)
         {
-            var childBlockNode = _stack.Pop();
-            var expressionNode = SyntaxFactory.ParseExpression("true");
-            // var expressionNode = _stack.Pop();
-
-            if (expressionNode is ExpressionSyntax expression)
-            {
-                if (childBlockNode is BlockSyntax childBlock)
-                {
-                    var @if = SyntaxFactory.IfStatement(expression, childBlock);
-                    var @else = SyntaxFactory.ElseClause(@if);
-                    _stack.Push(@else);
-                }
-                else if (childBlockNode is ElseClauseSyntax @else)
-                {
-                    var blockNode = _stack.Pop();
-                    if (blockNode is BlockSyntax block)
-                    {
-                        var @if = SyntaxFactory.IfStatement(expression, block, @else);
-                        var @else2 = SyntaxFactory.ElseClause(@if);
-                        _stack.Push(@else2);
-                    }
-
-                }
-                else
-                {
-                    throw new Exception("Node was of an unrecognized type");
-                }
-            }
+            // Else if is not its own construct. Wrap @if in an else clause
+            var @if = IfHelper();
+            var @else = SyntaxFactory.ElseClause(@if);
+            _stack.Push(@else);
         }
         public override void ExitElse([NotNull] SctParser.ElseContext context)
         {
-            var childBlockNode = _stack.Pop();
+            var childBlock = _stack.Pop<BlockSyntax>();
+            var @else = SyntaxFactory.ElseClause(childBlock);
+            _stack.Push(@else);
+        }
 
-            if (childBlockNode is BlockSyntax childBlock)
-            {
-                var @else = SyntaxFactory.ElseClause(childBlock);
-                _stack.Push(@else);
-            }
-            else
-            {
-                throw new Exception("Node was of an unrecognized type");
-            }
+        private IfStatementSyntax IfHelper()
+        {
+            // Stack order is either <block> <exp> or <else> <block> <exp>
+            var @else = _stack.Peek() is ElseClauseSyntax ? _stack.Pop<ElseClauseSyntax>() : null;
+            var block = _stack.Pop<BlockSyntax>();
+            var expression = _stack.Pop<ExpressionSyntax>();
+
+            // Add else if it exists
+            var @if = SyntaxFactory.IfStatement(expression, block);
+            return @else == null ? @if : @if.WithElse(@else);
         }
     }
 }
