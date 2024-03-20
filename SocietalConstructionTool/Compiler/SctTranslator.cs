@@ -95,6 +95,19 @@ namespace Sct.Compiler
             ));
         }
 
+        public override void EnterArgs_call([NotNull] SctParser.Args_callContext context)
+        {
+            _stack.PushMarker();
+        }
+
+        public override void ExitArgs_call(SctParser.Args_callContext context)
+        {
+            var args = _stack.PopUntilMarker<ExpressionSyntax>();
+            _stack.Push(SyntaxFactory.ArgumentList(
+                SyntaxFactory.SeparatedList(args.Select(SyntaxFactory.Argument))
+            ));
+        }
+
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
