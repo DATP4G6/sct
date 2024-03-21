@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
@@ -60,6 +62,20 @@ namespace Sct.Compiler
             else
             {
                 throw new UnrecognizedNodeException(nameof(TParent), (node?.GetType().Name) ?? "null");
+            }
+
+            // Popping stack reversed order of items
+            items.Reverse();
+            return items.ToArray();
+        }
+
+        public TItem[] PopWhile<TItem>() where TItem : TBase
+        {
+            List<TItem> items = [];
+            while (_stack.Peek().Value is TItem item)
+            {
+                items.Add(item);
+                _ = _stack.Pop();
             }
 
             // Popping stack reversed order of items
