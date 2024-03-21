@@ -190,6 +190,20 @@ namespace Sct.Compiler
         /// <exception cref="Exception"></exception>
 
 
+        // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
+        // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
+        public override void ExitBreak([NotNull] SctParser.BreakContext context)
+        {
+            //todo check if we can break before doing it
+            _stack.Push(SyntaxFactory.BreakStatement());
+        }
+
+        public override void ExitContinue([NotNull] SctParser.ContinueContext context)
+        {
+            //todo check if we can continue before doing it
+            _stack.Push(SyntaxFactory.ContinueStatement());
+        }
+
         public override void ExitIf([NotNull] SctParser.IfContext context)
         {
             var @if = IfHelper();
