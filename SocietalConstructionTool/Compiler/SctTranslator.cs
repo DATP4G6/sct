@@ -126,44 +126,44 @@ namespace Sct.Compiler
             var exp2 = (ExpressionSyntax)_stack.Pop();
             var exp1 = (ExpressionSyntax)_stack.Pop();
 
-            var expOperator = SyntaxKind.None;
-            if (context.GT() != null)
+            var @operator = SyntaxKind.None;
+            if (context.op == context.GT()?.Symbol)
             {
-                expOperator = SyntaxKind.GreaterThanExpression;
+                @operator = SyntaxKind.GreaterThanExpression;
             }
-            else if (context.LT() != null)
+            else if (context.op == context.LT()?.Symbol)
             {
-                expOperator = SyntaxKind.GreaterThanExpression;
+                @operator = SyntaxKind.LessThanExpression;
             }
-            else if (context.GTE() != null)
+            else if (context.op == context.GTE()?.Symbol)
             {
-                expOperator = SyntaxKind.GreaterThanOrEqualExpression;
+                @operator = SyntaxKind.GreaterThanOrEqualExpression;
             }
-            else if (context.LTE() != null)
+            else if (context.op == context.LTE()?.Symbol)
             {
-                expOperator = SyntaxKind.LessThanOrEqualExpression;
+                @operator = SyntaxKind.LessThanOrEqualExpression;
             }
-            else if (context.EQ() != null)
+            else if (context.op == context.EQ()?.Symbol)
             {
-                expOperator = SyntaxKind.EqualsExpression;
+                @operator = SyntaxKind.EqualsExpression;
             }
-            else if (context.NEQ() != null)
+            else if (context.op == context.NEQ()?.Symbol)
             {
-                expOperator = SyntaxKind.NotEqualsExpression;
+                @operator = SyntaxKind.NotEqualsExpression;
             }
-            else if (context.AND() != null)
+            else if (context.op == context.AND()?.Symbol)
             {
-                expOperator = SyntaxKind.LogicalAndExpression;
+                @operator = SyntaxKind.LogicalAndExpression;
             }
-            else if (context.OR() != null)
+            else if (context.op == context.OR()?.Symbol)
             {
-                expOperator = SyntaxKind.LogicalOrExpression;
+                @operator = SyntaxKind.LogicalOrExpression;
             }
 
             var trueValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
             var falseValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
 
-            var condition = SyntaxFactory.BinaryExpression(expOperator, exp1, exp2);
+            var condition = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
             _stack.Push(SyntaxFactory.ConditionalExpression(condition, trueValue, falseValue));
         }
 
