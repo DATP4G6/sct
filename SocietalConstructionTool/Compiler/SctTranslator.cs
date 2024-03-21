@@ -344,5 +344,10 @@ namespace Sct.Compiler
             var @if = SyntaxFactory.IfStatement(expression, block);
             return @else == null ? @if : @if.WithElse(@else);
         }
+
+        public override void ExitExit([NotNull] SctParser.ExitContext context){
+            _stack.Push(SyntaxFactory.ParseStatement("ctx.Exit();"));
+        }
+
     }
 }
