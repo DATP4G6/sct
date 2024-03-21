@@ -282,6 +282,14 @@ namespace Sct.Compiler
             ));
         }
 
+        public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
+        {
+            var args = _stack.Pop<ArgumentListSyntax>();
+            var id = SyntaxFactory.IdentifierName(context.ID().GetText());
+            var call = SyntaxFactory.InvocationExpression(id, args);
+            _stack.Push(call);
+        }
+
         /// <summary>
         /// Pops items from the stack until it finds an element of type TParent
         /// </summary>
