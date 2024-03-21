@@ -5,7 +5,6 @@ namespace Sct.Runtime
         public IAgentHandler AgentHandler { get; }
         public IQueryHandler QueryHandler { get; }
         public bool ShouldExit { get; private set; }
-
         public RuntimeContext(IAgentHandler agentHandler, IQueryHandler queryHandler)
         {
             AgentHandler = agentHandler;

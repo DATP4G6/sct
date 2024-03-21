@@ -47,13 +47,39 @@ namespace Sct.Compiler
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
             var @class = _stack.Pop<ClassDeclarationSyntax>();
-            var constructor = CreateConstructor(context.ID().GetText());
+            var idText = context.ID().GetText();
+            var constructor = CreateConstructor(idText);
+            var cloneMethod = CreateCloneMethod(idText);
 
-            @class = @class.WithIdentifier(SyntaxFactory.Identifier(context.ID().GetText()))
+            @class = @class.WithIdentifier(SyntaxFactory.Identifier(idText))
                 .AddMembers(constructor)
-                .AddMembers(members);
+                .AddMembers(members)
+                .AddMembers(cloneMethod);
 
             _stack.Push(@class);
+        }
+
+        private MethodDeclarationSyntax CreateCloneMethod(string className)
+        {
+            return SyntaxFactory.MethodDeclaration(
+                SyntaxFactory.ParseTypeName(typeof(BaseAgent).Name),
+                "Clone"
+            )
+            .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword)))
+            .WithBody(SyntaxFactory.Block(
+                SyntaxFactory.ReturnStatement(
+                    SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(className))
+                    .WithArgumentList(
+                        SyntaxFactory.ArgumentList(
+                            SyntaxFactory.SeparatedList(new[]
+                            {
+                                SyntaxFactory.Argument(SyntaxFactory.IdentifierName("State")),
+                                SyntaxFactory.Argument(SyntaxFactory.IdentifierName("Fields"))
+                            })
+                        )
+                    )
+                )
+            ));
         }
 
         private ConstructorDeclarationSyntax CreateConstructor(string className)
