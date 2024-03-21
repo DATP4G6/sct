@@ -134,16 +134,35 @@ namespace Sct.Compiler
             _stack.Push(method);
         }
 
+        public override void ExitState_decorator([NotNull] SctParser.State_decoratorContext context)
+        {
+            // push all decorators to the stack as method calls
+            var state = SyntaxFactory.InvocationExpression(
+                SyntaxFactory.IdentifierName(context.ID().GetText())
+            );
+
+            _stack.Push(state);
+        }
+
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
-            // TODO: Expand with preprending decorator calls
-            var childBlock = _stack.Pop<BlockSyntax>();
+            var stateLogic = _stack.Pop<BlockSyntax>();
+            var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
+                .Select(SyntaxFactory.ExpressionStatement)
+                .Cast<StatementSyntax>();
+
+            // create new body with decorators first then state logic
+            var body = SyntaxFactory.Block()
+                .AddStatements(decorators.ToArray())
+                .AddStatements(stateLogic.Statements.ToArray());
+
+            // TODO: Add ctx as method argument
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 context.ID().GetText()
             );
-            method = method.WithBody(childBlock);
-            _stack.Push(method);
+
+            _stack.Push(method.WithBody(body));
         }
 
         public override void EnterStatement_list([NotNull] SctParser.Statement_listContext context)
