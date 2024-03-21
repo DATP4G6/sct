@@ -14,5 +14,10 @@ namespace Sct.Runtime
         /// The fields that the predicate should check.
         /// </summary>
         IDictionary<string, dynamic> Fields { get; }
+
+        /// <summary>
+        /// Tests the predicate against the given agent.
+        /// </summary>
+        public bool Test(BaseAgent agent);
     }
 }
