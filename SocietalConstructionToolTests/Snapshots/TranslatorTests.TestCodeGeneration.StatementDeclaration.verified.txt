@@ -4,12 +4,18 @@
     {
         public class Citizen : Sct.Runtime.BaseAgent
         {
-            public Citizen(string state, IDictionary<string, dynamic> fields): base(state, fields)
+            public Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
             }
 
             void Adult()
             {
+                Int32 age = 5;
+            }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
             }
         }
     }
