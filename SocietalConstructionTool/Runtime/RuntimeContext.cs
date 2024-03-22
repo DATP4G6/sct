@@ -12,7 +12,7 @@ namespace Sct.Runtime
             ShouldExit = false;
         }
 
-        public void Exit()
+        public void ExitRuntime()
         {
             throw new NotImplementedException("Exit not implemented.");
         }

@@ -5,6 +5,6 @@ namespace Sct.Runtime
         public IAgentHandler AgentHandler { get; }
         public IQueryHandler QueryHandler { get; }
         public bool ShouldExit { get; }
-        public void Exit();
+        public void ExitRuntime();
     }
 }

@@ -4,6 +4,10 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+            <!--
+                CS2002 - Source file specified multiple times
+            -->
+        <NoWarn>$(NoWarn);CS2002</NoWarn>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
@@ -14,7 +18,7 @@
         <GeneratedParserFiles Include="$(MSBuildProjectDirectory)/out/*.*"/>
     </ItemGroup>
 
-    <Target Name="generateParser" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)/Sct.g4" Outputs="$(MSBuildProjectDirectory)/out/" Condition=" '$(OS)' != 'Windows_NT' ">
+    <Target Name="generateParser" BeforeTargets="BeforeBuild" Inputs="$(MSBuildProjectDirectory)/Sct.g4" Outputs="$(MSBuildProjectDirectory)/out/SctParser.cs" Condition=" '$(OS)' != 'Windows_NT' ">
         <Message Text="Running generate parser" Importance="high"/>
         <Exec Command="bash $(MSBuildProjectDirectory)/generateParser.sh" ConsoleToMSBuild="true">
             <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
@@ -24,6 +28,9 @@
             <Compile Include="$(MSBuildProjectDirectory)/out/*.cs"/>
         </ItemGroup>
         <PropertyGroup>
+            <!--
+                CS3021 - Error from Antlr
+            -->
             <NoWarn>$(NoWarn);CS3021</NoWarn>
         </PropertyGroup>
     </Target>

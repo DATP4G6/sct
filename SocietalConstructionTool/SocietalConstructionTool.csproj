@@ -10,6 +10,7 @@
             generateParser;
             $(BuildDependsOn)
         </BuildDependsOn>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
     </PropertyGroup>
 
     <ItemGroup>
