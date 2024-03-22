@@ -4,7 +4,7 @@
     {
         public class TestClass : Sct.Runtime.BaseAgent
         {
-            public TestClass(string state, IDictionary<string, dynamic> fields): base(state, fields)
+            public TestClass(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
             }
 
