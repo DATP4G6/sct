@@ -11,6 +11,11 @@
             void Adult()
             {
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
+            }
         }
     }
 }

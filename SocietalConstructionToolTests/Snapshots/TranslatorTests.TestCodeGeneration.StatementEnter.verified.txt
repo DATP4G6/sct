@@ -11,6 +11,11 @@
             void Child()
             {
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
+            }
         }
     }
 }

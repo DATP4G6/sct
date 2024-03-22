@@ -11,6 +11,11 @@
             void Stable()
             {
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Town(State, Fields);
+            }
         }
     }
 }

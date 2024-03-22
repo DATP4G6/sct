@@ -7,6 +7,11 @@
             public TestClass(string state, IDictionary<string, dynamic> fields): base(state, fields)
             {
             }
+
+            public override BaseAgent Clone()
+            {
+                return new TestClass(State, Fields);
+            }
         }
     }
 }

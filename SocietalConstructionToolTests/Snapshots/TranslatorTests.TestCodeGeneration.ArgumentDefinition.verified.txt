@@ -7,6 +7,11 @@
             public Citizen(string state, IDictionary<string, dynamic> fields): base(state, fields)
             {
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
+            }
         }
     }
 }
