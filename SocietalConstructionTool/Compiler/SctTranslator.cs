@@ -59,7 +59,7 @@ namespace Sct.Compiler
             _stack.Push(@class);
         }
 
-        private MethodDeclarationSyntax CreateCloneMethod(string className)
+        private static MethodDeclarationSyntax CreateCloneMethod(string className)
         {
             return SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.ParseTypeName(typeof(BaseAgent).Name),
@@ -82,7 +82,7 @@ namespace Sct.Compiler
             ));
         }
 
-        private ConstructorDeclarationSyntax CreateConstructor(string className)
+        private static ConstructorDeclarationSyntax CreateConstructor(string className)
         {
             var parameters = SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(new[]
@@ -206,20 +206,34 @@ namespace Sct.Compiler
 
         public override void ExitWhile([NotNull] SctParser.WhileContext context)
         {
-            // TODO: Expand with expression from stack
             var childBlock = _stack.Pop<BlockSyntax>();
+            var expression = _stack.Pop<ExpressionSyntax>();
+            var condition = ConvertToBooleanCondition(expression);
+
             var @while = SyntaxFactory.WhileStatement(
-                SyntaxFactory.ParseExpression("true"),
+                condition,
                 childBlock
             );
             _stack.Push(@while);
         }
 
+        /// <summary>
+        /// Converts an expression to a boolean condion by comparing it to 0
+        /// </summary>
+        /// <param name="expression">Expression to be compared</param>
+        /// <returns>expression != 0</returns>
+        private static BinaryExpressionSyntax ConvertToBooleanCondition(ExpressionSyntax expression)
+        {
+            return SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression,
+                SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0)));
+        }
+
         public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
         {
-            var contxt = context.LIT();
-            var litExp = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(contxt.GetText()));
-            _stack.Push(litExp);
+            // if value is int, double will print without decimal point
+            var value = double.Parse(context.LIT().GetText());
+            var literal = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value));
+            _stack.Push(literal);
         }
 
         public override void ExitIDExpression([NotNull] SctParser.IDExpressionContext context)
@@ -231,8 +245,8 @@ namespace Sct.Compiler
 
         public override void ExitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
         {
-            var exp2 = (ExpressionSyntax)_stack.Pop();
-            var exp1 = (ExpressionSyntax)_stack.Pop();
+            var exp2 = _stack.Pop<ExpressionSyntax>();
+            var exp1 = _stack.Pop<ExpressionSyntax>();
 
             var @operator = SyntaxKind.None;
             if (context.op == context.GT()?.Symbol)
@@ -365,9 +379,10 @@ namespace Sct.Compiler
             var @else = _stack.Peek() is ElseClauseSyntax ? _stack.Pop<ElseClauseSyntax>() : null;
             var block = _stack.Pop<BlockSyntax>();
             var expression = _stack.Pop<ExpressionSyntax>();
+            var condition = ConvertToBooleanCondition(expression);
 
             // Add else if it exists
-            var @if = SyntaxFactory.IfStatement(expression, block);
+            var @if = SyntaxFactory.IfStatement(condition, block);
             return @else == null ? @if : @if.WithElse(@else);
         }
 
