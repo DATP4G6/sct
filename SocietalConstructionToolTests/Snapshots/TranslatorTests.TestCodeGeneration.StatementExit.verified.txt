@@ -12,6 +12,11 @@
             {
                 ctx.Exit();
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
+            }
         }
     }
 }

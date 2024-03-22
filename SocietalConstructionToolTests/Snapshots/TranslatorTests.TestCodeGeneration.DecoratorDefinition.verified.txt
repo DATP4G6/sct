@@ -16,6 +16,11 @@
             {
                 testDecorator42();
             }
+
+            public override BaseAgent Clone()
+            {
+                return new Town(State, Fields);
+            }
         }
     }
 }
