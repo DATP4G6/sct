@@ -14,7 +14,7 @@
 
     <ItemGroup>
         <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
-        <PackageReference Include="Microsoft.CodeAnalysis" Version="3.9.0 "/>
+        <PackageReference Include="Microsoft.CodeAnalysis" Version="4.7.0 "/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../SctBuildTasks/SctBuildTasks.csproj" />
