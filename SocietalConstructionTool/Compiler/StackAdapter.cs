@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler

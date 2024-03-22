@@ -361,3 +361,6 @@ dotnet_naming_style.s_camelcase.capitalization = camel_case
 
 # ignore antlr warning
 dotnet_diagnostic.CS3021.severity = none
+
+# Remove unused using statements
+dotnet_diagnostic.IDE0005.severity = warning
