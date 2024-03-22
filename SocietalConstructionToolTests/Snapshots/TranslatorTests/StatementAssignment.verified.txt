@@ -8,9 +8,10 @@
             {
             }
 
-            void Adult()
+            void Adult(IRuntimeContext ctx)
             {
                 Int32 age = 5;
+                age = 10;
             }
 
             public override BaseAgent Clone()

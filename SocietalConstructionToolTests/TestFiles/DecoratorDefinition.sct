@@ -1,10 +1,14 @@
 class Town() {
-
-    decorator testDecorator42 {
+    decorator decor1 {
 
     }
 
-    @testDecorator42
+    decorator decor2 {
+
+    }
+
+    @decor1
+    @decor2
     state Stable {
 
     }

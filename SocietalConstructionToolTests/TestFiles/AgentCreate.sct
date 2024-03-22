@@ -1,6 +1,5 @@
 class Citizen() {
-
     state Adult {
-        create Citizen::Adult(); 
+        create Citizen::Adult();
     }
 }

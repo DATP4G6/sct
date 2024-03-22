@@ -1,3 +1,12 @@
-function Setup() -> void {
-    exists(Town::Growing());
+class Foo(int a) {
+    state Bar {
+
+    }
+}
+
+function f() -> void {
+    exists(Foo::Bar(a: 2));
+    exists(Foo::Bar());
+    exists(Foo::?(a: 3));
+    exists(Foo::?());
 }

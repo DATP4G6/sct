@@ -16,6 +16,8 @@ namespace SocietalConstructionToolTests
         [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
         public async Task TranslateFile(string file)
         {
+            UseProjectRelativeDirectory("Snapshots/TranslatorTests"); // save snapshots here
+
             string input = File.ReadAllText(file);
             ICharStream stream = CharStreams.fromString(input);
             ITokenSource lexer = new SctLexer(stream);
@@ -26,7 +28,7 @@ namespace SocietalConstructionToolTests
             _ = parser.start();
 
             _ = await Verify(listener.Root?.NormalizeWhitespace().ToFullString())
-                .UseMethodName("TestCodeGeneration." + Path.GetFileNameWithoutExtension(file));
+                .UseFileName(Path.GetFileNameWithoutExtension(file));
         }
     }
 }

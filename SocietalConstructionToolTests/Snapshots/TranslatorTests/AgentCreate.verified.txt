@@ -10,6 +10,7 @@
 
             void Adult(IRuntimeContext ctx)
             {
+                return new Dictionary();
             }
 
             public override BaseAgent Clone()

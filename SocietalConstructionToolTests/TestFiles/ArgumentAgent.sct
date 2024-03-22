@@ -1,6 +1,5 @@
 class Citizen(int id, float height) {
-
     state Adult {
-        create Citizen::Adult(id: 5, height: 20.5); 
+        create Citizen::Adult(id: 5, height: 20.5);
     }
 }
