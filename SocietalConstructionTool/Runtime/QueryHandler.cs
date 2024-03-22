@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Sct.Runtime
 {
     public class QueryHandler : IQueryHandler
