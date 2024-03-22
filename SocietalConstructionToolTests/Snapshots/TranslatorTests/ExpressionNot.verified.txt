@@ -2,8 +2,9 @@
 {
     public class GlobalClass
     {
-        void Setup()
+        void Setup(IRuntimeContext ctx)
         {
+            2 != 0 ? 0 : 1;
         }
     }
 }

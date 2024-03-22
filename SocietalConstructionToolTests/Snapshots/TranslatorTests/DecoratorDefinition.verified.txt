@@ -8,13 +8,18 @@
             {
             }
 
-            void testDecorator42(IRuntimeContext ctx)
+            void decor1(IRuntimeContext ctx)
+            {
+            }
+
+            void decor2(IRuntimeContext ctx)
             {
             }
 
             void Stable(IRuntimeContext ctx)
             {
-                testDecorator42(ctx);
+                decor1(ctx);
+                decor2(ctx);
             }
 
             public override BaseAgent Clone()

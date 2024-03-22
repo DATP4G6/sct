@@ -12,6 +12,10 @@
             {
             }
 
+            void Adult(IRuntimeContext ctx)
+            {
+            }
+
             public override BaseAgent Clone()
             {
                 return new Citizen(State, Fields);

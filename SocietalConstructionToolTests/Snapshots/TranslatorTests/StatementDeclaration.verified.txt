@@ -1,0 +1,22 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        public class Citizen : Sct.Runtime.BaseAgent
+        {
+            public Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            void Adult(IRuntimeContext ctx)
+            {
+                Int32 age = 5;
+            }
+
+            public override BaseAgent Clone()
+            {
+                return new Citizen(State, Fields);
+            }
+        }
+    }
+}

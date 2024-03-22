@@ -1,0 +1,13 @@
+class Foo() {
+    state Bar {
+
+    }
+}
+
+function f() -> void {
+    exists(Foo::Bar());
+    count(Foo::Bar());
+
+    rand();
+    seed(123);
+}

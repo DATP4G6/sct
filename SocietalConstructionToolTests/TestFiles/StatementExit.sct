@@ -1,5 +1,4 @@
 class Citizen() {
-
     state Adult {
         exit;
     }

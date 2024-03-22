@@ -1,0 +1,1 @@
+﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type float) pi = (expression 3.14159) ;)) (statement (declaration (type float) a = (expression 1.5) ;)) (statement (declaration (type float) b = (expression 2.0) ;))) }) <EOF>)

@@ -1,6 +1,6 @@
 namespace SocietalConstructionToolTests
 {
-    public class AbstractSnapshotTests : VerifyBase
+    public abstract class AbstractSnapshotTests : VerifyBase
     {
         // yield all files in TestFiles directory
         protected static IEnumerable<string[]> Files =>
@@ -12,7 +12,6 @@ namespace SocietalConstructionToolTests
         public static void Setup(TestContext _)
         {
             DiffEngine.DiffRunner.Disabled = true; // avoid destroying your terminal
-            UseProjectRelativeDirectory("Snapshots"); // save snapshots here
         }
     }
 }

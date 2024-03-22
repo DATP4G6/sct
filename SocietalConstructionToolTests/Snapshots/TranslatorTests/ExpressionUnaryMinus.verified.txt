@@ -2,8 +2,10 @@
 {
     public class GlobalClass
     {
-        void Setup()
+        void Setup(IRuntimeContext ctx)
         {
+            Int32 a = 4;
+            -a;
         }
     }
 }

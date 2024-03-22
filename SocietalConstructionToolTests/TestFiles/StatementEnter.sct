@@ -1,6 +1,9 @@
 class Citizen() {
-
     state Child {
         enter Adult;
+    }
+
+    state Adult {
+
     }
 }
