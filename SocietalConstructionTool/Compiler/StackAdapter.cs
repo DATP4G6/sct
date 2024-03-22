@@ -1,8 +1,11 @@
+using System.Collections;
+using System.ComponentModel;
+
 using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
 {
-    public class StackAdapter<TBase>
+    public class StackAdapter<TBase> : IEnumerable<TBase>
     {
         private readonly Stack<StackItem<TBase>> _stack = new();
 
@@ -141,5 +144,26 @@ namespace Sct.Compiler
                 IsMarker = true;
             }
         }
+
+        public IEnumerator<TBase> GetEnumerator()
+        {
+
+            for (int i = _stack.Count - 1; i >= 0; i--)
+            {
+                if (_stack.ElementAt(i).IsMarker)
+                {
+                    continue;
+                }
+                yield return _stack.ElementAt(i).Value ?? throw new NullReferenceException();
+            }
+
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+
+
     }
 }
