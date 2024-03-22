@@ -137,6 +137,40 @@ namespace Sct.Compiler
             ));
         }
 
+        public override void EnterArgs_agent([NotNull] SctParser.Args_agentContext context)
+        {
+            _stack.PushMarker();
+        }
+
+        public override void ExitArgs_agent([NotNull] SctParser.Args_agentContext context)
+        {
+            var args = _stack.PopUntilMarker<ExpressionSyntax>();
+
+            var keyValuePairs = args.Select((arg, i) =>
+                    SyntaxFactory.Argument(
+                        SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(KeyValuePair<string, dynamic>)))
+                        .WithArgumentList(
+                            SyntaxFactory.ArgumentList(
+                                SyntaxFactory.SeparatedList(new[]
+                                {
+                                    SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(context.ID(i).GetText()))),
+                                    SyntaxFactory.Argument(arg)
+                                })
+                            )
+                        )
+                    )
+            );
+
+            _stack.Push(SyntaxFactory.ReturnStatement(
+                SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(Dictionary<string, dynamic>)))
+                    .WithArgumentList(
+                        SyntaxFactory.ArgumentList(
+                            SyntaxFactory.SeparatedList(keyValuePairs)
+                        )
+                    )
+            ));
+        }
+
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
