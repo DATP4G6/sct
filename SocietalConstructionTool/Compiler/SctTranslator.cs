@@ -109,6 +109,11 @@ namespace Sct.Compiler
                     )
                 ));
         }
+        public override void ExitExpressionStatement([NotNull] SctParser.ExpressionStatementContext context)
+        {
+            var expression = _stack.Pop<ExpressionSyntax>();
+            _stack.Push(SyntaxFactory.ExpressionStatement(expression));
+        }
 
         public override void ExitArgs_def([NotNull] SctParser.Args_defContext context)
         {
