@@ -1,5 +1,6 @@
 using Antlr4.Runtime.Misc;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -9,6 +10,8 @@ namespace Sct.Compiler
 {
     public class SctTranslator : SctBaseListener
     {
+        private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
+
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
         private readonly TypeTable _typeTable = new();
@@ -177,7 +180,7 @@ namespace Sct.Compiler
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 context.ID().GetText()
-            );
+            ).WithParameterList(WithContextParameter([]));
             method = method.WithBody(childBlock);
             _stack.Push(method);
         }
@@ -185,7 +188,7 @@ namespace Sct.Compiler
         public override void ExitFunction([NotNull] SctParser.FunctionContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
-            var @params = _stack.Pop<ParameterListSyntax>();
+            var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // change to actual type
                 context.ID().GetText()
@@ -199,7 +202,8 @@ namespace Sct.Compiler
         {
             // push all decorators to the stack as method calls
             var state = SyntaxFactory.InvocationExpression(
-                SyntaxFactory.IdentifierName(context.ID().GetText())
+                SyntaxFactory.IdentifierName(context.ID().GetText()),
+                WithContextArgument([])
             );
 
             _stack.Push(state);
@@ -245,11 +249,10 @@ namespace Sct.Compiler
                 .AddStatements(decorators.ToArray())
                 .AddStatements(stateLogic.Statements.ToArray());
 
-            // TODO: Add ctx as method argument
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 context.ID().GetText()
-            );
+            ).WithParameterList(WithContextParameter([]));
 
             _stack.Push(method.WithBody(body));
         }
@@ -387,7 +390,7 @@ namespace Sct.Compiler
 
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
-            var args = _stack.Pop<ArgumentListSyntax>();
+            var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
             var id = SyntaxFactory.IdentifierName(context.ID().GetText());
             var call = SyntaxFactory.InvocationExpression(id, args);
             _stack.Push(call);
@@ -451,8 +454,39 @@ namespace Sct.Compiler
 
         public override void ExitExit([NotNull] SctParser.ExitContext context)
         {
-            _stack.Push(SyntaxFactory.ParseStatement("ctx.Exit();"));
+            _stack.Push(SyntaxFactory.ExpressionStatement(
+                    SyntaxFactory.InvocationExpression(
+                        SyntaxFactory.MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            SyntaxFactory.IdentifierName(ContextIdentifier),
+                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.Exit))
+                            )
+                        )
+                    ));
         }
 
+        /// <summary>
+        /// Returns a <see cref="ParameterListSyntax"/> with an <see cref="IRuntimeContext"/> <code>ctx</code> parameter added.
+        /// </summary>
+        private static ParameterListSyntax WithContextParameter(ParameterListSyntax p) => WithContextParameter(p.Parameters);
+
+        /// <summary>
+        /// Returns a <see cref="ParameterListSyntax"/> with an <see cref="IRuntimeContext"/> <code>ctx</code> parameter added.
+        /// </summary>
+        private static ParameterListSyntax WithContextParameter(IEnumerable<ParameterSyntax> p) => SyntaxFactory.ParameterList(
+                SyntaxFactory.SeparatedList(
+                    p.Prepend(
+                        SyntaxFactory.Parameter(ContextIdentifier)
+                        .WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)))
+                        )
+                    ));
+
+
+        private static ArgumentListSyntax WithContextArgument(IEnumerable<ArgumentSyntax> a) => SyntaxFactory.ArgumentList(
+                SyntaxFactory.SeparatedList(a.Prepend(
+                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName(ContextIdentifier))
+                        ))
+                );
+        private static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
     }
 }

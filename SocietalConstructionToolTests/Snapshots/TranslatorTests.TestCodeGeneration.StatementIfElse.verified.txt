@@ -2,7 +2,7 @@
 {
     public class GlobalClass
     {
-        void Setup()
+        void Setup(IRuntimeContext ctx)
         {
             if (1 != 0)
             {
