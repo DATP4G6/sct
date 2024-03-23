@@ -1,8 +1,10 @@
+using System.Collections;
+
 using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
 {
-    public class StackAdapter<TBase>
+    public class StackAdapter<TBase> : IEnumerable<TBase>
     {
         private readonly Stack<StackItem<TBase>> _stack = new();
 
@@ -109,6 +111,11 @@ namespace Sct.Compiler
         {
             return string.Join("\n", _stack.Select(x => x.Value?.GetType().Name ?? (x.IsMarker ? "Marker" : "null")));
         }
+
+        IEnumerator<TBase> IEnumerable<TBase>.GetEnumerator() => _stack.Where(x => !x.IsMarker)
+                                                                 .Select(x => x.Value ?? throw new NullReferenceException("Non-marker value was null"))
+                                                                 .GetEnumerator();
+        public IEnumerator GetEnumerator() => _stack.GetEnumerator();
 
         private class StackItem<T>
         {

@@ -14,7 +14,6 @@ namespace Sct.Compiler
 
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
-        private readonly TypeTable _typeTable = new();
         public override void ExitStart(SctParser.StartContext context)
         {
             var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
@@ -219,7 +218,7 @@ namespace Sct.Compiler
             var expression = _stack.Pop<ExpressionSyntax>();
 
             var variable = SyntaxFactory.VariableDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText())
+                TypeTable.GetTypeNode(context.type().GetText())
             ).AddVariables(
                 SyntaxFactory.VariableDeclarator(context.ID().GetText())
                     .WithInitializer(SyntaxFactory.EqualsValueClause(expression))

@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler;
+using Sct.Compiler.Typechecking;
 
 static void SctParseMethod()
 {
@@ -15,11 +16,33 @@ static void SctParseMethod()
     ITokenSource lexer = new SctLexer(stream);
     ITokenStream tokens = new CommonTokenStream(lexer);
     SctParser parser = new SctParser(tokens);
-    var listener = new SctTranslator();
-    parser.AddParseListener(listener);
+    // var listener = new SctTranslator();
+    // parser.AddParseListener(listener);
+    var tableBuilder = new SctTableBuilder();
+    parser.AddParseListener(tableBuilder);
     _ = parser.start();
-    if (listener.Root is not null)
-        WriteNamespace(listener.Root);
+    parser.Reset();
+    parser.RemoveParseListeners();
+
+    // Console.WriteLine("\n\");
+
+    var typeChecker = new SctTypeChecker(tableBuilder.FTable, tableBuilder.STable, tableBuilder.DTable, tableBuilder.CTable);
+    parser.AddParseListener(typeChecker);
+    _ = parser.start();
+
+    Console.WriteLine("\n\nErrors:");
+    foreach (var error in tableBuilder.Errors.Concat(typeChecker.Errors))
+    {
+        Console.WriteLine(error);
+    }
+
+    // if (listener.Root is not null)
+    //     WriteNamespace(listener.Root);
+}
+
+if (TypeTable.IsNumber(TypeTable.Int))
+{
+    Console.WriteLine("Int is a number");
 }
 
 static void WriteNamespace(NamespaceDeclarationSyntax ns)
