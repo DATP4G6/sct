@@ -2,9 +2,9 @@
 {
     public class GlobalClass
     {
-        void Setup(IRuntimeContext ctx)
+        void f(IRuntimeContext ctx)
         {
-            return;
+            return 2 + 2;
         }
     }
 }
