@@ -436,28 +436,31 @@ namespace Sct.Compiler
             _stack.Push(call);
         }
 
-        /// <summary>
-        /// Pops items from the stack until it finds an element of type TParent
-        /// </summary>
-        /// <typeparam name="TParent"></typeparam>
-        /// <typeparam name="TItem"></typeparam>
-        /// <param name="parent"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-
-
         // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
         // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
         public override void ExitBreak([NotNull] SctParser.BreakContext context)
         {
-            //todo check if we can break before doing it
+            // TODO: check if we can break before doing it
             _stack.Push(SyntaxFactory.BreakStatement());
         }
 
         public override void ExitContinue([NotNull] SctParser.ContinueContext context)
         {
-            //todo check if we can continue before doing it
+            // TODO: check if we can continue before doing it
             _stack.Push(SyntaxFactory.ContinueStatement());
+        }
+
+        public override void ExitReturn([NotNull] SctParser.ReturnContext context)
+        {
+            // TODO: check if we can return before doing it
+            var @return = SyntaxFactory.ReturnStatement();
+            var value = _stack.Peek();
+            if (value is ExpressionSyntax expression)
+            {
+                _ = _stack.Pop();
+                @return = @return.WithExpression(expression);
+            }
+            _stack.Push(@return);
         }
 
         public override void ExitIf([NotNull] SctParser.IfContext context)
