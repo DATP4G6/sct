@@ -21,6 +21,12 @@ static int SctParseMethod()
     _ = startNode.Accept(returnChecker);
     errors.AddRange(returnChecker.Errors);
 
+    // Run visitor that populates the tables.
+    parser.Reset();
+    var sctTableVisitor = new SctTableVisitor();
+    _ = sctTableVisitor.Visit(parser.start());
+    var ctable = sctTableVisitor.Ctable;
+
     parser.Reset();
     var visitor = new SctTypeChecker();
     _ = visitor.Visit(parser.start());
@@ -33,6 +39,7 @@ static int SctParseMethod()
         }
         return 1;
     }
+
 
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
