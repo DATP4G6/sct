@@ -18,9 +18,13 @@ static void SctParseMethod()
     SctParser parser = new SctParser(tokens);
     var visitor = new SctTypeChecker();
 
-    _ = visitor.Visit(parser.start());
+    // Run visitor that populates the tables.
+    var sctTableVisitor = new SctTableVisitor();
+    _ = sctTableVisitor.Visit(parser.start());
+    var ctable = sctTableVisitor.Ctable;
     List<InvalidTypeException> errors = visitor.Errors;
 
+    // run visitor that checks the types.
 
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
