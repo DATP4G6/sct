@@ -404,7 +404,7 @@ namespace Sct.Compiler
         public override void ExitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
             var node = _stack.Pop<ExpressionSyntax>();
-            var type = SyntaxFactory.ParseTypeName(context.type().GetText());
+            var type = _typeTable.GetTypeNode(context.type().GetText());
             _stack.Push(SyntaxFactory.CastExpression(type, node));
         }
 
