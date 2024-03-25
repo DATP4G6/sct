@@ -303,7 +303,7 @@ namespace Sct.Compiler
 
         public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
         {
-            // prevent decimal point from being a comma (based on locale), because... C#
+            // prevent decimal point from being a comma (based on locale), because... C#, see CS1305
             var culture = CultureInfo.InvariantCulture;
             // if value is int, double will print without decimal point
             var value = double.Parse(context.LIT().GetText(), culture);
@@ -468,7 +468,7 @@ namespace Sct.Compiler
                         SyntaxFactory.MemberAccessExpression(
                             SyntaxKind.SimpleMemberAccessExpression,
                             SyntaxFactory.IdentifierName(ContextIdentifier),
-                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.Exit))
+                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.ExitRuntime))
                             )
                         )
                     ));

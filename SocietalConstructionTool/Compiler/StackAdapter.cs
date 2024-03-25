@@ -110,7 +110,7 @@ namespace Sct.Compiler
             return string.Join("\n", _stack.Select(x => x.Value?.GetType().Name ?? (x.IsMarker ? "Marker" : "null")));
         }
 
-        private class StackItem<T>
+        private sealed class StackItem<T>
         {
             public T? Value { get; }
             public bool IsMarker { get; }
