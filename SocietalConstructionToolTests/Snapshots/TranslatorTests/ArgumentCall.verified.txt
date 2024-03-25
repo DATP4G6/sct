@@ -2,13 +2,13 @@
 {
     public class GlobalClass
     {
-        void testFunctionArgs(IRuntimeContext ctx, int intArgument, float floatArgument)
+        void __sct_testFunctionArgs(IRuntimeContext ctx, int __sct_intArgument, float __sct_floatArgument)
         {
         }
 
-        void testFunction(IRuntimeContext ctx)
+        void __sct_testFunction(IRuntimeContext ctx)
         {
-            testFunctionArgs(ctx, 1, 1.5);
+            __sct_testFunctionArgs(ctx, 1, 1.5);
         }
     }
 }

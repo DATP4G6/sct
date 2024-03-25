@@ -2,19 +2,19 @@
 {
     public class GlobalClass
     {
-        public class Citizen : Sct.Runtime.BaseAgent
+        public class __sct_Citizen : Sct.Runtime.BaseAgent
         {
-            public Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            public __sct_Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
             }
 
-            void Adult(IRuntimeContext ctx)
+            void __sct_Adult(IRuntimeContext ctx)
             {
             }
 
             public override BaseAgent Clone()
             {
-                return new Citizen(State, Fields);
+                return new __sct_Citizen(State, Fields);
             }
         }
     }

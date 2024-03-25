@@ -14,6 +14,8 @@ namespace Sct.Compiler
     {
         private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
 
+        private const string NAME_MANGLE_PREFIX = "__sct_";
+
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
         private readonly TypeTable _typeTable = new();
@@ -53,7 +55,7 @@ namespace Sct.Compiler
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
             var @class = _stack.Pop<ClassDeclarationSyntax>();
-            var idText = context.ID().GetText();
+            var idText = MangleStringName(context.ID().GetText());
             var constructor = CreateConstructor(idText);
             var cloneMethod = CreateCloneMethod(idText);
 
@@ -123,8 +125,9 @@ namespace Sct.Compiler
         public override void ExitArgs_def([NotNull] SctParser.Args_defContext context)
         {
             // create list of parameters by zipping ID and type
-            var @params = context.ID().Zip(context.type(), (id, type) =>
-                SyntaxFactory.Parameter(SyntaxFactory.Identifier(id.GetText())) // set name
+            var @params = context.ID().Select(id => MangleName(id.GetText()))
+                .Zip(context.type(), (id, type) =>
+                SyntaxFactory.Parameter(id) // set name
                     .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
             );
 
@@ -156,15 +159,17 @@ namespace Sct.Compiler
         {
             var args = _stack.PopUntilMarker<ExpressionSyntax>();
 
-            var keyValuePairs = args.Select((arg, i) =>
+            var keyValuePairs = args
+                .Select((arg, i) => (expr: arg, name: MangleStringName(context.ID(i).GetText())))
+                .Select(arg =>
                     SyntaxFactory.Argument(
                         SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(KeyValuePair<string, dynamic>)))
                         .WithArgumentList(
                             SyntaxFactory.ArgumentList(
                                 SyntaxFactory.SeparatedList(new[]
                                 {
-                                    SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(context.ID(i).GetText()))),
-                                    SyntaxFactory.Argument(arg)
+                                    SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(arg.name))),
+                                    SyntaxFactory.Argument(arg.expr)
                                 })
                             )
                         )
@@ -184,9 +189,10 @@ namespace Sct.Compiler
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
+            var mangledName = MangleName(context.ID().GetText());
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                context.ID().GetText()
+                mangledName
             ).WithParameterList(WithContextParameter([]));
             method = method.WithBody(childBlock);
             _stack.Push(method);
@@ -196,9 +202,10 @@ namespace Sct.Compiler
         {
             var childBlock = _stack.Pop<BlockSyntax>();
             var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
+            var mangledName = MangleName(context.ID().GetText());
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // change to actual type
-                context.ID().GetText()
+                mangledName
             )
             .WithParameterList(@params)
             .WithBody(childBlock);
@@ -207,9 +214,10 @@ namespace Sct.Compiler
 
         public override void ExitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
+            var mangledName = MangleName(context.ID().GetText());
             // push all decorators to the stack as method calls
             var state = SyntaxFactory.InvocationExpression(
-                SyntaxFactory.IdentifierName(context.ID().GetText()),
+                SyntaxFactory.IdentifierName(mangledName),
                 WithContextArgument([])
             );
 
@@ -220,10 +228,12 @@ namespace Sct.Compiler
         {
             var expression = _stack.Pop<ExpressionSyntax>();
 
+            var mangledName = MangleName(context.ID().GetText());
+
             var variable = SyntaxFactory.VariableDeclaration(
                 _typeTable.GetTypeNode(context.type().GetText())
             ).AddVariables(
-                SyntaxFactory.VariableDeclarator(context.ID().GetText())
+                SyntaxFactory.VariableDeclarator(mangledName)
                     .WithInitializer(SyntaxFactory.EqualsValueClause(expression))
             );
 
@@ -234,10 +244,11 @@ namespace Sct.Compiler
         public override void ExitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var expression = _stack.Pop<ExpressionSyntax>();
+            var mangledName = MangleName(context.ID().GetText());
             var assignment = SyntaxFactory.ExpressionStatement(
                 SyntaxFactory.AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
-                    SyntaxFactory.IdentifierName(context.ID().GetText()),
+                    SyntaxFactory.IdentifierName(mangledName),
                     expression
                 )
             );
@@ -258,7 +269,7 @@ namespace Sct.Compiler
 
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                context.ID().GetText()
+                MangleName(context.ID().GetText())
             ).WithParameterList(WithContextParameter([]));
 
             _stack.Push(method.WithBody(body));
@@ -313,8 +324,8 @@ namespace Sct.Compiler
 
         public override void ExitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
-            var contxt = context.ID();
-            var idExp = SyntaxFactory.IdentifierName(contxt.GetText());
+            var id = MangleName(context.ID().GetText());
+            var idExp = SyntaxFactory.IdentifierName(id);
             _stack.Push(idExp);
         }
 
@@ -431,7 +442,7 @@ namespace Sct.Compiler
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
-            var id = SyntaxFactory.IdentifierName(context.ID().GetText());
+            var id = SyntaxFactory.IdentifierName(MangleName(context.ID().GetText()));
             var call = SyntaxFactory.InvocationExpression(id, args);
             _stack.Push(call);
         }
@@ -528,5 +539,9 @@ namespace Sct.Compiler
                         ))
                 );
         private static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
+
+        private static SyntaxToken MangleName(SyntaxToken n) => MangleName(n.Text);
+        private static SyntaxToken MangleName(string n) => SyntaxFactory.Identifier(MangleStringName(n));
+        private static string MangleStringName(string n) => NAME_MANGLE_PREFIX + n;
     }
 }

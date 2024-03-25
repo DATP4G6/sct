@@ -2,11 +2,11 @@
 {
     public class GlobalClass
     {
-        void Setup(IRuntimeContext ctx)
+        void __sct_Setup(IRuntimeContext ctx)
         {
-            Double a = 1.5;
-            Int32 b = 2 + (Int32)a;
-            Double b = 4 + (Double)b;
+            Double __sct_a = 1.5;
+            Int32 __sct_b = 2 + (Int32)__sct_a;
+            Double __sct_b = 4 + (Double)__sct_b;
         }
     }
 }

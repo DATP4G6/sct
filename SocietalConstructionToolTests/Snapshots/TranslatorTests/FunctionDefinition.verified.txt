@@ -2,7 +2,7 @@
 {
     public class GlobalClass
     {
-        void f(IRuntimeContext ctx)
+        void __sct_f(IRuntimeContext ctx)
         {
         }
     }

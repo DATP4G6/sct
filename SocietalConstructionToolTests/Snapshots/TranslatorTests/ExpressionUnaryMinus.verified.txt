@@ -2,10 +2,10 @@
 {
     public class GlobalClass
     {
-        void Setup(IRuntimeContext ctx)
+        void __sct_Setup(IRuntimeContext ctx)
         {
-            Int32 a = 4;
-            -a;
+            Int32 __sct_a = 4;
+            -__sct_a;
         }
     }
 }
