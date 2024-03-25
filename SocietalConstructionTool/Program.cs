@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler;
 using Sct.Compiler.Typechecker;
+using Sct.Compiler.Exceptions;
 
 static int SctParseMethod()
 {
@@ -20,6 +21,10 @@ static int SctParseMethod()
     _ = startNode.Accept(returnChecker);
     errors.AddRange(returnChecker.Errors);
 
+    parser.Reset();
+    var visitor = new SctTypeChecker();
+    _ = visitor.Visit(parser.start());
+
     if (errors.Count > 0)
     {
         foreach (var error in errors)
@@ -29,7 +34,6 @@ static int SctParseMethod()
         return 1;
     }
 
-    parser.Reset();
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
     _ = parser.start();
