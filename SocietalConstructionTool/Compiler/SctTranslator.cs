@@ -488,6 +488,35 @@ namespace Sct.Compiler
             _stack.Push(call);
         }
 
+                public override void ExitAgent_create([NotNull] SctParser.Agent_createContext context)
+        {
+           var contxt = context.ID(1).GetText();
+           var dictionary = _stack.Pop<ObjectCreationExpressionSyntax>();
+           var test2 = SyntaxFactory.InvocationExpression(SyntaxFactory.MemberAccessExpression(
+                            SyntaxKind.SimpleMemberAccessExpression,
+                            SyntaxFactory.MemberAccessExpression(
+                                SyntaxKind.SimpleMemberAccessExpression,
+                                SyntaxFactory.IdentifierName(ContextIdentifier),
+                                SyntaxFactory.IdentifierName(nameof(IRuntimeContext.AgentHandler))),
+                            SyntaxFactory.IdentifierName(nameof(IAgentHandler.CreateAgent))
+                            )); 
+
+        
+           var test = SyntaxFactory.ExpressionStatement(test2);
+           _stack.Push(test);
+
+        }
+
+        //public override void ExitAgentPredicateExpression([NotNull] SctParser.AgentPredicateExpressionContext context)
+        //{
+        //    var predicate = context.agent_predicate;
+        //    var test = SyntaxFactory.FromClause(predicate);
+
+        //    var expression = SyntaxFactory.QueryBody(SyntaxFactory.SelectClause(_stack.Pop<ExpressionSyntax>()));
+        //    var agent_pred = SyntaxFactory.QueryExpression(predicate, expression);
+        //    _stack.Push(agent_pred);
+        //}
+
         // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
         // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
         public override void ExitBreak([NotNull] SctParser.BreakContext context)
