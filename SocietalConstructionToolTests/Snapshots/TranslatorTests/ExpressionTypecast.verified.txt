@@ -5,7 +5,8 @@
         void Setup(IRuntimeContext ctx)
         {
             Double a = 1.5;
-            Int32 b = 2 + (int)a;
+            Int32 b = 2 + (Int32)a;
+            Double b = 4 + (Double)b;
         }
     }
 }
