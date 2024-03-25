@@ -13,6 +13,9 @@ namespace Sct.Compiler
     public class SctTranslator : SctBaseListener
     {
         private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
+        // boolean values are either 0 or 1
+        private static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
+        private static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
 
         private const string NAME_MANGLE_PREFIX = "__sct_";
 
@@ -24,31 +27,12 @@ namespace Sct.Compiler
         {
             var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
             var @class = SyntaxFactory.ClassDeclaration("GlobalClass")
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
             var members = _stack.ToArray<MemberDeclarationSyntax>();
 
             @class = @class.AddMembers(members);
             Root = @namespace.AddMembers(@class);
-        }
-
-        public override void EnterClass_def([NotNull] SctParser.Class_defContext context)
-        {
-            _isInAgent = true;
-            var @class = SyntaxFactory.ClassDeclaration("tmp")
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-                .WithBaseList(SyntaxFactory.BaseList(
-                    SyntaxFactory.SeparatedList(
-                        (IEnumerable<BaseTypeSyntax>)[SyntaxFactory.SimpleBaseType(
-                            SyntaxFactory.QualifiedName(
-                                // If namespace = null this could produce invalid code
-                                SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? ""),
-                                SyntaxFactory.IdentifierName(typeof(BaseAgent).Name)
-                                )
-                            )]
-                        )
-                    )
-                );
-            _stack.Push(@class);
         }
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
@@ -57,44 +41,59 @@ namespace Sct.Compiler
             // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
-            var @class = _stack.Pop<ClassDeclarationSyntax>();
-            var idText = MangleStringName(context.ID().GetText());
-            var constructor = CreateConstructor(idText);
-            var cloneMethod = CreateCloneMethod(idText);
+            var className = MangleStringName(context.ID().GetText());
 
-            @class = @class.WithIdentifier(SyntaxFactory.Identifier(idText))
-                .AddMembers(constructor)
-                .AddMembers(members)
-                .AddMembers(cloneMethod);
+            var @class = SyntaxFactory.ClassDeclaration(className)
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+            .WithBaseList(SyntaxFactory.BaseList( // add BaseAgent as base class
+                SyntaxFactory.SeparatedList(new[]
+                {
+                    // Get namespace of BaseAgent
+                    (BaseTypeSyntax) SyntaxFactory.SimpleBaseType(SyntaxFactory.QualifiedName(
+                        SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? ""),
+                        SyntaxFactory.IdentifierName(typeof(BaseAgent).Name)
+                    ))
+                })
+            ))
+            .AddMembers(CreateConstructor(className))
+            .AddMembers(members)
+            .AddMembers(CreateCloneMethod(className));
 
             _stack.Push(@class);
         }
 
         private static MethodDeclarationSyntax CreateCloneMethod(string className)
         {
+            // 'new <className>(State, Fields)'
+            var dict = SyntaxFactory.ObjectCreationExpression(
+                SyntaxFactory.ParseTypeName(className))
+            .WithArgumentList(
+                SyntaxFactory.ArgumentList(
+                    // with base arguments
+                    SyntaxFactory.SeparatedList(new[]
+                    {
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("State")),
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("Fields"))
+                    })
+                )
+            );
+
+            // Create clone method
             return SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.ParseTypeName(typeof(BaseAgent).Name),
                 "Clone"
             )
+            // public override of BaseAgent's method
             .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword)))
             .WithBody(SyntaxFactory.Block(
-                SyntaxFactory.ReturnStatement(
-                    SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(className))
-                    .WithArgumentList(
-                        SyntaxFactory.ArgumentList(
-                            SyntaxFactory.SeparatedList(new[]
-                            {
-                                SyntaxFactory.Argument(SyntaxFactory.IdentifierName("State")),
-                                SyntaxFactory.Argument(SyntaxFactory.IdentifierName("Fields"))
-                            })
-                        )
-                    )
-                )
+                // return the dictionary defined above
+                SyntaxFactory.ReturnStatement(dict)
             ));
         }
 
         private static ConstructorDeclarationSyntax CreateConstructor(string className)
         {
+            // base parameters for constructor is string 'state' and IDictionary<string, dynamic> 'fields'
             var parameters = SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(new[]
                 {
@@ -106,21 +105,24 @@ namespace Sct.Compiler
             );
 
             return SyntaxFactory.ConstructorDeclaration(className)
-                .WithParameterList(parameters) // Add parameters
-                .WithBody(SyntaxFactory.Block()) // Add empty body
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)) // Make public
-                .WithInitializer(SyntaxFactory.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, // Add base constructor call
-                    SyntaxFactory.ArgumentList(
-                        SyntaxFactory.SeparatedList(new[]
-                        {
-                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("state")),
-                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("fields"))
-                        })
-                    )
-                ));
+            .WithParameterList(parameters) // Add parameters
+            .WithBody(SyntaxFactory.Block()) // Add empty body
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+            // Add base constructor call
+            .WithInitializer(SyntaxFactory.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer,
+                SyntaxFactory.ArgumentList(
+                    // BaseAgent takes two parameters
+                    SyntaxFactory.SeparatedList(new[]
+                    {
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("state")),
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("fields"))
+                    })
+                )
+            ));
         }
         public override void ExitExpressionStatement([NotNull] SctParser.ExpressionStatementContext context)
         {
+            // convert expression to statement in eg. a void function call
             var expression = _stack.Pop<ExpressionSyntax>();
             _stack.Push(SyntaxFactory.ExpressionStatement(expression));
         }
@@ -129,7 +131,7 @@ namespace Sct.Compiler
         {
             // create list of parameters by zipping ID and type
             var @params = context.ID().Select(id => MangleName(id.GetText()))
-                .Zip(context.type(), (id, type) =>
+            .Zip(context.type(), (id, type) =>
                 SyntaxFactory.Parameter(id) // set name
                     .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
             );
@@ -148,7 +150,7 @@ namespace Sct.Compiler
         public override void ExitArgs_call(SctParser.Args_callContext context)
         {
             var args = _stack.PopUntilMarker<ExpressionSyntax>();
-            _stack.Push(SyntaxFactory.ArgumentList(
+            _stack.Push(SyntaxFactory.ArgumentList( // pass expressions as argument list
                 SyntaxFactory.SeparatedList(args.Select(SyntaxFactory.Argument))
             ));
         }
@@ -162,42 +164,44 @@ namespace Sct.Compiler
         {
             var args = _stack.PopUntilMarker<ExpressionSyntax>();
 
+            // create list of args
             var keyValuePairs = args
-                .Select((arg, i) => (expr: arg, name: MangleStringName(context.ID(i).GetText())))
-                .Select(arg =>
-                    SyntaxFactory.Argument(
-                        SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(KeyValuePair<string, dynamic>)))
-                        .WithArgumentList(
-                            SyntaxFactory.ArgumentList(
-                                SyntaxFactory.SeparatedList(new[]
-                                {
-                                    SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(arg.name))),
-                                    SyntaxFactory.Argument(arg.expr)
-                                })
-                            )
-                        )
-                    )
+            .Select((arg, i) => (expr: arg, name: MangleStringName(context.ID(i).GetText())))
+            .Select(arg =>
+                SyntaxFactory.Argument(
+                    // all arguments are of type KeyValuePair<string, dynamic>
+                    SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(KeyValuePair<string, dynamic>)))
+                    .WithArgumentList(SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new[]
+                        {
+                        // set key to ID
+                            SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(arg.name))),
+                            SyntaxFactory.Argument(arg.expr) // set value to expression from stack
+                        })
+                    ))
+                )
             );
 
+            // convert to 'return new Dictionary(...)' statement
             _stack.Push(SyntaxFactory.ReturnStatement(
                 SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(Dictionary<string, dynamic>)))
-                    .WithArgumentList(
-                        SyntaxFactory.ArgumentList(
-                            SyntaxFactory.SeparatedList(keyValuePairs)
-                        )
-                    )
-            ));
+                    .WithArgumentList(SyntaxFactory.ArgumentList( // add arguments
+                        SyntaxFactory.SeparatedList(keyValuePairs)
+                    ))
+                )
+            );
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
             var mangledName = MangleName(context.ID().GetText());
+
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // all decorators return void
                 mangledName
             )
-            .WithParameterList(WithContextParameter([]))
+            .WithParameterList(WithContextParameter([])) // all decorators take 0 arguments;
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
             .WithBody(childBlock);
 
@@ -209,6 +213,7 @@ namespace Sct.Compiler
             var childBlock = _stack.Pop<BlockSyntax>();
             var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
             var mangledName = MangleName(context.ID().GetText());
+
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // TODO: change to actual type
                 mangledName
@@ -228,7 +233,7 @@ namespace Sct.Compiler
         public override void ExitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
             var mangledName = MangleName(context.ID().GetText());
-            // push all decorators to the stack as method calls
+            // push decorator to the stack as method call
             var state = SyntaxFactory.InvocationExpression(
                 SyntaxFactory.IdentifierName(mangledName),
                 WithContextArgument([])
@@ -244,12 +249,14 @@ namespace Sct.Compiler
             var mangledName = MangleName(context.ID().GetText());
 
             var variable = SyntaxFactory.VariableDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText())
-            ).AddVariables(
-                SyntaxFactory.VariableDeclarator(mangledName)
-                    .WithInitializer(SyntaxFactory.EqualsValueClause(expression))
+                _typeTable.GetTypeNode(context.type().GetText()) // set type
+            )
+            .AddVariables(
+                SyntaxFactory.VariableDeclarator(mangledName) // set name
+                    .WithInitializer(SyntaxFactory.EqualsValueClause(expression)) // equal to expression
             );
 
+            // convert to statement
             var statement = SyntaxFactory.LocalDeclarationStatement(variable);
             _stack.Push(statement);
         }
@@ -258,11 +265,11 @@ namespace Sct.Compiler
         {
             var expression = _stack.Pop<ExpressionSyntax>();
             var mangledName = MangleName(context.ID().GetText());
-            var assignment = SyntaxFactory.ExpressionStatement(
+            var assignment = SyntaxFactory.ExpressionStatement( // convert to expression
                 SyntaxFactory.AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
-                    SyntaxFactory.IdentifierName(mangledName),
-                    expression
+                    SyntaxFactory.IdentifierName(mangledName), // assign name
+                    expression // to expression
                 )
             );
             _stack.Push(assignment);
@@ -271,36 +278,36 @@ namespace Sct.Compiler
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
             var stateLogic = _stack.Pop<BlockSyntax>();
+            // create statement list of decorators
             var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
-                .Select(SyntaxFactory.ExpressionStatement)
-                .Cast<StatementSyntax>();
+            .Select(SyntaxFactory.ExpressionStatement)
+            .Cast<StatementSyntax>();
 
-            // create new body with decorators first then state logic
+            // create new body with decorators first, then state logic
             var body = SyntaxFactory.Block()
-                .AddStatements(decorators.ToArray())
-                .AddStatements(stateLogic.Statements.ToArray());
+            .AddStatements(decorators.ToArray())
+            .AddStatements(stateLogic.Statements.ToArray());
 
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 MangleName(context.ID().GetText())
             )
-            .WithParameterList(WithContextParameter([]))
+            .WithParameterList(WithContextParameter([])) // state only takes context
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword));
 
-            _stack.Push(method.WithBody(body));
+            _stack.Push(method);
         }
 
         public override void EnterStatement_list([NotNull] SctParser.Statement_listContext context)
         {
-            var block = SyntaxFactory.Block();
-            _stack.Push(block);
+            _stack.PushMarker();
         }
 
         public override void ExitStatement_list([NotNull] SctParser.Statement_listContext context)
         {
-            var statements = _stack.PopUntil<BlockSyntax, StatementSyntax>(out var parentBlock);
-            parentBlock = parentBlock.AddStatements(statements);
-            _stack.Push(parentBlock);
+            var statements = _stack.PopUntilMarker<StatementSyntax>();
+            var block = SyntaxFactory.Block(statements); // convert all statements to a single block
+            _stack.Push(block);
         }
 
         public override void ExitWhile([NotNull] SctParser.WhileContext context)
@@ -323,8 +330,7 @@ namespace Sct.Compiler
         /// <returns>expression != 0</returns>
         private static BinaryExpressionSyntax ConvertToBooleanCondition(ExpressionSyntax expression)
         {
-            return SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression,
-                SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0)));
+            return SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression, SctFalse);
         }
 
         public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
@@ -349,27 +355,17 @@ namespace Sct.Compiler
             var exp2 = _stack.Pop<ExpressionSyntax>();
             var exp1 = _stack.Pop<ExpressionSyntax>();
 
-            var @operator = SyntaxKind.None;
-            if (context.op == context.PLUS()?.Symbol)
+            // switch expression does not need to descructure the context,
+            // so we determine it based on 'when'
+            var @operator = context.op switch
             {
-                @operator = SyntaxKind.AddExpression;
-            }
-            else if (context.op == context.MINUS()?.Symbol)
-            {
-                @operator = SyntaxKind.SubtractExpression;
-            }
-            else if (context.op == context.MULT()?.Symbol)
-            {
-                @operator = SyntaxKind.MultiplyExpression;
-            }
-            else if (context.op == context.DIV()?.Symbol)
-            {
-                @operator = SyntaxKind.DivideExpression;
-            }
-            else if (context.op == context.MOD()?.Symbol)
-            {
-                @operator = SyntaxKind.ModuloExpression;
-            }
+                { } op when op == context.PLUS()?.Symbol => SyntaxKind.AddExpression,
+                { } op when op == context.MINUS()?.Symbol => SyntaxKind.SubtractExpression,
+                { } op when op == context.MULT()?.Symbol => SyntaxKind.MultiplyExpression,
+                { } op when op == context.DIV()?.Symbol => SyntaxKind.DivideExpression,
+                { } op when op == context.MOD()?.Symbol => SyntaxKind.ModuloExpression,
+                _ => SyntaxKind.None
+            };
 
             var binaryExpression = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
             _stack.Push(binaryExpression);
@@ -380,45 +376,22 @@ namespace Sct.Compiler
             var exp2 = _stack.Pop<ExpressionSyntax>();
             var exp1 = _stack.Pop<ExpressionSyntax>();
 
-            var @operator = SyntaxKind.None;
-            if (context.op == context.GT()?.Symbol)
+            var @operator = context.op switch
             {
-                @operator = SyntaxKind.GreaterThanExpression;
-            }
-            else if (context.op == context.LT()?.Symbol)
-            {
-                @operator = SyntaxKind.LessThanExpression;
-            }
-            else if (context.op == context.GTE()?.Symbol)
-            {
-                @operator = SyntaxKind.GreaterThanOrEqualExpression;
-            }
-            else if (context.op == context.LTE()?.Symbol)
-            {
-                @operator = SyntaxKind.LessThanOrEqualExpression;
-            }
-            else if (context.op == context.EQ()?.Symbol)
-            {
-                @operator = SyntaxKind.EqualsExpression;
-            }
-            else if (context.op == context.NEQ()?.Symbol)
-            {
-                @operator = SyntaxKind.NotEqualsExpression;
-            }
-            else if (context.op == context.AND()?.Symbol)
-            {
-                @operator = SyntaxKind.LogicalAndExpression;
-            }
-            else if (context.op == context.OR()?.Symbol)
-            {
-                @operator = SyntaxKind.LogicalOrExpression;
-            }
+                { } op when op == context.GT()?.Symbol => SyntaxKind.GreaterThanExpression,
+                { } op when op == context.LT()?.Symbol => SyntaxKind.LessThanExpression,
+                { } op when op == context.GTE()?.Symbol => SyntaxKind.GreaterThanOrEqualExpression,
+                { } op when op == context.LTE()?.Symbol => SyntaxKind.LessThanOrEqualExpression,
+                { } op when op == context.EQ()?.Symbol => SyntaxKind.EqualsExpression,
+                { } op when op == context.NEQ()?.Symbol => SyntaxKind.NotEqualsExpression,
+                { } op when op == context.AND()?.Symbol => SyntaxKind.LogicalAndExpression,
+                { } op when op == context.OR()?.Symbol => SyntaxKind.LogicalOrExpression,
+                _ => SyntaxKind.None
+            };
 
-            var trueValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-            var falseValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
-
+            // convert to conditional, as booleans do not exist in SCT
             var condition = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
-            _stack.Push(SyntaxFactory.ConditionalExpression(condition, trueValue, falseValue));
+            _stack.Push(SyntaxFactory.ConditionalExpression(condition, SctTrue, SctFalse));
         }
 
         public override void ExitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
@@ -438,27 +411,23 @@ namespace Sct.Compiler
         {
             var expression = _stack.Pop<ExpressionSyntax>();
             var @operator = SyntaxKind.NotEqualsExpression;
-            var falseValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
-            var trueValue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-            var condition = SyntaxFactory.BinaryExpression(@operator, expression, falseValue);
-            _stack.Push(SyntaxFactory.ConditionalExpression(condition, falseValue, trueValue));
+            // compare with 0, and convert to SctBoolean via conditional
+            var condition = SyntaxFactory.BinaryExpression(@operator, expression, SctFalse);
+            _stack.Push(SyntaxFactory.ConditionalExpression(condition, SctFalse, SctTrue));
         }
 
 
         public override void ExitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
         {
             var expression = _stack.Pop<ExpressionSyntax>();
-            _stack.Push(SyntaxFactory.PrefixUnaryExpression(
-                SyntaxKind.UnaryMinusExpression,
-                expression
-            ));
+            _stack.Push(SyntaxFactory.PrefixUnaryExpression(SyntaxKind.UnaryMinusExpression, expression));
         }
 
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
             var id = SyntaxFactory.IdentifierName(MangleName(context.ID().GetText()));
-            var call = SyntaxFactory.InvocationExpression(id, args);
+            var call = SyntaxFactory.InvocationExpression(id, args); // convert to method call
             _stack.Push(call);
         }
 
@@ -523,15 +492,16 @@ namespace Sct.Compiler
 
         public override void ExitExit([NotNull] SctParser.ExitContext context)
         {
+            // call ExitRuntime on context
             _stack.Push(SyntaxFactory.ExpressionStatement(
-                    SyntaxFactory.InvocationExpression(
-                        SyntaxFactory.MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            SyntaxFactory.IdentifierName(ContextIdentifier),
-                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.ExitRuntime))
-                            )
-                        )
-                    ));
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.IdentifierName(ContextIdentifier),
+                        SyntaxFactory.IdentifierName(nameof(IRuntimeContext.ExitRuntime))
+                    )
+                )
+            ));
         }
 
         /// <summary>
@@ -542,13 +512,18 @@ namespace Sct.Compiler
         /// <summary>
         /// Returns a <see cref="ParameterListSyntax"/> with an <see cref="IRuntimeContext"/> <code>ctx</code> parameter added.
         /// </summary>
-        private static ParameterListSyntax WithContextParameter(IEnumerable<ParameterSyntax> p) => SyntaxFactory.ParameterList(
+        private static ParameterListSyntax WithContextParameter(IEnumerable<ParameterSyntax> p)
+        {
+            // create new parameter list
+            return SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(
-                    p.Prepend(
+                    p.Prepend( // prepend context to the original parameters
                         SyntaxFactory.Parameter(ContextIdentifier)
                         .WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)))
-                        )
-                    ));
+                    )
+                )
+            );
+        }
 
 
         private static ArgumentListSyntax WithContextArgument(IEnumerable<ArgumentSyntax> a) => SyntaxFactory.ArgumentList(
