@@ -8,15 +8,15 @@
             {
             }
 
-            void __sct_decor1(IRuntimeContext ctx)
+            private void __sct_decor1(IRuntimeContext ctx)
             {
             }
 
-            void __sct_decor2(IRuntimeContext ctx)
+            private void __sct_decor2(IRuntimeContext ctx)
             {
             }
 
-            void __sct_Stable(IRuntimeContext ctx)
+            private void __sct_Stable(IRuntimeContext ctx)
             {
                 __sct_decor1(ctx);
                 __sct_decor2(ctx);

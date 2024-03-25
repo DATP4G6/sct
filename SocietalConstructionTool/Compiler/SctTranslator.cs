@@ -19,6 +19,7 @@ namespace Sct.Compiler
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
         private readonly TypeTable _typeTable = new();
+        private bool _isInAgent;
         public override void ExitStart(SctParser.StartContext context)
         {
             var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
@@ -32,6 +33,7 @@ namespace Sct.Compiler
 
         public override void EnterClass_def([NotNull] SctParser.Class_defContext context)
         {
+            _isInAgent = true;
             var @class = SyntaxFactory.ClassDeclaration("tmp")
                 .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
                 .WithBaseList(SyntaxFactory.BaseList(
@@ -51,6 +53,7 @@ namespace Sct.Compiler
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
         {
+            _isInAgent = false;
             // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
@@ -193,8 +196,11 @@ namespace Sct.Compiler
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 mangledName
-            ).WithParameterList(WithContextParameter([]));
-            method = method.WithBody(childBlock);
+            )
+            .WithParameterList(WithContextParameter([]))
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
+            .WithBody(childBlock);
+
             _stack.Push(method);
         }
 
@@ -204,11 +210,18 @@ namespace Sct.Compiler
             var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
             var mangledName = MangleName(context.ID().GetText());
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // change to actual type
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // TODO: change to actual type
                 mangledName
             )
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .WithParameterList(@params)
             .WithBody(childBlock);
+
+            if (!_isInAgent) // all global functions are static
+            {
+                method = method.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            }
+
             _stack.Push(method);
         }
 
@@ -270,7 +283,9 @@ namespace Sct.Compiler
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 MangleName(context.ID().GetText())
-            ).WithParameterList(WithContextParameter([]));
+            )
+            .WithParameterList(WithContextParameter([]))
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword));
 
             _stack.Push(method.WithBody(body));
         }

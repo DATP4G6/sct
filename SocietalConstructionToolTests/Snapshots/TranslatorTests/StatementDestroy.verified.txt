@@ -8,7 +8,7 @@
             {
             }
 
-            void __sct_Adult(IRuntimeContext ctx)
+            private void __sct_Adult(IRuntimeContext ctx)
             {
             }
 

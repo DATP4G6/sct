@@ -8,7 +8,7 @@
             {
             }
 
-            void __sct_Adult(IRuntimeContext ctx)
+            private void __sct_Adult(IRuntimeContext ctx)
             {
                 return new Dictionary(new KeyValuePair("__sct_id", 5), new KeyValuePair("__sct_height", 20.5));
             }
