@@ -318,6 +318,37 @@ namespace Sct.Compiler
             _stack.Push(idExp);
         }
 
+        public override void ExitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
+        {
+            var exp2 = _stack.Pop<ExpressionSyntax>();
+            var exp1 = _stack.Pop<ExpressionSyntax>();
+
+            var @operator = SyntaxKind.None;
+            if (context.op == context.PLUS()?.Symbol)
+            {
+                @operator = SyntaxKind.AddExpression;
+            }
+            else if (context.op == context.MINUS()?.Symbol)
+            {
+                @operator = SyntaxKind.SubtractExpression;
+            }
+            else if (context.op == context.MULT()?.Symbol)
+            {
+                @operator = SyntaxKind.MultiplyExpression;
+            }
+            else if (context.op == context.DIV()?.Symbol)
+            {
+                @operator = SyntaxKind.DivideExpression;
+            }
+            else if (context.op == context.MOD()?.Symbol)
+            {
+                @operator = SyntaxKind.ModuloExpression;
+            }
+
+            var binaryExpression = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
+            _stack.Push(binaryExpression);
+        }
+
         public override void ExitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
         {
             var exp2 = _stack.Pop<ExpressionSyntax>();
