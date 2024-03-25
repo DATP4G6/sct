@@ -2,7 +2,7 @@
 {
     public class GlobalClass
     {
-        void Setup(IRuntimeContext ctx)
+        void __sct_Setup(IRuntimeContext ctx)
         {
             while (1 != 0)
             {
