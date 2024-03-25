@@ -8,7 +8,7 @@
             {
             }
 
-            void __sct_Adult(IRuntimeContext ctx)
+            private void __sct_Adult(IRuntimeContext ctx)
             {
                 Int32 __sct_age = 5;
                 __sct_age = 10;

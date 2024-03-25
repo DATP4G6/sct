@@ -2,7 +2,7 @@
 {
     public class GlobalClass
     {
-        void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_Setup(IRuntimeContext ctx)
         {
             Double __sct_pi = 3.14159;
             Double __sct_a = 1.5;

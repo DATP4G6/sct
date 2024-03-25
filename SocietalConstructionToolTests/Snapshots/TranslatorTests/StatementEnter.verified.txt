@@ -8,11 +8,11 @@
             {
             }
 
-            void __sct_Child(IRuntimeContext ctx)
+            private void __sct_Child(IRuntimeContext ctx)
             {
             }
 
-            void __sct_Adult(IRuntimeContext ctx)
+            private void __sct_Adult(IRuntimeContext ctx)
             {
             }
 
