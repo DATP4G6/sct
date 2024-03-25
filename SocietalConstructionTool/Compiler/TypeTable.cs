@@ -7,6 +7,10 @@ namespace Sct.Compiler
 {
     public class TypeTable
     {
+        public SctType Void => _types["void"];
+        public SctType Int => _types["int"];
+        public SctType Float => _types["float"];
+        public SctType Predicate => _types["Predicate"];
         private readonly Dictionary<string, SctType> _types = new()
         {
             { "int", new SctType(typeof(int)) },
@@ -42,6 +46,7 @@ namespace Sct.Compiler
 
             return @type;
         }
+
 
     }
 }
