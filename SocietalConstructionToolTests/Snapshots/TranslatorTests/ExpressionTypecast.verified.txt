@@ -1,0 +1,11 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        void Setup(IRuntimeContext ctx)
+        {
+            Double a = 1.5;
+            Int32 b = 2 + (int)a;
+        }
+    }
+}
