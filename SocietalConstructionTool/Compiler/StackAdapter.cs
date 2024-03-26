@@ -20,6 +20,7 @@ namespace Sct.Compiler
             }
             throw new UnrecognizedNodeException(nameof(T), (node?.Value?.GetType().Name) ?? "null");
         }
+
         public TBase Peek() => Peek<TBase>();
         public T Peek<T>() where T : TBase
         {
@@ -30,6 +31,19 @@ namespace Sct.Compiler
             }
             throw new UnrecognizedNodeException(nameof(T), (node?.Value?.GetType().Name) ?? "null");
         }
+
+        public bool TryPeek(out TBase? peekedValue) => TryPeek<TBase>(out peekedValue);
+        public bool TryPeek<T>(out T? peekedValue) where T : TBase
+        {
+            if (_stack.TryPeek(out var node) && node.Value is T value)
+            {
+                peekedValue = value;
+                return true;
+            }
+            peekedValue = default;
+            return false;
+        }
+
         public TBase[] ToArray() => ToArray<TBase>();
         public T[] ToArray<T>() where T : TBase
         {
