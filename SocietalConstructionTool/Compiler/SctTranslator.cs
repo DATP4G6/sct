@@ -22,7 +22,11 @@ namespace Sct.Compiler
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
         private readonly TypeTable _typeTable = new();
+
+        // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
+        private List<string> stateNames = new();
+
         public override void ExitStart(SctParser.StartContext context)
         {
             var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
@@ -60,9 +64,49 @@ namespace Sct.Compiler
             ))
             .AddMembers(CreateConstructor(className))
             .AddMembers(members)
-            .AddMembers(CreateCloneMethod(className));
+            .AddMembers(CreateCloneMethod(className))
+            .AddMembers(CreateUpdateMethod());
 
             _stack.Push(@class);
+        }
+
+        private MethodDeclarationSyntax CreateUpdateMethod()
+        {
+
+            var body = SyntaxFactory.Block().AddStatements(
+                SyntaxFactory.ExpressionStatement(
+                    SyntaxFactory.SwitchExpression(
+                        SyntaxFactory.IdentifierName(nameof(BaseAgent.State)),
+                        // Add cases for each state in stateNames, calling the corresponding method of the same name
+                        SyntaxFactory.SeparatedList(
+                            stateNames.Select(stateName => SyntaxFactory.SwitchExpressionArm(
+                                SyntaxFactory.ConstantPattern(
+                                    SyntaxFactory.LiteralExpression(
+                                        SyntaxKind.StringLiteralExpression,
+                                        SyntaxFactory.Literal(stateName)
+                                    )
+                                ),
+                                SyntaxFactory.InvocationExpression(
+                                    SyntaxFactory.IdentifierName(stateName),
+                                    WithContextArgument([])
+                                )
+                            ))
+                        )
+                    )
+                )
+            );
+
+            stateNames = new();
+
+            var updateMethod = SyntaxFactory.MethodDeclaration(
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                nameof(BaseAgent.Update)
+            )
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword))
+            .WithParameterList(WithContextParameter([]))
+            .WithBody(body);
+
+            return updateMethod;
         }
 
         private static MethodDeclarationSyntax CreateCloneMethod(string className)
@@ -284,13 +328,15 @@ namespace Sct.Compiler
             // create statement list of decorators
             var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
             .Select(SyntaxFactory.ExpressionStatement)
-            .Cast<StatementSyntax>();
+            .Cast<StatementSyntax>(); // TODO: Cast is unsafe
 
             // create new body with decorators first, then state logic
             var body = SyntaxFactory.Block()
             .AddStatements(decorators.ToArray())
             .AddStatements(stateLogic.Statements.ToArray());
 
+            var name = MangleName(context.ID().GetText());
+            stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 MangleName(context.ID().GetText())
