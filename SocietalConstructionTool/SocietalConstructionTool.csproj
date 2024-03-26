@@ -11,6 +11,7 @@
             $(BuildDependsOn)
         </BuildDependsOn>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <NoWarn>$(NoWarn);CA1720</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

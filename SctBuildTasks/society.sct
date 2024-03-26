@@ -32,7 +32,7 @@ class Town(int id, int space) {
             enter Critical;
         }
 
-        // If no enter keyword is executed during a tick, the agent will simply stay in the same state.
+        enter Stable;
     }
 
     state Critical {
@@ -45,6 +45,8 @@ class Town(int id, int space) {
         if (population == 0) {
             quit();
         }
+
+        enter Critical;
     }
 }
 
@@ -69,6 +71,8 @@ class Citizen(int townId) {
         if ((int) rand() < 0.05) {
             enter Adult;
         }
+
+        enter Child;
     }
 
     @randomDeath
@@ -80,6 +84,8 @@ class Citizen(int townId) {
         if (rand() < 0.01) {
             destroy;
         }
+
+        enter Adult;
     }
 }
 
