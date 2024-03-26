@@ -28,8 +28,10 @@ static int SctParseMethod()
     var ctable = sctTableVisitor.Ctable;
 
     parser.Reset();
-    var visitor = new SctTypeChecker();
-    _ = visitor.Visit(parser.start());
+
+    // Run visitor that checks the types.
+    var SctTypeChecker = new SctTypeChecker(ctable);
+    _ = SctTypeChecker.Visit(parser.start());
 
     if (errors.Count > 0)
     {
@@ -40,7 +42,7 @@ static int SctParseMethod()
         return 1;
     }
 
-
+    // Run listener that translates the AST to C#.
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
     _ = parser.start();
