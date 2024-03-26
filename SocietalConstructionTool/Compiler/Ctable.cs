@@ -9,7 +9,7 @@ namespace Sct.Compiler
         }
         public FunctionType GetFunctionType(string className, string functionName)
         {
-            return _classes[className].GetFunctionType(functionName);
+            return _classes.TryGetValue(className, out ClassContent classContent) ? classContent.Ftable.GetFunctionType(functionName) : null;
         }
     }
 }

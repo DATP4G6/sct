@@ -11,6 +11,13 @@ namespace Sct.Compiler
 
         public List<InvalidTypeException> Errors = new List<InvalidTypeException>();
 
+        private readonly Ctable _ctable;
+
+        public SctTypeChecker(Ctable ctable)
+        {
+            _ctable = ctable;
+        }
+
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
 

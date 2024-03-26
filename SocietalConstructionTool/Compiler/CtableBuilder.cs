@@ -11,6 +11,12 @@ namespace Sct
 
         private readonly Dictionary<string, ClassContent> _classes = new Dictionary<string, ClassContent>();
 
+        public CtableBuilder()
+        {
+            _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent());
+            _currentClass = _globalClass;
+        }
+
         public Ctable BuildCtable()
         {
             _classes.Add(_globalClass.Key, _globalClass.Value);
@@ -34,20 +40,38 @@ namespace Sct
 
         public bool AddFunction(string functionName, FunctionType functionType)
         {
-            _currentClass.Value.AddFunction(functionName, functionType);
-            return false;
+            if(IDExistsGlobal(functionName))
+            {
+                return false;
+            }
+            return _currentClass.Value.AddFunction(functionName, functionType);
         }
 
-        public bool AddState()
+        public bool AddState(string name)
         {
-            return false;
-
+            if(IDExistsGlobal(name))
+            {
+                return false;
+            }
+            return _currentClass.Value.AddState(name);
         }
 
-        public bool AddDecorator()
+        public bool AddDecorator(string name)
         {
-            return false;
+            if(IDExistsGlobal(name))
+            {
+                return false;
+            }
+            return _currentClass.Value.AddDecorator(name);
+        }
 
+        private bool IDExistsGlobal(string name)
+        {
+            if(_globalClass.Value?.LookupFunctionType(name) is not null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

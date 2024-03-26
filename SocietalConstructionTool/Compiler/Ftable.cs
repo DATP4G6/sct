@@ -6,12 +6,12 @@ namespace Sct.Compiler
 
         public FunctionType GetFunctionType(string name)
         {
-            return ftable[name];
+            return ftable.TryGetValue(name, out FunctionType functionType) ? functionType : null;
         }
 
-        public void AddFunctionType(string name, FunctionType functionType)
+        public bool AddFunctionType(string name, FunctionType functionType)
         {
-            ftable.Add(name, functionType);
+            return ftable.TryAdd(name, functionType);
         }
     }
 

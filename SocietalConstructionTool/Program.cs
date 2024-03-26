@@ -16,16 +16,19 @@ static void SctParseMethod()
     ITokenSource lexer = new SctLexer(stream);
     ITokenStream tokens = new CommonTokenStream(lexer);
     SctParser parser = new SctParser(tokens);
-    var visitor = new SctTypeChecker();
 
     // Run visitor that populates the tables.
     var sctTableVisitor = new SctTableVisitor();
     _ = sctTableVisitor.Visit(parser.start());
     var ctable = sctTableVisitor.Ctable;
-    List<InvalidTypeException> errors = visitor.Errors;
 
-    // run visitor that checks the types.
+    Console.WriteLine(ctable);
 
+    // Run visitor that checks the types.
+    var SctTypeChecker = new SctTypeChecker(ctable);
+    _ = SctTypeChecker.Visit(parser.start());
+
+    // Run listener that translates the AST to C#.
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
     _ = parser.start();

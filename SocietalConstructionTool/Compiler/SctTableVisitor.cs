@@ -12,11 +12,7 @@ namespace Sct.Compiler
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
-
-            foreach (var classDef in context.class_def())
-            {
-                _ = classDef.Accept(this);
-            }
+            _ = base.VisitStart(context);
 
             Ctable = _ctableBuilder.BuildCtable();
             return _typeTable.Void;
@@ -49,7 +45,31 @@ namespace Sct.Compiler
             type ??= _typeTable.Int;
             FunctionType functionType = new FunctionType(type, argsTypes);
 
+            _ = _ctableBuilder.AddFunction(context.ID().GetText(), functionType);
+
             return type;
+        }
+
+        public override SctType VisitType([NotNull] SctParser.TypeContext context)
+        {
+            var type = _typeTable.GetType(context.GetText());
+            if (type is null)
+            {
+                _errors.Add($"Type {context.GetText()} does not exist");
+            }
+            type ??= _typeTable.Int;
+
+            return type;
+        }
+
+        public override SctType VisitState([NotNull] SctParser.StateContext context) {
+            _ = _ctableBuilder.AddState(context.ID().GetText());
+            return _typeTable.Void;
+        }
+
+        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context) {
+            _ = _ctableBuilder.AddDecorator(context.ID().GetText());
+            return _typeTable.Void;
         }
     }
 }
