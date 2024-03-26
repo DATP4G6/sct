@@ -27,6 +27,13 @@
     }
   },
   "extensions": {
-    "recommendations": ["mike-lischke.vscode-antlr4"]
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "mike-lischke.vscode-antlr4",
+        "EditorConfig.EditorConfig"
+    ]
+  },
+  "files.associations": {
+    "**/SocietalConstructionToolTests/Snapshots/TranslatorTests/*.txt": "csharp",
   }
 }
