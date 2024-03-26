@@ -327,13 +327,19 @@ namespace Sct.Compiler
                 SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0)));
         }
 
+        // TODO: Split this rule up if we want literals that aren't just numeric
         public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
         {
             // prevent decimal point from being a comma (based on locale), because... C#, see CS1305
             var culture = CultureInfo.InvariantCulture;
-            // if value is int, double will print without decimal point
-            var value = double.Parse(context.LIT().GetText(), culture);
-            var literal = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(value));
+            var text = context.LIT().GetText();
+            var value = double.Parse(text, culture);
+            var literal = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression,
+                    // Passing the text of the token to Literal ensures that we print whole floats (e.g. 2.0) correctly.
+                    // Ints are also printed correctly this way, since we preserve the text of the token
+                    // This might be a problem in the future if we want literals that don't look like C# literals
+                    SyntaxFactory.Literal(text, value)
+            );
             _stack.Push(literal);
         }
 
