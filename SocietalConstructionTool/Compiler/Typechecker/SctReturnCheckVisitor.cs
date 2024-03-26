@@ -1,4 +1,4 @@
-namespace Sct.Compiler.Typechecking
+namespace Sct.Compiler.Typechecker
 {
     public class SctReturnCheckVisitor : SctBaseVisitor<bool>, IErrorReporter
     {
