@@ -26,6 +26,13 @@
             {
                 return new __sct_Town(State, Fields);
             }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                State switch
+                {
+                    "__sct_Stable" => __sct_Stable(ctx)};
+            }
         }
 
         public static void Main()

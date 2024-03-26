@@ -18,6 +18,13 @@
             {
                 return new __sct_Citizen(State, Fields);
             }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                State switch
+                {
+                    "__sct_Adult" => __sct_Adult(ctx)};
+            }
         }
 
         public static void Main()
