@@ -5,5 +5,13 @@
         public static void __sct_f(IRuntimeContext ctx)
         {
         }
+
+        public static void Main()
+        {
+            Runtime runtime = new Runtime();
+            RuntimeContext ctx = new RuntimeContext();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
     }
 }

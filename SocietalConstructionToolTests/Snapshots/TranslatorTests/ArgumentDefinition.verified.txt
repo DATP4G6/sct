@@ -13,5 +13,13 @@
                 return new __sct_Citizen(State, Fields);
             }
         }
+
+        public static void Main()
+        {
+            Runtime runtime = new Runtime();
+            RuntimeContext ctx = new RuntimeContext();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
     }
 }

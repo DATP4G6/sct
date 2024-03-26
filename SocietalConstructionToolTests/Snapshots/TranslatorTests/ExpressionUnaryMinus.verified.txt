@@ -7,5 +7,13 @@
             Int32 __sct_a = 4;
             -__sct_a;
         }
+
+        public static void Main()
+        {
+            Runtime runtime = new Runtime();
+            RuntimeContext ctx = new RuntimeContext();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
     }
 }

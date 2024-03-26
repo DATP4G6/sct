@@ -8,5 +8,13 @@
             Int32 __sct_b = 2 + (Int32)__sct_a;
             Double __sct_b = 4 + (Double)__sct_b;
         }
+
+        public static void Main()
+        {
+            Runtime runtime = new Runtime();
+            RuntimeContext ctx = new RuntimeContext();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
     }
 }

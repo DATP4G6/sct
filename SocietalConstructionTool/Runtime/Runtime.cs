@@ -1,6 +1,6 @@
 namespace Sct.Runtime
 {
-    public abstract class Runtime() : IRuntime
+    public class Runtime() : IRuntime
     {
         public void Run(IRuntimeContext initialContext)
         {

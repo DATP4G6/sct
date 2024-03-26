@@ -31,7 +31,10 @@ namespace Sct.Compiler
 
             var members = _stack.ToArray<MemberDeclarationSyntax>();
 
-            @class = @class.AddMembers(members);
+            @class = @class
+            .AddMembers(members)
+            .AddMembers(MakeMainMethod());
+
             Root = @namespace.AddMembers(@class);
         }
 
@@ -543,5 +546,95 @@ namespace Sct.Compiler
         private static SyntaxToken MangleName(SyntaxToken n) => MangleName(n.Text);
         private static SyntaxToken MangleName(string n) => SyntaxFactory.Identifier(MangleStringName(n));
         private static string MangleStringName(string n) => NAME_MANGLE_PREFIX + n;
+
+        private static MethodDeclarationSyntax MakeMainMethod()
+        {
+            var runtime = SyntaxFactory.LocalDeclarationStatement(
+                SyntaxFactory.VariableDeclaration(
+                    SyntaxFactory.ParseTypeName(nameof(Runtime))
+                )
+                .AddVariables(
+                    SyntaxFactory.VariableDeclarator(
+                        SyntaxFactory.Identifier("runtime")
+                    )
+                    .WithInitializer(
+                        SyntaxFactory.EqualsValueClause(
+                            SyntaxFactory.ObjectCreationExpression(
+                                SyntaxFactory.ParseTypeName(nameof(Runtime))
+                            )
+                            // need to add empty argument list to invoke constructor
+                            .WithArgumentList(
+                                SyntaxFactory.ArgumentList(
+                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            var ctx = SyntaxFactory.LocalDeclarationStatement(
+                SyntaxFactory.VariableDeclaration(
+                    SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
+                )
+                .AddVariables(
+                    SyntaxFactory.VariableDeclarator(
+                        SyntaxFactory.Identifier("ctx")
+                    )
+                    .WithInitializer(
+                        SyntaxFactory.EqualsValueClause(
+                            SyntaxFactory.ObjectCreationExpression(
+                                SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
+                            )
+                            .WithArgumentList(
+                                SyntaxFactory.ArgumentList(
+                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            var setup = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.IdentifierName("__sct_Setup"),
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new[]
+                        {
+                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("ctx"))
+                        })
+                    )
+                )
+            );
+
+            var run = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.IdentifierName("runtime"),
+                        SyntaxFactory.IdentifierName("Run")
+                    ),
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new[]
+                        {
+                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("ctx"))
+                        })
+                    )
+                )
+            );
+
+            var body = SyntaxFactory.Block()
+            .AddStatements(runtime, ctx, setup, run);
+
+            var mainMethod = SyntaxFactory.MethodDeclaration(
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.Identifier("Main")
+            )
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
+            .WithBody(body);
+
+            return mainMethod;
+        }
     }
 }
