@@ -293,7 +293,8 @@ namespace Sct.Compiler
                 MangleName(context.ID().GetText())
             )
             .WithParameterList(WithContextParameter([])) // state only takes context
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword));
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
+            .WithBody(body);
 
             _stack.Push(method);
         }
@@ -455,11 +456,11 @@ namespace Sct.Compiler
         {
             // TODO: check if we can return before doing it
             var @return = SyntaxFactory.ReturnStatement();
-            var value = _stack.Peek();
-            if (value is ExpressionSyntax expression)
+            var valueExists = _stack.TryPeek<ExpressionSyntax>(out var peekedValue);
+            if (valueExists)
             {
                 _ = _stack.Pop();
-                @return = @return.WithExpression(expression);
+                @return = @return.WithExpression(peekedValue);
             }
             _stack.Push(@return);
         }
