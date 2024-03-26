@@ -43,7 +43,7 @@ namespace Sct.Compiler
             _isInAgent = false;
             // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
             // All constructors are equal, so we can just create a custom one
-            var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var _);
+            var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var fields);
             var className = MangleStringName(context.ID().GetText());
 
             var @class = SyntaxFactory.ClassDeclaration(className)
@@ -58,6 +58,7 @@ namespace Sct.Compiler
                     ))
                 })
             ))
+            .AddMembers(CreateClassFields(fields))
             .AddMembers(CreateConstructor(className))
             .AddMembers(members)
             .AddMembers(CreateCloneMethod(className));
@@ -635,6 +636,73 @@ namespace Sct.Compiler
             .WithBody(body);
 
             return mainMethod;
+        }
+
+        /// <summary>
+        /// Create getters and setters for all fields in a class
+        /// </summary>
+        /// <param name="fields">Fields in the class</param>
+        /// <returns></returns>
+        private static PropertyDeclarationSyntax[] CreateClassFields(ParameterListSyntax fields)
+        {
+            var fieldDeclarations = fields.Parameters.Select(p =>
+            {
+                var name = p.Identifier.Text;
+                var type = p.Type ?? SyntaxFactory.ParseTypeName("dynamic"); // should never happen
+
+                var getter = SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
+                .WithExpressionBody(
+                    SyntaxFactory.ArrowExpressionClause(
+                        SyntaxFactory.ElementAccessExpression(
+                            SyntaxFactory.IdentifierName("Fields"),
+                            CreateBracketedArgumentList(name)) // get value from dictionary
+                    )
+                )
+                // accessordeclaration does not insert this aparently
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+
+                var setter = SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
+                .WithExpressionBody(
+                    SyntaxFactory.ArrowExpressionClause(
+                        SyntaxFactory.AssignmentExpression(
+                            SyntaxKind.SimpleAssignmentExpression,
+                            SyntaxFactory.ElementAccessExpression(
+                                SyntaxFactory.IdentifierName("Fields"),
+                                CreateBracketedArgumentList(name) // get value from dictionary
+                            ),
+                            SyntaxFactory.IdentifierName("value") // set equal to value from setter
+                        )
+                    )
+                )
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+
+                // convert to public property declaration
+                return SyntaxFactory.PropertyDeclaration(type, name)
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
+                .AddAccessorListAccessors(getter, setter);
+            });
+
+            return fieldDeclarations.ToArray();
+        }
+
+        /// <summary>
+        /// Creates a bracketed argument, accessing a dictionary with a key
+        /// Helper method for the CreateClassFields method
+        /// </summary>
+        /// <param name="name">The key to find</param>
+        /// <returns></returns>
+        private static BracketedArgumentListSyntax CreateBracketedArgumentList(string name)
+        {
+            return SyntaxFactory.BracketedArgumentList(
+                SyntaxFactory.SingletonSeparatedList(
+                    SyntaxFactory.Argument(
+                        SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(name)
+                        )
+                    )
+                )
+            );
         }
     }
 }
