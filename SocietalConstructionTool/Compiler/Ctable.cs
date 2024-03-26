@@ -11,6 +11,11 @@ namespace Sct.Compiler
         {
             return _classes.TryGetValue(className, out ClassContent classContent) ? classContent.Ftable.GetFunctionType(functionName) : null;
         }
+
+        public bool stateExists(string className, string stateName)
+        {
+            return _classes.TryGetValue(className, out ClassContent classContent) && classContent.STable.Contains(stateName);
+        }
     }
 }
 

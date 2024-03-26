@@ -21,12 +21,12 @@ static void SctParseMethod()
     var sctTableVisitor = new SctTableVisitor();
     _ = sctTableVisitor.Visit(parser.start());
     var ctable = sctTableVisitor.Ctable;
-
-    Console.WriteLine(ctable);
+    parser.Reset();
 
     // Run visitor that checks the types.
     var SctTypeChecker = new SctTypeChecker(ctable);
-    _ = SctTypeChecker.Visit(parser.start());
+    _ = parser.Accept(SctTypeChecker);
+    parser.Reset();
 
     // Run listener that translates the AST to C#.
     var listener = new SctTranslator();

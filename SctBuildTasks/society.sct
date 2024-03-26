@@ -67,7 +67,7 @@ class Citizen(int townId) {
         }
 
         if ((int) rand() < 0.05) {
-            enter Adult;
+            enter Adusdlt;
         }
     }
 
