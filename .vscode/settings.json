@@ -5,5 +5,8 @@
     "listeners": true,
     "visitors": true,
     "outputDir": "out"
+  },
+  "files.associations": {
+    "**/SocietalConstructionToolTests/Snapshots/TranslatorTests/*.txt": "csharp",
   }
 }
