@@ -12,6 +12,13 @@ namespace Sct.Runtime
             ShouldExit = false;
         }
 
+        public RuntimeContext()
+        {
+            AgentHandler = new AgentHandler();
+            QueryHandler = new QueryHandler([]);
+            ShouldExit = false;
+        }
+
         public void ExitRuntime()
         {
             throw new NotImplementedException("Exit not implemented.");
