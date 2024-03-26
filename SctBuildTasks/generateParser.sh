@@ -10,6 +10,6 @@ ANTLR_COMMAND=$(command -v antlr4 || command -v antlr)
 
 pushd "$SCRIPT_DIR"
 
-"$ANTLR_COMMAND" -Dlanguage=CSharp "Sct.g4" -o "out"
+"$ANTLR_COMMAND" -Dlanguage=CSharp "Sct.g4" -o "out" -visitor
 
 popd
