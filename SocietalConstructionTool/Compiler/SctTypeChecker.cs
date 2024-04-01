@@ -196,5 +196,52 @@ namespace Sct.Compiler
             }
             return targetType;
         }
+
+        public override SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
+        {
+
+            var targetAgent = context.ID(0).GetText();
+
+            if (_ctable.GetClassContent(targetAgent) is null)
+            {
+                _errors.Add(new CompilerError($"Agent {targetAgent} does not exist"));
+                return _typeTable.Predicate;
+            }
+
+            if (context.QUESTION() is null && _ctable.GetClassContent(targetAgent).LookupState(context.ID(1).GetText()) is null)
+            {
+                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {targetAgent}"));
+                return _typeTable.Predicate;
+            }
+
+            var targetAgentFields = _ctable.GetClassContent(targetAgent);
+            var agentArgumentIds = context.args_agent().ID();
+
+            var agentArgs = new Dictionary<string, SctType>();
+
+            foreach (var id in agentArgumentIds)
+            {
+                if (targetAgentFields.LookupVariable(id.GetText()) is null)
+                {
+                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {targetAgent}"));
+                    agentArgs.Add(id.GetText(), _typeTable.Int);
+                }
+
+                if (agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
+                {
+                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate."));
+                }
+            }
+
+            foreach (var arg in agentArgs)
+            {
+                if (targetAgentFields.LookupVariable(arg.Key) != arg.Value)
+                {
+                    _errors.Add(new CompilerError($"Type mismatch: {targetAgentFields.LookupVariable(arg.Key)} != {arg.Value}. Expression in predicate does not match field type in target agent."));
+                }
+            }
+
+            return _typeTable.Predicate;
+        }
     }
 }
