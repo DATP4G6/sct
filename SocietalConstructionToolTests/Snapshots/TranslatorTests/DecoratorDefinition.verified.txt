@@ -20,8 +20,10 @@
 
             private bool __sct_Stable(IRuntimeContext ctx)
             {
-                __sct_decor1(ctx);
-                __sct_decor2(ctx);
+                if (__sct_decor1(ctx))
+                    return true;
+                if (__sct_decor2(ctx))
+                    return true;
                 return false;
             }
 

@@ -335,7 +335,8 @@ namespace Sct.Compiler
             //.Select(SyntaxFactory.ExpressionStatement);
             //.Cast<ExpressionSyntax>(); // TODO: Cast is unsafe
 
-            var ifs = decorators.Select(decor => {
+            var ifs = decorators.Select(decor =>
+            {
                 //var condition = SyntaxFactory.ExpressionStatement(decor);
                 var return_block = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
 

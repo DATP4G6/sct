@@ -17,7 +17,8 @@
 
             private bool __sct_Stable(IRuntimeContext ctx)
             {
-                __sct_decor(ctx);
+                if (__sct_decor(ctx))
+                    return true;
                 return false;
             }
 
