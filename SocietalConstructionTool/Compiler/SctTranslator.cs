@@ -26,7 +26,6 @@ namespace Sct.Compiler
         // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
         private List<string> _stateNames = new();
-        private bool _isInDecorator;
 
         public override void ExitStart(SctParser.StartContext context)
         {
@@ -241,18 +240,10 @@ namespace Sct.Compiler
             ;
         }
 
-        public override void EnterDecorator([NotNull] SctParser.DecoratorContext context)
-        {
-            _isInDecorator = true;
-        }
-
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
-            _isInDecorator = false;
-
             var childBlock = _stack.Pop<BlockSyntax>();
-            // TODO: add return false as last statement to block
-            // childBlock = childBlock.AddStatements(returnStatement...)
+            childBlock = childBlock.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
 
             var mangledName = MangleName(context.ID().GetText());
 
@@ -337,6 +328,8 @@ namespace Sct.Compiler
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
             var stateLogic = _stack.Pop<BlockSyntax>();
+            stateLogic = stateLogic.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
+
             // create statement list of decorators
             var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
             .Select(SyntaxFactory.ExpressionStatement)
@@ -350,7 +343,7 @@ namespace Sct.Compiler
             var name = MangleName(context.ID().GetText());
             _stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
                 MangleName(context.ID().GetText())
             )
             .WithParameterList(WithContextParameter([])) // state only takes context
@@ -614,6 +607,12 @@ namespace Sct.Compiler
                 )
             ));
 
+
+            _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
+
+
+            //SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
+
             // TODO: push return true statement to stack if inside decorator
             // if (_isInDecorator) ...
             // _stack.Push(returnStatement...)
@@ -631,14 +630,15 @@ namespace Sct.Compiler
                     WithContextArgument([SyntaxFactory.Argument(state)])
                 )
             );
-            var @return = SyntaxFactory.ReturnStatement();
+
+            var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
             _stack.Push(invocation);
             _stack.Push(@return);
         }
 
         public override void ExitDestroy([NotNull] SctParser.DestroyContext context)
         {
-            var @return = SyntaxFactory.ReturnStatement();
+            var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
             _stack.Push(@return);
         }
 
