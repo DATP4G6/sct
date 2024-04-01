@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
 
 using Sct.Compiler.Exceptions;
 using Sct.Extensions;

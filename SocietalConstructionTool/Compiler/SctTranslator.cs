@@ -398,7 +398,7 @@ namespace Sct.Compiler
         {
             // prevent decimal point from being a comma (based on locale), because... C#, see CS1305
             var culture = CultureInfo.InvariantCulture;
-            var text = context.LIT().GetText();
+            var text = context.literal().GetText();
             var value = double.Parse(text, culture);
             var literal = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression,
                     // Passing the text of the token to Literal ensures that we print whole floats (e.g. 2.0) correctly.

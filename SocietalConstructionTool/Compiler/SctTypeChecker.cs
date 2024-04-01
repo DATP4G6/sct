@@ -5,16 +5,18 @@ using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
 {
-    public class SctTypeChecker : SctBaseVisitor<SctType>
+    public class SctTypeChecker : SctBaseVisitor<SctType>, IErrorReporter
     {
         private readonly TypeTable _typeTable = new();
 
-        public List<InvalidTypeException> Errors = new List<InvalidTypeException>();
 
         private readonly Ctable _ctable;
 
         private string _currentClass = "Global";
+        // private ClassContent _currentClass
 
+        private readonly List<CompilerError> _errors = new();
+        public IEnumerable<CompilerError> Errors => _errors;
         public SctTypeChecker(Ctable ctable)
         {
             _ctable = ctable;
@@ -34,12 +36,12 @@ namespace Sct.Compiler
             SctType type = _typeTable.GetType(typeName) ?? throw new InvalidTypeException($"Type {typeName} does not exist");
             if (type == _typeTable.GetType("Predicate"))
             {
-                Errors.Add(new InvalidTypeException("Variable cannot have a Predicate type"));
+                // Errors.Add(new InvalidTypeException("Variable cannot have a Predicate type"));
             }
             SctType expressionType = Visit(context.expression()); // This should call our overridden VisitExpression method with the expression context.
             if (type != expressionType)
             {
-                Errors.Add(new InvalidTypeException($"Type mismatch: {type} != {expressionType}"));
+                //Errors.Add(new InvalidTypeException($"Type mismatch: {type} != {expressionType}"));
             }
             return type;
         }
@@ -54,12 +56,59 @@ namespace Sct.Compiler
 
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
-            Console.WriteLine("AAAAARGH");
             var stateName = context.ID().GetText();
-            if (!_ctable.stateExists(_currentClass, stateName))
+            if (!_ctable.StateExists(_currentClass, stateName))
             {
+                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}"));
             }
             return base.VisitEnter(context);
+        }
+
+        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context) {
+            var decoratorName = context.ID().GetText();
+            if (!_ctable.DecoratorExists(_currentClass, decoratorName))
+            {
+                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}"));
+            }
+            return base.VisitDecorator(context);
+        }
+
+        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context) {
+            var functionName = context.ID().GetText();
+            var functionType = _ctable.GetFunctionType(_currentClass, functionName);
+            if (functionType is null)
+            {
+                _errors.Add(new CompilerError($"Function {functionName} does not exist"));
+            }
+            // TODO: CHECK ARGUMENTS AND RETURN TYPE MATCH YES :)))
+            return base.VisitCallExpression(context);
+        }
+
+        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context) {
+            return base.VisitReturn(context);
+        }
+
+        public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context) {
+            var leftType = Visit(context.left);
+            var rightType = Visit(context.right);
+            if (leftType == rightType)
+            {
+            return leftType;
+            } else
+            {
+                return _typeTable.Float;
+            }
+
+        }
+
+        public override SctType VisitLiteral([NotNull] SctParser.LiteralContext context) {
+            if (context.INT() is not null)
+            {
+                return _typeTable.Int;
+            } else if (context.FLOAT() is not null)
+            {
+                return _typeTable.Float;
+            }
         }
     }
 }
