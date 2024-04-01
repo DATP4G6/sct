@@ -15,9 +15,12 @@ namespace Sct.Compiler
             return _classes[className];
         }
 
-        public ClassContent GetGlobalContent(){
+        public ClassContent GetGlobalContent()
+        {
             return _globalClass;
         }
+
+
     }
 }
 
