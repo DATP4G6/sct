@@ -8,18 +8,14 @@
             {
             }
 
-            private bool __sct_decor1(IRuntimeContext ctx)
+            private bool __sct_decor(IRuntimeContext ctx)
             {
-            }
-
-            private bool __sct_decor2(IRuntimeContext ctx)
-            {
+                ctx.ExitRuntime();
             }
 
             private void __sct_Stable(IRuntimeContext ctx)
             {
-                __sct_decor1(ctx);
-                __sct_decor2(ctx);
+                __sct_decor(ctx);
             }
 
             public override BaseAgent Clone()

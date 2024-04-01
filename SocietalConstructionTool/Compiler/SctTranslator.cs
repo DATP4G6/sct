@@ -26,6 +26,7 @@ namespace Sct.Compiler
         // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
         private List<string> _stateNames = new();
+        private bool _isInDecorator;
 
         public override void ExitStart(SctParser.StartContext context)
         {
@@ -240,13 +241,23 @@ namespace Sct.Compiler
             ;
         }
 
+        public override void EnterDecorator([NotNull] SctParser.DecoratorContext context)
+        {
+            _isInDecorator = true;
+        }
+
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
+            _isInDecorator = false;
+
             var childBlock = _stack.Pop<BlockSyntax>();
+            // TODO: add return false as last statement to block
+            // childBlock = childBlock.AddStatements(returnStatement...)
+
             var mangledName = MangleName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // all decorators return void
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)), // all decorators return bool
                 mangledName
             )
             .WithParameterList(WithContextParameter([])) // all decorators take 0 arguments;
@@ -602,6 +613,10 @@ namespace Sct.Compiler
                     )
                 )
             ));
+
+            // TODO: push return true statement to stack if inside decorator
+            // if (_isInDecorator) ...
+            // _stack.Push(returnStatement...)
         }
 
         public override void ExitEnter([NotNull] SctParser.EnterContext context)
