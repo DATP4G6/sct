@@ -606,12 +606,18 @@ namespace Sct.Compiler
 
         public override void ExitEnter([NotNull] SctParser.EnterContext context)
         {
-            var @return = SyntaxFactory.ReturnStatement(
-                SyntaxFactory.InvocationExpression(
+            var state = SyntaxFactory.LiteralExpression(
+                SyntaxKind.StringLiteralExpression,
+                SyntaxFactory.Literal(MangleStringName(context.ID().GetText()))
+            );
+            var invocation = SyntaxFactory.ExpressionStatement(
+                    SyntaxFactory.InvocationExpression(
                     SyntaxFactory.IdentifierName(BaseAgent.EnterMethodName),
-                    WithContextArgument([])
+                    WithContextArgument([SyntaxFactory.Argument(state)])
                 )
             );
+            var @return = SyntaxFactory.ReturnStatement();
+            _stack.Push(invocation);
             _stack.Push(@return);
         }
 
