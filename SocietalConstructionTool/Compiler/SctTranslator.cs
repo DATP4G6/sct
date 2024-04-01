@@ -25,7 +25,7 @@ namespace Sct.Compiler
 
         // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
-        private List<string> stateNames = new();
+        private List<string> _stateNames = new();
 
         public override void ExitStart(SctParser.StartContext context)
         {
@@ -80,7 +80,7 @@ namespace Sct.Compiler
                         SyntaxFactory.IdentifierName(nameof(BaseAgent.State)),
                         // Add cases for each state in stateNames, calling the corresponding method of the same name
                         SyntaxFactory.SeparatedList(
-                            stateNames.Select(stateName => SyntaxFactory.SwitchExpressionArm(
+                            _stateNames.Select(stateName => SyntaxFactory.SwitchExpressionArm(
                                 SyntaxFactory.ConstantPattern(
                                     SyntaxFactory.LiteralExpression(
                                         SyntaxKind.StringLiteralExpression,
@@ -97,7 +97,7 @@ namespace Sct.Compiler
                 )
             );
 
-            stateNames = new();
+            _stateNames = new();
 
             var updateMethod = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -337,7 +337,7 @@ namespace Sct.Compiler
             .AddStatements(stateLogic.Statements.ToArray());
 
             var name = MangleName(context.ID().GetText());
-            stateNames.Add(name.Text);
+            _stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 MangleName(context.ID().GetText())
@@ -602,6 +602,23 @@ namespace Sct.Compiler
                     )
                 )
             ));
+        }
+
+        public override void ExitEnter([NotNull] SctParser.EnterContext context)
+        {
+            var @return = SyntaxFactory.ReturnStatement(
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.IdentifierName(BaseAgent.EnterMethodName),
+                    WithContextArgument([])
+                )
+            );
+            _stack.Push(@return);
+        }
+
+        public override void ExitDestroy([NotNull] SctParser.DestroyContext context)
+        {
+            var @return = SyntaxFactory.ReturnStatement();
+            _stack.Push(@return);
         }
 
         /// <summary>
