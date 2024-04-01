@@ -62,15 +62,19 @@ namespace Sct.Compiler
             return type;
         }
 
-        public override SctType VisitState([NotNull] SctParser.StateContext context) {
-            if (!_ctableBuilder.AddState(context.ID().GetText())){
+        public override SctType VisitState([NotNull] SctParser.StateContext context)
+        {
+            if (!_ctableBuilder.AddState(context.ID().GetText()))
+            {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
             }
             return _typeTable.Void;
         }
 
-        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context) {
-            if (!_ctableBuilder.AddDecorator(context.ID().GetText())){
+        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
+        {
+            if (!_ctableBuilder.AddDecorator(context.ID().GetText()))
+            {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
             }
             return _typeTable.Void;
