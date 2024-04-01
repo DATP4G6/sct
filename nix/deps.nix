@@ -4,6 +4,7 @@
 { fetchNuGet }: [
   (fetchNuGet { pname = "Antlr4.Runtime.Standard"; version = "4.13.1"; sha256 = "14f9qhqagw0l3x0f1jfv001dp313mp1b9d0jirk99q6qwis93yln"; })
   (fetchNuGet { pname = "Argon"; version = "0.17.0"; sha256 = "027fng81s6fj9hsl1pc4frrb2mkchbmmh9848ksdxixb05j5dclf"; })
+  (fetchNuGet { pname = "Castle.Core"; version = "5.1.1"; sha256 = "1caf4878nvjid3cw3rw18p9cn53brfs5x8dkvf82xvcdwc3i0nd1"; })
   (fetchNuGet { pname = "coverlet.collector"; version = "6.0.0"; sha256 = "12j34vrkmph8lspbafnqmfnj2qvysz1jcrks2khw798s6dwv0j90"; })
   (fetchNuGet { pname = "DiffEngine"; version = "15.3.0"; sha256 = "0291rgxr9knk6nsw7vqjhzkcvrgn02cklxmw3mi3s2p6scv8hs2s"; })
   (fetchNuGet { pname = "EmptyFiles"; version = "8.2.0"; sha256 = "10g2fyc1gvpnndbh5s6r6kfmlavv83w2xhbqi9h2qry3g25bqc7j"; })
@@ -51,6 +52,7 @@
   (fetchNuGet { pname = "Microsoft.TestPlatform.TestHost"; version = "17.6.0"; sha256 = "16vpicp4q2kbpgr3qwpsxg7srabxqszx23x6smjvvrvz7qmr5v8i"; })
   (fetchNuGet { pname = "Microsoft.Win32.Registry"; version = "4.3.0"; sha256 = "1gxyzxam8163vk1kb6xzxjj4iwspjsz9zhgn1w9rjzciphaz0ig7"; })
   (fetchNuGet { pname = "Microsoft.Win32.SystemEvents"; version = "4.7.0"; sha256 = "0pjll2a62hc576hd4wgyasva0lp733yllmk54n37svz5ac7nfz0q"; })
+  (fetchNuGet { pname = "Moq"; version = "4.20.70"; sha256 = "0jzfxvw5ngxld2rfzq1361lqzi3f8shywqd4546ayz7wgga1vq9v"; })
   (fetchNuGet { pname = "MSTest.TestAdapter"; version = "3.2.2"; sha256 = "14nrxg1cd3lzaxw7zz8z91168sgnsf1xxnrpdy7wkd6ggk22hi19"; })
   (fetchNuGet { pname = "MSTest.TestFramework"; version = "3.2.2"; sha256 = "0igdrjr300bqz5lnibf9vl8pkaky1l27f889gza3a9xs83mpd06p"; })
   (fetchNuGet { pname = "Newtonsoft.Json"; version = "13.0.1"; sha256 = "0fijg0w6iwap8gvzyjnndds0q4b8anwxxvik7y8vgq97dram4srb"; })
@@ -98,6 +100,7 @@
   (fetchNuGet { pname = "System.Composition.TypedParts"; version = "7.0.0"; sha256 = "0syz7y6wgnxxgjvfqgymn9mnaa5fjy1qp06qnsvh3agr9mvcv779"; })
   (fetchNuGet { pname = "System.Configuration.ConfigurationManager"; version = "4.7.0"; sha256 = "0pav0n21ghf2ax6fiwjbng29f27wkb4a2ddma0cqx04s97yyk25d"; })
   (fetchNuGet { pname = "System.Diagnostics.DiagnosticSource"; version = "5.0.0"; sha256 = "0phd2qizshjvglhzws1jd0cq4m54gscz4ychzr3x6wbgl4vvfrga"; })
+  (fetchNuGet { pname = "System.Diagnostics.EventLog"; version = "6.0.0"; sha256 = "08y1x2d5w2hnhkh9r1998pjc7r4qp0rmzax062abha85s11chifd"; })
   (fetchNuGet { pname = "System.Drawing.Common"; version = "4.7.0"; sha256 = "0yfw7cpl54mgfcylvlpvrl0c8r1b0zca6p7r3rcwkvqy23xqcyhg"; })
   (fetchNuGet { pname = "System.Globalization"; version = "4.0.11"; sha256 = "070c5jbas2v7smm660zaf1gh0489xanjqymkvafcs4f8cdrs1d5d"; })
   (fetchNuGet { pname = "System.Globalization"; version = "4.3.0"; sha256 = "1cp68vv683n6ic2zqh2s1fn4c2sd87g5hpp6l4d4nj4536jz98ki"; })
