@@ -331,13 +331,21 @@ namespace Sct.Compiler
             stateLogic = stateLogic.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
 
             // create statement list of decorators
-            var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
-            .Select(SyntaxFactory.ExpressionStatement)
-            .Cast<StatementSyntax>(); // TODO: Cast is unsafe
+            var decorators = _stack.PopWhile<InvocationExpressionSyntax>();
+            //.Select(SyntaxFactory.ExpressionStatement);
+            //.Cast<ExpressionSyntax>(); // TODO: Cast is unsafe
+
+            var ifs = decorators.Select(decor => {
+                //var condition = SyntaxFactory.ExpressionStatement(decor);
+                var return_block = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+
+                return SyntaxFactory.IfStatement(decor, return_block);
+            });
+
 
             // create new body with decorators first, then state logic
             var body = SyntaxFactory.Block()
-            .AddStatements(decorators.ToArray())
+            .AddStatements(ifs.ToArray())
             .AddStatements(stateLogic.Statements.ToArray());
 
             var name = MangleName(context.ID().GetText());
