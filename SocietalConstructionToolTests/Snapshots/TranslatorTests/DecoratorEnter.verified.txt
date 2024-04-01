@@ -10,15 +10,20 @@
 
             private bool __sct_decor(IRuntimeContext ctx)
             {
+                Enter(ctx, "__sct_Growing");
+                return true;
+                return false;
             }
 
-            private void __sct_Stable(IRuntimeContext ctx)
+            private bool __sct_Stable(IRuntimeContext ctx)
             {
                 __sct_decor(ctx);
+                return false;
             }
 
-            private void __sct_Growing(IRuntimeContext ctx)
+            private bool __sct_Growing(IRuntimeContext ctx)
             {
+                return false;
             }
 
             public override BaseAgent Clone()

@@ -10,16 +10,19 @@
 
             private bool __sct_decor1(IRuntimeContext ctx)
             {
+                return false;
             }
 
             private bool __sct_decor2(IRuntimeContext ctx)
             {
+                return false;
             }
 
-            private void __sct_Stable(IRuntimeContext ctx)
+            private bool __sct_Stable(IRuntimeContext ctx)
             {
                 __sct_decor1(ctx);
                 __sct_decor2(ctx);
+                return false;
             }
 
             public override BaseAgent Clone()

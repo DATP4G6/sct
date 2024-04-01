@@ -8,14 +8,16 @@
             {
             }
 
-            private void __sct_Child(IRuntimeContext ctx)
+            private bool __sct_Child(IRuntimeContext ctx)
             {
                 Enter(ctx, "__sct_Adult");
-                return;
+                return true;
+                return false;
             }
 
-            private void __sct_Adult(IRuntimeContext ctx)
+            private bool __sct_Adult(IRuntimeContext ctx)
             {
+                return false;
             }
 
             public override BaseAgent Clone()
