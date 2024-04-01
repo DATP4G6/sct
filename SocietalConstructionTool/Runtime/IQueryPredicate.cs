@@ -1,7 +1,12 @@
 namespace Sct.Runtime
 {
-    public interface IQueryPredicate<T> where T : BaseAgent
+    public interface IQueryPredicate
     {
+        /// <summary>
+        /// Name of the class this predicate targets
+        /// </summary>
+        public string ClassName { get; }
+
         /// <summary>
         /// The state that the predicate should check.
         /// Can be null, as wildcards are allowed.

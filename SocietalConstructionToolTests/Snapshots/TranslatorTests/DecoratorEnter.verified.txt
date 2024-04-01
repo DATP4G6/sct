@@ -1,8 +1,10 @@
 ﻿namespace MyNamespace
 {
+    using Sct.Runtime;
+
     public class GlobalClass
     {
-        public class __sct_Town : Sct.Runtime.BaseAgent
+        public class __sct_Town : BaseAgent
         {
             public __sct_Town(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
@@ -41,10 +43,10 @@
             }
         }
 
-        public static void Main()
+        public static void Main(string[] args)
         {
             Runtime runtime = new Runtime();
-            RuntimeContext ctx = new RuntimeContext();
+            RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
             __sct_Setup(ctx);
             runtime.Run(ctx);
         }

@@ -233,9 +233,9 @@ namespace Sct.Compiler
                 SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(Dictionary<string, dynamic>)))
                     .WithArgumentList(SyntaxFactory.ArgumentList( // add arguments
                         SyntaxFactory.SeparatedList(keyValuePairs)
-                    ))
+                    )
                 )
-            ;
+            );
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
@@ -538,6 +538,38 @@ namespace Sct.Compiler
             );
 
             _stack.Push(createAgent);
+        }
+
+        public override void ExitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
+        {
+            var fields = _stack.Pop<ObjectCreationExpressionSyntax>();
+            // TODO: Extract literals like this into method. It gets very repetitive.
+            var className = SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
+                SyntaxKind.StringLiteralExpression,
+                SyntaxFactory.Literal(MangleStringName(context.ID(0).GetText()))
+            ));
+            var state = context.QUESTION() switch
+            {
+                null => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
+                        SyntaxKind.StringLiteralExpression,
+                        SyntaxFactory.Literal(MangleStringName(context.ID(1).GetText()))
+                    )),
+                _ => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
+                        SyntaxKind.NullLiteralExpression
+                    )),
+            };
+            var predicate = SyntaxFactory.ObjectCreationExpression(
+                SyntaxFactory.ParseTypeName(nameof(QueryPredicate))
+            ).WithArgumentList(
+                SyntaxFactory.ArgumentList(
+                    SyntaxFactory.SeparatedList([
+                        className,
+                        state,
+                        SyntaxFactory.Argument(fields)
+                    ])
+                )
+            );
+            _stack.Push(predicate);
         }
 
         public override void ExitBreak([NotNull] SctParser.BreakContext context)

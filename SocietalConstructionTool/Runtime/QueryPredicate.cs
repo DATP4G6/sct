@@ -1,21 +1,23 @@
 namespace Sct.Runtime
 {
-    public class QueryPredicate<T> : IQueryPredicate<T> where T : BaseAgent
+    public class QueryPredicate : IQueryPredicate
     {
+        public string ClassName { get; }
         public string? State { get; }
 
         public IDictionary<string, dynamic> Fields { get; }
 
-        public QueryPredicate(string? state, IDictionary<string, dynamic> fields)
+        public QueryPredicate(string className, string? state, IDictionary<string, dynamic> fields)
         {
+            ClassName = className;
             State = state;
             Fields = fields;
         }
 
         public bool Test(BaseAgent agent)
         {
-            // Match the agent type
-            if (agent is not T)
+            // Match the class name
+            if (agent.GetType().Name != ClassName)
             {
                 return false;
             }
