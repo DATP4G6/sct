@@ -10,26 +10,13 @@ namespace Sct.Compiler
             _globalClass = globalClass;
         }
 
-        public FunctionType GetFunctionType(string className, string functionName)
+        public ClassContent GetClassContent(string className)
         {
-            if (_classes.TryGetValue(className, out ClassContent classContent))
-            {
-                return classContent.Ftable.GetFunctionType(functionName);
-            }
-            else
-            {
-                return _globalClass.Ftable.GetFunctionType(functionName);
-            }
+            return _classes[className];
         }
 
-        public bool StateExists(string className, string stateName)
-        {
-            return _classes.TryGetValue(className, out ClassContent classContent) && classContent.STable.Contains(stateName);
-        }
-
-        public bool DecoratorExists(string className, string decoratorName)
-        {
-            return _classes.TryGetValue(className, out ClassContent classContent) && classContent.Dtable.Contains(decoratorName);
+        public ClassContent GetGlobalContent(){
+            return _globalClass;
         }
     }
 }

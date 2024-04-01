@@ -9,17 +9,30 @@ namespace Sct.Compiler
     {
         private readonly TypeTable _typeTable = new();
 
-
         private readonly Ctable _ctable;
 
-        private string _currentClass = "Global";
-        // private ClassContent _currentClass
+        private ClassContent _currentClass;
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
         public SctTypeChecker(Ctable ctable)
         {
             _ctable = ctable;
+            _currentClass = _ctable.GetGlobalContent();
+        }
+
+        public FunctionType GetFunctionType(string functionName)
+        {
+            if (_currentClass.LookupFunctionType(functionName) is FunctionType functionType)
+            {
+                return functionType;
+            }
+            else if (_ctable.GetGlobalContent().LookupFunctionType(functionName) is FunctionType globalFunctionType)
+            {
+                return globalFunctionType;
+            }
+            _errors.Add(new CompilerError($"Function {functionName} does not exist"));
+            return new FunctionType(_typeTable.Void, new List<SctType>());
         }
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
@@ -48,16 +61,16 @@ namespace Sct.Compiler
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
-            _currentClass = context.ID().GetText();
+            _currentClass = _ctable.GetClassContent(context.ID().GetText());
             _ = base.VisitClass_def(context);
-            _currentClass = "Global";
+            _currentClass = _ctable.GetGlobalContent();
             return _typeTable.Void;
         }
 
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var stateName = context.ID().GetText();
-            if (!_ctable.StateExists(_currentClass, stateName))
+            if (!_currentClass.StateExists(stateName))
             {
                 _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}"));
             }
@@ -67,7 +80,7 @@ namespace Sct.Compiler
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var decoratorName = context.ID().GetText();
-            if (!_ctable.DecoratorExists(_currentClass, decoratorName))
+            if (!_currentClass.DecoratorExists(decoratorName))
             {
                 _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}"));
             }
@@ -77,11 +90,7 @@ namespace Sct.Compiler
         public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var functionName = context.ID().GetText();
-            var functionType = _ctable.GetFunctionType(_currentClass, functionName);
-            if (functionType is null)
-            {
-                _errors.Add(new CompilerError($"Function {functionName} does not exist"));
-            }
+            var functionType = GetFunctionType(functionName);
             // TODO: CHECK ARGUMENTS AND RETURN TYPE MATCH YES :)))
             return base.VisitCallExpression(context);
         }
@@ -121,5 +130,7 @@ namespace Sct.Compiler
                 return _typeTable.Int;
             }
         }
+
+
     }
 }

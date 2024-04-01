@@ -64,10 +64,22 @@ namespace Sct.Compiler
             return Ftable.GetFunctionType(name);
         }
 
+        public bool StateExists(string stateName)
+        {
+            return STable.Contains(stateName);
+        }
+
+        public bool DecoratorExists(string decoratorName)
+        {
+            return Dtable.Contains(decoratorName);
+        }
+
         private bool IDExists(string name)
         {
             return Ftable.GetFunctionType(name) is not null || STable.Contains(name) || Dtable.Contains(name);
         }
+
+
     }
 }
 
