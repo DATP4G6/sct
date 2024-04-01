@@ -2,16 +2,15 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctReturnCheckVisitor : SctBaseVisitor<bool>, IErrorReporter
     {
-        private readonly TypeTable _typeTable = new();
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
 
         public override bool VisitFunction(SctParser.FunctionContext context)
         {
-            var @type = _typeTable.GetType(context.type().GetText());
+            var @type = TypeTable.GetType(context.type().GetText());
             var returns = @type switch
             {
-                { } when @type == _typeTable.Void => true,
+                { } when @type == TypeTable.Void => true,
                 _ => context.statement_list().Accept(this)
             };
 

@@ -5,13 +5,13 @@ using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
 {
-    public class TypeTable
+    public static class TypeTable
     {
-        public SctType Void => _types["void"];
-        public SctType Int => _types["int"];
-        public SctType Float => _types["float"];
-        public SctType Predicate => _types["Predicate"];
-        private readonly Dictionary<string, SctType> _types = new()
+        public static SctType Void => _types["void"];
+        public static SctType Int => _types["int"];
+        public static SctType Float => _types["float"];
+        public static SctType Predicate => _types["Predicate"];
+        private static readonly Dictionary<string, SctType> _types = new()
         {
             { "int", new SctType(typeof(int)) },
             { "float", new SctType(typeof(double)) },
@@ -19,9 +19,9 @@ namespace Sct.Compiler
             { "Predicate", new SctType(typeof(void)) },
         };
 
-        public SctType? GetType(string name) => _types[name];
+        public static SctType? GetType(string name) => _types[name];
 
-        public TypeSyntax GetTypeNode(string name)
+        public static TypeSyntax GetTypeNode(string name)
         {
             SctType type = (_types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
             if (type == _types["Predicate"])
@@ -32,8 +32,8 @@ namespace Sct.Compiler
             return SyntaxFactory.ParseTypeName(typeName);
         }
 
-        public bool TypeIsNumeric(SctType type) => type == Int || type == Float;
+        public static bool TypeIsNumeric(SctType type) => type == Int || type == Float;
 
-        public bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
+        public static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
     }
 }

@@ -37,6 +37,11 @@ namespace Sct
             return false;
         }
 
+        public bool AddField(string name, SctType type)
+        {
+            return _currentClass.Value.AddField(name, type);
+        }
+
         public bool AddFunction(string functionName, FunctionType functionType)
         {
             if (IDExistsGlobal(functionName))
