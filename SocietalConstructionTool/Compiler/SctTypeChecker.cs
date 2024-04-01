@@ -162,5 +162,16 @@ namespace Sct.Compiler
 
             return variableType;
         }
+
+        public override SctType VisitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
+        {
+            var leftType = context.expression(0).Accept(this);
+            var rightType = context.expression(1).Accept(this);
+            if (leftType != _typeTable.Int || rightType != _typeTable.Int)
+            {
+                _errors.Add(new CompilerError("Boolean expression must have integer types"));
+            }
+            return _typeTable.Int;
+        }
     }
 }
