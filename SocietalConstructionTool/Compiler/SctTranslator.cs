@@ -230,14 +230,14 @@ namespace Sct.Compiler
                 )
             );
 
-            // convert to 'return new Dictionary(...)' statement
-            _stack.Push(SyntaxFactory.ReturnStatement(
+            // convert to 'new Dictionary(...)' statement
+            _stack.Push(
                 SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(Dictionary<string, dynamic>)))
                     .WithArgumentList(SyntaxFactory.ArgumentList( // add arguments
                         SyntaxFactory.SeparatedList(keyValuePairs)
                     ))
                 )
-            );
+            ;
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
@@ -488,37 +488,51 @@ namespace Sct.Compiler
             _stack.Push(call);
         }
 
-                public override void ExitAgent_create([NotNull] SctParser.Agent_createContext context)
+        public override void ExitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
-           var contxt = context.ID(1).GetText();
-           var dictionary = _stack.Pop<ObjectCreationExpressionSyntax>();
-           var test2 = SyntaxFactory.InvocationExpression(SyntaxFactory.MemberAccessExpression(
+            var fields = _stack.Pop<ObjectCreationExpressionSyntax>();
+            var state = MangleStringName(context.ID(1).GetText());
+            var type = MangleStringName(context.ID(0).GetText());
+
+            var agent = SyntaxFactory.ObjectCreationExpression(
+                SyntaxFactory.ParseTypeName(type))
+            .WithArgumentList(
+                SyntaxFactory.ArgumentList(
+                    SyntaxFactory.SeparatedList(new[]
+                    {
+                        SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(state)
+                        )),
+                        SyntaxFactory.Argument(fields)
+                    })
+                )
+            );
+
+            var createAgent = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.MemberAccessExpression(
+                        SyntaxKind.SimpleMemberAccessExpression,
+                        SyntaxFactory.MemberAccessExpression(
                             SyntaxKind.SimpleMemberAccessExpression,
-                            SyntaxFactory.MemberAccessExpression(
-                                SyntaxKind.SimpleMemberAccessExpression,
-                                SyntaxFactory.IdentifierName(ContextIdentifier),
-                                SyntaxFactory.IdentifierName(nameof(IRuntimeContext.AgentHandler))),
-                            SyntaxFactory.IdentifierName(nameof(IAgentHandler.CreateAgent))
-                            )); 
+                            SyntaxFactory.IdentifierName(ContextIdentifier),
+                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.AgentHandler))),
+                        SyntaxFactory.IdentifierName(nameof(IAgentHandler.CreateAgent))
+                        )
+                    )
+                    .WithArgumentList(
+                        SyntaxFactory.ArgumentList(
+                            SyntaxFactory.SeparatedList(new[]
+                            {
+                                SyntaxFactory.Argument(agent)
+                            })
+                        )
+                    )
+            );
 
-        
-           var test = SyntaxFactory.ExpressionStatement(test2);
-           _stack.Push(test);
-
+            _stack.Push(createAgent);
         }
 
-        //public override void ExitAgentPredicateExpression([NotNull] SctParser.AgentPredicateExpressionContext context)
-        //{
-        //    var predicate = context.agent_predicate;
-        //    var test = SyntaxFactory.FromClause(predicate);
-
-        //    var expression = SyntaxFactory.QueryBody(SyntaxFactory.SelectClause(_stack.Pop<ExpressionSyntax>()));
-        //    var agent_pred = SyntaxFactory.QueryExpression(predicate, expression);
-        //    _stack.Push(agent_pred);
-        //}
-
-        // BELOW ARE TEMPORARY METHODS TO MAKE THE COMPILER WORK
-        // WE NEED TO DROP BLOCKS FROM THE STACK UNTILL THEY ARE PROPERLY IMPLEMENTED
         public override void ExitBreak([NotNull] SctParser.BreakContext context)
         {
             // TODO: check if we can break before doing it

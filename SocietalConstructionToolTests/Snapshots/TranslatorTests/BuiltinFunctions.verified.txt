@@ -2,27 +2,34 @@
 {
     public class GlobalClass
     {
-        public class __sct_Citizen : Sct.Runtime.BaseAgent
+        public static void __sct_f(IRuntimeContext ctx)
         {
-            public __sct_Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            __sct_exists(ctx, new Dictionary());
+            __sct_count(ctx, new Dictionary());
+            __sct_rand(ctx);
+            __sct_seed(ctx, 123);
+        }
+
+        public class __sct_Foo : Sct.Runtime.BaseAgent
+        {
+            public __sct_Foo(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
             }
 
-            private void __sct_Adult(IRuntimeContext ctx)
+            private void __sct_Bar(IRuntimeContext ctx)
             {
-                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary()));
             }
 
             public override BaseAgent Clone()
             {
-                return new __sct_Citizen(State, Fields);
+                return new __sct_Foo(State, Fields);
             }
 
             public override void Update(IRuntimeContext ctx)
             {
                 State switch
                 {
-                    "__sct_Adult" => __sct_Adult(ctx)};
+                    "__sct_Bar" => __sct_Bar(ctx)};
             }
         }
 

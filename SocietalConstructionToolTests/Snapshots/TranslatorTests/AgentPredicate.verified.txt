@@ -1,0 +1,46 @@
+﻿namespace MyNamespace
+{
+    public class GlobalClass
+    {
+        public static void __sct_f(IRuntimeContext ctx)
+        {
+            __sct_exists(ctx, new Dictionary(new KeyValuePair("__sct_a", 2)));
+            __sct_exists(ctx, new Dictionary());
+            __sct_exists(ctx, new Dictionary(new KeyValuePair("__sct_a", 3)));
+            __sct_exists(ctx, new Dictionary());
+        }
+
+        public class __sct_Foo : Sct.Runtime.BaseAgent
+        {
+            private int __sct_a { get => Fields["__sct_a"]; set => Fields["__sct_a"] = value; }
+
+            public __sct_Foo(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private void __sct_Bar(IRuntimeContext ctx)
+            {
+            }
+
+            public override BaseAgent Clone()
+            {
+                return new __sct_Foo(State, Fields);
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                State switch
+                {
+                    "__sct_Bar" => __sct_Bar(ctx)};
+            }
+        }
+
+        public static void Main()
+        {
+            Runtime runtime = new Runtime();
+            RuntimeContext ctx = new RuntimeContext();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}
