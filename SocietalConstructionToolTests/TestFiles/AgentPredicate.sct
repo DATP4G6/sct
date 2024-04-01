@@ -1,11 +1,11 @@
-class Foo(int a) {
+class Foo(int a, int b) {
     state Bar {
 
     }
 }
 
 function f() -> void {
-    exists(Foo::Bar(a: 2));
+    exists(Foo::Bar(a: 2, b: 3));
     exists(Foo::Bar());
     exists(Foo::?(a: 3));
     exists(Foo::?());

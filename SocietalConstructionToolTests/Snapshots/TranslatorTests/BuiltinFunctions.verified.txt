@@ -6,8 +6,8 @@
     {
         public static void __sct_f(IRuntimeContext ctx)
         {
-            __sct_exists(ctx, new Dictionary());
-            __sct_count(ctx, new Dictionary());
+            __sct_exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary()));
+            __sct_count(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary()));
             __sct_rand(ctx);
             __sct_seed(ctx, 123);
         }

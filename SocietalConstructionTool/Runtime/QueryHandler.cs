@@ -8,10 +8,10 @@ namespace Sct.Runtime
             _agents = agents;
         }
 
-        private IEnumerable<BaseAgent> Filter(IQueryPredicate<BaseAgent> predicate) => _agents.Where(a => predicate.Test(a));
+        private IEnumerable<BaseAgent> Filter(IQueryPredicate predicate) => _agents.Where(a => predicate.Test(a));
 
-        public int Count(IQueryPredicate<BaseAgent> predicate) => Filter(predicate).Count();
+        public int Count(IQueryPredicate predicate) => Filter(predicate).Count();
 
-        public bool Exists(IQueryPredicate<BaseAgent> predicate) => Count(predicate) > 0;
+        public bool Exists(IQueryPredicate predicate) => Count(predicate) > 0;
     }
 }
