@@ -7,7 +7,7 @@ namespace Sct.Runtime
             IRuntimeContext prevCtx = initialContext;
             while (!prevCtx.ShouldExit)
             {
-                IRuntimeContext nextCtx = RuntimeContextFactory.CreateNext(prevCtx);
+                IRuntimeContext nextCtx = prevCtx.GetNextContext();
                 foreach (var agent in prevCtx.AgentHandler.Agents)
                 {
                     agent.Update(nextCtx);
