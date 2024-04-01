@@ -31,7 +31,6 @@ namespace Sct.Compiler
 
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
-        private readonly TypeTable _typeTable = new();
 
         // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
@@ -299,7 +298,7 @@ namespace Sct.Compiler
             var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var variable = SyntaxFactory.VariableDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText()) // set type
+                TypeTable.GetTypeNode(context.type().GetText()) // set type
             )
             .AddVariables(
                 SyntaxFactory.VariableDeclarator(mangledName) // set name
@@ -473,7 +472,7 @@ namespace Sct.Compiler
         public override void ExitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
             var node = _stack.Pop<ExpressionSyntax>();
-            var type = _typeTable.GetTypeNode(context.type().GetText());
+            var type = TypeTable.GetTypeNode(context.type().GetText());
             _stack.Push(SyntaxFactory.CastExpression(type, node));
         }
 

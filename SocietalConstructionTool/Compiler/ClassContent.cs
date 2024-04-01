@@ -3,17 +3,17 @@ namespace Sct.Compiler
     public class ClassContent
     {
         public Ftable Ftable { get; }
-        public Vtable Vtable { get; }
         public List<string> STable { get; }
         public List<string> Dtable { get; }
+        public Dictionary<string, SctType> Fields { get; }
 
 
         public ClassContent()
         {
+            Fields = new Dictionary<string, SctType>();
             Ftable = new Ftable();
             STable = new List<string>();
             Dtable = new List<string>();
-            Vtable = new Vtable();
         }
 
         public bool AddFunction(string name, FunctionType functionType)
@@ -45,20 +45,6 @@ namespace Sct.Compiler
             return true;
         }
 
-        public bool AddVariable(string name, SctType type)
-        {
-            if (IDExists(name))
-            {
-                return false;
-            }
-            Vtable.AddEntry(name, type);
-            return true;
-        }
-
-        public SctType LookupVariable(string name)
-        {
-            return Vtable.Lookup(name);
-        }
         public string? LookupState(string name)
         {
             return STable.Contains(name) ? name : null;
@@ -78,6 +64,16 @@ namespace Sct.Compiler
         {
 
             return Ftable.GetFunctionType(name) is not null || STable.Contains(name) || Dtable.Contains(name);
+        }
+
+        public bool AddField(string name, SctType type)
+        {
+            if (IDExists(name))
+            {
+                return false;
+            }
+            Fields.Add(name, type);
+            return true;
         }
     }
 }

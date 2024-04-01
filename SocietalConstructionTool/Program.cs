@@ -32,6 +32,7 @@ static int SctParseMethod()
     _ = parser.start().Accept(sctTypeChecker);
     parser.Reset();
 
+    errors.AddRange(sctTypeChecker.Errors);
     if (errors.Count > 0)
     {
         foreach (var error in errors)

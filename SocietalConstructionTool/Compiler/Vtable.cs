@@ -6,16 +6,20 @@ namespace Sct.Compiler
     {
         private readonly StackAdapter<VtableEntry> _entries = new StackAdapter<VtableEntry>();
 
-        public void AddEntry(string name, SctType type)
+        public bool AddEntry(string name, SctType type)
         {
+            if (_entries.Any(x => x.Name == name))
+            {
+                return false;
+            }
             _entries.Push(new VtableEntry(name, type));
+            return true;
         }
 
-        public SctType Lookup(string name)
+        public SctType? Lookup(string name)
         {
             return _entries.Where(x => x.Name == name)
-                    .FirstOrDefault()?
-                    .Type ?? throw new UnrecognizedNodeException("Vtable entry not found: " + name);
+                    .FirstOrDefault()?.Type;
         }
 
         public void EnterScope()
