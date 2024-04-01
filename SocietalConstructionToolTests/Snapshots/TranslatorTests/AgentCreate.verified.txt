@@ -8,9 +8,10 @@
             {
             }
 
-            private void __sct_Adult(IRuntimeContext ctx)
+            private bool __sct_Adult(IRuntimeContext ctx)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary()));
+                return false;
             }
 
             public override BaseAgent Clone()

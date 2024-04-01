@@ -11,11 +11,14 @@
             private bool __sct_decor(IRuntimeContext ctx)
             {
                 ctx.ExitRuntime();
+                return true;
+                return false;
             }
 
-            private void __sct_Stable(IRuntimeContext ctx)
+            private bool __sct_Stable(IRuntimeContext ctx)
             {
                 __sct_decor(ctx);
+                return false;
             }
 
             public override BaseAgent Clone()

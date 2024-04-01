@@ -8,8 +8,9 @@
             {
             }
 
-            private void __sct_Stable(IRuntimeContext ctx)
+            private bool __sct_Stable(IRuntimeContext ctx)
             {
+                return false;
             }
 
             public override BaseAgent Clone()
