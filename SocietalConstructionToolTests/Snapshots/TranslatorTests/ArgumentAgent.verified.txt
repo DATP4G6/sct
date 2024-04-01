@@ -13,7 +13,7 @@
 
             private void __sct_Adult(IRuntimeContext ctx)
             {
-                return new Dictionary(new KeyValuePair("__sct_id", 5), new KeyValuePair("__sct_height", 20.5));
+                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary(new KeyValuePair("__sct_id", 5), new KeyValuePair("__sct_height", 20.5))));
             }
 
             public override BaseAgent Clone()
