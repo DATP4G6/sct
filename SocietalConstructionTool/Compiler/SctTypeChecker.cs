@@ -12,6 +12,8 @@ namespace Sct.Compiler
 
         private ClassContent _currentClass;
 
+        private FunctionType currentFunctionType;
+
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
         public SctTypeChecker(Ctable ctable)
@@ -93,17 +95,42 @@ namespace Sct.Compiler
             return base.VisitDecorator(context);
         }
 
-        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
+        public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
         {
-            // var functionName = context.ID().GetText();
-            // var functionType = GetFunctionType(functionName);
-            // TODO: CHECK ARGUMENTS AND RETURN TYPE MATCH YES :)))
-            return base.VisitCallExpression(context);
+            var functionName = context.ID().GetText();
+            currentFunctionType = GetFunctionType(functionName);
+            return base.VisitFunction(context);
         }
 
-        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
+        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
-            return base.VisitReturn(context);
+            var functionName = context.ID().GetText();
+            var functionParamTypes = GetFunctionType(functionName).ParameterTypes;
+            var argumentTypes = context.args_call().expression().Select(expression => expression.Accept(this)).ToList();
+            if (functionParamTypes.Count == argumentTypes.Count)
+            {
+                foreach (var (functionParamType, argumentType) in functionParamTypes.Zip(argumentTypes))
+                {
+                    if (functionParamType != argumentType)
+                    {
+                        _errors.Add(new CompilerError($"Type mismatch: {functionParamType} != {argumentType}"));
+                    }
+                }
+            } else {
+                _errors.Add(new CompilerError($"Function {functionName} expected {functionParamTypes.Count} arguments, but {argumentTypes.Count} were provided"));
+            }
+            return GetFunctionType(functionName).ReturnType;
+        }
+
+        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context) {
+            var returnType = context.expression().Accept(this);
+            var functionReturnType = currentFunctionType.ReturnType;
+            if (returnType != functionReturnType)
+            {
+                _errors.Add(new CompilerError("Return type does not match function return type"));
+                returnType = functionReturnType;
+            }
+            return returnType;
         }
 
         public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
@@ -242,6 +269,14 @@ namespace Sct.Compiler
             }
 
             return _typeTable.Predicate;
+        }
+
+        public override SctType VisitStatement_list([NotNull] SctParser.Statement_listContext context)
+        {
+            _currentClass.Vtable.EnterScope();
+            _ = base.VisitStatement_list(context);
+            _currentClass.Vtable.ExitScope();
+            return _typeTable.Void;
         }
     }
 }
