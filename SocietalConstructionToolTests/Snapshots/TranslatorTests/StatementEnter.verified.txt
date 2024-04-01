@@ -10,6 +10,7 @@
 
             private void __sct_Child(IRuntimeContext ctx)
             {
+                return Enter(ctx);
             }
 
             private void __sct_Adult(IRuntimeContext ctx)

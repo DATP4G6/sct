@@ -10,6 +10,7 @@
 
             private void __sct_Adult(IRuntimeContext ctx)
             {
+                return;
             }
 
             public override BaseAgent Clone()
