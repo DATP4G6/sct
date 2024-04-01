@@ -1,4 +1,3 @@
-
 using Antlr4.Runtime.Misc;
 
 using Sct.Compiler.Exceptions;
@@ -49,13 +48,20 @@ namespace Sct.Compiler
             SctType type = _typeTable.GetType(typeName) ?? throw new InvalidTypeException($"Type {typeName} does not exist");
             if (type == _typeTable.GetType("Predicate"))
             {
-                // Errors.Add(new InvalidTypeException("Variable cannot have a Predicate type"));
+                _errors.Add(new CompilerError("Variable cannot have a Predicate type"));
             }
             SctType expressionType = Visit(context.expression()); // This should call our overridden VisitExpression method with the expression context.
             if (type != expressionType)
             {
-                //Errors.Add(new InvalidTypeException($"Type mismatch: {type} != {expressionType}"));
+                _errors.Add(new CompilerError($"Type mismatch: {type} != {expressionType}"));
             }
+
+            if (!_currentClass.AddVariable(context.ID().GetText(), type))
+            {
+                _errors.Add(new CompilerError($"Variable {context.ID().GetText()} already exists"));
+                return _currentClass.LookupVariable(context.ID().GetText());
+            }
+
             return type;
         }
 
@@ -70,7 +76,7 @@ namespace Sct.Compiler
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var stateName = context.ID().GetText();
-            if (!_currentClass.StateExists(stateName))
+            if (_currentClass.LookupState(stateName) is null)
             {
                 _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}"));
             }
@@ -80,7 +86,7 @@ namespace Sct.Compiler
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var decoratorName = context.ID().GetText();
-            if (!_currentClass.DecoratorExists(decoratorName))
+            if (_currentClass.LookupDecorator(decoratorName) is null)
             {
                 _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}"));
             }
@@ -89,8 +95,8 @@ namespace Sct.Compiler
 
         public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
-            var functionName = context.ID().GetText();
-            var functionType = GetFunctionType(functionName);
+            // var functionName = context.ID().GetText();
+            // var functionType = GetFunctionType(functionName);
             // TODO: CHECK ARGUMENTS AND RETURN TYPE MATCH YES :)))
             return base.VisitCallExpression(context);
         }
@@ -131,6 +137,30 @@ namespace Sct.Compiler
             }
         }
 
+        // This method is unnecessary, as we can just return the type of the expression inside the parentheses.
+        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
+        {
+            return context.expression().Accept(this);
+        }
 
+        public override SctType VisitAssignment([NotNull] SctParser.AssignmentContext context)
+        {
+            var variableName = context.ID().GetText();
+            var variableType = _currentClass.LookupVariable(variableName);
+            var expressionType = context.expression().Accept(this);
+
+            if (variableType is null)
+            {
+                _errors.Add(new CompilerError($"Variable {variableName} does not exist"));
+                return _typeTable.Int;
+            }
+
+            if (variableType != expressionType)
+            {
+                _errors.Add(new CompilerError($"Type mismatch: {variableType} != {expressionType}"));
+            }
+
+            return variableType;
+        }
     }
 }

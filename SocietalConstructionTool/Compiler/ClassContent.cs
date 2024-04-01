@@ -3,22 +3,18 @@ namespace Sct.Compiler
     public class ClassContent
     {
         public Ftable Ftable { get; }
+        public Vtable Vtable { get; }
         public List<string> STable { get; }
         public List<string> Dtable { get; }
+
 
         public ClassContent()
         {
             Ftable = new Ftable();
             STable = new List<string>();
             Dtable = new List<string>();
+            Vtable = new Vtable();
         }
-
-        public ClassContent(Ftable ftable)
-        {
-            Ftable = ftable;
-        }
-
-
 
         public bool AddFunction(string name, FunctionType functionType)
         {
@@ -49,12 +45,26 @@ namespace Sct.Compiler
             return true;
         }
 
-        public string lookupState(string name)
+        public bool AddVariable(string name, SctType type)
+        {
+            if (IDExists(name))
+            {
+                return false;
+            }
+            Vtable.AddEntry(name, type);
+            return true;
+        }
+
+        public SctType LookupVariable(string name)
+        {
+            return Vtable.Lookup(name);
+        }
+        public string? LookupState(string name)
         {
             return STable.Contains(name) ? name : null;
         }
 
-        public string lookupDecorator(string name)
+        public string? LookupDecorator(string name)
         {
             return Dtable.Contains(name) ? name : null;
         }
@@ -64,22 +74,11 @@ namespace Sct.Compiler
             return Ftable.GetFunctionType(name);
         }
 
-        public bool StateExists(string stateName)
-        {
-            return STable.Contains(stateName);
-        }
-
-        public bool DecoratorExists(string decoratorName)
-        {
-            return Dtable.Contains(decoratorName);
-        }
-
         private bool IDExists(string name)
         {
+
             return Ftable.GetFunctionType(name) is not null || STable.Contains(name) || Dtable.Contains(name);
         }
-
-
     }
 }
 
