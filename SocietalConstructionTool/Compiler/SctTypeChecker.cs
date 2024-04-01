@@ -46,9 +46,9 @@ namespace Sct.Compiler
 
             string typeName = context.type().GetText();
             SctType type = _typeTable.GetType(typeName) ?? throw new InvalidTypeException($"Type {typeName} does not exist");
-            if (type == _typeTable.GetType("Predicate"))
+            if (type == _typeTable.Predicate || type == _typeTable.Void)
             {
-                _errors.Add(new CompilerError("Variable cannot have a Predicate type"));
+                _errors.Add(new CompilerError($"Variable cannot be of type :{type}"));
             }
             SctType expressionType = Visit(context.expression()); // This should call our overridden VisitExpression method with the expression context.
             if (type != expressionType)
@@ -172,6 +172,29 @@ namespace Sct.Compiler
                 _errors.Add(new CompilerError("Boolean expression must have integer types"));
             }
             return _typeTable.Int;
+        }
+
+        public override SctType VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
+        {
+            var targetTypeName = context.type().GetText();
+            var targetType = _typeTable.GetType(targetTypeName);
+            if (targetType is null)
+            {
+                _errors.Add(new CompilerError($"Type {targetTypeName} does not exist"));
+                return _typeTable.Int;
+            }
+
+            if (targetType == _typeTable.Predicate)
+            {
+                _errors.Add(new CompilerError($"Typecast cannot have a {_typeTable.Predicate} type"));
+            }
+
+            var expressionType = context.expression().Accept(this);
+            if (!_typeTable.IsTypeCastable(expressionType, targetType))
+            {
+                _errors.Add(new CompilerError($"Type mismatch: Cannot typecast from {expressionType} to {targetType}."));
+            }
+            return targetType;
         }
     }
 }

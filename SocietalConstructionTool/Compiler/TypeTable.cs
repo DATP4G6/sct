@@ -43,5 +43,7 @@ namespace Sct.Compiler
         }
 
         public bool TypeIsNumeric(SctType type) => type == Int || type == Float;
+
+        public bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
     }
 }
