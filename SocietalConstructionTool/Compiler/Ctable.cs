@@ -12,9 +12,12 @@ namespace Sct.Compiler
 
         public FunctionType GetFunctionType(string className, string functionName)
         {
-            if (_classes.TryGetValue(className, out ClassContent classContent)) {
+            if (_classes.TryGetValue(className, out ClassContent classContent))
+            {
                 return classContent.Ftable.GetFunctionType(functionName);
-            } else {
+            }
+            else
+            {
                 return _globalClass.Ftable.GetFunctionType(functionName);
             }
         }

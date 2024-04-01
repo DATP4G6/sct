@@ -32,6 +32,6 @@ namespace Sct.Compiler
             return SyntaxFactory.ParseTypeName(typeName);
         }
 
-
+        public bool TypeIsLiteral(SctType type) => type == _types["int"] || type == _types["float"];
     }
 }

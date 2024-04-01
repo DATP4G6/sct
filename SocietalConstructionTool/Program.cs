@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler;
 using Sct.Compiler.Typechecker;
-using Sct.Compiler.Exceptions;
 
 static int SctParseMethod()
 {

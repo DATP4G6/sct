@@ -49,7 +49,7 @@ namespace Sct.Compiler
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
             _currentClass = context.ID().GetText();
-            base.VisitClass_def(context);
+            _ = base.VisitClass_def(context);
             _currentClass = "Global";
             return _typeTable.Void;
         }
@@ -64,7 +64,8 @@ namespace Sct.Compiler
             return base.VisitEnter(context);
         }
 
-        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context) {
+        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
+        {
             var decoratorName = context.ID().GetText();
             if (!_ctable.DecoratorExists(_currentClass, decoratorName))
             {
@@ -73,7 +74,8 @@ namespace Sct.Compiler
             return base.VisitDecorator(context);
         }
 
-        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context) {
+        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
+        {
             var functionName = context.ID().GetText();
             var functionType = _ctable.GetFunctionType(_currentClass, functionName);
             if (functionType is null)
@@ -84,30 +86,39 @@ namespace Sct.Compiler
             return base.VisitCallExpression(context);
         }
 
-        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context) {
+        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
+        {
             return base.VisitReturn(context);
         }
 
-        public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context) {
-            var leftType = Visit(context.left);
-            var rightType = Visit(context.right);
-            if (leftType == rightType)
+        public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
+        {
+            var leftType = context.expression(0).Accept(this);
+            var rightType = context.expression(1).Accept(this);
+            if (!_typeTable.TypeIsLiteral(leftType) || !_typeTable.TypeIsLiteral(rightType))
             {
-            return leftType;
-            } else
-            {
-                return _typeTable.Float;
+                _errors.Add(new CompilerError("Binary expression must have literal types"));
+                leftType = _typeTable.Int;
+                rightType = _typeTable.Int;
             }
 
+            return (leftType == rightType) ? leftType : _typeTable.Float;
         }
 
-        public override SctType VisitLiteral([NotNull] SctParser.LiteralContext context) {
+        public override SctType VisitLiteral([NotNull] SctParser.LiteralContext context)
+        {
             if (context.INT() is not null)
             {
                 return _typeTable.Int;
-            } else if (context.FLOAT() is not null)
+            }
+            else if (context.FLOAT() is not null)
             {
                 return _typeTable.Float;
+            }
+            else
+            {
+                _errors.Add(new CompilerError("Literal type not recognized, must be int or float."));
+                return _typeTable.Int;
             }
         }
     }

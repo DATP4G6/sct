@@ -6,7 +6,7 @@ public class FtableBuilder
 
     public void AddFunctionType(string name, FunctionType functionType)
     {
-        _ftable.AddFunctionType(name, functionType);
+        _ = _ftable.AddFunctionType(name, functionType);
     }
 
     public Ftable GetFtable()

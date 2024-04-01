@@ -39,7 +39,7 @@ namespace Sct
 
         public bool AddFunction(string functionName, FunctionType functionType)
         {
-            if(IDExistsGlobal(functionName))
+            if (IDExistsGlobal(functionName))
             {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace Sct
 
         public bool AddState(string name)
         {
-            if(IDExistsGlobal(name))
+            if (IDExistsGlobal(name))
             {
                 return false;
             }
@@ -57,7 +57,7 @@ namespace Sct
 
         public bool AddDecorator(string name)
         {
-            if(IDExistsGlobal(name))
+            if (IDExistsGlobal(name))
             {
                 return false;
             }
@@ -66,7 +66,7 @@ namespace Sct
 
         private bool IDExistsGlobal(string name)
         {
-            if(_globalClass.Value?.LookupFunctionType(name) is not null)
+            if (_globalClass.Value?.LookupFunctionType(name) is not null)
             {
                 return true;
             }
