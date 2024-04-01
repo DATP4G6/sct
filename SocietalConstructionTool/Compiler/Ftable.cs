@@ -13,6 +13,11 @@ namespace Sct.Compiler
         {
             return ftable.TryAdd(name, functionType);
         }
+
+        public bool Contains(string name)
+        {
+            return ftable.ContainsKey(name);
+        }
     }
 
 

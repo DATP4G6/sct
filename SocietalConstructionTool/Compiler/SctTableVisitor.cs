@@ -2,13 +2,15 @@ using Antlr4.Runtime.Misc;
 
 namespace Sct.Compiler
 {
-    public class SctTableVisitor : SctBaseVisitor<SctType>
+    public class SctTableVisitor : SctBaseVisitor<SctType>, IErrorReporter
     {
 
         public Ctable? Ctable { get; private set; }
+
+        private readonly List<CompilerError> _errors = new();
+        public IEnumerable<CompilerError> Errors => _errors;
         private readonly CtableBuilder _ctableBuilder = new CtableBuilder();
         private readonly TypeTable _typeTable = new TypeTable();
-        private readonly List<string> _errors = new List<string>();
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
@@ -20,8 +22,6 @@ namespace Sct.Compiler
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
-
-
             string className = context.ID().GetText();
             _ = _ctableBuilder.StartClass(className);
 
@@ -40,7 +40,7 @@ namespace Sct.Compiler
 
             if (type is null)
             {
-                _errors.Add($"Type {context.type().GetText()} does not exist");
+                _errors.Add(new CompilerError($"Type {context.type().GetText()} does not exist"));
             }
             type ??= _typeTable.Int;
             FunctionType functionType = new FunctionType(type, argsTypes);
@@ -55,7 +55,7 @@ namespace Sct.Compiler
             var type = _typeTable.GetType(context.GetText());
             if (type is null)
             {
-                _errors.Add($"Type {context.GetText()} does not exist");
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist"));
             }
             type ??= _typeTable.Int;
 
@@ -63,12 +63,16 @@ namespace Sct.Compiler
         }
 
         public override SctType VisitState([NotNull] SctParser.StateContext context) {
-            _ = _ctableBuilder.AddState(context.ID().GetText());
+            if (!_ctableBuilder.AddState(context.ID().GetText())){
+                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
+            }
             return _typeTable.Void;
         }
 
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context) {
-            _ = _ctableBuilder.AddDecorator(context.ID().GetText());
+            if (!_ctableBuilder.AddDecorator(context.ID().GetText())){
+                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
+            }
             return _typeTable.Void;
         }
     }

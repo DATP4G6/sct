@@ -19,11 +19,6 @@ namespace Sct.Compiler
             { "Predicate", new SctType(typeof(void)) },
         };
 
-        public SctType Void => _types["void"];
-        public SctType Int => _types["int"];
-        public SctType Float => _types["float"];
-        public SctType Predicate => _types["Predicate"];
-
         public SctType? GetType(string name) => _types[name];
 
         public TypeSyntax GetTypeNode(string name)

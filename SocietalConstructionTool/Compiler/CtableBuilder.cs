@@ -19,8 +19,7 @@ namespace Sct
 
         public Ctable BuildCtable()
         {
-            _classes.Add(_globalClass.Key, _globalClass.Value);
-            return new Ctable(_classes);
+            return new Ctable(_classes, _globalClass.Value);
         }
 
         public bool StartClass(string className)
