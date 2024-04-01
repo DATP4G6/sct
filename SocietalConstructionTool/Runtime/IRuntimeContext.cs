@@ -6,5 +6,6 @@ namespace Sct.Runtime
         public IQueryHandler QueryHandler { get; }
         public bool ShouldExit { get; }
         public void ExitRuntime();
+        public IRuntimeContext GetNextContext();
     }
 }

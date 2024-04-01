@@ -23,5 +23,7 @@ namespace Sct.Runtime
         {
             throw new NotImplementedException("Exit not implemented.");
         }
+
+        public IRuntimeContext GetNextContext() => RuntimeContextFactory.CreateNext(this);
     }
 }
