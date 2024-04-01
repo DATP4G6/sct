@@ -95,9 +95,9 @@ namespace Sct.Compiler
         {
             var leftType = context.expression(0).Accept(this);
             var rightType = context.expression(1).Accept(this);
-            if (!_typeTable.TypeIsLiteral(leftType) || !_typeTable.TypeIsLiteral(rightType))
+            if (!_typeTable.TypeIsNumeric(leftType) || !_typeTable.TypeIsNumeric(rightType))
             {
-                _errors.Add(new CompilerError("Binary expression must have literal types"));
+                _errors.Add(new CompilerError("Binary expression must have numeric types"));
                 leftType = _typeTable.Int;
                 rightType = _typeTable.Int;
             }

@@ -42,6 +42,6 @@ namespace Sct.Compiler
             return @type;
         }
 
-        public bool TypeIsLiteral(SctType type) => type == _types["int"] || type == _types["float"];
+        public bool TypeIsNumeric(SctType type) => type == Int || type == Float;
     }
 }
