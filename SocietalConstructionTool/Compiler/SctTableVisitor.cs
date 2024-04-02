@@ -50,15 +50,15 @@ namespace Sct.Compiler
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
         {
-
             var type = TypeTable.GetType(context.type().GetText());
             var argsTypes = context.args_def().type().Select(arg => arg.Accept(this)).ToList();
 
             if (type is null)
             {
-                _errors.Add(new CompilerError($"Type {context.type().GetText()} does not exist"));
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
             }
             type ??= TypeTable.Int;
+
             FunctionType functionType = new FunctionType(type, argsTypes);
 
             _ = _ctableBuilder.AddFunction(context.ID().GetText(), functionType);
@@ -71,7 +71,7 @@ namespace Sct.Compiler
             var type = TypeTable.GetType(context.GetText());
             if (type is null)
             {
-                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist"));
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
             }
             type ??= TypeTable.Int;
 
@@ -82,7 +82,7 @@ namespace Sct.Compiler
         {
             if (!_ctableBuilder.AddState(context.ID().GetText()))
             {
-                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
+                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Void;
         }
@@ -91,7 +91,7 @@ namespace Sct.Compiler
         {
             if (!_ctableBuilder.AddDecorator(context.ID().GetText()))
             {
-                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists"));
+                _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Void;
         }
