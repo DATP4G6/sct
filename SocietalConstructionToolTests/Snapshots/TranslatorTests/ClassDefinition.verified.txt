@@ -1,8 +1,10 @@
 ﻿namespace MyNamespace
 {
+    using Sct.Runtime;
+
     public class GlobalClass
     {
-        public class __sct_TestClass : Sct.Runtime.BaseAgent
+        public class __sct_TestClass : BaseAgent
         {
             public __sct_TestClass(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {

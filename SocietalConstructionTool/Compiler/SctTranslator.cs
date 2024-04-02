@@ -29,17 +29,24 @@ namespace Sct.Compiler
 
         public override void ExitStart(SctParser.StartContext context)
         {
-            var @namespace = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"));
-            var @class = SyntaxFactory.ClassDeclaration("GlobalClass")
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
-
             var members = _stack.ToArray<MemberDeclarationSyntax>();
 
-            @class = @class
+            var @class = SyntaxFactory
+            .ClassDeclaration("GlobalClass")
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddMembers(members)
             .AddMembers(MakeMainMethod());
 
-            Root = @namespace.AddMembers(@class);
+            var @using = SyntaxFactory.UsingDirective(
+                SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? "")
+            );
+
+            var @namespace = SyntaxFactory
+            .NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"))
+            .AddMembers(@class)
+            .AddUsings(@using);
+
+            Root = @namespace;
         }
 
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
@@ -52,16 +59,7 @@ namespace Sct.Compiler
 
             var @class = SyntaxFactory.ClassDeclaration(className)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            .WithBaseList(SyntaxFactory.BaseList( // add BaseAgent as base class
-                SyntaxFactory.SeparatedList(new[]
-                {
-                    // Get namespace of BaseAgent
-                    (BaseTypeSyntax) SyntaxFactory.SimpleBaseType(SyntaxFactory.QualifiedName(
-                        SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? ""),
-                        SyntaxFactory.IdentifierName(typeof(BaseAgent).Name)
-                    ))
-                })
-            ))
+            .AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(nameof(BaseAgent))))
             .AddMembers(CreateClassFields(fields))
             .AddMembers(CreateConstructor(className))
             .AddMembers(members)

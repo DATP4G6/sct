@@ -1,5 +1,7 @@
 ﻿namespace MyNamespace
 {
+    using Sct.Runtime;
+
     public class GlobalClass
     {
         public static void __sct_f(IRuntimeContext ctx)
@@ -10,7 +12,7 @@
             __sct_seed(ctx, 123);
         }
 
-        public class __sct_Foo : Sct.Runtime.BaseAgent
+        public class __sct_Foo : BaseAgent
         {
             public __sct_Foo(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
