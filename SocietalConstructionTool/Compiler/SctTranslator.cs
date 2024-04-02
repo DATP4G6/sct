@@ -241,10 +241,12 @@ namespace Sct.Compiler
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
+            childBlock = childBlock.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
+
             var mangledName = MangleName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // all decorators return void
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)), // all decorators return bool
                 mangledName
             )
             .WithParameterList(WithContextParameter([])) // all decorators take 0 arguments;
@@ -324,20 +326,27 @@ namespace Sct.Compiler
         public override void ExitState([NotNull] SctParser.StateContext context)
         {
             var stateLogic = _stack.Pop<BlockSyntax>();
+            stateLogic = stateLogic.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
+
             // create statement list of decorators
-            var decorators = _stack.PopWhile<InvocationExpressionSyntax>()
-            .Select(SyntaxFactory.ExpressionStatement)
-            .Cast<StatementSyntax>(); // TODO: Cast is unsafe
+            var decorators = _stack.PopWhile<InvocationExpressionSyntax>();
+
+            var ifs = decorators.Select(decor =>
+            {
+                var return_block = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+                return SyntaxFactory.IfStatement(decor, return_block);
+            });
+
 
             // create new body with decorators first, then state logic
             var body = SyntaxFactory.Block()
-            .AddStatements(decorators.ToArray())
+            .AddStatements(ifs.ToArray())
             .AddStatements(stateLogic.Statements.ToArray());
 
             var name = MangleName(context.ID().GetText());
             _stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
                 MangleName(context.ID().GetText())
             )
             .WithParameterList(WithContextParameter([])) // state only takes context
@@ -600,6 +609,9 @@ namespace Sct.Compiler
                     )
                 )
             ));
+
+            // return true any time we exit
+            _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
         }
 
         public override void ExitEnter([NotNull] SctParser.EnterContext context)
@@ -614,15 +626,17 @@ namespace Sct.Compiler
                     WithContextArgument([SyntaxFactory.Argument(state)])
                 )
             );
-            var @return = SyntaxFactory.ReturnStatement();
+            var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+
+            // invoke Enter of BaseAgent, and return to prevent further execution
             _stack.Push(invocation);
             _stack.Push(@return);
         }
 
         public override void ExitDestroy([NotNull] SctParser.DestroyContext context)
         {
-            var @return = SyntaxFactory.ReturnStatement();
-            _stack.Push(@return);
+            // return true to stop further execution
+            _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
         }
 
         /// <summary>

@@ -1,0 +1,14 @@
+class Town() {
+    decorator decor {
+        enter Growing;
+    }
+
+    @decor
+    state Stable {
+
+    }
+
+    state Growing {
+
+    }
+}

@@ -20,8 +20,9 @@
             {
             }
 
-            private void __sct_Bar(IRuntimeContext ctx)
+            private bool __sct_Bar(IRuntimeContext ctx)
             {
+                return false;
             }
 
             public override BaseAgent Clone()

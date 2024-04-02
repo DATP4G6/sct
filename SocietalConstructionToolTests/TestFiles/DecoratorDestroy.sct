@@ -1,0 +1,10 @@
+class Town() {
+    decorator decor {
+        destroy;
+    }
+
+    @decor
+    state Stable {
+
+    }
+}

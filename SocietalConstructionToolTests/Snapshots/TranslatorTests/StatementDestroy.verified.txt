@@ -10,9 +10,10 @@
             {
             }
 
-            private void __sct_Adult(IRuntimeContext ctx)
+            private bool __sct_Adult(IRuntimeContext ctx)
             {
-                return;
+                return true;
+                return false;
             }
 
             public override BaseAgent Clone()

@@ -1,30 +1,23 @@
 ﻿namespace MyNamespace
 {
-    using Sct.Runtime;
-
     public class GlobalClass
     {
-        public class __sct_Town : BaseAgent
+        public class __sct_Town : Sct.Runtime.BaseAgent
         {
             public __sct_Town(string state, IDictionary<string, dynamic> fields) : base(state, fields)
             {
             }
 
-            private bool __sct_decor1(IRuntimeContext ctx)
+            private bool __sct_decor(IRuntimeContext ctx)
             {
-                return false;
-            }
-
-            private bool __sct_decor2(IRuntimeContext ctx)
-            {
+                ctx.ExitRuntime();
+                return true;
                 return false;
             }
 
             private bool __sct_Stable(IRuntimeContext ctx)
             {
-                if (__sct_decor1(ctx))
-                    return true;
-                if (__sct_decor2(ctx))
+                if (__sct_decor(ctx))
                     return true;
                 return false;
             }
