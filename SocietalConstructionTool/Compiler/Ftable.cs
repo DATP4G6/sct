@@ -2,21 +2,21 @@ namespace Sct.Compiler
 {
     public class Ftable
     {
-        public Dictionary<string, FunctionType> ftable = new Dictionary<string, FunctionType>();
+        private readonly Dictionary<string, FunctionType> _ftable = new Dictionary<string, FunctionType>();
 
-        public FunctionType GetFunctionType(string name)
+        public FunctionType? GetFunctionType(string name)
         {
-            return ftable.TryGetValue(name, out FunctionType functionType) ? functionType : null;
+            return _ftable.TryGetValue(name, out var functionType) ? functionType : default;
         }
 
         public bool AddFunctionType(string name, FunctionType functionType)
         {
-            return ftable.TryAdd(name, functionType);
+            return _ftable.TryAdd(name, functionType);
         }
 
         public bool Contains(string name)
         {
-            return ftable.ContainsKey(name);
+            return _ftable.ContainsKey(name);
         }
     }
 

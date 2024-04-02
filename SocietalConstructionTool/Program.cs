@@ -25,6 +25,7 @@ static int SctParseMethod()
     var sctTableVisitor = new SctTableVisitor();
     _ = sctTableVisitor.Visit(parser.start());
     var ctable = sctTableVisitor.Ctable;
+    errors.AddRange(sctTableVisitor.Errors);
 
     parser.Reset();
     // Run visitor that checks the types.

@@ -22,7 +22,7 @@ namespace Sct.Compiler
             _currentClass = _ctable.GetGlobalContent();
         }
 
-        public FunctionType GetFunctionType(string functionName)
+        private FunctionType GetFunctionType(string functionName)
         {
             if (_currentClass.LookupFunctionType(functionName) is FunctionType functionType)
             {
@@ -36,6 +36,18 @@ namespace Sct.Compiler
             return new FunctionType(TypeTable.Void, new List<SctType>());
         }
 
+        private SctType? GetCompatibleType(SctType left, SctType right)
+        {
+            if (left == right)
+            {
+                return left;
+            } else if (left == TypeTable.Float && right == TypeTable.Int)
+            {
+                return TypeTable.Float;
+            }
+            return null;
+        }
+
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
             _ = base.VisitStart(context);
@@ -45,15 +57,22 @@ namespace Sct.Compiler
 
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
-
             string typeName = context.type().GetText();
-            SctType type = TypeTable.GetType(typeName) ?? throw new InvalidTypeException($"Type {typeName} does not exist");
+            var type = TypeTable.GetType(typeName);
+
+            if (type is null)
+            {
+                _errors.Add(new CompilerError($"Type {typeName} does not exist"));
+                return TypeTable.Int;
+            }
+            // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
                 _errors.Add(new CompilerError($"Variable cannot be of type :{type}"));
             }
-            SctType expressionType = Visit(context.expression()); // This should call our overridden VisitExpression method with the expression context.
-            if (type != expressionType)
+
+            SctType expressionType = context.expression().Accept(this);
+            if (GetCompatibleType(type, expressionType) is null)
             {
                 _errors.Add(new CompilerError($"Type mismatch: {type} != {expressionType}"));
             }
@@ -70,7 +89,6 @@ namespace Sct.Compiler
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
             _currentClass = _ctable.GetClassContent(context.ID().GetText());
-            _currentClass = _ctable.GetGlobalContent();
             _vtable.EnterScope();
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
@@ -79,6 +97,7 @@ namespace Sct.Compiler
             }
 
             _ = base.VisitClass_def(context);
+            _currentClass = _ctable.GetGlobalContent();
             _vtable.ExitScope();
             return TypeTable.Void;
         }
@@ -89,7 +108,7 @@ namespace Sct.Compiler
             var variableType = _vtable.Lookup(variableName);
             if (variableType is null)
             {
-                _errors.Add(new CompilerError($"Variable {variableName} does not exist"));
+                _errors.Add(new CompilerError($"Variable {variableName} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Int;
             }
             return variableType;
@@ -131,7 +150,7 @@ namespace Sct.Compiler
             {
                 foreach (var (functionParamType, argumentType) in functionParamTypes.Zip(argumentTypes))
                 {
-                    if (functionParamType != argumentType)
+                    if (GetCompatibleType(functionParamType, argumentType) is null)
                     {
                         _errors.Add(new CompilerError($"Type mismatch: {functionParamType.TargetType} != {argumentType.TargetType}"));
                     }
@@ -178,7 +197,7 @@ namespace Sct.Compiler
                 rightType = TypeTable.Int;
             }
 
-            return (leftType == rightType) ? leftType : TypeTable.Float;
+            return (leftType == rightType) ? leftType : TypeTable.Float; // If we have two different types (int and float), we return float.
         }
 
         public override SctType VisitLiteral([NotNull] SctParser.LiteralContext context)
@@ -198,12 +217,6 @@ namespace Sct.Compiler
             }
         }
 
-        // This method is unnecessary, as we can just return the type of the expression inside the parentheses.
-        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
-        {
-            return context.expression().Accept(this);
-        }
-
         public override SctType VisitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var variableName = context.ID().GetText();
@@ -216,7 +229,7 @@ namespace Sct.Compiler
                 return TypeTable.Int;
             }
 
-            if (variableType != expressionType)
+            if (GetCompatibleType(variableType, expressionType) is null)
             {
                 _errors.Add(new CompilerError($"Type mismatch: {variableType.TargetType} != {expressionType.TargetType}"));
             }
@@ -228,9 +241,9 @@ namespace Sct.Compiler
         {
             var leftType = context.expression(0).Accept(this);
             var rightType = context.expression(1).Accept(this);
-            if (leftType != TypeTable.Int || rightType != TypeTable.Int)
+            if (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
             {
-                _errors.Add(new CompilerError("Boolean expression must have integer types"));
+                _errors.Add(new CompilerError("Boolean expression must be numeric types"));
             }
             return TypeTable.Int;
         }
@@ -245,11 +258,6 @@ namespace Sct.Compiler
                 return TypeTable.Int;
             }
 
-            if (targetType == TypeTable.Predicate)
-            {
-                _errors.Add(new CompilerError($"Typecast cannot have a {TypeTable.Predicate} type"));
-            }
-
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
@@ -260,7 +268,6 @@ namespace Sct.Compiler
 
         public override SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
         {
-
             var targetAgent = context.ID(0).GetText();
 
             if (_ctable.GetClassContent(targetAgent) is null)
@@ -288,7 +295,7 @@ namespace Sct.Compiler
                     agentArgs.Add(id.GetText(), TypeTable.Int);
                 }
 
-                if (agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
+                if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
                 {
                     _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate."));
                 }

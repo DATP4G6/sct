@@ -15,6 +15,16 @@ namespace Sct.Compiler
             _ = base.VisitStart(context);
 
             Ctable = _ctableBuilder.BuildCtable();
+
+            var setupType = Ctable.GetGlobalContent().LookupFunctionType("Setup");
+            if (setupType is null)
+            {
+                _errors.Add(new CompilerError("No setup function found"));
+            }
+            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            {
+                _errors.Add(new CompilerError("Setup function must return void and take no arguments"));
+            }
             return TypeTable.Void;
         }
 
