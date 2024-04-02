@@ -7,6 +7,7 @@ namespace Sct.Runtime
             IRuntimeContext prevCtx = initialContext;
             while (!prevCtx.ShouldExit)
             {
+                prevCtx.OnTick();
                 IRuntimeContext nextCtx = prevCtx.GetNextContext();
                 foreach (var agent in prevCtx.AgentHandler.Agents)
                 {
@@ -14,6 +15,8 @@ namespace Sct.Runtime
                 }
                 prevCtx = nextCtx;
             }
+
+            prevCtx.OnExit();
         }
     }
 }
