@@ -26,10 +26,10 @@
             }
         }
 
-        public static void Main()
+        public static void Main(string[] args)
         {
             Runtime runtime = new Runtime();
-            RuntimeContext ctx = new RuntimeContext();
+            RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
             __sct_Setup(ctx);
             runtime.Run(ctx);
         }

@@ -362,5 +362,8 @@ dotnet_naming_style.s_camelcase.capitalization = camel_case
 # ignore antlr warning
 dotnet_diagnostic.CS3021.severity = none
 
+# ignore explicitly initializing to default value, e.g. `bool x = false`
+dotnet_diagnostic.CA1805.severity = none
+
 # Remove unused using statements
 dotnet_diagnostic.IDE0005.severity = warning

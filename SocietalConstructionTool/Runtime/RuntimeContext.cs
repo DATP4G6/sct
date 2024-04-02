@@ -1,27 +1,21 @@
+using Sct.Runtime.Trace;
+
 namespace Sct.Runtime
 {
-    public class RuntimeContext : IRuntimeContext
+    public class RuntimeContext(IAgentHandler agentHandler, IQueryHandler queryHandler, IOutputLogger? outputLogger) : IRuntimeContext
     {
-        public IAgentHandler AgentHandler { get; }
-        public IQueryHandler QueryHandler { get; }
-        public bool ShouldExit { get; private set; }
-        public RuntimeContext(IAgentHandler agentHandler, IQueryHandler queryHandler)
-        {
-            AgentHandler = agentHandler;
-            QueryHandler = queryHandler;
-            ShouldExit = false;
-        }
+        public IAgentHandler AgentHandler { get; } = agentHandler;
+        public IQueryHandler QueryHandler { get; } = queryHandler;
+        public IOutputLogger? OutputLogger { get; } = outputLogger;
 
-        public RuntimeContext()
-        {
-            AgentHandler = new AgentHandler();
-            QueryHandler = new QueryHandler([]);
-            ShouldExit = false;
-        }
+        public bool ShouldExit { get; private set; } = false;
+
+        public RuntimeContext() : this(new AgentHandler(), new QueryHandler([]), null)
+        { }
 
         public void ExitRuntime()
         {
-            throw new NotImplementedException("Exit not implemented.");
+            ShouldExit = true;
         }
 
         public IRuntimeContext GetNextContext() => RuntimeContextFactory.CreateNext(this);

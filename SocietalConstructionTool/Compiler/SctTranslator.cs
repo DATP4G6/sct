@@ -660,6 +660,8 @@ namespace Sct.Compiler
 
         private static MethodDeclarationSyntax MakeMainMethod()
         {
+            var argsId = SyntaxFactory.IdentifierName("args");
+
             var runtime = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(
                     SyntaxFactory.ParseTypeName(nameof(Runtime))
@@ -684,6 +686,7 @@ namespace Sct.Compiler
                 )
             );
 
+            // TODO: Make this use `RuntimeContextFactory.CreateFromArgs`
             var ctx = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(
                     SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
@@ -694,12 +697,17 @@ namespace Sct.Compiler
                     )
                     .WithInitializer(
                         SyntaxFactory.EqualsValueClause(
-                            SyntaxFactory.ObjectCreationExpression(
-                                SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
+                            SyntaxFactory.InvocationExpression(
+                            SyntaxFactory.MemberAccessExpression(
+                                        SyntaxKind.SimpleMemberAccessExpression,
+                                        SyntaxFactory.ParseTypeName(nameof(RuntimeContextFactory)),
+                                        SyntaxFactory.IdentifierName(nameof(RuntimeContextFactory.CreateFromArgs)
+                                    )
+                                )
                             )
                             .WithArgumentList(
                                 SyntaxFactory.ArgumentList(
-                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
+                                    SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(argsId) })
                                 )
                             )
                         )
@@ -738,11 +746,16 @@ namespace Sct.Compiler
             var body = SyntaxFactory.Block()
             .AddStatements(runtime, ctx, setup, run);
 
+            // `string[] args` parameter
+            var argsParameter = SyntaxFactory.Parameter(argsId.Identifier)
+                .WithType(SyntaxFactory.ParseTypeName("string[]"));
+
             var mainMethod = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 SyntaxFactory.Identifier("Main")
             )
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
+            .AddParameterListParameters(argsParameter)
             .WithBody(body);
 
             return mainMethod;

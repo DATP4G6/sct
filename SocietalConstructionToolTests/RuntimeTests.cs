@@ -1,6 +1,7 @@
 using Moq;
 
 using Sct.Runtime;
+using Sct.Runtime.Trace;
 
 namespace SocietalConstructionToolTests
 {
@@ -13,6 +14,8 @@ namespace SocietalConstructionToolTests
             // GetNextContext should just return the mocked context again
             _ = contextMock.Setup(c => c.GetNextContext())
                 .Returns(contextMock.Object);
+
+            _ = contextMock.Setup(c => c.AgentHandler.Agents).Returns([]);
 
             return contextMock;
         }
@@ -38,6 +41,8 @@ namespace SocietalConstructionToolTests
             contextMock.Verify(c => c.ShouldExit, Times.Exactly(2));
             contextMock.Verify(c => c.GetNextContext(), Times.Once);
             contextMock.Verify(c => c.AgentHandler.Agents, Times.Once);
+            contextMock.Verify(c => c.OnTick(), Times.Once);
+            contextMock.Verify(c => c.OnExit(), Times.Once);
             contextMock.VerifyNoOtherCalls();
         }
 
@@ -78,6 +83,31 @@ namespace SocietalConstructionToolTests
 
             // Assert
             Assert.IsTrue(context.ShouldExit);
+        }
+
+        [TestMethod]
+        public void TestRuntimeLogsTicks()
+        {
+            // Arrange
+            var contextMock = GetContextMock();
+            _ = contextMock.SetupSequence(c => c.ShouldExit)
+                .Returns(false)
+                .Returns(true);
+            _ = contextMock.Setup(c => c.OnTick()).CallBase();
+            _ = contextMock.Setup(c => c.OnExit()).CallBase();
+
+            var loggerMock = new Mock<IOutputLogger>();
+            _ = contextMock.Setup(c => c.OutputLogger).Returns(loggerMock.Object);
+
+            var runtime = new Runtime();
+
+            // Act
+            runtime.Run(contextMock.Object);
+
+            // Assert
+            loggerMock.Verify(l => l.OnTick(contextMock.Object), Times.Once);
+            loggerMock.Verify(l => l.OnExit(), Times.Once);
+            loggerMock.VerifyNoOtherCalls();
         }
     }
 }
