@@ -6,7 +6,7 @@
     {
         public class __sct_TestClass : BaseAgent
         {
-            public __sct_TestClass(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            public __sct_TestClass(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
             }
 
@@ -23,7 +23,7 @@
             }
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);

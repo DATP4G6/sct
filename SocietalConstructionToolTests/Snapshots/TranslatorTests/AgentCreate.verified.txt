@@ -6,13 +6,13 @@
     {
         public class __sct_Citizen : BaseAgent
         {
-            public __sct_Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
             }
 
             private bool __sct_Adult(IRuntimeContext ctx)
             {
-                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary()));
+                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary<String, dynamic>()));
                 return false;
             }
 
@@ -29,7 +29,7 @@
             }
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);

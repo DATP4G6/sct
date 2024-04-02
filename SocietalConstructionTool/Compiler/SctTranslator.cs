@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Sct.Extensions;
 using Sct.Runtime;
 
 namespace Sct.Compiler
@@ -13,6 +14,7 @@ namespace Sct.Compiler
     public class SctTranslator : SctBaseListener
     {
         private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
+        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName("ctx");
         // boolean values are either 0 or 1
         private static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
         private static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
@@ -118,8 +120,8 @@ namespace Sct.Compiler
                     // with base arguments
                     SyntaxFactory.SeparatedList(new[]
                     {
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("State")),
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("Fields"))
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(nameof(BaseAgent.State))),
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)))
                     })
                 )
             );
@@ -127,7 +129,7 @@ namespace Sct.Compiler
             // Create clone method
             return SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.ParseTypeName(typeof(BaseAgent).Name),
-                "Clone"
+                nameof(BaseAgent.Clone)
             )
             // public override of BaseAgent's method
             .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword)))
@@ -139,14 +141,16 @@ namespace Sct.Compiler
 
         private static ConstructorDeclarationSyntax CreateConstructor(string className)
         {
+            var stateIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.State).ToLower(CultureInfo.InvariantCulture));
+            var fieldsIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.Fields).ToLower(CultureInfo.InvariantCulture));
             // base parameters for constructor is string 'state' and IDictionary<string, dynamic> 'fields'
             var parameters = SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(new[]
                 {
-                    SyntaxFactory.Parameter(SyntaxFactory.Identifier("state"))
-                        .WithType(SyntaxFactory.ParseTypeName("string")),
-                    SyntaxFactory.Parameter(SyntaxFactory.Identifier("fields"))
-                        .WithType(SyntaxFactory.ParseTypeName("IDictionary<string, dynamic>"))
+                    SyntaxFactory.Parameter(stateIdentifier)
+                        .WithType(SyntaxFactory.ParseTypeName(typeof(string).Name)),
+                    SyntaxFactory.Parameter(fieldsIdentifier)
+                        .WithType(SyntaxFactory.ParseTypeName(typeof(IDictionary<string, dynamic>).GenericName()))
                 })
             );
 
@@ -160,8 +164,8 @@ namespace Sct.Compiler
                     // BaseAgent takes two parameters
                     SyntaxFactory.SeparatedList(new[]
                     {
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("state")),
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName("fields"))
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(stateIdentifier)),
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(fieldsIdentifier))
                     })
                 )
             ));
@@ -216,7 +220,7 @@ namespace Sct.Compiler
             .Select(arg =>
                 SyntaxFactory.Argument(
                     // all arguments are of type KeyValuePair<string, dynamic>
-                    SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(KeyValuePair<string, dynamic>)))
+                    SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(KeyValuePair<string, dynamic>).GenericName()))
                     .WithArgumentList(SyntaxFactory.ArgumentList(
                         SyntaxFactory.SeparatedList(new[]
                         {
@@ -230,7 +234,7 @@ namespace Sct.Compiler
 
             // convert to 'new Dictionary(...)' statement
             _stack.Push(
-                SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(nameof(Dictionary<string, dynamic>)))
+                SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(Dictionary<string, dynamic>).GenericName()))
                     .WithArgumentList(SyntaxFactory.ArgumentList( // add arguments
                         SyntaxFactory.SeparatedList(keyValuePairs)
                     )
@@ -739,7 +743,7 @@ namespace Sct.Compiler
                 )
                 .AddVariables(
                     SyntaxFactory.VariableDeclarator(
-                        SyntaxFactory.Identifier("ctx")
+                        ContextIdentifier
                     )
                     .WithInitializer(
                         SyntaxFactory.EqualsValueClause(
@@ -767,7 +771,7 @@ namespace Sct.Compiler
                     SyntaxFactory.ArgumentList(
                         SyntaxFactory.SeparatedList(new[]
                         {
-                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("ctx"))
+                            SyntaxFactory.Argument(ContextIdentifierName)
                         })
                     )
                 )
@@ -783,7 +787,7 @@ namespace Sct.Compiler
                     SyntaxFactory.ArgumentList(
                         SyntaxFactory.SeparatedList(new[]
                         {
-                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName("ctx"))
+                            SyntaxFactory.Argument(ContextIdentifierName)
                         })
                     )
                 )
@@ -794,7 +798,7 @@ namespace Sct.Compiler
 
             // `string[] args` parameter
             var argsParameter = SyntaxFactory.Parameter(argsId.Identifier)
-                .WithType(SyntaxFactory.ParseTypeName("string[]"));
+                .WithType(SyntaxFactory.ParseTypeName(typeof(string[]).Name));
 
             var mainMethod = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -817,13 +821,13 @@ namespace Sct.Compiler
             var fieldDeclarations = fields.Parameters.Select(p =>
             {
                 var name = p.Identifier.Text;
-                var type = p.Type ?? SyntaxFactory.ParseTypeName("dynamic"); // should never happen
+                var type = p.Type ?? SyntaxFactory.ParseTypeName("dynamic"); // should never happen. TODO: Find a way to use typeof()-like naming for "dynamic"
 
                 var getter = SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
                 .WithExpressionBody(
                     SyntaxFactory.ArrowExpressionClause(
                         SyntaxFactory.ElementAccessExpression(
-                            SyntaxFactory.IdentifierName("Fields"),
+                            SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)),
                             CreateBracketedArgumentList(name)) // get value from dictionary
                     )
                 )
@@ -836,7 +840,7 @@ namespace Sct.Compiler
                         SyntaxFactory.AssignmentExpression(
                             SyntaxKind.SimpleAssignmentExpression,
                             SyntaxFactory.ElementAccessExpression(
-                                SyntaxFactory.IdentifierName("Fields"),
+                                SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)),
                                 CreateBracketedArgumentList(name) // get value from dictionary
                             ),
                             SyntaxFactory.IdentifierName("value") // set equal to value from setter

@@ -9,7 +9,7 @@
             Int32 __sct_a = 5;
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
