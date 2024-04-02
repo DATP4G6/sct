@@ -612,15 +612,8 @@ namespace Sct.Compiler
                 )
             ));
 
-
+            // return true any time we exit
             _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
-
-
-            //SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-
-            // TODO: push return true statement to stack if inside decorator
-            // if (_isInDecorator) ...
-            // _stack.Push(returnStatement...)
         }
 
         public override void ExitEnter([NotNull] SctParser.EnterContext context)
@@ -635,16 +628,17 @@ namespace Sct.Compiler
                     WithContextArgument([SyntaxFactory.Argument(state)])
                 )
             );
-
             var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
+
+            // invoke Enter of BaseAgent, and return to prevent further execution
             _stack.Push(invocation);
             _stack.Push(@return);
         }
 
         public override void ExitDestroy([NotNull] SctParser.DestroyContext context)
         {
-            var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
-            _stack.Push(@return);
+            // return true to stop further execution
+            _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
         }
 
         /// <summary>
