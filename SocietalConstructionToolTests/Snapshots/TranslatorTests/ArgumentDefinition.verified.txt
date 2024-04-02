@@ -1,8 +1,10 @@
 ﻿namespace MyNamespace
 {
+    using Sct.Runtime;
+
     public class GlobalClass
     {
-        public class __sct_Citizen : Sct.Runtime.BaseAgent
+        public class __sct_Citizen : BaseAgent
         {
             private int __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
             private float __sct_latitude { get => Fields["__sct_latitude"]; set => Fields["__sct_latitude"] = value; }

@@ -1,5 +1,7 @@
 ﻿namespace MyNamespace
 {
+    using Sct.Runtime;
+
     public class GlobalClass
     {
         public static void __sct_f(IRuntimeContext ctx)
