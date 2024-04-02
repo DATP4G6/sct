@@ -1,7 +1,5 @@
 using Antlr4.Runtime.Misc;
 
-using Sct.Compiler.Exceptions;
-
 namespace Sct.Compiler
 {
     public class SctTypeChecker : SctBaseVisitor<SctType>, IErrorReporter
@@ -12,7 +10,7 @@ namespace Sct.Compiler
 
         private ClassContent _currentClass;
 
-        private FunctionType? _currentFunctionType;
+        private FunctionType _currentFunctionType = new FunctionType(TypeTable.Void, new List<SctType>());
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
@@ -36,7 +34,30 @@ namespace Sct.Compiler
             return new FunctionType(TypeTable.Void, new List<SctType>());
         }
 
-        private SctType? GetCompatibleType(SctType left, SctType right)
+        private SctType GetType(SctParser.TypeContext context)
+        {
+            var type = TypeTable.GetType(context.GetText());
+            if (type is null)
+            {
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
+            }
+            type ??= TypeTable.Int;
+
+            return type;
+        }
+
+        private SctType LookupVariable(string variableName, int line, int col)
+        {
+            var variableType = _vtable.Lookup(variableName);
+            if (variableType is null)
+            {
+                _errors.Add(new CompilerError($"Variable {variableName} does not exist", line, col));
+                return TypeTable.Int;
+            }
+            return variableType;
+        }
+
+        private static SctType? GetCompatibleType(SctType left, SctType right)
         {
             if (left == right)
             {
@@ -57,14 +78,8 @@ namespace Sct.Compiler
 
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
-            string typeName = context.type().GetText();
-            var type = TypeTable.GetType(typeName);
+            var type = GetType(context.type());
 
-            if (type is null)
-            {
-                _errors.Add(new CompilerError($"Type {typeName} does not exist", context.Start.Line, context.Start.Column));
-                return TypeTable.Int;
-            }
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
@@ -80,7 +95,7 @@ namespace Sct.Compiler
             if (!_vtable.AddEntry(context.ID().GetText(), type))
             {
                 _errors.Add(new CompilerError($"Variable {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
-                return _vtable.Lookup(context.ID().GetText());
+                return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
             }
 
             return type;
@@ -93,7 +108,7 @@ namespace Sct.Compiler
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
             {
-                _ = _vtable.AddEntry(id.GetText(), TypeTable.GetType(type.GetText())!);
+                _ = _vtable.AddEntry(id.GetText(), GetType(type));
             }
 
             _ = base.VisitClass_def(context);
@@ -104,14 +119,7 @@ namespace Sct.Compiler
 
         public override SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
-            var variableName = context.ID().GetText();
-            var variableType = _vtable.Lookup(variableName);
-            if (variableType is null)
-            {
-                _errors.Add(new CompilerError($"Variable {variableName} does not exist", context.Start.Line, context.Start.Column));
-                return TypeTable.Int;
-            }
-            return variableType;
+            return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
         }
 
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
@@ -167,10 +175,10 @@ namespace Sct.Compiler
         public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
         {
 
-            if (context.expression() is null && _currentFunctionType!.ReturnType != TypeTable.Void)
+            if (context.expression() is null && _currentFunctionType.ReturnType != TypeTable.Void)
             {
                 _errors.Add(new CompilerError("Return type does not match function return type, only void functions can return nothing", context.Start.Line, context.Start.Column));
-                return _currentFunctionType!.ReturnType;
+                return _currentFunctionType.ReturnType;
             }
             // TODO: Fix these if statements.
             if (context.expression() is null)
@@ -178,7 +186,7 @@ namespace Sct.Compiler
                 return TypeTable.Void;
             }
             var returnType = context.expression().Accept(this);
-            var functionReturnType = _currentFunctionType!.ReturnType;
+            var functionReturnType = _currentFunctionType.ReturnType;
             if (returnType != functionReturnType)
             {
                 _errors.Add(new CompilerError("Return type does not match function return type", context.Start.Line, context.Start.Column));
@@ -220,15 +228,8 @@ namespace Sct.Compiler
 
         public override SctType VisitAssignment([NotNull] SctParser.AssignmentContext context)
         {
-            var variableName = context.ID().GetText();
-            var variableType = _vtable.Lookup(variableName);
+            var variableType = LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
             var expressionType = context.expression().Accept(this);
-
-            if (variableType is null)
-            {
-                _errors.Add(new CompilerError($"Variable {variableName} does not exist", context.Start.Line, context.Start.Column));
-                return TypeTable.Int;
-            }
 
             if (GetCompatibleType(variableType, expressionType) is null)
             {
@@ -251,14 +252,7 @@ namespace Sct.Compiler
 
         public override SctType VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
-            var targetTypeName = context.type().GetText();
-            var targetType = TypeTable.GetType(targetTypeName);
-            if (targetType is null)
-            {
-                _errors.Add(new CompilerError($"Type {targetTypeName} does not exist", context.Start.Line, context.Start.Column));
-                return TypeTable.Int;
-            }
-
+            var targetType = GetType(context.type());
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
