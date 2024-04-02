@@ -6,10 +6,10 @@
     {
         public static void __sct_f(IRuntimeContext ctx)
         {
-            __sct_exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary(new KeyValuePair("__sct_a", 2), new KeyValuePair("__sct_b", 3))));
-            __sct_exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary()));
-            __sct_exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary(new KeyValuePair("__sct_a", 3))));
-            __sct_exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary()));
+            __sct_exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>("__sct_a", 2), new KeyValuePair<String, dynamic>("__sct_b", 3))));
+            __sct_exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>()));
+            __sct_exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>("__sct_a", 3))));
+            __sct_exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>()));
         }
 
         public class __sct_Foo : BaseAgent
@@ -17,7 +17,7 @@
             private int __sct_a { get => Fields["__sct_a"]; set => Fields["__sct_a"] = value; }
             private int __sct_b { get => Fields["__sct_b"]; set => Fields["__sct_b"] = value; }
 
-            public __sct_Foo(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            public __sct_Foo(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
             }
 
@@ -39,7 +39,7 @@
             }
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);

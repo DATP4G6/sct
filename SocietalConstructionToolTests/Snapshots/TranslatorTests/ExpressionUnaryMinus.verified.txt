@@ -10,7 +10,7 @@
             -__sct_a;
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);

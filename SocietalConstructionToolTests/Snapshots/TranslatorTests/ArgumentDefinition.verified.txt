@@ -9,7 +9,7 @@
             private int __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
             private float __sct_latitude { get => Fields["__sct_latitude"]; set => Fields["__sct_latitude"] = value; }
 
-            public __sct_Citizen(string state, IDictionary<string, dynamic> fields) : base(state, fields)
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
             }
 
@@ -26,7 +26,7 @@
             }
         }
 
-        public static void Main(string[] args)
+        public static void Main(String[] args)
         {
             Runtime runtime = new Runtime();
             RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);

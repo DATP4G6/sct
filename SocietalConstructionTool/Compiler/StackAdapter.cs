@@ -1,4 +1,5 @@
 using Sct.Compiler.Exceptions;
+using Sct.Extensions;
 
 namespace Sct.Compiler
 {
@@ -18,7 +19,7 @@ namespace Sct.Compiler
             {
                 return t;
             }
-            throw new UnrecognizedNodeException(nameof(T), (node?.Value?.GetType().Name) ?? "null");
+            throw new UnrecognizedNodeException(typeof(T).GenericName(), (node?.Value?.GetType().Name) ?? "null");
         }
 
         public TBase Peek() => Peek<TBase>();
@@ -29,7 +30,7 @@ namespace Sct.Compiler
             {
                 return t;
             }
-            throw new UnrecognizedNodeException(nameof(T), (node?.Value?.GetType().Name) ?? "null");
+            throw new UnrecognizedNodeException(typeof(T).GenericName(), (node?.Value?.GetType().Name) ?? "null");
         }
 
         public bool TryPeek(out TBase? peekedValue) => TryPeek<TBase>(out peekedValue);
@@ -50,7 +51,7 @@ namespace Sct.Compiler
             var typedArr = _stack.Select(x => x.Value).OfType<T>().ToArray();
             if (_stack.Count != typedArr.Length)
             {
-                throw new UnrecognizedNodeException("Not all children were of type " + nameof(T));
+                throw new UnrecognizedNodeException("Not all children were of type " + typeof(T).GenericName());
             }
             return typedArr;
         }
@@ -73,7 +74,7 @@ namespace Sct.Compiler
             }
             else
             {
-                throw new UnrecognizedNodeException(nameof(TParent), (node?.GetType().Name) ?? "null");
+                throw new UnrecognizedNodeException(typeof(TParent).GenericName(), (node?.GetType().Name) ?? "null");
             }
 
             // Popping stack reversed order of items
