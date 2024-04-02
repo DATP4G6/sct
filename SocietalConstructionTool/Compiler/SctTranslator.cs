@@ -332,14 +332,10 @@ namespace Sct.Compiler
 
             // create statement list of decorators
             var decorators = _stack.PopWhile<InvocationExpressionSyntax>();
-            //.Select(SyntaxFactory.ExpressionStatement);
-            //.Cast<ExpressionSyntax>(); // TODO: Cast is unsafe
 
             var ifs = decorators.Select(decor =>
             {
-                //var condition = SyntaxFactory.ExpressionStatement(decor);
                 var return_block = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
-
                 return SyntaxFactory.IfStatement(decor, return_block);
             });
 
