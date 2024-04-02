@@ -1,5 +1,3 @@
-using Sct.Compiler.Exceptions;
-
 namespace Sct.Compiler
 {
     public class Vtable
