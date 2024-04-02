@@ -22,7 +22,7 @@ namespace Sct.Compiler
             _currentClass = _ctable.GetGlobalContent();
         }
 
-        private FunctionType GetFunctionType(string functionName)
+        private FunctionType GetFunctionType(string functionName, int line, int col)
         {
             if (_currentClass.LookupFunctionType(functionName) is FunctionType functionType)
             {
@@ -32,7 +32,7 @@ namespace Sct.Compiler
             {
                 return globalFunctionType;
             }
-            _errors.Add(new CompilerError($"Function {functionName} does not exist"));
+            _errors.Add(new CompilerError($"Function {functionName} does not exist", line, col));
             return new FunctionType(TypeTable.Void, new List<SctType>());
         }
 
@@ -62,24 +62,24 @@ namespace Sct.Compiler
 
             if (type is null)
             {
-                _errors.Add(new CompilerError($"Type {typeName} does not exist"));
+                _errors.Add(new CompilerError($"Type {typeName} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Int;
             }
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type :{type}"));
+                _errors.Add(new CompilerError($"Variable cannot be of type :{type}", context.Start.Line, context.Start.Column));
             }
 
             SctType expressionType = context.expression().Accept(this);
             if (GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch: {type} != {expressionType}"));
+                _errors.Add(new CompilerError($"Type mismatch: {type} != {expressionType}", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
             {
-                _errors.Add(new CompilerError($"Variable {context.ID().GetText()} already exists"));
+                _errors.Add(new CompilerError($"Variable {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
                 return _vtable.Lookup(context.ID().GetText());
             }
 
@@ -119,7 +119,7 @@ namespace Sct.Compiler
             var stateName = context.ID().GetText();
             if (_currentClass.LookupState(stateName) is null)
             {
-                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}"));
+                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}", context.Start.Line, context.Start.Column));
             }
             return base.VisitEnter(context);
         }
@@ -129,7 +129,7 @@ namespace Sct.Compiler
             var decoratorName = context.ID().GetText();
             if (_currentClass.LookupDecorator(decoratorName) is null)
             {
-                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}"));
+                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}", context.Start.Line, context.Start.Column));
             }
             return base.VisitDecorator(context);
         }
@@ -137,14 +137,15 @@ namespace Sct.Compiler
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
         {
             var functionName = context.ID().GetText();
-            _currentFunctionType = GetFunctionType(functionName);
+            _currentFunctionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
             return base.VisitFunction(context);
         }
 
         public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var functionName = context.ID().GetText();
-            var functionParamTypes = GetFunctionType(functionName).ParameterTypes;
+            var functionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
+            var functionParamTypes = functionType.ParameterTypes;
             var argumentTypes = context.args_call().expression().Select(expression => expression.Accept(this)).ToList();
             if (functionParamTypes.Count == argumentTypes.Count)
             {
@@ -152,15 +153,15 @@ namespace Sct.Compiler
                 {
                     if (GetCompatibleType(functionParamType, argumentType) is null)
                     {
-                        _errors.Add(new CompilerError($"Type mismatch: {functionParamType.TargetType} != {argumentType.TargetType}"));
+                        _errors.Add(new CompilerError($"Type mismatch: {functionParamType.TargetType} != {argumentType.TargetType}", context.Start.Line, context.Start.Column));
                     }
                 }
             }
             else
             {
-                _errors.Add(new CompilerError($"Function {functionName} expected {functionParamTypes.Count} arguments, but {argumentTypes.Count} were provided"));
+                _errors.Add(new CompilerError($"Function {functionName} expected {functionParamTypes.Count} arguments, but {argumentTypes.Count} were provided", context.Start.Line, context.Start.Column));
             }
-            return GetFunctionType(functionName).ReturnType;
+            return functionType.ReturnType;
         }
 
         public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
@@ -168,7 +169,7 @@ namespace Sct.Compiler
 
             if (context.expression() is null && _currentFunctionType!.ReturnType != TypeTable.Void)
             {
-                _errors.Add(new CompilerError("Return type does not match function return type, only void functions can return nothing"));
+                _errors.Add(new CompilerError("Return type does not match function return type, only void functions can return nothing", context.Start.Line, context.Start.Column));
                 return _currentFunctionType!.ReturnType;
             }
             // TODO: Fix these if statements.
@@ -180,7 +181,7 @@ namespace Sct.Compiler
             var functionReturnType = _currentFunctionType!.ReturnType;
             if (returnType != functionReturnType)
             {
-                _errors.Add(new CompilerError("Return type does not match function return type"));
+                _errors.Add(new CompilerError("Return type does not match function return type", context.Start.Line, context.Start.Column));
                 returnType = functionReturnType;
             }
             return returnType;
@@ -192,7 +193,7 @@ namespace Sct.Compiler
             var rightType = context.expression(1).Accept(this);
             if (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
             {
-                _errors.Add(new CompilerError("Binary expression must have numeric types"));
+                _errors.Add(new CompilerError("Binary expression must have numeric types", context.Start.Line, context.Start.Column));
                 leftType = TypeTable.Int;
                 rightType = TypeTable.Int;
             }
@@ -212,7 +213,7 @@ namespace Sct.Compiler
             }
             else
             {
-                _errors.Add(new CompilerError("Literal type not recognized, must be int or float."));
+                _errors.Add(new CompilerError("Literal type not recognized, must be int or float.", context.Start.Line, context.Start.Column));
                 return TypeTable.Int;
             }
         }
@@ -225,13 +226,13 @@ namespace Sct.Compiler
 
             if (variableType is null)
             {
-                _errors.Add(new CompilerError($"Variable {variableName} does not exist"));
+                _errors.Add(new CompilerError($"Variable {variableName} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Int;
             }
 
             if (GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch: {variableType.TargetType} != {expressionType.TargetType}"));
+                _errors.Add(new CompilerError($"Type mismatch: {variableType.TargetType} != {expressionType.TargetType}", context.Start.Line, context.Start.Column));
             }
 
             return variableType;
@@ -243,7 +244,7 @@ namespace Sct.Compiler
             var rightType = context.expression(1).Accept(this);
             if (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
             {
-                _errors.Add(new CompilerError("Boolean expression must be numeric types"));
+                _errors.Add(new CompilerError("Boolean expression must be numeric types", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Int;
         }
@@ -254,14 +255,14 @@ namespace Sct.Compiler
             var targetType = TypeTable.GetType(targetTypeName);
             if (targetType is null)
             {
-                _errors.Add(new CompilerError($"Type {targetTypeName} does not exist"));
+                _errors.Add(new CompilerError($"Type {targetTypeName} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Int;
             }
 
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
-                _errors.Add(new CompilerError($"Type mismatch: Cannot typecast from {expressionType.TargetType} to {targetType.TargetType}."));
+                _errors.Add(new CompilerError($"Type mismatch: Cannot typecast from {expressionType.TargetType} to {targetType.TargetType}.", context.Start.Line, context.Start.Column));
             }
             return targetType;
         }
@@ -272,13 +273,13 @@ namespace Sct.Compiler
 
             if (_ctable.GetClassContent(targetAgent) is null)
             {
-                _errors.Add(new CompilerError($"Agent {targetAgent} does not exist"));
+                _errors.Add(new CompilerError($"Agent {targetAgent} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
             }
 
             if (context.QUESTION() is null && _ctable.GetClassContent(targetAgent).LookupState(context.ID(1).GetText()) is null)
             {
-                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {targetAgent}"));
+                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {targetAgent}", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
             }
 
@@ -291,13 +292,13 @@ namespace Sct.Compiler
             {
                 if (targetAgentFields[id.GetText()] is null)
                 {
-                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {targetAgent}"));
+                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {targetAgent}", context.Start.Line, context.Start.Column));
                     agentArgs.Add(id.GetText(), TypeTable.Int);
                 }
 
                 if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
                 {
-                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate."));
+                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
                 }
             }
 
@@ -305,7 +306,9 @@ namespace Sct.Compiler
             {
                 if (targetAgentFields[arg.Key] != arg.Value)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch: {targetAgentFields[arg.Key].TargetType} != {arg.Value.TargetType}. Expression in predicate does not match field type in target agent."));
+                    _errors.Add(new CompilerError($"Type mismatch: {targetAgentFields[arg.Key].TargetType} != {arg.Value.TargetType}. " +
+                        "Expression in predicate does not match field type in target agent.",
+                        context.Start.Line, context.Start.Column));
                 }
             }
 
