@@ -15,6 +15,10 @@ namespace Sct
         {
             _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent());
             _currentClass = _globalClass;
+            _ = AddFunction("count", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
+            _ = AddFunction("exists", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
+            _ = AddFunction("rand", new FunctionType(TypeTable.Float, []));
+            _ = AddFunction("seed", new FunctionType(TypeTable.Float, [TypeTable.Int]));
         }
 
         public Ctable BuildCtable()

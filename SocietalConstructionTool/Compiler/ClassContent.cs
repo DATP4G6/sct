@@ -55,7 +55,7 @@ namespace Sct.Compiler
             return Dtable.Contains(name) ? name : null;
         }
 
-        public FunctionType LookupFunctionType(string name)
+        public FunctionType? LookupFunctionType(string name)
         {
             return Ftable.GetFunctionType(name);
         }
