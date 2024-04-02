@@ -57,7 +57,7 @@ namespace Sct.Compiler
             // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var fields);
-            var className = MangleStringName(context.ID().GetText());
+            var className = IdentifierTable.GetMangledStringName(context.ID().GetText());
 
             var @class = SyntaxFactory.ClassDeclaration(className)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
@@ -182,7 +182,7 @@ namespace Sct.Compiler
         public override void ExitArgs_def([NotNull] SctParser.Args_defContext context)
         {
             // create list of parameters by zipping ID and type
-            var @params = context.ID().Select(id => MangleName(id.GetText()))
+            var @params = context.ID().Select(id => IdentifierTable.GetMangledName(id.GetText()))
             .Zip(context.type(), (id, type) =>
                 SyntaxFactory.Parameter(id) // set name
                     .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
@@ -218,7 +218,7 @@ namespace Sct.Compiler
 
             // create list of args
             var keyValuePairs = args
-            .Select((arg, i) => (expr: arg, name: MangleStringName(context.ID(i).GetText())))
+            .Select((arg, i) => (expr: arg, name: IdentifierTable.GetMangledStringName(context.ID(i).GetText())))
             .Select(arg =>
                     // all arguments are of type KeyValuePair<string, dynamic>
                     SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(KeyValuePair<string, dynamic>).GenericName()))
@@ -263,7 +263,7 @@ namespace Sct.Compiler
             var childBlock = _stack.Pop<BlockSyntax>();
             childBlock = childBlock.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
 
-            var mangledName = MangleName(context.ID().GetText());
+            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)), // all decorators return bool
@@ -280,7 +280,7 @@ namespace Sct.Compiler
         {
             var childBlock = _stack.Pop<BlockSyntax>();
             var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
-            var mangledName = MangleName(context.ID().GetText());
+            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
                 _typeTable.GetTypeNode(context.type().GetText()),
@@ -300,7 +300,7 @@ namespace Sct.Compiler
 
         public override void ExitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
-            var mangledName = MangleName(context.ID().GetText());
+            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
             // push decorator to the stack as method call
             var state = SyntaxFactory.InvocationExpression(
                 SyntaxFactory.IdentifierName(mangledName),
@@ -314,7 +314,7 @@ namespace Sct.Compiler
         {
             var expression = _stack.Pop<ExpressionSyntax>();
 
-            var mangledName = MangleName(context.ID().GetText());
+            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
 
             var variable = SyntaxFactory.VariableDeclaration(
                 _typeTable.GetTypeNode(context.type().GetText()) // set type
@@ -332,7 +332,7 @@ namespace Sct.Compiler
         public override void ExitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var expression = _stack.Pop<ExpressionSyntax>();
-            var mangledName = MangleName(context.ID().GetText());
+            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
             var assignment = SyntaxFactory.ExpressionStatement( // convert to expression
                 SyntaxFactory.AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
@@ -363,11 +363,11 @@ namespace Sct.Compiler
             .AddStatements(ifs.ToArray())
             .AddStatements(stateLogic.Statements.ToArray());
 
-            var name = MangleName(context.ID().GetText());
+            var name = IdentifierTable.GetMangledName(context.ID().GetText());
             _stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
-                MangleName(context.ID().GetText())
+                name
             )
             .WithParameterList(WithContextParameter([])) // state only takes context
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
@@ -429,7 +429,7 @@ namespace Sct.Compiler
 
         public override void ExitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
-            var id = MangleName(context.ID().GetText());
+            var id = IdentifierTable.GetMangledName(context.ID().GetText());
             var idExp = SyntaxFactory.IdentifierName(id);
             _stack.Push(idExp);
         }
@@ -514,16 +514,15 @@ namespace Sct.Compiler
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
-            var id = SyntaxFactory.IdentifierName(MangleName(context.ID().GetText()));
-            var call = SyntaxFactory.InvocationExpression(id, args); // convert to method call
+            var call = IdentifierTable.GetFunction(context.ID().GetText(), args);
             _stack.Push(call);
         }
 
         public override void ExitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
             var fields = _stack.Pop<ObjectCreationExpressionSyntax>();
-            var state = MangleStringName(context.ID(1).GetText());
-            var type = MangleStringName(context.ID(0).GetText());
+            var state = IdentifierTable.GetMangledStringName(context.ID(1).GetText());
+            var type = IdentifierTable.GetMangledStringName(context.ID(0).GetText());
 
             var agent = SyntaxFactory.ObjectCreationExpression(
                 SyntaxFactory.ParseTypeName(type))
@@ -541,24 +540,7 @@ namespace Sct.Compiler
             );
 
             var createAgent = SyntaxFactory.ExpressionStatement(
-                SyntaxFactory.InvocationExpression(
-                    SyntaxFactory.MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.MemberAccessExpression(
-                            SyntaxKind.SimpleMemberAccessExpression,
-                            SyntaxFactory.IdentifierName(ContextIdentifier),
-                            SyntaxFactory.IdentifierName(nameof(IRuntimeContext.AgentHandler))),
-                        SyntaxFactory.IdentifierName(nameof(IAgentHandler.CreateAgent))
-                        )
-                    )
-                    .WithArgumentList(
-                        SyntaxFactory.ArgumentList(
-                            SyntaxFactory.SeparatedList(new[]
-                            {
-                                SyntaxFactory.Argument(agent)
-                            })
-                        )
-                    )
+                IdentifierTable.GetFunction("create", SyntaxFactory.Argument(agent))
             );
 
             _stack.Push(createAgent);
@@ -570,13 +552,13 @@ namespace Sct.Compiler
             // TODO: Extract literals like this into method. It gets very repetitive.
             var className = SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(MangleStringName(context.ID(0).GetText()))
+                SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID(0).GetText()))
             ));
             var state = context.QUESTION() switch
             {
                 null => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                         SyntaxKind.StringLiteralExpression,
-                        SyntaxFactory.Literal(MangleStringName(context.ID(1).GetText()))
+                        SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID(1).GetText()))
                     )),
                 _ => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                         SyntaxKind.NullLiteralExpression
@@ -674,7 +656,7 @@ namespace Sct.Compiler
         {
             var state = SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(MangleStringName(context.ID().GetText()))
+                SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID().GetText()))
             );
             var invocation = SyntaxFactory.ExpressionStatement(
                     SyntaxFactory.InvocationExpression(
@@ -724,10 +706,6 @@ namespace Sct.Compiler
                 );
         private static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
 
-        private static SyntaxToken MangleName(SyntaxToken n) => MangleName(n.Text);
-        private static SyntaxToken MangleName(string n) => SyntaxFactory.Identifier(MangleStringName(n));
-        private static string MangleStringName(string n) => NAME_MANGLE_PREFIX + n;
-
         private static MethodDeclarationSyntax MakeMainMethod()
         {
             var argsId = SyntaxFactory.IdentifierName("args");
@@ -746,11 +724,7 @@ namespace Sct.Compiler
                                 SyntaxFactory.ParseTypeName(nameof(Runtime))
                             )
                             // need to add empty argument list to invoke constructor
-                            .WithArgumentList(
-                                SyntaxFactory.ArgumentList(
-                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
-                                )
-                            )
+                            .WithArgumentList(SyntaxFactory.ArgumentList())
                         )
                     )
                 )
