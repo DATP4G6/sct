@@ -218,7 +218,6 @@ namespace Sct.Compiler
             var keyValuePairs = args
             .Select((arg, i) => (expr: arg, name: MangleStringName(context.ID(i).GetText())))
             .Select(arg =>
-                SyntaxFactory.Argument(
                     // all arguments are of type KeyValuePair<string, dynamic>
                     SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(KeyValuePair<string, dynamic>).GenericName()))
                     .WithArgumentList(SyntaxFactory.ArgumentList(
@@ -229,17 +228,32 @@ namespace Sct.Compiler
                             SyntaxFactory.Argument(arg.expr) // set value to expression from stack
                         })
                     ))
-                )
             );
 
-            // convert to 'new Dictionary(...)' statement
-            _stack.Push(
-                SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(Dictionary<string, dynamic>).GenericName()))
-                    .WithArgumentList(SyntaxFactory.ArgumentList( // add arguments
-                        SyntaxFactory.SeparatedList(keyValuePairs)
+            var arrayExpression = SyntaxFactory.ArrayCreationExpression(
+                SyntaxFactory.ArrayType(SyntaxFactory.ParseTypeName(typeof(KeyValuePair<string, dynamic>).GenericName() + "[]")),
+                SyntaxFactory.InitializerExpression(
+                    SyntaxKind.ArrayInitializerExpression,
+                    SyntaxFactory.SeparatedList<ExpressionSyntax>(
+                        keyValuePairs
                     )
                 )
             );
+
+            var dictionary = SyntaxFactory.ObjectCreationExpression(
+                    SyntaxFactory.ParseTypeName(typeof(Dictionary<string, dynamic>).GenericName())
+                )
+                .WithArgumentList(
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList(new[] {
+                            SyntaxFactory.Argument(
+                                arrayExpression
+                            )
+                        })
+                    )
+                );
+
+            _stack.Push(dictionary);
         }
 
         public override void ExitDecorator([NotNull] SctParser.DecoratorContext context)
