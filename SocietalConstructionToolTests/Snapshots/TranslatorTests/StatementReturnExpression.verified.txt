@@ -6,7 +6,7 @@
     {
         public static long __sct_f(IRuntimeContext ctx)
         {
-            return 2 + 2;
+            return (2 + 2);
         }
 
         public static void Main(String[] args)
