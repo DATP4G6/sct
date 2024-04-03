@@ -175,25 +175,24 @@ namespace Sct.Compiler
 
         public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
         {
+            var returnType = _currentFunctionType.ReturnType;
 
-            if (context.expression() is null && _currentFunctionType.ReturnType != TypeTable.Void)
-            {
-                _errors.Add(new CompilerError("Return type does not match function return type, only void functions can return nothing", context.Start.Line, context.Start.Column));
-                return _currentFunctionType.ReturnType;
-            }
-            // TODO: Fix these if statements.
-            if (context.expression() is null)
+            if (context.expression() is null && returnType == TypeTable.Void)
             {
                 return TypeTable.Void;
-            }
-            var returnType = context.expression().Accept(this);
-            var functionReturnType = _currentFunctionType.ReturnType;
-            if (GetCompatibleType(functionReturnType, returnType) is null)
+            } else if (context.expression() is null)
             {
-                _errors.Add(new CompilerError("Return type does not match function return type", context.Start.Line, context.Start.Column));
-                returnType = functionReturnType;
+                _errors.Add(new CompilerError($"Return type does not match the functions returned type expression, expected expression of type {returnType.TargetType}, got no expression.", context.Start.Line, context.Start.Column));
+                return TypeTable.Void;
             }
-            return returnType;
+
+            var expressionType = context.expression().Accept(this);
+            if (GetCompatibleType(returnType, expressionType) is null)
+            {
+                _errors.Add(new CompilerError($"Return type does not match the functions returned type expression, expected expression of type {returnType.TargetType}, got {expressionType.TargetType}.", context.Start.Line, context.Start.Column));
+                expressionType = returnType;
+            }
+            return expressionType;
         }
 
         public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
