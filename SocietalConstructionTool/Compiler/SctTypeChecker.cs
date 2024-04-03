@@ -62,7 +62,8 @@ namespace Sct.Compiler
             if (left == right)
             {
                 return left;
-            } else if (left == TypeTable.Float && right == TypeTable.Int)
+            }
+            else if (left == TypeTable.Float && right == TypeTable.Int)
             {
                 return TypeTable.Float;
             }
@@ -127,7 +128,7 @@ namespace Sct.Compiler
             var stateName = context.ID().GetText();
             if (_currentClass.LookupState(stateName) is null)
             {
-                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
             return base.VisitEnter(context);
         }
@@ -137,7 +138,7 @@ namespace Sct.Compiler
             var decoratorName = context.ID().GetText();
             if (_currentClass.LookupDecorator(decoratorName) is null)
             {
-                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
             return base.VisitDecorator(context);
         }

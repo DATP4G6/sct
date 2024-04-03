@@ -45,7 +45,10 @@ namespace Sct.Compiler
         {
             string className = context.ID().GetText();
 
-            _ = _ctableBuilder.StartClass(className);
+            if (!_ctableBuilder.StartClass(className))
+            {
+                _errors.Add(new CompilerError($"ID {className} already exists", context.Start.Line, context.Start.Column));
+            }
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
             {

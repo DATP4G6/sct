@@ -13,7 +13,7 @@ namespace Sct
 
         public CtableBuilder()
         {
-            _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent());
+            _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent("Global"));
             _currentClass = _globalClass;
             _ = AddFunction("count", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
             _ = AddFunction("exists", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
@@ -28,9 +28,12 @@ namespace Sct
 
         public bool StartClass(string className)
         {
-            // TODO: Make checks for existing class
-            _currentClass = new KeyValuePair<string, ClassContent>(className, new ClassContent());
-            return false;
+            if (_classes.ContainsKey(className))
+            {
+                return false;
+            }
+            _currentClass = new KeyValuePair<string, ClassContent>(className, new ClassContent(className));
+            return true;
         }
 
         public bool FinishClass()
@@ -38,11 +41,15 @@ namespace Sct
             _classes.Add(_currentClass.Key, _currentClass.Value);
             _currentClass = _globalClass;
 
-            return false;
+            return _classes.ContainsKey(_currentClass.Key);
         }
 
         public bool AddField(string name, SctType type)
         {
+            if (_currentClass.Value.Fields.ContainsKey(name))
+            {
+                return false;
+            }
             return _currentClass.Value.AddField(name, type);
         }
 

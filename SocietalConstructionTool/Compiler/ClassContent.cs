@@ -2,14 +2,16 @@ namespace Sct.Compiler
 {
     public class ClassContent
     {
+        public string Name { get; }
         public Ftable Ftable { get; }
         public List<string> STable { get; }
         public List<string> Dtable { get; }
         public Dictionary<string, SctType> Fields { get; }
 
 
-        public ClassContent()
+        public ClassContent(string name)
         {
+            Name = name;
             Fields = new Dictionary<string, SctType>();
             Ftable = new Ftable();
             STable = new List<string>();

@@ -3,7 +3,7 @@ namespace Sct.Compiler
     public class Ctable
     {
         readonly Dictionary<string, ClassContent> _classes = new Dictionary<string, ClassContent>();
-        readonly ClassContent _globalClass = new ClassContent();
+        readonly ClassContent _globalClass;
         public Ctable(Dictionary<string, ClassContent> classes, ClassContent globalClass)
         {
             _classes = classes;
@@ -19,8 +19,6 @@ namespace Sct.Compiler
         {
             return _globalClass;
         }
-
-
     }
 }
 
