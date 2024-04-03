@@ -325,5 +325,33 @@ namespace Sct.Compiler
             _vtable.ExitScope();
             return TypeTable.Void;
         }
+
+        public override SctType VisitIf([NotNull] SctParser.IfContext context)
+        {
+            var conditionType = context.expression().Accept(this);
+            if (!TypeTable.TypeIsNumeric(conditionType))
+            {
+                _errors.Add(new CompilerError("If condition must be numeric.", context.Start.Line, context.Start.Column));
+            }
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        public override SctType VisitElse([NotNull] SctParser.ElseContext context)
+        {
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        public override SctType VisitWhile([NotNull] SctParser.WhileContext context)
+        {
+            var conditionType = context.expression().Accept(this);
+            if (!TypeTable.TypeIsNumeric(conditionType))
+            {
+                _errors.Add(new CompilerError("While condition must be numeric.", context.Start.Line, context.Start.Column));
+            }
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
     }
 }
