@@ -173,6 +173,15 @@ namespace Sct.Compiler
             return functionType.ReturnType;
         }
 
+        public override SctType VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context) {
+            var expressionType = context.expression().Accept(this);
+            if (!TypeTable.TypeIsNumeric(expressionType))
+            {
+                _errors.Add(new CompilerError("Unary minus expression must have numeric type", context.Start.Line, context.Start.Column));
+            }
+            return expressionType;
+        }
+
         public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
         {
             var returnType = _currentFunctionType.ReturnType;
