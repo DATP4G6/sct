@@ -187,7 +187,7 @@ namespace Sct.Compiler
             }
             var returnType = context.expression().Accept(this);
             var functionReturnType = _currentFunctionType.ReturnType;
-            if (returnType != functionReturnType)
+            if (GetCompatibleType(functionReturnType, returnType) is null)
             {
                 _errors.Add(new CompilerError("Return type does not match function return type", context.Start.Line, context.Start.Column));
                 returnType = functionReturnType;
