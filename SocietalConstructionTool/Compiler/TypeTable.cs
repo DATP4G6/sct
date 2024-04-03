@@ -24,13 +24,23 @@ namespace Sct.Compiler
 
         public TypeSyntax GetTypeNode(string name)
         {
-            SctType type = (_types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
-            if (type == _types["Predicate"])
+            SctType sctType = (_types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
+            if (sctType == _types["Predicate"])
             {
                 throw new InvalidTypeException("Predicate type cannot be used as a syntax node");
             }
-            string typeName = type.TargetType.Name;
-            return SyntaxFactory.ParseTypeName(typeName);
+
+            var syntaxKind = name switch
+            {
+                "int" => SyntaxKind.LongKeyword,
+                "float" => SyntaxKind.DoubleKeyword,
+                "void" => SyntaxKind.VoidKeyword,
+                _ => throw new InvalidTypeException($"Got unknown type in translation: ${name}")
+            };
+
+            var @type = SyntaxFactory.PredefinedType(SyntaxFactory.Token(syntaxKind));
+
+            return @type;
         }
 
     }

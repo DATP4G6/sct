@@ -6,7 +6,7 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            Double __sct_x = 2.0;
+            double __sct_x = 2.0;
         }
 
         public static void Main(String[] args)
