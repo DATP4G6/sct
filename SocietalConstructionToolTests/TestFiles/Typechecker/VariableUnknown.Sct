@@ -1,0 +1,7 @@
+function Setup() -> void {
+    if (1) {
+        int x = 5;
+        7 + x;
+    }
+    7 + x;
+}

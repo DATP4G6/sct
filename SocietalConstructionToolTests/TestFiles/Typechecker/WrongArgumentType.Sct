@@ -1,0 +1,9 @@
+class Citizen(int townId) {
+    state Child {}
+}
+
+function test(void var) -> void{}
+
+function Setup() -> void {
+    test(5)
+}

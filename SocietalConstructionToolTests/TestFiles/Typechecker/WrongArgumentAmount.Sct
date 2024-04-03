@@ -1,0 +1,7 @@
+function test(int var1, float var2, int var3) -> void{};
+
+function Setup() -> void {
+    test(5, 8)
+    test(5, 8, 11)
+    test(5, 8, 11, 12)
+}

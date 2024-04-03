@@ -1,0 +1,13 @@
+class Citizen(int townId) {
+    decorator randomDeath {
+        if (rand() < 0.01) {
+                destroy;
+        }
+    }
+
+    @randomDeath
+    @someDecorator
+    state Child {}
+}
+
+function Setup() -> void {}

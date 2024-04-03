@@ -1,0 +1,9 @@
+class Town(int id, int space) {}
+
+function test() -> void {}
+
+function Setup() -> void {
+    5 + test();
+    5 - Town::?();
+    5 * 5.0
+}

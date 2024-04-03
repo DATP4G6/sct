@@ -1,0 +1,10 @@
+function foo () -> void {}
+
+class Citizen(int townId, int age) {
+    state foo{}
+    state child{}
+    state child{}
+}
+
+function Setup() -> void {
+}

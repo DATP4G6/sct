@@ -1,0 +1,10 @@
+class Town(int id, int space) {}
+
+function test() -> void {}
+
+function Setup() -> void {
+    5 <= test();
+    5 == Town::?();
+    test() != 10 && Town::?() == 0;
+    5 > 6.0 == 0
+}

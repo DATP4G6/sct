@@ -1,0 +1,6 @@
+class Citizen(int townId) {}
+
+function Setup() -> void {
+    Citizen::?(townId: 5, weight: 62.3);
+}
+

@@ -1,0 +1,22 @@
+function foo() -> int {}
+
+function bar() -> int {
+    if (1) {
+        return 5;
+    } else if (0) {
+        return 10;
+    }
+}
+
+function foobar() -> int {
+    if (1) {
+        return 5;
+    } else if (0) {
+        return 10;
+    } else {
+        return 9;
+    }
+}
+
+
+function Setup() -> void {}

@@ -1,3 +1,6 @@
+function emptyReturn() -> void {
+    return;
+}
 
 function ifelseifelseif() -> void {
     int x = 10;

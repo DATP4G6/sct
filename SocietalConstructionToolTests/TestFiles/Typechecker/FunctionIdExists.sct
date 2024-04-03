@@ -1,0 +1,9 @@
+function test(int var1, float var2) -> void{};
+
+function test(int var1) -> int{};
+
+class Citizen(int townId) {
+    function test(int var1) -> int{};
+}
+
+function Setup() -> void {}
