@@ -57,7 +57,7 @@ namespace Sct.Compiler
             // Pop functions, decorators, and states, but throw away parameter list, as it is not relevant post-type checking
             // All constructors are equal, so we can just create a custom one
             var members = _stack.PopUntil<ParameterListSyntax, MemberDeclarationSyntax>(out var fields);
-            var className = IdentifierTable.GetMangledStringName(context.ID().GetText());
+            var className = TranslatorUtils.GetMangledStringName(context.ID().GetText());
 
             var @class = SyntaxFactory.ClassDeclaration(className)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
@@ -182,7 +182,7 @@ namespace Sct.Compiler
         public override void ExitArgs_def([NotNull] SctParser.Args_defContext context)
         {
             // create list of parameters by zipping ID and type
-            var @params = context.ID().Select(id => IdentifierTable.GetMangledName(id.GetText()))
+            var @params = context.ID().Select(id => TranslatorUtils.GetMangledName(id.GetText()))
             .Zip(context.type(), (id, type) =>
                 SyntaxFactory.Parameter(id) // set name
                     .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
@@ -218,7 +218,7 @@ namespace Sct.Compiler
 
             // create list of args
             var keyValuePairs = args
-            .Select((arg, i) => (expr: arg, name: IdentifierTable.GetMangledStringName(context.ID(i).GetText())))
+            .Select((arg, i) => (expr: arg, name: TranslatorUtils.GetMangledStringName(context.ID(i).GetText())))
             .Select(arg =>
                     // all arguments are of type KeyValuePair<string, dynamic>
                     SyntaxFactory.ObjectCreationExpression(SyntaxFactory.ParseTypeName(typeof(KeyValuePair<string, dynamic>).GenericName()))
@@ -263,7 +263,7 @@ namespace Sct.Compiler
             var childBlock = _stack.Pop<BlockSyntax>();
             childBlock = childBlock.AddStatements(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.FalseLiteralExpression)));
 
-            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
+            var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)), // all decorators return bool
@@ -280,7 +280,7 @@ namespace Sct.Compiler
         {
             var childBlock = _stack.Pop<BlockSyntax>();
             var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
-            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
+            var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
                 _typeTable.GetTypeNode(context.type().GetText()),
@@ -300,7 +300,7 @@ namespace Sct.Compiler
 
         public override void ExitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
-            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
+            var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
             // push decorator to the stack as method call
             var state = SyntaxFactory.InvocationExpression(
                 SyntaxFactory.IdentifierName(mangledName),
@@ -314,7 +314,7 @@ namespace Sct.Compiler
         {
             var expression = _stack.Pop<ExpressionSyntax>();
 
-            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
+            var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var variable = SyntaxFactory.VariableDeclaration(
                 _typeTable.GetTypeNode(context.type().GetText()) // set type
@@ -332,7 +332,7 @@ namespace Sct.Compiler
         public override void ExitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var expression = _stack.Pop<ExpressionSyntax>();
-            var mangledName = IdentifierTable.GetMangledName(context.ID().GetText());
+            var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
             var assignment = SyntaxFactory.ExpressionStatement( // convert to expression
                 SyntaxFactory.AssignmentExpression(
                     SyntaxKind.SimpleAssignmentExpression,
@@ -363,7 +363,7 @@ namespace Sct.Compiler
             .AddStatements(ifs.ToArray())
             .AddStatements(stateLogic.Statements.ToArray());
 
-            var name = IdentifierTable.GetMangledName(context.ID().GetText());
+            var name = TranslatorUtils.GetMangledName(context.ID().GetText());
             _stateNames.Add(name.Text);
             var method = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
@@ -429,7 +429,7 @@ namespace Sct.Compiler
 
         public override void ExitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
-            var id = IdentifierTable.GetMangledName(context.ID().GetText());
+            var id = TranslatorUtils.GetMangledName(context.ID().GetText());
             var idExp = SyntaxFactory.IdentifierName(id);
             _stack.Push(idExp);
         }
@@ -514,18 +514,19 @@ namespace Sct.Compiler
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
-            var call = IdentifierTable.GetFunction(context.ID().GetText(), args);
+            var call = TranslatorUtils.GetFunction(context.ID().GetText(), args);
             _stack.Push(call);
         }
 
         public override void ExitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
             var fields = _stack.Pop<ObjectCreationExpressionSyntax>();
-            var state = IdentifierTable.GetMangledStringName(context.ID(1).GetText());
-            var type = IdentifierTable.GetMangledStringName(context.ID(0).GetText());
+            var state = TranslatorUtils.GetMangledStringName(context.ID(1).GetText());
+            var type = TranslatorUtils.GetMangledStringName(context.ID(0).GetText());
 
             var agent = SyntaxFactory.ObjectCreationExpression(
-                SyntaxFactory.ParseTypeName(type))
+                SyntaxFactory.ParseTypeName(type)
+            )
             .WithArgumentList(
                 SyntaxFactory.ArgumentList(
                     SyntaxFactory.SeparatedList(new[]
@@ -540,7 +541,16 @@ namespace Sct.Compiler
             );
 
             var createAgent = SyntaxFactory.ExpressionStatement(
-                IdentifierTable.GetFunction("create", SyntaxFactory.Argument(agent))
+                SyntaxFactory.InvocationExpression(
+                    // call ctx.AgentHandler.CreateAgent
+                    TranslatorUtils.BuildAccessor(
+                        nameof(IAgentHandler.CreateAgent), ContextIdentifier, SyntaxFactory.Identifier(nameof(IRuntimeContext.AgentHandler))
+                    ),
+                    // with agent as argument
+                    SyntaxFactory.ArgumentList(
+                        SyntaxFactory.SeparatedList([SyntaxFactory.Argument(agent)])
+                    )
+                )
             );
 
             _stack.Push(createAgent);
@@ -552,13 +562,13 @@ namespace Sct.Compiler
             // TODO: Extract literals like this into method. It gets very repetitive.
             var className = SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID(0).GetText()))
+                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(context.ID(0).GetText()))
             ));
             var state = context.QUESTION() switch
             {
                 null => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                         SyntaxKind.StringLiteralExpression,
-                        SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID(1).GetText()))
+                        SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(context.ID(1).GetText()))
                     )),
                 _ => SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                         SyntaxKind.NullLiteralExpression
@@ -640,11 +650,7 @@ namespace Sct.Compiler
             // call ExitRuntime on context
             _stack.Push(SyntaxFactory.ExpressionStatement(
                 SyntaxFactory.InvocationExpression(
-                    SyntaxFactory.MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.IdentifierName(ContextIdentifier),
-                        SyntaxFactory.IdentifierName(nameof(IRuntimeContext.ExitRuntime))
-                    )
+                    TranslatorUtils.BuildAccessor(nameof(IRuntimeContext.ExitRuntime), ContextIdentifier)
                 )
             ));
 
@@ -656,7 +662,7 @@ namespace Sct.Compiler
         {
             var state = SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(IdentifierTable.GetMangledStringName(context.ID().GetText()))
+                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(context.ID().GetText()))
             );
             var invocation = SyntaxFactory.ExpressionStatement(
                     SyntaxFactory.InvocationExpression(
@@ -709,6 +715,7 @@ namespace Sct.Compiler
         private static MethodDeclarationSyntax MakeMainMethod()
         {
             var argsId = SyntaxFactory.IdentifierName("args");
+            var runtimeId = SyntaxFactory.Identifier("runtime");
 
             var runtime = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(
@@ -716,7 +723,7 @@ namespace Sct.Compiler
                 )
                 .AddVariables(
                     SyntaxFactory.VariableDeclarator(
-                        SyntaxFactory.Identifier("runtime")
+                        runtimeId
                     )
                     .WithInitializer(
                         SyntaxFactory.EqualsValueClause(
@@ -730,7 +737,6 @@ namespace Sct.Compiler
                 )
             );
 
-            // TODO: Make this use `RuntimeContextFactory.CreateFromArgs`
             var ctx = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(
                     SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
@@ -742,15 +748,11 @@ namespace Sct.Compiler
                     .WithInitializer(
                         SyntaxFactory.EqualsValueClause(
                             SyntaxFactory.InvocationExpression(
-                            SyntaxFactory.MemberAccessExpression(
-                                        SyntaxKind.SimpleMemberAccessExpression,
-                                        SyntaxFactory.ParseTypeName(nameof(RuntimeContextFactory)),
-                                        SyntaxFactory.IdentifierName(nameof(RuntimeContextFactory.CreateFromArgs)
-                                    )
-                                )
-                            )
-                            .WithArgumentList(
-                                SyntaxFactory.ArgumentList(
+                                TranslatorUtils.BuildAccessor( // call RuntimeContextFactory.CreateFromArgs
+                                    nameof(RuntimeContextFactory.CreateFromArgs),
+                                    SyntaxFactory.Identifier(nameof(RuntimeContextFactory))
+                                ),
+                                SyntaxFactory.ArgumentList( // with args as argument
                                     SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(argsId) })
                                 )
                             )
@@ -760,29 +762,16 @@ namespace Sct.Compiler
             );
 
             var setup = SyntaxFactory.ExpressionStatement(
-                SyntaxFactory.InvocationExpression(
-                    SyntaxFactory.IdentifierName("__sct_Setup"),
-                    SyntaxFactory.ArgumentList(
-                        SyntaxFactory.SeparatedList(new[]
-                        {
-                            SyntaxFactory.Argument(ContextIdentifierName)
-                        })
-                    )
+                TranslatorUtils.GetFunction("Setup",
+                    SyntaxFactory.Argument(ContextIdentifierName)
                 )
             );
 
             var run = SyntaxFactory.ExpressionStatement(
                 SyntaxFactory.InvocationExpression(
-                    SyntaxFactory.MemberAccessExpression(
-                        SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.IdentifierName("runtime"),
-                        SyntaxFactory.IdentifierName("Run")
-                    ),
+                    TranslatorUtils.BuildAccessor(nameof(IRuntime.Run), runtimeId),
                     SyntaxFactory.ArgumentList(
-                        SyntaxFactory.SeparatedList(new[]
-                        {
-                            SyntaxFactory.Argument(ContextIdentifierName)
-                        })
+                        SyntaxFactory.SeparatedList([SyntaxFactory.Argument(ContextIdentifierName)])
                     )
                 )
             );
