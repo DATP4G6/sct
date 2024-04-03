@@ -328,11 +328,14 @@ namespace Sct.Compiler
 
         public override SctType VisitIf([NotNull] SctParser.IfContext context)
         {
-            var conditionType = context.expression().Accept(this);
-            if (!TypeTable.TypeIsNumeric(conditionType))
-            {
-                _errors.Add(new CompilerError("If condition must be numeric.", context.Start.Line, context.Start.Column));
-            }
+            _ = CheckBooleanExpression(context.expression());
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        public override SctType VisitElseif([NotNull] SctParser.ElseifContext context)
+        {
+            _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);
             return TypeTable.None;
         }
@@ -343,15 +346,23 @@ namespace Sct.Compiler
             return TypeTable.None;
         }
 
+
         public override SctType VisitWhile([NotNull] SctParser.WhileContext context)
         {
-            var conditionType = context.expression().Accept(this);
-            if (!TypeTable.TypeIsNumeric(conditionType))
-            {
-                _errors.Add(new CompilerError("While condition must be numeric.", context.Start.Line, context.Start.Column));
-            }
+            _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);
             return TypeTable.None;
+        }
+
+        private bool CheckBooleanExpression(SctParser.ExpressionContext context)
+        {
+            var expressionType = context.Accept(this);
+            if (!TypeTable.TypeIsNumeric(expressionType))
+            {
+                _errors.Add(new CompilerError("Boolean expression must be numeric.", context.Start.Line, context.Start.Column));
+                return false;
+            }
+            return true;
         }
     }
 }
