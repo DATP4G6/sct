@@ -6,7 +6,7 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            Int32 __sct_a = 5;
+            long __sct_a = 5;
         }
 
         public static void Main(String[] args)

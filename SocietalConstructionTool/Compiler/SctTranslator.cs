@@ -267,7 +267,7 @@ namespace Sct.Compiler
             var mangledName = MangleName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)), // TODO: change to actual type
+                _typeTable.GetTypeNode(context.type().GetText()),
                 mangledName
             )
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
