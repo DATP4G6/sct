@@ -6,25 +6,25 @@ using Sct.Runtime;
 
 namespace Sct.Compiler
 {
-    public static class IdentifierTable
+    public static class TranslatorUtils
     {
-        private static readonly Dictionary<string, MemberAccessExpressionSyntax> Types = new()
-        {
-            { "Rand", BuildAccessor(nameof(Stdlib.Rand), StdlibIdentifier) },
-            { "Seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
-            { "Exists", BuildAccessor(nameof(IQueryHandler.Exists), ContextIdentifier, QueryHandlerIdentifier) },
-            { "Count", BuildAccessor(nameof(IQueryHandler.Count), ContextIdentifier, QueryHandlerIdentifier) },
-            { "create", BuildAccessor(nameof(IAgentHandler.CreateAgent), ContextIdentifier, AgentHandlerIdentifier) },
-            { "exit", BuildAccessor(nameof(IRuntimeContext.ExitRuntime), ContextIdentifier) },
-        };
-
         private const string NAME_MANGLE_PREFIX = "__sct_";
         private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
         private static readonly SyntaxToken AgentHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.AgentHandler));
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
         private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
 
-        private static MemberAccessExpressionSyntax BuildAccessor(string accessor, params SyntaxToken[] members)
+        // Due to the way static fields are initialized, this field MUST be placed after the identifiers
+        // A full day has gone to waste debugging this...
+        private static readonly Dictionary<string, MemberAccessExpressionSyntax> Types = new()
+        {
+            { "rand", BuildAccessor(nameof(Stdlib.Rand), StdlibIdentifier) },
+            { "seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
+            { "exists", BuildAccessor(nameof(IQueryHandler.Exists), ContextIdentifier, QueryHandlerIdentifier) },
+            { "count", BuildAccessor(nameof(IQueryHandler.Count), ContextIdentifier, QueryHandlerIdentifier) },
+        };
+
+        public static MemberAccessExpressionSyntax BuildAccessor(string accessor, params SyntaxToken[] members)
         {
             return BuildAccessor(SyntaxFactory.Identifier(accessor), members);
         }
@@ -36,7 +36,7 @@ namespace Sct.Compiler
         /// <param name="members">all members leading up to it, in order</param>
         /// <returns>a MemberAccessExpressionSyntax corresponding to the parameters</returns>
         /// <exception cref="ArgumentException">If no `members` are provided</exception>
-        private static MemberAccessExpressionSyntax BuildAccessor(SyntaxToken accessor, params SyntaxToken[] members)
+        public static MemberAccessExpressionSyntax BuildAccessor(SyntaxToken accessor, params SyntaxToken[] members)
         {
             if (members.Length == 0)
             {
