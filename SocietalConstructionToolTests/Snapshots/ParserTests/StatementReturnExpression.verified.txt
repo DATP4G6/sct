@@ -1,1 +1,1 @@
-﻿(start (function function f ( args_def ) -> (type int) { (statement_list (statement (return return (expression (expression 2) + (expression 2)) ;))) }) <EOF>)
+﻿(start (function function f ( args_def ) -> (type int) { (statement_list (statement (return return (expression (expression (literal 2)) + (expression (literal 2))) ;))) }) <EOF>)
