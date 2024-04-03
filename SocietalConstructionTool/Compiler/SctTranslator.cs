@@ -435,7 +435,9 @@ namespace Sct.Compiler
                 _ => SyntaxKind.None
             };
 
-            var binaryExpression = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
+            var binaryExpression = SyntaxFactory.ParenthesizedExpression(
+                SyntaxFactory.BinaryExpression(@operator, exp1, exp2)
+            );
             _stack.Push(binaryExpression);
         }
 
@@ -458,8 +460,10 @@ namespace Sct.Compiler
             };
 
             // convert to conditional, as booleans do not exist in SCT
-            var condition = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
-            _stack.Push(SyntaxFactory.ConditionalExpression(condition, SctTrue, SctFalse));
+            var expression = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
+            var condition = SyntaxFactory.ConditionalExpression(expression, SctTrue, SctFalse);
+            var parenthesizedCondition = SyntaxFactory.ParenthesizedExpression(condition);
+            _stack.Push(parenthesizedCondition);
         }
 
         public override void ExitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)

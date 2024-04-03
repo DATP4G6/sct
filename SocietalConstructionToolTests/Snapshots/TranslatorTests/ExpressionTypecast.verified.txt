@@ -7,8 +7,8 @@
         public static void __sct_Setup(IRuntimeContext ctx)
         {
             Double __sct_a = 1.5;
-            Int32 __sct_b = 2 + (Int32)__sct_a;
-            Double __sct_b = 4 + (Double)__sct_b;
+            Int32 __sct_b = (2 + (Int32)__sct_a);
+            Double __sct_b = (4 + (Double)__sct_b);
         }
 
         public static void Main(String[] args)
