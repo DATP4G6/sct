@@ -29,7 +29,7 @@
 
             public override void Update(IRuntimeContext ctx)
             {
-                State switch
+                _ = State switch
                 {
                     "__sct_Child" => __sct_Child(ctx),
                     "__sct_Adult" => __sct_Adult(ctx)};

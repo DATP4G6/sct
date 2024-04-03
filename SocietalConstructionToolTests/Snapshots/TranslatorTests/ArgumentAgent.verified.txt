@@ -26,7 +26,7 @@
 
             public override void Update(IRuntimeContext ctx)
             {
-                State switch
+                _ = State switch
                 {
                     "__sct_Adult" => __sct_Adult(ctx)};
             }

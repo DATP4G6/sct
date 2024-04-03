@@ -73,29 +73,31 @@ namespace Sct.Compiler
 
         private MethodDeclarationSyntax CreateUpdateMethod()
         {
-
-            var body = SyntaxFactory.Block().AddStatements(
-                SyntaxFactory.ExpressionStatement(
-                    SyntaxFactory.SwitchExpression(
+            var @switch = SyntaxFactory.SwitchExpression(
                         SyntaxFactory.IdentifierName(nameof(BaseAgent.State)),
                         // Add cases for each state in stateNames, calling the corresponding method of the same name
                         SyntaxFactory.SeparatedList(
                             _stateNames.Select(stateName => SyntaxFactory.SwitchExpressionArm(
-                                SyntaxFactory.ConstantPattern(
-                                    SyntaxFactory.LiteralExpression(
-                                        SyntaxKind.StringLiteralExpression,
-                                        SyntaxFactory.Literal(stateName)
-                                    )
-                                ),
-                                SyntaxFactory.InvocationExpression(
-                                    SyntaxFactory.IdentifierName(stateName),
-                                    WithContextArgument([])
-                                )
-                            ))
-                        )
-                    )
-                )
-            );
+                                    SyntaxFactory.ConstantPattern(
+                                        SyntaxFactory.LiteralExpression(
+                                            SyntaxKind.StringLiteralExpression,
+                                            SyntaxFactory.Literal(stateName)
+                                            )
+                                        ),
+                                    SyntaxFactory.InvocationExpression(
+                                        SyntaxFactory.IdentifierName(stateName),
+                                        WithContextArgument([])
+                                        )
+                                    ))
+                            )
+                        );
+
+            var discardAssignment = SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                SyntaxKind.SimpleAssignmentExpression,
+                SyntaxFactory.IdentifierName("_"),
+                @switch
+            ));
+            var body = SyntaxFactory.Block().AddStatements(discardAssignment);
 
             _stateNames = new();
 
