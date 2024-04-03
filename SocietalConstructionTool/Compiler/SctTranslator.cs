@@ -264,7 +264,7 @@ namespace Sct.Compiler
             var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText()),
+                TypeTable.GetTypeNode(context.type().GetText()),
                 mangledName
             )
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))

@@ -7,11 +7,11 @@ namespace Sct.Compiler
 {
     public static class TypeTable
     {
-        public static SctType Void => _types["void"];
-        public static SctType Int => _types["int"];
-        public static SctType Float => _types["float"];
-        public static SctType Predicate => _types["Predicate"];
-        private static readonly Dictionary<string, SctType> _types = new()
+        public static SctType Void => Types["void"];
+        public static SctType Int => Types["int"];
+        public static SctType Float => Types["float"];
+        public static SctType Predicate => Types["Predicate"];
+        private static readonly Dictionary<string, SctType> Types = new()
         {
             { "int", new SctType(typeof(int)) },
             { "float", new SctType(typeof(double)) },
@@ -19,12 +19,12 @@ namespace Sct.Compiler
             { "Predicate", new SctType(typeof(void)) },
         };
 
-        public static SctType? GetType(string name) => _types[name];
+        public static SctType? GetType(string name) => Types[name];
 
         public static TypeSyntax GetTypeNode(string name)
         {
-            SctType sctType = (_types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
-            if (sctType == _types["Predicate"])
+            SctType sctType = (Types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
+            if (sctType == Types["Predicate"])
             {
                 throw new InvalidTypeException("Predicate type cannot be used as a syntax node");
             }
