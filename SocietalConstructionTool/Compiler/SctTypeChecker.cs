@@ -325,5 +325,44 @@ namespace Sct.Compiler
             _vtable.ExitScope();
             return TypeTable.Void;
         }
+
+        public override SctType VisitIf([NotNull] SctParser.IfContext context)
+        {
+            _ = CheckBooleanExpression(context.expression());
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        public override SctType VisitElseif([NotNull] SctParser.ElseifContext context)
+        {
+            _ = CheckBooleanExpression(context.expression());
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        public override SctType VisitElse([NotNull] SctParser.ElseContext context)
+        {
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+
+        public override SctType VisitWhile([NotNull] SctParser.WhileContext context)
+        {
+            _ = CheckBooleanExpression(context.expression());
+            _ = context.statement_list().Accept(this);
+            return TypeTable.None;
+        }
+
+        private bool CheckBooleanExpression(SctParser.ExpressionContext context)
+        {
+            var expressionType = context.Accept(this);
+            if (!TypeTable.TypeIsNumeric(expressionType))
+            {
+                _errors.Add(new CompilerError("Boolean expression must be numeric.", context.Start.Line, context.Start.Column));
+                return false;
+            }
+            return true;
+        }
     }
 }

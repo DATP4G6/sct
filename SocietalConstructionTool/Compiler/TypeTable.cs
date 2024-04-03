@@ -11,12 +11,14 @@ namespace Sct.Compiler
         public static SctType Int => Types["int"];
         public static SctType Float => Types["float"];
         public static SctType Predicate => Types["Predicate"];
+        public static SctType None => Types["none"];
         private static readonly Dictionary<string, SctType> Types = new()
         {
             { "int", new SctType(typeof(int)) },
             { "float", new SctType(typeof(double)) },
             { "void", new SctType(typeof(void)) },
             { "Predicate", new SctType(typeof(void)) },
+            { "none", new SctType(typeof(void))}
         };
 
         public static SctType? GetType(string name) => Types[name];
