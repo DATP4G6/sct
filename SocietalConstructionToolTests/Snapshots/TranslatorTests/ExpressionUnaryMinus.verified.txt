@@ -7,7 +7,7 @@
         public static void __sct_Setup(IRuntimeContext ctx)
         {
             long __sct_a = 4;
-            -__sct_a;
+            __sct_a = -__sct_a;
         }
 
         public static void Main(String[] args)

@@ -6,11 +6,11 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            (2 + 3);
-            (5 - 2);
-            (5 * 6);
-            (6 / 2);
-            (5 % 2);
+            long __sct_a = (2 + 3);
+            __sct_a = (5 - 2);
+            __sct_a = (5 * 6);
+            __sct_a = (6 / 2);
+            __sct_a = (5 % 2);
         }
 
         public static void Main(String[] args)
