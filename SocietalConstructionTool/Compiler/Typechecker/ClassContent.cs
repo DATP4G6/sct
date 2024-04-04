@@ -1,4 +1,4 @@
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class ClassContent
     {

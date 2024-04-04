@@ -1,4 +1,4 @@
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class Ctable
     {
@@ -21,4 +21,3 @@ namespace Sct.Compiler
         }
     }
 }
-

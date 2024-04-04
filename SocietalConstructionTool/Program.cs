@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler;
+using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
 
 static int SctParseMethod()

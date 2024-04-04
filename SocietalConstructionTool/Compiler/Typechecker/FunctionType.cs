@@ -1,4 +1,4 @@
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class FunctionType
     {
@@ -11,7 +11,5 @@ namespace Sct.Compiler
             ParameterTypes = parameterTypes;
         }
     }
-
-
 }
 

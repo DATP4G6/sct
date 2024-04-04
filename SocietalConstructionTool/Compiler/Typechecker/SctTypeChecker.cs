@@ -1,6 +1,6 @@
 using Antlr4.Runtime.Misc;
 
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class SctTypeChecker : SctBaseVisitor<SctType>, IErrorReporter
     {

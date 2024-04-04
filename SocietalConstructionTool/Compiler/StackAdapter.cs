@@ -154,16 +154,14 @@ namespace Sct.Compiler
                 {
                     continue;
                 }
-                yield return _stack.ElementAt(i).Value ?? throw new NullReferenceException();
+                yield return _stack.ElementAt(i).Value ?? throw new InvalidOperationException("Stack item is null");
             }
 
         }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
-
-
-
     }
 }

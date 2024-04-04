@@ -1,6 +1,4 @@
-using Sct.Compiler;
-
-namespace Sct
+namespace Sct.Compiler.Typechecker
 {
 
     public class CtableBuilder

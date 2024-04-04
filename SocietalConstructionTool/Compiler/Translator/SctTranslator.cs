@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sct.Extensions;
 using Sct.Runtime;
 
-namespace Sct.Compiler
+namespace Sct.Compiler.Translator
 {
     public class SctTranslator : SctBaseListener
     {

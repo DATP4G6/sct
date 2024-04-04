@@ -1,4 +1,4 @@
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class VtableEntry
     {
@@ -11,5 +11,4 @@ namespace Sct.Compiler
             Type = type;
         }
     }
-
 }

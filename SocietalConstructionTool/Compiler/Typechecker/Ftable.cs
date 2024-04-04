@@ -1,4 +1,4 @@
-namespace Sct.Compiler
+namespace Sct.Compiler.Typechecker
 {
     public class Ftable
     {
@@ -19,7 +19,5 @@ namespace Sct.Compiler
             return _ftable.ContainsKey(name);
         }
     }
-
-
 }
 
