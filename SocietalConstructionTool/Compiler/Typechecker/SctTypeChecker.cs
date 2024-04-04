@@ -78,7 +78,7 @@ namespace Sct.Compiler.Typechecker
             SctType expressionType = context.expression().Accept(this);
             if (GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch: {type} != {expressionType}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert {expressionType} to {type}", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
@@ -162,7 +162,7 @@ namespace Sct.Compiler.Typechecker
                 {
                     if (GetCompatibleType(functionParamType, argumentType) is null)
                     {
-                        _errors.Add(new CompilerError($"Type mismatch: {functionParamType.TargetType} != {argumentType.TargetType}", context.Start.Line, context.Start.Column));
+                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TargetType} to {functionParamType.TargetType}", context.Start.Line, context.Start.Column));
                     }
                 }
             }
@@ -198,7 +198,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (GetCompatibleType(returnType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Return type does not match the functions returned type expression, expected expression of type {returnType.TargetType}, got {expressionType.TargetType}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert the returned type to the functions expected return type, expected expression of type {returnType.TargetType}, got {expressionType.TargetType}.", context.Start.Line, context.Start.Column));
                 expressionType = returnType;
             }
             return expressionType;
@@ -242,7 +242,7 @@ namespace Sct.Compiler.Typechecker
 
             if (GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch: {variableType.TargetType} != {expressionType.TargetType}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert {expressionType.TargetType} to {variableType.TargetType} ", context.Start.Line, context.Start.Column));
             }
 
             return variableType;
@@ -265,7 +265,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
-                _errors.Add(new CompilerError($"Type mismatch: Cannot typecast from {expressionType.TargetType} to {targetType.TargetType}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot typecast from {expressionType.TargetType} to {targetType.TargetType}.", context.Start.Line, context.Start.Column));
             }
             return targetType;
         }
@@ -307,11 +307,9 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var arg in agentArgs)
             {
-                if (targetAgentFields[arg.Key] != arg.Value)
+                if (GetCompatibleType(targetAgentFields[arg.Key], arg.Value) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch: {targetAgentFields[arg.Key].TargetType} != {arg.Value.TargetType}. " +
-                        "Expression in predicate does not match field type in target agent.",
-                        context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {targetAgentFields[arg.Key].TargetType}", context.Start.Line, context.Start.Column));
                 }
             }
 
