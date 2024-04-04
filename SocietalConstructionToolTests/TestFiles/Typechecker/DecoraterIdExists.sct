@@ -11,3 +11,5 @@ class Citizen(int townId) {
         }
     }
 }
+
+function Setup() -> void {}

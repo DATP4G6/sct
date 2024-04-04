@@ -1,5 +1,5 @@
 function Setup() -> void {
-    (float) 7
-    (int) 7.0
-    (void) 7
+    (float) 7;
+    (int) 7.0;
+    (void) 7;
 }

@@ -1,0 +1,1 @@
+﻿Line 7, Column 8: State Dead does not exist in class Citizen
