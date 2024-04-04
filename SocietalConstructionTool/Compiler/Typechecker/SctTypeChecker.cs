@@ -34,18 +34,6 @@ namespace Sct.Compiler.Typechecker
             return new FunctionType(TypeTable.Void, new List<SctType>());
         }
 
-        private SctType GetType(SctParser.TypeContext context)
-        {
-            var type = TypeTable.GetType(context.GetText());
-            if (type is null)
-            {
-                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
-            }
-            type ??= TypeTable.Int;
-
-            return type;
-        }
-
         private SctType LookupVariable(string variableName, int line, int col)
         {
             var variableType = _vtable.Lookup(variableName);
@@ -79,7 +67,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
-            var type = GetType(context.type());
+            var type = context.type().Accept(this);
 
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
@@ -101,6 +89,22 @@ namespace Sct.Compiler.Typechecker
 
             return type;
         }
+        public override SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
+        {
+            return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
+        }
+
+        public override SctType VisitType([NotNull] SctParser.TypeContext context)
+        {
+            var type = TypeTable.GetType(context.GetText());
+            if (type is null)
+            {
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
+            }
+            type ??= TypeTable.Int;
+
+            return type;
+        }
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
@@ -109,7 +113,7 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
             {
-                _ = _vtable.AddEntry(id.GetText(), GetType(type));
+                _ = _vtable.AddEntry(id.GetText(), type.Accept(this));
             }
 
             _ = base.VisitClass_def(context);
@@ -118,10 +122,6 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Void;
         }
 
-        public override SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
-        {
-            return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
-        }
 
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
@@ -261,7 +261,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
-            var targetType = GetType(context.type());
+            var targetType = context.type().Accept(this);
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {

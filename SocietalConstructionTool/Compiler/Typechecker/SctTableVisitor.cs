@@ -11,18 +11,6 @@ namespace Sct.Compiler.Typechecker
         public IEnumerable<CompilerError> Errors => _errors;
         private readonly CtableBuilder _ctableBuilder = new CtableBuilder();
 
-        private SctType GetType(SctParser.TypeContext context)
-        {
-            var type = TypeTable.GetType(context.GetText());
-            if (type is null)
-            {
-                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
-            }
-            type ??= TypeTable.Int;
-
-            return type;
-        }
-
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
             _ = base.VisitStart(context);
@@ -52,7 +40,7 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
             {
-                if (!_ctableBuilder.AddField(id.GetText(), GetType(type)))
+                if (!_ctableBuilder.AddField(id.GetText(), type.Accept(this)))
                 {
                     _errors.Add(new CompilerError($"ID {id.GetText()} already exists", id.Symbol.Line, id.Symbol.Column));
                 }
@@ -69,7 +57,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
         {
-            var type = GetType(context.type());
+            var type = context.type().Accept(this);
             var argsTypes = context.args_def().type().Select(arg => arg.Accept(this)).ToList();
 
             FunctionType functionType = new FunctionType(type, argsTypes);
@@ -83,7 +71,14 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitType([NotNull] SctParser.TypeContext context)
         {
-            return GetType(context);
+            var type = TypeTable.GetType(context.GetText());
+            if (type is null)
+            {
+                _errors.Add(new CompilerError($"Type {context.GetText()} does not exist", context.Start.Line, context.Start.Column));
+            }
+            type ??= TypeTable.Int;
+
+            return type;
         }
 
         public override SctType VisitState([NotNull] SctParser.StateContext context)
