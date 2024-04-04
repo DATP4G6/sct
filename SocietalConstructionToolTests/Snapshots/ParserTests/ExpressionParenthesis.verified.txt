@@ -1,1 +1,1 @@
-﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (expression (expression 16) / (expression ( (expression (expression 1) + (expression 3)) ))) ;)) }) <EOF>)
+﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type int) a = (expression (expression 16) / (expression ( (expression (expression 1) + (expression 3)) ))) ;))) }) <EOF>)
