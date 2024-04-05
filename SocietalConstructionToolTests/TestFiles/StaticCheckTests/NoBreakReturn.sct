@@ -1,0 +1,4 @@
+function Setup() -> void {
+    int x = 2;
+    x = x + 2;
+}
