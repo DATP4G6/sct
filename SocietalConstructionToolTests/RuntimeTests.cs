@@ -41,7 +41,7 @@ namespace SocietalConstructionToolTests
             contextMock.Verify(c => c.ShouldExit, Times.Exactly(2));
             contextMock.Verify(c => c.GetNextContext(), Times.Once);
             contextMock.Verify(c => c.AgentHandler.Agents, Times.Once);
-            contextMock.Verify(c => c.OnTick(), Times.Once);
+            contextMock.Verify(c => c.OnTick(), Times.Exactly(2));
             contextMock.Verify(c => c.OnExit(), Times.Once);
             contextMock.VerifyNoOtherCalls();
         }
@@ -105,7 +105,7 @@ namespace SocietalConstructionToolTests
             runtime.Run(contextMock.Object);
 
             // Assert
-            loggerMock.Verify(l => l.OnTick(contextMock.Object), Times.Once);
+            loggerMock.Verify(l => l.OnTick(contextMock.Object), Times.Exactly(2));
             loggerMock.Verify(l => l.OnExit(), Times.Once);
             loggerMock.VerifyNoOtherCalls();
         }

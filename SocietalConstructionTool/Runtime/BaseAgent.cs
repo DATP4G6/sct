@@ -1,6 +1,6 @@
 namespace Sct.Runtime
 {
-    public abstract class BaseAgent
+    public abstract class BaseAgent : ICloneable
     {
         public string State { get; set; }
         public IDictionary<string, dynamic> Fields { get; set; }
@@ -11,17 +11,25 @@ namespace Sct.Runtime
         public BaseAgent(string state, IDictionary<string, dynamic> fields)
         {
             State = state;
-            Fields = fields;
+            Fields = fields.ToDictionary(entry => entry.Key, entry => entry.Value);
             ClassName = GetType().Name;
         }
 
         public abstract void Update(IRuntimeContext ctx);
-        public abstract BaseAgent Clone();
+
         public static string EnterMethodName => nameof(Enter);
         protected void Enter(IRuntimeContext ctx, string state)
         {
-            State = state;
-            ctx.AgentHandler.CreateAgent(this);
+            BaseAgent a = (BaseAgent)Clone();
+            a.State = state;
+            ctx.AgentHandler.CreateAgent(a);
+        }
+
+        public object Clone()
+        {
+            BaseAgent a = (BaseAgent)MemberwiseClone();
+            a.Fields = new Dictionary<string, dynamic>(Fields);
+            return a;
         }
     }
 }

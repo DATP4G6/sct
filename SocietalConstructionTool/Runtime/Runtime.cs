@@ -16,6 +16,7 @@ namespace Sct.Runtime
                 prevCtx = nextCtx;
             }
 
+            prevCtx.OnTick();
             prevCtx.OnExit();
         }
     }

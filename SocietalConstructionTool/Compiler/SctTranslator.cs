@@ -13,11 +13,19 @@ namespace Sct.Compiler
 {
     public class SctTranslator : SctBaseListener
     {
+        public const string GeneratedNamespace = "SctGenerated";
+        public const string GeneratedGlobalClass = "GlobalClass";
+
+        public const string RunSimulationFunctionName = "RunSimulation";
+
         private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
-        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName("ctx");
+        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(ContextIdentifier);
+        private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(RunSimulationFunctionName);
+
         // boolean values are either 0 or 1
         private static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
         private static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+
 
         private const string NAME_MANGLE_PREFIX = "__sct_";
 
@@ -34,19 +42,23 @@ namespace Sct.Compiler
             var members = _stack.ToArray<MemberDeclarationSyntax>();
 
             var @class = SyntaxFactory
-            .ClassDeclaration("GlobalClass")
+            .ClassDeclaration(GeneratedGlobalClass)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddMembers(members)
-            .AddMembers(MakeMainMethod());
+            .AddMembers(MakeMainMethod())
+            .AddMembers(MakeRunMethod());
 
-            var @using = SyntaxFactory.UsingDirective(
-                SyntaxFactory.IdentifierName(typeof(BaseAgent).Namespace ?? "")
-            );
+            string[] usingStrings = [typeof(BaseAgent).Namespace!, nameof(System), typeof(IDictionary<string, dynamic>).Namespace!];
+
+            var usings = usingStrings.Select(u => SyntaxFactory.UsingDirective(
+                            SyntaxFactory.IdentifierName(u)
+                        )).ToArray();
 
             var @namespace = SyntaxFactory
-            .NamespaceDeclaration(SyntaxFactory.ParseName("MyNamespace"))
+            .NamespaceDeclaration(SyntaxFactory.ParseName(GeneratedNamespace))
             .AddMembers(@class)
-            .AddUsings(@using);
+            .AddUsings(usings);
+
 
             Root = @namespace;
         }
@@ -65,7 +77,6 @@ namespace Sct.Compiler
             .AddMembers(CreateClassFields(fields))
             .AddMembers(CreateConstructor(className))
             .AddMembers(members)
-            .AddMembers(CreateCloneMethod(className))
             .AddMembers(CreateUpdateMethod());
 
             _stack.Push(@class);
@@ -110,35 +121,6 @@ namespace Sct.Compiler
             .WithBody(body);
 
             return updateMethod;
-        }
-
-        private static MethodDeclarationSyntax CreateCloneMethod(string className)
-        {
-            // 'new <className>(State, Fields)'
-            var dict = SyntaxFactory.ObjectCreationExpression(
-                SyntaxFactory.ParseTypeName(className))
-            .WithArgumentList(
-                SyntaxFactory.ArgumentList(
-                    // with base arguments
-                    SyntaxFactory.SeparatedList(new[]
-                    {
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(nameof(BaseAgent.State))),
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)))
-                    })
-                )
-            );
-
-            // Create clone method
-            return SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.ParseTypeName(typeof(BaseAgent).Name),
-                nameof(BaseAgent.Clone)
-            )
-            // public override of BaseAgent's method
-            .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword)))
-            .WithBody(SyntaxFactory.Block(
-                // return the dictionary defined above
-                SyntaxFactory.ReturnStatement(dict)
-            ));
         }
 
         private static ConstructorDeclarationSyntax CreateConstructor(string className)
@@ -715,31 +697,10 @@ namespace Sct.Compiler
         private static MethodDeclarationSyntax MakeMainMethod()
         {
             var argsId = SyntaxFactory.IdentifierName("args");
-            var runtimeId = SyntaxFactory.Identifier("runtime");
-
-            var runtime = SyntaxFactory.LocalDeclarationStatement(
-                SyntaxFactory.VariableDeclaration(
-                    SyntaxFactory.ParseTypeName(nameof(Runtime))
-                )
-                .AddVariables(
-                    SyntaxFactory.VariableDeclarator(
-                        runtimeId
-                    )
-                    .WithInitializer(
-                        SyntaxFactory.EqualsValueClause(
-                            SyntaxFactory.ObjectCreationExpression(
-                                SyntaxFactory.ParseTypeName(nameof(Runtime))
-                            )
-                            // need to add empty argument list to invoke constructor
-                            .WithArgumentList(SyntaxFactory.ArgumentList())
-                        )
-                    )
-                )
-            );
 
             var ctx = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(
-                    SyntaxFactory.ParseTypeName(nameof(RuntimeContext))
+                    SyntaxFactory.ParseTypeName(nameof(IRuntimeContext))
                 )
                 .AddVariables(
                     SyntaxFactory.VariableDeclarator(
@@ -754,6 +715,59 @@ namespace Sct.Compiler
                                 ),
                                 SyntaxFactory.ArgumentList( // with args as argument
                                     SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(argsId) })
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            var run = SyntaxFactory.ExpressionStatement(
+                    SyntaxFactory.InvocationExpression(
+                        SyntaxFactory.IdentifierName(RunSimulationIdentifier)
+                    ).WithArgumentList(SyntaxFactory.ArgumentList(
+                                SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(SyntaxFactory.IdentifierName(ContextIdentifier)) })
+                            )
+                        )
+            );
+
+            var body = SyntaxFactory.Block().AddStatements(ctx, run);
+            // `string[] args` parameter
+            var argsParameter = SyntaxFactory.Parameter(argsId.Identifier)
+                .WithType(SyntaxFactory.ParseTypeName(typeof(string[]).Name));
+
+            var mainMethod = SyntaxFactory.MethodDeclaration(
+                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                SyntaxFactory.Identifier("Main")
+            )
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
+            .AddParameterListParameters(argsParameter)
+            .WithBody(body);
+
+            return mainMethod;
+        }
+
+        private static MethodDeclarationSyntax MakeRunMethod()
+        {
+
+            var runtimeId = SyntaxFactory.Identifier("runtime");
+            var runtime = SyntaxFactory.LocalDeclarationStatement(
+                SyntaxFactory.VariableDeclaration(
+                    SyntaxFactory.ParseTypeName(nameof(Runtime))
+                )
+                .AddVariables(
+                    SyntaxFactory.VariableDeclarator(
+                        runtimeId
+                    )
+                    .WithInitializer(
+                        SyntaxFactory.EqualsValueClause(
+                            SyntaxFactory.ObjectCreationExpression(
+                                SyntaxFactory.ParseTypeName(nameof(Runtime))
+                            )
+                            // need to add empty argument list to invoke constructor
+                            .WithArgumentList(
+                                SyntaxFactory.ArgumentList(
+                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
                                 )
                             )
                         )
@@ -776,23 +790,21 @@ namespace Sct.Compiler
                 )
             );
 
-            var body = SyntaxFactory.Block()
-            .AddStatements(runtime, ctx, setup, run);
+            var runtimeParameter = SyntaxFactory.Parameter(ContextIdentifier).WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)));
 
-            // `string[] args` parameter
-            var argsParameter = SyntaxFactory.Parameter(argsId.Identifier)
-                .WithType(SyntaxFactory.ParseTypeName(typeof(string[]).Name));
-
-            var mainMethod = SyntaxFactory.MethodDeclaration(
+            var runMethod = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                SyntaxFactory.Identifier("Main")
+                RunSimulationIdentifier
             )
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
-            .AddParameterListParameters(argsParameter)
-            .WithBody(body);
+            .AddParameterListParameters(runtimeParameter)
+            .WithBody(SyntaxFactory.Block()
+            .AddStatements(runtime, setup, run));
 
-            return mainMethod;
+            return runMethod;
+
         }
+
 
         /// <summary>
         /// Create getters and setters for all fields in a class
