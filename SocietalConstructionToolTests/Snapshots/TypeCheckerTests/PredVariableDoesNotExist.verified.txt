@@ -1,1 +1,1 @@
-﻿Line 4, Column 4: Variable weight does not exist in agent Citizen
+﻿Line 4, Column 19: Variable weight does not exist in agent Citizen
