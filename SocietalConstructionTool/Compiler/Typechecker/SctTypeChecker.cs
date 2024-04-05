@@ -72,13 +72,13 @@ namespace Sct.Compiler.Typechecker
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type :{type.GetType()}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable cannot be of type: {type.TargetType}", context.Start.Line, context.Start.Column));
             }
 
             SctType expressionType = context.expression().Accept(this);
             if (GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot convert {expressionType} to {type.GetType()}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert {expressionType.TargetType} to {type.TargetType}", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
