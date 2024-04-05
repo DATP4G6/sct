@@ -1,4 +1,4 @@
-﻿Line 6, Column 4: Boolean expression must be numeric types
-Line 7, Column 4: Boolean expression must be numeric types
-Line 8, Column 4: Boolean expression must be numeric types
-Line 8, Column 20: Boolean expression must be numeric types
+﻿Line 6, Column 12: Boolean expression must be numeric types
+Line 7, Column 8: Boolean expression must be numeric types
+Line 8, Column 8: Boolean expression must be numeric types
+Line 8, Column 24: Boolean expression must be numeric types

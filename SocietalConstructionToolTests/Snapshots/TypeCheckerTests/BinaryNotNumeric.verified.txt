@@ -1,2 +1,2 @@
-﻿Line 6, Column 4: Binary expression must have numeric types
-Line 7, Column 4: Binary expression must have numeric types
+﻿Line 6, Column 14: Binary expression must have numeric types
+Line 7, Column 8: Binary expression must have numeric types

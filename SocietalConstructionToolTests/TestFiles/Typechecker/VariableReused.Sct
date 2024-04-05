@@ -1,0 +1,5 @@
+function Setup() -> void {
+    int x = 5;
+    int x = 10;
+    float x = 7.5;
+}

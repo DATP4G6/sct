@@ -9,5 +9,5 @@ class Citizen(int townId) {
 }
 
 function Setup() -> void {
-    Town::Child(townId: 5, townId: 13);
+    int x = exists(Town::Child(townId: 5, townId: 13));
 }

@@ -195,7 +195,7 @@ namespace Sct.Compiler.Typechecker
             if (context.expression() is null && returnType == TypeTable.Void)
             {
                 return TypeTable.Void;
-            } else if (context.expression() is null)
+            } else if (context.expression() is null && returnType != TypeTable.Void)
             {
                 _errors.Add(new CompilerError($"Return type does not match the functions returned type expression, expected expression of type {returnType.TargetType}, got no expression.", context.Start.Line, context.Start.Column));
                 return TypeTable.Void;
