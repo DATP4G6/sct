@@ -10,9 +10,9 @@ namespace Sct.Compiler.Typechecker
             _globalClass = globalClass;
         }
 
-        public ClassContent GetClassContent(string className)
+        public ClassContent? GetClassContent(string className)
         {
-            return _classes[className];
+            return _classes.TryGetValue(className, out var classContent) ? classContent : null;
         }
 
         public ClassContent GetGlobalContent()

@@ -72,13 +72,13 @@ namespace Sct.Compiler.Typechecker
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type :{type}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable cannot be of type :{type.GetType()}", context.Start.Line, context.Start.Column));
             }
 
             SctType expressionType = context.expression().Accept(this);
             if (GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot convert {expressionType} to {type}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert {expressionType} to {type.GetType()}", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
@@ -272,21 +272,22 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
         {
-            var targetAgent = context.ID(0).GetText();
+            var agentName = context.ID(0).GetText();
+            var targetAgent = _ctable.GetClassContent(agentName);
 
-            if (_ctable.GetClassContent(targetAgent) is null)
+            if (targetAgent is null)
             {
-                _errors.Add(new CompilerError($"Agent {targetAgent} does not exist", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Agent {agentName} does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
             }
 
-            if (context.QUESTION() is null && _ctable.GetClassContent(targetAgent).LookupState(context.ID(1).GetText()) is null)
+            if (context.QUESTION() is null && targetAgent.LookupState(context.ID(1).GetText()) is null)
             {
-                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {targetAgent}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
             }
 
-            var targetAgentFields = _ctable.GetClassContent(targetAgent).Fields;
+            var targetAgentFields = targetAgent.Fields;
             var agentArgumentIds = context.args_agent().ID();
 
             var agentArgs = new Dictionary<string, SctType>();
@@ -295,7 +296,7 @@ namespace Sct.Compiler.Typechecker
             {
                 if (targetAgentFields[id.GetText()] is null)
                 {
-                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {targetAgent}", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
                     agentArgs.Add(id.GetText(), TypeTable.Int);
                 }
 
