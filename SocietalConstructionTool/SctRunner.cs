@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.Emit;
 
 using Sct.Compiler;
 using Sct.Compiler.Typechecker;
+using Sct.Compiler.Translator;
 using Sct.Runtime;
 using Sct.Runtime.Trace;
 
