@@ -147,6 +147,12 @@ namespace Sct.Compiler.Typechecker
         {
             var functionName = context.ID().GetText();
             _currentFunctionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
+
+            // this only happens when multiple functions exist with the same name
+            if (_currentFunctionType.ReturnType != context.type().Accept(this))
+            {
+                return TypeTable.Void;
+            }
             return base.VisitFunction(context);
         }
 

@@ -1,1 +1,1 @@
-﻿Line 4, Column 4: Type mismatch: Cannot typecast from System.Int32 to System.Void.
+﻿Line 4, Column 4: Cannot typecast from System.Int32 to System.Void.

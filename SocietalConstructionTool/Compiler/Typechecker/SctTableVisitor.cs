@@ -62,7 +62,8 @@ namespace Sct.Compiler.Typechecker
 
             FunctionType functionType = new FunctionType(type, argsTypes);
 
-            if(!_ctableBuilder.AddFunction(context.ID().GetText(), functionType)){
+            if (!_ctableBuilder.AddFunction(context.ID().GetText(), functionType))
+            {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
 

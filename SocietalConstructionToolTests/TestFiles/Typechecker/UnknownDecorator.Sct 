@@ -7,7 +7,9 @@ class Citizen(int townId) {
 
     @randomDeath
     @someDecorator
-    state Child {}
+    state Child {
+        enter Child;
+    }
 }
 
 function Setup() -> void {}

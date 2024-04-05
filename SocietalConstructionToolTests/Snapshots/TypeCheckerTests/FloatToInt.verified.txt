@@ -1,0 +1,2 @@
+﻿Line 4, Column 4: Cannot convert System.Double to System.Int32
+Line 5, Column 4: Cannot convert System.Double to System.Int32 

@@ -1,1 +1,3 @@
-function Setup() -> int {}
+function Setup() -> int {
+    return 1;
+}

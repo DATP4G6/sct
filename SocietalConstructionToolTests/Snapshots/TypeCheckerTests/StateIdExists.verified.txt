@@ -1,2 +1,2 @@
-﻿Line 4, Column 4: ID foo already exists
-Line 6, Column 4: ID child already exists
+﻿Line 6, Column 4: ID foo already exists
+Line 12, Column 4: ID child already exists

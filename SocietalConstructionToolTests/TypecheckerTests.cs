@@ -30,20 +30,19 @@ namespace SocietalConstructionToolTests
 
             List<CompilerError> errors = new();
             SctParser parser = new(tokens);
-            // SctParser.StartContext result = parser.start();
+            SctParser.StartContext startNode = parser.start();
+
             var returnChecker = new SctReturnCheckVisitor();
+            _ = startNode.Accept(returnChecker);
             errors.AddRange(returnChecker.Errors);
 
-            parser.Reset();
             var sctTableVisitor = new SctTableVisitor();
-            _ = sctTableVisitor.Visit(parser.start());
+            _ = sctTableVisitor.Visit(startNode);
             var ctable = sctTableVisitor.Ctable;
             errors.AddRange(sctTableVisitor.Errors);
 
-            parser.Reset();
             var sctTypeChecker = new SctTypeChecker(ctable);
-            _ = parser.start().Accept(sctTypeChecker);
-            parser.Reset();
+            _ = startNode.Accept(sctTypeChecker);
 
             errors.AddRange(sctTypeChecker.Errors);
 

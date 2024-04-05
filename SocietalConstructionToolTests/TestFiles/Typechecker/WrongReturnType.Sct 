@@ -1,4 +1,4 @@
-function test() -> void{
+function test() -> void {
     return 15;
 }
 
