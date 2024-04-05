@@ -1,0 +1,11 @@
+class C() {
+    decorator D {
+        enter S;
+    }
+
+    state S {
+    }
+}
+
+function Setup() -> void {
+}

@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 
 using Sct.Compiler;
+using Sct.Compiler.Typechecker;
 using Sct.Runtime;
 using Sct.Runtime.Trace;
 
@@ -29,13 +30,24 @@ namespace Sct
             ITokenSource lexer = new SctLexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
             SctParser parser = new(tokens);
-            var listener = new SctTranslator();
-            parser.AddParseListener(listener);
 
-            _ = parser.start();
+            var translator = new SctTranslator();
+            parser.AddParseListener(translator);
+
+            var startNode = parser.start();
+
+            KeywordContextCheckVisitor keywordChecker = new();
+            var errors = startNode.Accept(keywordChecker);
+
+            if (errors.Length > 0)
+            {
+                string errorsText = string.Join('\n', (IEnumerable<CompilerError>)errors);
+                // TODO: Better error handling
+                throw new ArgumentException($"Could not compile SCT file.\nCompilation errors:\n{errorsText}");
+            }
 
             // TODO: It's a little evil that we hold the entire generated source text in memory, but it is what it is
-            return listener.Root?.NormalizeWhitespace().ToFullString();
+            return translator.Root?.NormalizeWhitespace().ToFullString();
         }
 
         /**
