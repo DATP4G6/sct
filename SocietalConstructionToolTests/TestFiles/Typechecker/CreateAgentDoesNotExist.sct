@@ -1,0 +1,8 @@
+class Foo() {}
+
+function setup() -> void {
+    create Bar::Foo(a: 5);
+    create Bar::Foo();
+    create Bar::Bar();
+}
+

@@ -327,6 +327,66 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Predicate;
         }
 
+        public override SctType VisitAgent_create([NotNull] SctParser.Agent_createContext context)
+        {
+            var agentName = context.ID(0).GetText();
+            var stateName = context.ID(1).GetText();
+            var targetAgent = _ctable.GetClassContent(agentName);
+
+            if (targetAgent is null)
+            {
+                _errors.Add(new CompilerError($"Agent {agentName} does not exist", context.Start.Line, context.Start.Column));
+                return TypeTable.None;
+            }
+
+            if (targetAgent.LookupState(stateName) is null)
+            {
+                _errors.Add(new CompilerError($"State {stateName} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                return TypeTable.None;
+            }
+
+            var targetAgentFields = targetAgent.Fields;
+            var agentArgumentIds = context.args_agent().ID();
+
+            var agentArgs = new Dictionary<string, SctType>();
+
+            foreach (var id in agentArgumentIds)
+            {
+                if (!targetAgentFields.TryGetValue(id.GetText(), out _))
+                {
+                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                    agentArgs.Add(id.GetText(), TypeTable.Int);
+                    continue;
+                }
+
+                if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
+                {
+                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
+                }
+            }
+
+            foreach (var arg in agentArgs)
+            {
+                if (targetAgentFields.TryGetValue(arg.Key, out var type))
+                {
+                    if (GetCompatibleType(type, arg.Value) is null)
+                    {
+                        _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {type.TargetType}", context.Start.Line, context.Start.Column));
+                    }
+                }
+            }
+
+            foreach(var field in targetAgentFields)
+            {
+                if (!agentArgs.ContainsKey(field.Key))
+                {
+                    _errors.Add(new CompilerError($"Missing argument {field.Key} in agent create.", context.Start.Line, context.Start.Column));
+                }
+            }
+
+            return TypeTable.None;
+        }
+
         public override SctType VisitStatement_list([NotNull] SctParser.Statement_listContext context)
         {
             _vtable.EnterScope();

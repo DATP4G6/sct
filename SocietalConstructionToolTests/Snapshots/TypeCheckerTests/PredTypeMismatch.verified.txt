@@ -1,2 +1,2 @@
-﻿Line 5, Column 15: Cannot convert System.Double to System.Int32
-Line 7, Column 15: Cannot convert System.Double to System.Int32
+﻿Line 5, Column 15: Cannot convert System.Double to System.Int32 in predicate.
+Line 7, Column 15: Cannot convert System.Double to System.Int32 in predicate.

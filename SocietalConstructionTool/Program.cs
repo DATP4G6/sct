@@ -22,16 +22,14 @@ static int SctParseMethod()
     errors.AddRange(returnChecker.Errors);
 
     // Run visitor that populates the tables.
-    parser.Reset();
     var sctTableVisitor = new SctTableVisitor();
-    _ = sctTableVisitor.Visit(parser.start());
+    _ = sctTableVisitor.Visit(startNode);
     var ctable = sctTableVisitor.Ctable;
     errors.AddRange(sctTableVisitor.Errors);
 
-    parser.Reset();
     // Run visitor that checks the types.
     var sctTypeChecker = new SctTypeChecker(ctable);
-    _ = parser.start().Accept(sctTypeChecker);
+    _ = startNode.Accept(sctTypeChecker);
     parser.Reset();
 
     errors.AddRange(sctTypeChecker.Errors);

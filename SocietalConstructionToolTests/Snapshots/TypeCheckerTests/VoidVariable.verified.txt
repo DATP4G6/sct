@@ -1,2 +1,2 @@
 ﻿Line 2, Column 3: Variable cannot be of type: System.Void
-Line 2, Column 3: Cannot convert System.Int32 to System.Void
+Line 2, Column 3: Cannot assign System.Int32 to System.Void

@@ -1,0 +1,10 @@
+class Foo(int a) {
+    state Bar {
+        enter Bar;
+    }
+}
+
+function Setup() -> void {
+    create Foo::Bar(b: 7);
+    create Foo::Bar(a: 3, b: 6);
+}
