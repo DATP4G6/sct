@@ -28,7 +28,7 @@ static int SctParseMethod()
     errors.AddRange(sctTableVisitor.Errors);
 
     // Run visitor that checks the types.
-    var sctTypeChecker = new SctTypeChecker(ctable);
+    var sctTypeChecker = new SctTypeChecker(ctable!);
     _ = startNode.Accept(sctTypeChecker);
     parser.Reset();
 

@@ -1,4 +1,5 @@
 using Antlr4.Runtime;
+
 using Sct.Compiler;
 using Sct.Compiler.Typechecker;
 
@@ -41,7 +42,7 @@ namespace SocietalConstructionToolTests
             var ctable = sctTableVisitor.Ctable;
             errors.AddRange(sctTableVisitor.Errors);
 
-            var sctTypeChecker = new SctTypeChecker(ctable);
+            var sctTypeChecker = new SctTypeChecker(ctable!);
             _ = startNode.Accept(sctTypeChecker);
 
             errors.AddRange(sctTypeChecker.Errors);

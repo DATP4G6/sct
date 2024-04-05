@@ -108,7 +108,8 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
-            _currentClass = _ctable.GetClassContent(context.ID().GetText());
+            // can never be null, as SctTableVisitor created the class
+            _currentClass = _ctable.GetClassContent(context.ID().GetText())!;
             _vtable.EnterScope();
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
@@ -179,7 +180,8 @@ namespace Sct.Compiler.Typechecker
             return functionType.ReturnType;
         }
 
-        public override SctType VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context) {
+        public override SctType VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
+        {
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.TypeIsNumeric(expressionType))
             {
@@ -195,7 +197,8 @@ namespace Sct.Compiler.Typechecker
             if (context.expression() is null && returnType == TypeTable.Void)
             {
                 return TypeTable.Void;
-            } else if (context.expression() is null && returnType != TypeTable.Void)
+            }
+            else if (context.expression() is null && returnType != TypeTable.Void)
             {
                 _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TargetType}, got no expression.", context.Start.Line, context.Start.Column));
                 return TypeTable.Void;
@@ -376,7 +379,7 @@ namespace Sct.Compiler.Typechecker
                 }
             }
 
-            foreach(var field in targetAgentFields)
+            foreach (var field in targetAgentFields)
             {
                 if (!agentArgs.ContainsKey(field.Key))
                 {
@@ -402,7 +405,8 @@ namespace Sct.Compiler.Typechecker
             if (context.elseif() is not null)
             {
                 _ = context.elseif().Accept(this);
-            } else if (context.@else() is not null)
+            }
+            else if (context.@else() is not null)
             {
                 _ = context.@else().Accept(this);
             }
@@ -416,7 +420,8 @@ namespace Sct.Compiler.Typechecker
             if (context.elseif() is not null)
             {
                 _ = context.elseif().Accept(this);
-            } else if (context.@else() is not null)
+            }
+            else if (context.@else() is not null)
             {
                 _ = context.@else().Accept(this);
             }
