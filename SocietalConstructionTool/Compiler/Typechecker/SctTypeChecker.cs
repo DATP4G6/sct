@@ -133,14 +133,14 @@ namespace Sct.Compiler.Typechecker
             return base.VisitEnter(context);
         }
 
-        public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
+        public override SctType VisitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
             var decoratorName = context.ID().GetText();
             if (_currentClass.LookupDecorator(decoratorName) is null)
             {
                 _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
-            return base.VisitDecorator(context);
+            return TypeTable.None;
         }
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
