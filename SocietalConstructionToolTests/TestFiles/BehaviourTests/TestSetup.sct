@@ -1,0 +1,25 @@
+class Citizen() {
+    state Adult {
+        enter Child;
+    }
+
+    state Child {
+        exit;
+    }
+}
+
+class Town(int townId) {
+    state Stable {
+        townId = townId + 1;
+        enter Critical;
+    }
+    state Critical {
+        townId = townId + 1;
+        enter Stable;
+    }
+}
+
+function Setup() -> void {
+    create Citizen::Adult();
+    create Town::Stable(townId: 0);
+}

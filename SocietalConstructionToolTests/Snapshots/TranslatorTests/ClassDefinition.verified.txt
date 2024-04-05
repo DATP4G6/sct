@@ -1,6 +1,8 @@
-﻿namespace MyNamespace
+﻿namespace SctGenerated
 {
     using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
 
     public class GlobalClass
     {
@@ -8,11 +10,6 @@
         {
             public __sct_TestClass(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
-            }
-
-            public override BaseAgent Clone()
-            {
-                return new __sct_TestClass(State, Fields);
             }
 
             public override void Update(IRuntimeContext ctx)
@@ -25,8 +22,13 @@
 
         public static void Main(String[] args)
         {
+            IRuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
+            RunSimulation(ctx);
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
             Runtime runtime = new Runtime();
-            RuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
             __sct_Setup(ctx);
             runtime.Run(ctx);
         }

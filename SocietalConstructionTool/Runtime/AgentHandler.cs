@@ -6,7 +6,7 @@ namespace Sct.Runtime
         public IEnumerable<BaseAgent> Agents => _agents.AsReadOnly();
         public void CreateAgent(BaseAgent agent)
         {
-            _agents.Add(agent.Clone());
+            _agents.Add(agent);
         }
     }
 }
