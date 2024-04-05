@@ -294,10 +294,11 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var id in agentArgumentIds)
             {
-                if (targetAgentFields[id.GetText()] is null)
+                if (!targetAgentFields.TryGetValue(id.GetText(), out _))
                 {
                     _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
                     agentArgs.Add(id.GetText(), TypeTable.Int);
+                    continue;
                 }
 
                 if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
@@ -308,9 +309,12 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var arg in agentArgs)
             {
-                if (GetCompatibleType(targetAgentFields[arg.Key], arg.Value) is null)
+                if (targetAgentFields.TryGetValue(arg.Key, out var type))
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {targetAgentFields[arg.Key].TargetType}", context.Start.Line, context.Start.Column));
+                    if (GetCompatibleType(type, arg.Value) is null)
+                    {
+                        _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {type.TargetType}", context.Start.Line, context.Start.Column));
+                    }
                 }
             }
 
