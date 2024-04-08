@@ -1,39 +1,35 @@
 ﻿[
-  [
-    {
-      "State": "__sct_Adult",
-      "Fields": {},
-      "ClassName": "__sct_Citizen"
+  {
+    "State": "__sct_Adult",
+    "Fields": {},
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_townId": 0
     },
-    {
-      "State": "__sct_Stable",
-      "Fields": {
-        "__sct_townId": 1
-      },
-      "ClassName": "__sct_Town"
-    }
-  ],
-  [
-    {
-      "State": "__sct_Child",
-      "Fields": {},
-      "ClassName": "__sct_Citizen"
+    "ClassName": "__sct_Town"
+  }
+][
+  {
+    "State": "__sct_Child",
+    "Fields": {},
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Critical",
+    "Fields": {
+      "__sct_townId": 1
     },
-    {
-      "State": "__sct_Critical",
-      "Fields": {
-        "__sct_townId": 2
-      },
-      "ClassName": "__sct_Town"
-    }
-  ],
-  [
-    {
-      "State": "__sct_Stable",
-      "Fields": {
-        "__sct_townId": 2
-      },
-      "ClassName": "__sct_Town"
-    }
-  ]
+    "ClassName": "__sct_Town"
+  }
+][
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_townId": 2
+    },
+    "ClassName": "__sct_Town"
+  }
 ]
