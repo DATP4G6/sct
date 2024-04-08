@@ -1,15 +1,8 @@
 namespace Sct.Compiler.Typechecker
 {
-    public class FunctionType
+    public class FunctionType(SctType returnType, List<SctType> parameterTypes)
     {
-        public SctType ReturnType { get; set; }
-        public List<SctType> ParameterTypes { get; set; }
-
-        public FunctionType(SctType returnType, List<SctType> parameterTypes)
-        {
-            ReturnType = returnType;
-            ParameterTypes = parameterTypes;
-        }
+        public SctType ReturnType { get; } = returnType;
+        public List<SctType> ParameterTypes { get; } = parameterTypes;
     }
 }
-

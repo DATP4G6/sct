@@ -23,7 +23,7 @@ static int SctParseMethod()
 
     // Run visitor that populates the tables.
     var sctTableVisitor = new SctTableVisitor();
-    _ = sctTableVisitor.Visit(startNode);
+    _ = startNode.Accept(sctTableVisitor);
     var ctable = sctTableVisitor.Ctable;
     errors.AddRange(sctTableVisitor.Errors);
 

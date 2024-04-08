@@ -4,12 +4,11 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctTableVisitor : SctBaseVisitor<SctType>, IErrorReporter
     {
-
-        public Ctable? Ctable { get; private set; }
+        public CTable? Ctable { get; private set; }
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
-        private readonly CtableBuilder _ctableBuilder = new CtableBuilder();
+        private readonly CTableBuilder _ctableBuilder = new();
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
@@ -17,7 +16,7 @@ namespace Sct.Compiler.Typechecker
 
             Ctable = _ctableBuilder.BuildCtable();
 
-            var setupType = Ctable.GetGlobalContent().LookupFunctionType("Setup");
+            var setupType = Ctable.GlobalClass.LookupFunctionType("Setup");
             if (setupType is null)
             {
                 _errors.Add(new CompilerError("No setup function found"));
@@ -47,7 +46,6 @@ namespace Sct.Compiler.Typechecker
 
             }
 
-
             _ = base.VisitClass_def(context);
 
             _ = _ctableBuilder.FinishClass();
@@ -60,7 +58,7 @@ namespace Sct.Compiler.Typechecker
             var type = context.type().Accept(this);
             var argsTypes = context.args_def().type().Select(arg => arg.Accept(this)).ToList();
 
-            FunctionType functionType = new FunctionType(type, argsTypes);
+            var functionType = new FunctionType(type, argsTypes);
 
             if (!_ctableBuilder.AddFunction(context.ID().GetText(), functionType))
             {

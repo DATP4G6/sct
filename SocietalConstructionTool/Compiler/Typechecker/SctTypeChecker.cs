@@ -4,20 +4,19 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctTypeChecker : SctBaseVisitor<SctType>, IErrorReporter
     {
-
-        private readonly Ctable _ctable;
-        private readonly Vtable _vtable = new();
+        private readonly CTable _ctable;
+        private readonly VTable _vtable = new();
 
         private ClassContent _currentClass;
 
-        private FunctionType _currentFunctionType = new FunctionType(TypeTable.Void, new List<SctType>());
+        private FunctionType _currentFunctionType = new(TypeTable.Void, []);
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
-        public SctTypeChecker(Ctable ctable)
+        public SctTypeChecker(CTable ctable)
         {
             _ctable = ctable;
-            _currentClass = _ctable.GetGlobalContent();
+            _currentClass = _ctable.GlobalClass;
         }
 
         private FunctionType GetFunctionType(string functionName, int line, int col)
@@ -26,12 +25,12 @@ namespace Sct.Compiler.Typechecker
             {
                 return functionType;
             }
-            else if (_ctable.GetGlobalContent().LookupFunctionType(functionName) is FunctionType globalFunctionType)
+            else if (_ctable.GlobalClass.LookupFunctionType(functionName) is FunctionType globalFunctionType)
             {
                 return globalFunctionType;
             }
             _errors.Add(new CompilerError($"Function {functionName} does not exist", line, col));
-            return new FunctionType(TypeTable.Void, new List<SctType>());
+            return new FunctionType(TypeTable.Void, []);
         }
 
         private SctType LookupVariable(string variableName, int line, int col)
@@ -89,6 +88,7 @@ namespace Sct.Compiler.Typechecker
 
             return type;
         }
+
         public override SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
             return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
@@ -118,7 +118,7 @@ namespace Sct.Compiler.Typechecker
             }
 
             _ = base.VisitClass_def(context);
-            _currentClass = _ctable.GetGlobalContent();
+            _currentClass = _ctable.GlobalClass;
             _vtable.ExitScope();
             return TypeTable.Void;
         }
@@ -127,7 +127,7 @@ namespace Sct.Compiler.Typechecker
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var stateName = context.ID().GetText();
-            if (_currentClass.LookupState(stateName) is null)
+            if (!_currentClass.HasState(stateName))
             {
                 _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
@@ -137,7 +137,7 @@ namespace Sct.Compiler.Typechecker
         public override SctType VisitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
             var decoratorName = context.ID().GetText();
-            if (_currentClass.LookupDecorator(decoratorName) is null)
+            if (!_currentClass.HasDecorator(decoratorName))
             {
                 _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
@@ -150,6 +150,8 @@ namespace Sct.Compiler.Typechecker
             _currentFunctionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
 
             // this only happens when multiple functions exist with the same name
+            // we already log this in the SctTableVisitor (when we build the CTable)
+            // but need this, to be able to continue typechecking
             if (_currentFunctionType.ReturnType != context.type().Accept(this))
             {
                 return TypeTable.Void;
@@ -290,7 +292,7 @@ namespace Sct.Compiler.Typechecker
                 return TypeTable.Predicate;
             }
 
-            if (context.QUESTION() is null && targetAgent.LookupState(context.ID(1).GetText()) is null)
+            if (context.QUESTION() is null && !targetAgent.HasState(context.ID(1).GetText()))
             {
                 _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
@@ -342,7 +344,7 @@ namespace Sct.Compiler.Typechecker
                 return TypeTable.None;
             }
 
-            if (targetAgent.LookupState(stateName) is null)
+            if (!targetAgent.HasState(stateName))
             {
                 _errors.Add(new CompilerError($"State {stateName} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
                 return TypeTable.None;

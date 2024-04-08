@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Runtime;
 
-namespace Sct.Compiler
+namespace Sct.Compiler.Translator
 {
     public static class TranslatorUtils
     {

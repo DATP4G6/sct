@@ -1,15 +1,12 @@
 namespace Sct.Compiler.Typechecker
 {
-
-    public class CtableBuilder
+    public class CTableBuilder
     {
-
         private KeyValuePair<string, ClassContent> _currentClass;
         private readonly KeyValuePair<string, ClassContent> _globalClass;
+        private readonly Dictionary<string, ClassContent> _classes = new();
 
-        private readonly Dictionary<string, ClassContent> _classes = new Dictionary<string, ClassContent>();
-
-        public CtableBuilder()
+        public CTableBuilder()
         {
             _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent("Global"));
             _currentClass = _globalClass;
@@ -19,10 +16,7 @@ namespace Sct.Compiler.Typechecker
             _ = AddFunction("seed", new FunctionType(TypeTable.Void, [TypeTable.Int]));
         }
 
-        public Ctable BuildCtable()
-        {
-            return new Ctable(_classes, _globalClass.Value);
-        }
+        public CTable BuildCtable() => new(_classes, _globalClass.Value);
 
         public bool StartClass(string className)
         {
@@ -78,13 +72,6 @@ namespace Sct.Compiler.Typechecker
             return _currentClass.Value.AddDecorator(name);
         }
 
-        private bool IDExistsGlobal(string name)
-        {
-            if (_globalClass.Value?.LookupFunctionType(name) is not null)
-            {
-                return true;
-            }
-            return false;
-        }
+        private bool IDExistsGlobal(string name) => _globalClass.Value?.LookupFunctionType(name) is not null;
     }
 }

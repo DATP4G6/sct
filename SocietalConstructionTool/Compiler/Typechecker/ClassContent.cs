@@ -1,22 +1,12 @@
 namespace Sct.Compiler.Typechecker
 {
-    public class ClassContent
+    public class ClassContent(string name)
     {
-        public string Name { get; }
-        public Ftable Ftable { get; }
-        public List<string> STable { get; }
-        public List<string> Dtable { get; }
-        public Dictionary<string, SctType> Fields { get; }
-
-
-        public ClassContent(string name)
-        {
-            Name = name;
-            Fields = new Dictionary<string, SctType>();
-            Ftable = new Ftable();
-            STable = new List<string>();
-            Dtable = new List<string>();
-        }
+        public string Name { get; } = name;
+        public FTable FTable { get; } = new();
+        public HashSet<string> STable { get; } = new();
+        public HashSet<string> DTable { get; } = new();
+        public Dictionary<string, SctType> Fields { get; } = new();
 
         public bool AddFunction(string name, FunctionType functionType)
         {
@@ -24,7 +14,7 @@ namespace Sct.Compiler.Typechecker
             {
                 return false;
             }
-            return Ftable.AddFunctionType(name, functionType);
+            return FTable.AddFunctionType(name, functionType);
         }
 
         public bool AddState(string name)
@@ -33,7 +23,7 @@ namespace Sct.Compiler.Typechecker
             {
                 return false;
             }
-            STable.Add(name);
+            _ = STable.Add(name);
             return true;
         }
 
@@ -43,29 +33,8 @@ namespace Sct.Compiler.Typechecker
             {
                 return false;
             }
-            Dtable.Add(name);
+            _ = DTable.Add(name);
             return true;
-        }
-
-        public string? LookupState(string name)
-        {
-            return STable.Contains(name) ? name : null;
-        }
-
-        public string? LookupDecorator(string name)
-        {
-            return Dtable.Contains(name) ? name : null;
-        }
-
-        public FunctionType? LookupFunctionType(string name)
-        {
-            return Ftable.GetFunctionType(name);
-        }
-
-        private bool IDExists(string name)
-        {
-
-            return Ftable.GetFunctionType(name) is not null || STable.Contains(name) || Dtable.Contains(name);
         }
 
         public bool AddField(string name, SctType type)
@@ -77,6 +46,13 @@ namespace Sct.Compiler.Typechecker
             Fields.Add(name, type);
             return true;
         }
+
+        public bool HasState(string name) => STable.Contains(name);
+
+        public bool HasDecorator(string name) => DTable.Contains(name);
+
+        public FunctionType? LookupFunctionType(string name) => FTable.GetFunctionType(name);
+
+        private bool IDExists(string name) => FTable.Contains(name) || STable.Contains(name) || DTable.Contains(name);
     }
 }
-

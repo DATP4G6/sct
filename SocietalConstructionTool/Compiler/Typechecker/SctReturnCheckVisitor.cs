@@ -64,29 +64,14 @@ namespace Sct.Compiler.Typechecker
             return false;
         }
 
-        public override bool VisitElse(SctParser.ElseContext context)
-        {
-            return context.statement_list().Accept(this);
-        }
+        public override bool VisitElse(SctParser.ElseContext context) => context.statement_list().Accept(this);
 
-        public override bool VisitReturn(SctParser.ReturnContext context)
-        {
-            return true;
-        }
+        public override bool VisitReturn(SctParser.ReturnContext context) => true;
 
-        public override bool VisitEnter(SctParser.EnterContext context)
-        {
-            return true;
-        }
+        public override bool VisitEnter(SctParser.EnterContext context) => true;
 
-        public override bool VisitExit(SctParser.ExitContext context)
-        {
-            return true;
-        }
+        public override bool VisitExit(SctParser.ExitContext context) => true;
 
-        public override bool VisitDestroy(SctParser.DestroyContext context)
-        {
-            return true;
-        }
+        public override bool VisitDestroy(SctParser.DestroyContext context) => true;
     }
 }
