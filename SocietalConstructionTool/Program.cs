@@ -1,62 +1,51 @@
-﻿using Antlr4.Runtime;
+﻿using System.CommandLine;
 
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Sct;
+using Sct.Runtime.Trace;
 
-using Sct.Compiler;
-using Sct.Compiler.Translator;
-using Sct.Compiler.Typechecker;
+var outputFileOption = new Option<FileInfo>(
+        aliases: ["--output-file", "-o"],
+        description: "The file to output to"
+    );
 
-static int SctParseMethod()
-{
-    List<CompilerError> errors = new();
-    string input = File.ReadAllText("../SctBuildTasks/society.sct");
-    ICharStream stream = CharStreams.fromString(input);
-    ITokenSource lexer = new SctLexer(stream);
-    ITokenStream tokens = new CommonTokenStream(lexer);
-    SctParser parser = new SctParser(tokens);
-    var startNode = parser.start();
-    var returnChecker = new SctReturnCheckVisitor();
-    _ = startNode.Accept(returnChecker);
-    errors.AddRange(returnChecker.Errors);
+var outputToConsoleOption = new Option<bool>(
+        aliases: ["--output-to-console", "-c"],
+        description: "Whether to output simulation logs to the console"
+    );
 
-    // Run visitor that populates the tables.
-    var sctTableVisitor = new SctTableVisitor();
-    _ = startNode.Accept(sctTableVisitor);
-    var ctable = sctTableVisitor.Ctable;
-    errors.AddRange(sctTableVisitor.Errors);
+var sourceFilesArgument = new Argument<List<FileInfo>>(
+            "files",
+            description: "The SCT source files to run"
+        );
 
-    // Run visitor that checks the types.
-    var sctTypeChecker = new SctTypeChecker(ctable!);
-    _ = startNode.Accept(sctTypeChecker);
-    parser.Reset();
+var rootCommand = new RootCommand("SCT Compiler");
+rootCommand.AddOption(outputFileOption);
+rootCommand.AddOption(outputToConsoleOption);
+rootCommand.AddArgument(sourceFilesArgument);
 
-    errors.AddRange(sctTypeChecker.Errors);
-    if (errors.Count > 0)
-    {
-        foreach (var error in errors)
+rootCommand.SetHandler((sourceFiles, outputToConsole, outputFile) =>
         {
-            Console.WriteLine(error);
-        }
-        return 1;
-    }
+            if (outputToConsole && outputFile is not null)
+            {
+                Console.Error.WriteLine("Cannot output to the console and a file at the same time");
+                return;
+            }
+            IOutputLogger logger;
+            if (outputFile is not null)
+            {
+                logger = new JsonFileLogger(outputFile.FullName);
+            }
+            else if (outputToConsole)
+            {
+                logger = new JsonConsoleLogger();
+            }
+            else
+            {
+                Console.Error.WriteLine("Either -o with output files or -c must be specified");
+                return;
+            }
+            SctRunner.CompileAndRun(sourceFiles.Select(f => f.FullName).ToArray(), logger);
+        }, sourceFilesArgument, outputToConsoleOption, outputFileOption);
 
-    // Run listener that translates the AST to C#.
-    var listener = new SctTranslator();
-    parser.AddParseListener(listener);
-    _ = parser.start();
 
-    if (listener.Root is not null)
-        WriteNamespace(listener.Root);
-
-    return 0;
-}
-
-static void WriteNamespace(NamespaceDeclarationSyntax ns)
-{
-    using var writer = new StreamWriter("MyClass.ignore.cs", false);
-    ns.NormalizeWhitespace().WriteTo(writer);
-}
-
-return SctParseMethod();
+_ = rootCommand.Invoke(args);

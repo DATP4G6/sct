@@ -31,16 +31,30 @@ namespace Sct
             ITokenSource lexer = new SctLexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
             SctParser parser = new(tokens);
-
-            var translator = new SctTranslator();
-            parser.AddParseListener(translator);
-
             var startNode = parser.start();
 
             KeywordContextCheckVisitor keywordChecker = new();
-            var errors = startNode.Accept(keywordChecker);
+            var errors = startNode.Accept(keywordChecker).ToList();
 
-            if (errors.Length > 0)
+
+            // Run visitor that populates the tables.
+            var sctTableVisitor = new SctTableVisitor();
+            _ = startNode.Accept(sctTableVisitor);
+            var ctable = sctTableVisitor.Ctable;
+            errors.AddRange(sctTableVisitor.Errors);
+
+            // Run visitor that checks the types.
+            var sctTypeChecker = new SctTypeChecker(ctable!);
+            _ = startNode.Accept(sctTypeChecker);
+            parser.Reset();
+
+            errors.AddRange(sctTypeChecker.Errors);
+
+            var translator = new SctTranslator();
+            parser.AddParseListener(translator);
+            _ = parser.start();
+
+            if (errors.Count > 0)
             {
                 string errorsText = string.Join('\n', (IEnumerable<CompilerError>)errors);
                 // TODO: Better error handling
@@ -117,8 +131,10 @@ namespace Sct
          * <param name="filename">The path of the SCT source file</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        public static void CompileAndRun(string filename, IOutputLogger logger)
+        public static void CompileAndRun(string[] filenames, IOutputLogger logger)
         {
+            // TODO: Actually concatenate the files. Isak is working on this.
+            var filename = filenames[0];
             var outputSource = CompileSct(filename);
             if (outputSource is null)
             {
@@ -133,12 +149,7 @@ namespace Sct
 
             if (!result.Success)
             {
-                // TODO: Make this not depend on printing to the console
-                // This should throw an exception instead
-                Console.Error.WriteLine("Compiling generated C# failed");
-                Console.Error.WriteLine("Compilation diagnostics:");
-                Console.Error.WriteLine(string.Join('\n', result.Diagnostics));
-                return;
+                throw new ArgumentException($"Could not compile generated C#\nCompilation diagnostics: {string.Join('\n', result.Diagnostics)}");
             }
 
             _ = memoryStream.Seek(0, SeekOrigin.Begin);

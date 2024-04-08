@@ -44,7 +44,6 @@ namespace Sct.Compiler.Translator
             .ClassDeclaration(GeneratedGlobalClass)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddMembers(members)
-            .AddMembers(MakeMainMethod())
             .AddMembers(MakeRunMethod());
 
             string[] usingStrings = [typeof(BaseAgent).Namespace!, nameof(System), typeof(IDictionary<string, dynamic>).Namespace!];
@@ -692,59 +691,6 @@ namespace Sct.Compiler.Translator
                         ))
                 );
         private static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
-
-        private static MethodDeclarationSyntax MakeMainMethod()
-        {
-            var argsId = SyntaxFactory.IdentifierName("args");
-
-            var ctx = SyntaxFactory.LocalDeclarationStatement(
-                SyntaxFactory.VariableDeclaration(
-                    SyntaxFactory.ParseTypeName(nameof(IRuntimeContext))
-                )
-                .AddVariables(
-                    SyntaxFactory.VariableDeclarator(
-                        ContextIdentifier
-                    )
-                    .WithInitializer(
-                        SyntaxFactory.EqualsValueClause(
-                            SyntaxFactory.InvocationExpression(
-                                TranslatorUtils.BuildAccessor( // call RuntimeContextFactory.CreateFromArgs
-                                    nameof(RuntimeContextFactory.CreateFromArgs),
-                                    SyntaxFactory.Identifier(nameof(RuntimeContextFactory))
-                                ),
-                                SyntaxFactory.ArgumentList( // with args as argument
-                                    SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(argsId) })
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
-            var run = SyntaxFactory.ExpressionStatement(
-                    SyntaxFactory.InvocationExpression(
-                        SyntaxFactory.IdentifierName(RunSimulationIdentifier)
-                    ).WithArgumentList(SyntaxFactory.ArgumentList(
-                                SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(SyntaxFactory.IdentifierName(ContextIdentifier)) })
-                            )
-                        )
-            );
-
-            var body = SyntaxFactory.Block().AddStatements(ctx, run);
-            // `string[] args` parameter
-            var argsParameter = SyntaxFactory.Parameter(argsId.Identifier)
-                .WithType(SyntaxFactory.ParseTypeName(typeof(string[]).Name));
-
-            var mainMethod = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                SyntaxFactory.Identifier("Main")
-            )
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
-            .AddParameterListParameters(argsParameter)
-            .WithBody(body);
-
-            return mainMethod;
-        }
 
         private static MethodDeclarationSyntax MakeRunMethod()
         {
