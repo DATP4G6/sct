@@ -44,6 +44,19 @@ namespace Sct.Compiler
             return @type;
         }
 
+        public static SctType? GetCompatibleType(SctType left, SctType right)
+        {
+            if (left == right)
+            {
+                return left;
+            }
+            else if (left == Float && right == Int)
+            {
+                return Float;
+            }
+            return null;
+        }
+
         public static bool TypeIsNumeric(SctType type) => type == Int || type == Float;
 
         public static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));

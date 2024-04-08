@@ -19,5 +19,11 @@ namespace Sct.Compiler.Typechecker
         public void EnterScope() => _entries.PushMarker();
 
         public void ExitScope() => _ = _entries.PopUntilMarker();
+
+        private sealed class VTableEntry(string name, SctType type)
+        {
+            public string Name { get; } = name;
+            public SctType Type { get; } = type;
+        }
     }
 }
