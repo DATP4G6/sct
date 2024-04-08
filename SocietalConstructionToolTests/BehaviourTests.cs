@@ -22,7 +22,7 @@ namespace SocietalConstructionToolTests
 
             JsonStringLogger logger = new();
 
-            SctRunner.CompileAndRun(file, logger);
+            SctRunner.CompileAndRun([file], logger);
 
             _ = await Verify(logger.Output)
                 .UseFileName(Path.GetFileNameWithoutExtension(file));

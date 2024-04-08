@@ -11,12 +11,6 @@
             long __sct_a = (16 / ((1 + 3)));
         }
 
-        public static void Main(String[] args)
-        {
-            IRuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
-            RunSimulation(ctx);
-        }
-
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();

@@ -12,12 +12,6 @@
             __sct_a = -__sct_a;
         }
 
-        public static void Main(String[] args)
-        {
-            IRuntimeContext ctx = RuntimeContextFactory.CreateFromArgs(args);
-            RunSimulation(ctx);
-        }
-
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
