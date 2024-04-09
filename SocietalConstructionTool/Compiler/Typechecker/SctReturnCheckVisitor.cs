@@ -2,16 +2,15 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctReturnCheckVisitor : SctBaseVisitor<bool>, IErrorReporter
     {
-        private readonly TypeTable _typeTable = new();
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
 
         public override bool VisitFunction(SctParser.FunctionContext context)
         {
-            var @type = _typeTable.GetType(context.type().GetText());
+            var @type = TypeTable.GetType(context.type().GetText());
             var returns = @type switch
             {
-                { } when @type == _typeTable.Void => true,
+                { } when @type == TypeTable.Void => true,
                 _ => context.statement_list().Accept(this)
             };
 
@@ -65,29 +64,14 @@ namespace Sct.Compiler.Typechecker
             return false;
         }
 
-        public override bool VisitElse(SctParser.ElseContext context)
-        {
-            return context.statement_list().Accept(this);
-        }
+        public override bool VisitElse(SctParser.ElseContext context) => context.statement_list().Accept(this);
 
-        public override bool VisitReturn(SctParser.ReturnContext context)
-        {
-            return true;
-        }
+        public override bool VisitReturn(SctParser.ReturnContext context) => true;
 
-        public override bool VisitEnter(SctParser.EnterContext context)
-        {
-            return true;
-        }
+        public override bool VisitEnter(SctParser.EnterContext context) => true;
 
-        public override bool VisitExit(SctParser.ExitContext context)
-        {
-            return true;
-        }
+        public override bool VisitExit(SctParser.ExitContext context) => true;
 
-        public override bool VisitDestroy(SctParser.DestroyContext context)
-        {
-            return true;
-        }
+        public override bool VisitDestroy(SctParser.DestroyContext context) => true;
     }
 }

@@ -1,0 +1,2 @@
+﻿Not all code paths return a value in function foo
+Not all code paths return a value in function bar

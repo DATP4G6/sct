@@ -1,0 +1,5 @@
+function foo() -> void {
+    bar(1, 1.5);
+}
+
+function bar(int intArgument, float floatArgument) -> void {}

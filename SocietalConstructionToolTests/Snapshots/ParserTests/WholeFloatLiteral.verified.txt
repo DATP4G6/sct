@@ -1,1 +1,1 @@
-﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type float) x = (expression 2.0) ;))) }) <EOF>)
+﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type float) x = (expression (literal 2.0)) ;))) }) <EOF>)

@@ -1,0 +1,2 @@
+﻿Line 7, Column 4: Cannot assign System.Double to System.Int32 
+Line 8, Column 4: Cannot assign System.Void to System.Int32 

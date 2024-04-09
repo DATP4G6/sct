@@ -1,0 +1,12 @@
+class Foo(int a, float b) {
+    state Bar {
+        enter Bar;
+    }
+}
+
+function Setup() -> void {
+    create Foo::Bar(a: 5, b: 10);
+    create Foo::Bar(a: 5, b: 10.5);
+    create Foo::Bar(a: 5.5, b: 10);
+    create Foo::Bar(a: 5.5, b: 10.5);
+}

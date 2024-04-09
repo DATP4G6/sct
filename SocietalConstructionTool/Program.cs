@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler;
+using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
 
 static int SctParseMethod()
@@ -20,6 +21,18 @@ static int SctParseMethod()
     _ = startNode.Accept(returnChecker);
     errors.AddRange(returnChecker.Errors);
 
+    // Run visitor that populates the tables.
+    var sctTableVisitor = new SctTableVisitor();
+    _ = startNode.Accept(sctTableVisitor);
+    var ctable = sctTableVisitor.Ctable;
+    errors.AddRange(sctTableVisitor.Errors);
+
+    // Run visitor that checks the types.
+    var sctTypeChecker = new SctTypeChecker(ctable!);
+    _ = startNode.Accept(sctTypeChecker);
+    parser.Reset();
+
+    errors.AddRange(sctTypeChecker.Errors);
     if (errors.Count > 0)
     {
         foreach (var error in errors)
@@ -29,7 +42,7 @@ static int SctParseMethod()
         return 1;
     }
 
-    parser.Reset();
+    // Run listener that translates the AST to C#.
     var listener = new SctTranslator();
     parser.AddParseListener(listener);
     _ = parser.start();

@@ -2,7 +2,7 @@ using Antlr4.Runtime;
 
 using Microsoft.CodeAnalysis;
 
-using Sct.Compiler;
+using Sct.Compiler.Translator;
 
 namespace SocietalConstructionToolTests
 {

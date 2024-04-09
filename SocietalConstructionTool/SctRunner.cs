@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 
 using Sct.Compiler;
+using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
 using Sct.Runtime;
 using Sct.Runtime.Trace;

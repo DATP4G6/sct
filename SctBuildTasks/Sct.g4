@@ -56,7 +56,7 @@ continue: CONTINUE SEMI;
 
 // Expressions
 expression:
-    LIT                                 # LiteralExpression
+    literal                                 # LiteralExpression
     | ID                                # IDExpression
     | LPAREN expression RPAREN          # ParenthesisExpression
     | LPAREN type RPAREN expression     # TypecastExpression
@@ -147,6 +147,6 @@ COMMA: ',';
 COLON: ':';
 DBL_COLON: '::';
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
-LIT: INT | FLOAT;
+literal: INT | FLOAT;
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;

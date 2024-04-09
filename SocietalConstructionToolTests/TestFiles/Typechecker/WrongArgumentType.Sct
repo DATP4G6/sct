@@ -1,0 +1,5 @@
+function test(void var) -> void{}
+
+function Setup() -> void {
+    test(5);
+}

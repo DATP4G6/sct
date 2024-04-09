@@ -1,0 +1,2 @@
+﻿Line 3, Column 4: Variable x already exists
+Line 4, Column 4: Variable x already exists

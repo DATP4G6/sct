@@ -1,0 +1,5 @@
+function Setup() -> void {
+    float x = (float) 7;
+    x = (int) 7.0;
+    x = (void) 7;
+}

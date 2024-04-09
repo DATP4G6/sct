@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sct.Extensions;
 using Sct.Runtime;
 
-namespace Sct.Compiler
+namespace Sct.Compiler.Translator
 {
     public class SctTranslator : SctBaseListener
     {
@@ -31,7 +31,6 @@ namespace Sct.Compiler
 
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
-        private readonly TypeTable _typeTable = new();
 
         // These two could likely have been removed, had we decorated an AST first
         private bool _isInAgent;
@@ -265,7 +264,7 @@ namespace Sct.Compiler
             var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText()),
+                TypeTable.GetTypeNode(context.type().GetText()),
                 mangledName
             )
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
@@ -299,7 +298,7 @@ namespace Sct.Compiler
             var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var variable = SyntaxFactory.VariableDeclaration(
-                _typeTable.GetTypeNode(context.type().GetText()) // set type
+                TypeTable.GetTypeNode(context.type().GetText()) // set type
             )
             .AddVariables(
                 SyntaxFactory.VariableDeclarator(mangledName) // set name
@@ -398,7 +397,7 @@ namespace Sct.Compiler
         {
             // prevent decimal point from being a comma (based on locale), because... C#, see CS1305
             var culture = CultureInfo.InvariantCulture;
-            var text = context.LIT().GetText();
+            var text = context.literal().GetText();
             var value = double.Parse(text, culture);
             var literal = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression,
                     // Passing the text of the token to Literal ensures that we print whole floats (e.g. 2.0) correctly.
@@ -473,7 +472,7 @@ namespace Sct.Compiler
         public override void ExitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
             var node = _stack.Pop<ExpressionSyntax>();
-            var type = _typeTable.GetTypeNode(context.type().GetText());
+            var type = TypeTable.GetTypeNode(context.type().GetText());
             _stack.Push(SyntaxFactory.CastExpression(type, node));
         }
 

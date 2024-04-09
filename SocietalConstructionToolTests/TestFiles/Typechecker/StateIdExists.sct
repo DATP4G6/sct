@@ -1,0 +1,19 @@
+function foo () -> void {
+
+}
+
+class Citizen(int townId, int age) {
+    state foo {
+        enter child;
+    }
+    state child {
+        enter child;
+    }
+    state child {
+        enter child;
+    }
+}
+
+function Setup() -> void {
+
+}
