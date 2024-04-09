@@ -1,0 +1,6 @@
+class Citizen(int townId) {}
+
+function Setup() -> void {
+    int x = exists(Citizen::?(townId: 5, weight: 62.3))
+}
+

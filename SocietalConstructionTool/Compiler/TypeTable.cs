@@ -5,27 +5,28 @@ using Sct.Compiler.Exceptions;
 
 namespace Sct.Compiler
 {
-    public class TypeTable
+    public static class TypeTable
     {
-        private readonly Dictionary<string, SctType> _types = new()
+        public static SctType Void => Types["void"];
+        public static SctType Int => Types["int"];
+        public static SctType Float => Types["float"];
+        public static SctType Predicate => Types["Predicate"];
+        public static SctType None => Types["none"];
+        private static readonly Dictionary<string, SctType> Types = new()
         {
             { "int", new SctType(typeof(int)) },
             { "float", new SctType(typeof(double)) },
             { "void", new SctType(typeof(void)) },
             { "Predicate", new SctType(typeof(void)) },
+            { "none", new SctType(typeof(void))}
         };
 
-        public SctType Void => _types["void"];
-        public SctType Int => _types["int"];
-        public SctType Float => _types["float"];
-        public SctType Predicate => _types["Predicate"];
+        public static SctType? GetType(string name) => Types[name];
 
-        public SctType? GetType(string name) => _types[name];
-
-        public TypeSyntax GetTypeNode(string name)
+        public static TypeSyntax GetTypeNode(string name)
         {
-            SctType sctType = (_types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
-            if (sctType == _types["Predicate"])
+            SctType sctType = (Types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
+            if (sctType == Types["Predicate"])
             {
                 throw new InvalidTypeException("Predicate type cannot be used as a syntax node");
             }
@@ -43,5 +44,21 @@ namespace Sct.Compiler
             return @type;
         }
 
+        public static SctType? GetCompatibleType(SctType left, SctType right)
+        {
+            if (left == right)
+            {
+                return left;
+            }
+            else if (left == Float && right == Int)
+            {
+                return Float;
+            }
+            return null;
+        }
+
+        public static bool TypeIsNumeric(SctType type) => type == Int || type == Float;
+
+        public static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
     }
 }

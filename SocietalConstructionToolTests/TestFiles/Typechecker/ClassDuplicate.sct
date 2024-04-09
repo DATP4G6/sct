@@ -1,0 +1,5 @@
+class Town(int id, int space) {}
+
+class Town(int id) {}
+
+function Setup() -> void {}

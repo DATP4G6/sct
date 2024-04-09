@@ -1,0 +1,9 @@
+class Foo() {}
+
+function Setup() -> void {
+    if (void) {}
+    else if (void) {}
+
+    if (Foo::?()) {}
+    else if (Foo::?()) {}
+}

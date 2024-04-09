@@ -1,0 +1,11 @@
+class Citizen(int townId) {
+    state Child {
+        enter Adult;
+    }
+
+    state Adult {
+        enter Dead;
+    }
+}
+
+function Setup() -> void {}

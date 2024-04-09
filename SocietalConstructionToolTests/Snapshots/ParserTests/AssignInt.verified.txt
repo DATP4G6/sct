@@ -1,1 +1,1 @@
-﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type int) a = (expression 5) ;))) }) <EOF>)
+﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type int) a = (expression (literal 5)) ;))) }) <EOF>)

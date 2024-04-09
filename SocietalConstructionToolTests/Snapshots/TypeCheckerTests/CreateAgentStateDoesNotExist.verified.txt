@@ -1,0 +1,1 @@
+﻿Line 8, Column 11: State Baz does not exist in agent Foo

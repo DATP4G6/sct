@@ -1,0 +1,13 @@
+class Citizen(int townId) {
+    state Child {
+        enter Adult;
+    }
+
+    state Adult {
+        enter Adult;
+    }
+}
+
+function Setup() -> void {
+    int x = exists(Citizen::Dead(townId: 5, townId: 13));
+}

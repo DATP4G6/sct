@@ -1,5 +1,5 @@
-![.NET status](https://github.com/DATP4G6/sct/actions/workflows/dotnet.yml/badge.svg)
-![Format status](https://github.com/DATP4G6/sct/actions/workflows/dotnet-format.yml/badge.svg)
+![alt text](https://github.com/DATP4G6/sct/actions/workflows/dotnet.yml/badge.svg)
+![alt text](https://github.com/DATP4G6/sct/actions/workflows/dotnet-format.yml/badge.svg)
 
 # Societal Construction Tool
 
@@ -11,30 +11,34 @@ The repository is split into two distinct projects
 
 | Project                       | Description                                              |
 | ----------------------------- | -------------------------------------------------------- |
-| SctBuildTasks                 | The parser generator for unix-like systems               |
 | SocietalConstructionTool      | The main project containing the compiler                 |
 | SocietalConstructionToolTests | The test suite, ensuring the correctness of the compiler |
 
-## Prerequisites
+## Getting started
+
+To start the project, follow the steps as described below.
+
+Install the required system dependencies;
 
 - `dotnet` v8+
 - `antlr4`
 
-On **Unix-like systems**, the parser files are **automatically generated** after cleaning as part of the build process.
+On Unix-like systems, the parser files are automatically generated after cleaning as part of the build process.
 
-On **Windows**, the parser code must be **generated manually**:
+On Windows, the parser code must first be generated:
 
 ```sh
 cd SctBuildTasks
-antlr4 -Dlanguage=CSharp Sct.g4 -o out -visitor
+antlr4 -Dlanguage=CSharp Sct.g4 -o out
 cd ..
 ```
 
-## Dotnet commands
+### Dotnet commands
 
 To run tests:
 
 ```sh
+cd SocietalConstructionToolTests
 dotnet test
 ```
 
@@ -45,7 +49,7 @@ cd SocietalConstructionTool
 dotnet run
 ```
 
-Or with Nix with flakes enabled:
+Or with Nix with flakes enables:
 ```sh
 nix run
 ```
