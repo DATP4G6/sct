@@ -23,7 +23,7 @@ namespace Sct
          * <param name="filename">The path of the SCT source file</param>
          * <returns>The resulting C# source, or null if compilation failed</returns>
          */
-        public static string? CompileSct(string filename)
+        public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(string filename)
         {
             // TODO: Add error handling
             string input = File.ReadAllText(filename);
@@ -56,13 +56,24 @@ namespace Sct
 
             if (errors.Count > 0)
             {
-                string errorsText = string.Join('\n', (IEnumerable<CompilerError>)errors);
-                // TODO: Better error handling
-                throw new ArgumentException($"Could not compile SCT file.\nCompilation errors:\n{errorsText}");
+                return (null, errors);
             }
 
-            // TODO: It's a little evil that we hold the entire generated source text in memory, but it is what it is
-            return translator.Root?.NormalizeWhitespace().ToFullString();
+            if (translator.Root is null)
+            {
+                throw new InvalidOperationException("Translation failed");
+            }
+
+
+            // HACK: We do something bad in our translator somewhere that means that we produce a syntax tree that is not valid,
+            // but its string representation is.
+            // Take for example the expression `foo.bar`.
+            // The correct way to represent this would (roughly) be: `(member_access (id "foo") (id "bar"))`
+            // However, writing it as `(id "foo.bar")` produces the same string, but causes problems when C#
+            // tries to traverse the tree. As far as I can tell, the error we get isn't very telling, so for now we just deal with it.
+            var outputText = translator.Root.NormalizeWhitespace().ToFullString();
+
+            return (outputText, []);
         }
 
         /**
@@ -135,17 +146,18 @@ namespace Sct
         {
             // TODO: Actually concatenate the files. Isak is working on this.
             var filename = filenames[0];
-            var outputSource = CompileSct(filename);
-            if (outputSource is null)
+            var (outputText, errors) = CompileSct(filename);
+
+            if (errors.Any() || outputText is null)
             {
-                // TODO: Error reporting
-                Console.Error.WriteLine("Compiling SCT failed");
+                Console.Error.WriteLine("Compilation failed:");
+                Console.Error.WriteLine(string.Join('\n', errors));
                 return;
             }
 
             // Write the compiled C# into memory
             MemoryStream memoryStream = new();
-            var result = Emit(outputSource, memoryStream);
+            var result = Emit(outputText, memoryStream);
 
             if (!result.Success)
             {
