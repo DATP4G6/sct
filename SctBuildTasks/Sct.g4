@@ -56,27 +56,19 @@ continue: CONTINUE SEMI;
 
 // Expressions
 expression:
-    literal                                 # LiteralExpression
-    | ID                                # IDExpression
-    | LPAREN expression RPAREN          # ParenthesisExpression
-    | LPAREN type RPAREN expression     # TypecastExpression
-    | call_expression                   # Ignore
-    | unary_minus = MINUS expression    # UnaryMinusExpression
-    | not = NOT expression              # LogicalNotExpression
-    | expression op = MULT expression   # BinaryExpression
-    | expression op = DIV expression    # BinaryExpression
-    | expression op = MOD expression    # BinaryExpression
-    | expression op = PLUS expression   # BinaryExpression
-    | expression op = MINUS expression  # BinaryExpression
-    | expression op = GT expression     # BooleanExpression
-    | expression op = LT expression     # BooleanExpression
-    | expression op = GTE expression    # BooleanExpression
-    | expression op = LTE expression    # BooleanExpression
-    | expression op = EQ expression     # BooleanExpression
-    | expression op = NEQ expression    # BooleanExpression
-    | expression op = AND expression    # BooleanExpression
-    | expression op = OR expression     # BooleanExpression
-    | agent_predicate                   # AgentPredicateExpression;
+    literal                                                         # LiteralExpression
+    | ID                                                            # IDExpression
+    | LPAREN expression RPAREN                                      # ParenthesisExpression
+    | LPAREN type RPAREN expression                                 # TypecastExpression
+    | call_expression                                               # Ignore
+    | unary_minus = MINUS expression                                # UnaryMinusExpression
+    | not = NOT expression                                          # LogicalNotExpression
+    | expression op = (MULT | DIV | MOD) expression                 # BinaryExpression
+    | expression op = (PLUS | MINUS) expression                     # BinaryExpression
+    | expression op = (GT | LT | GTE | LTE | EQ | NEQ) expression   # BooleanExpression
+    | expression op = AND expression                                # BooleanExpression
+    | expression op = OR expression                                 # BooleanExpression
+    | agent_predicate                                               # AgentPredicateExpression;
 
 call_expression: ID LPAREN args_call RPAREN #CallExpression;
 

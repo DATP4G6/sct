@@ -421,13 +421,13 @@ namespace Sct.Compiler.Translator
 
             // switch expression does not need to descructure the context,
             // so we determine it based on 'when'
-            var @operator = context.op switch
+            var @operator = context.op.Type switch
             {
-                { } op when op == context.PLUS()?.Symbol => SyntaxKind.AddExpression,
-                { } op when op == context.MINUS()?.Symbol => SyntaxKind.SubtractExpression,
-                { } op when op == context.MULT()?.Symbol => SyntaxKind.MultiplyExpression,
-                { } op when op == context.DIV()?.Symbol => SyntaxKind.DivideExpression,
-                { } op when op == context.MOD()?.Symbol => SyntaxKind.ModuloExpression,
+                { } op when op == SctLexer.PLUS => SyntaxKind.AddExpression,
+                { } op when op == SctLexer.MINUS => SyntaxKind.SubtractExpression,
+                { } op when op == SctLexer.MULT => SyntaxKind.MultiplyExpression,
+                { } op when op == SctLexer.DIV => SyntaxKind.DivideExpression,
+                { } op when op == SctLexer.MOD => SyntaxKind.ModuloExpression,
                 _ => SyntaxKind.None
             };
 
@@ -442,22 +442,25 @@ namespace Sct.Compiler.Translator
             var exp2 = _stack.Pop<ExpressionSyntax>();
             var exp1 = _stack.Pop<ExpressionSyntax>();
 
-            var @operator = context.op switch
+            var @operator = context.op.Type switch
             {
-                { } op when op == context.GT()?.Symbol => SyntaxKind.GreaterThanExpression,
-                { } op when op == context.LT()?.Symbol => SyntaxKind.LessThanExpression,
-                { } op when op == context.GTE()?.Symbol => SyntaxKind.GreaterThanOrEqualExpression,
-                { } op when op == context.LTE()?.Symbol => SyntaxKind.LessThanOrEqualExpression,
-                { } op when op == context.EQ()?.Symbol => SyntaxKind.EqualsExpression,
-                { } op when op == context.NEQ()?.Symbol => SyntaxKind.NotEqualsExpression,
-                { } op when op == context.AND()?.Symbol => SyntaxKind.LogicalAndExpression,
-                { } op when op == context.OR()?.Symbol => SyntaxKind.LogicalOrExpression,
+                { } op when op == SctLexer.GT => SyntaxKind.GreaterThanExpression,
+                { } op when op == SctLexer.LT => SyntaxKind.LessThanExpression,
+                { } op when op == SctLexer.GTE => SyntaxKind.GreaterThanOrEqualExpression,
+                { } op when op == SctLexer.LTE => SyntaxKind.LessThanOrEqualExpression,
+                { } op when op == SctLexer.EQ => SyntaxKind.EqualsExpression,
+                { } op when op == SctLexer.NEQ => SyntaxKind.NotEqualsExpression,
+                { } op when op == SctLexer.AND => SyntaxKind.LogicalAndExpression,
+                { } op when op == SctLexer.OR => SyntaxKind.LogicalOrExpression,
                 _ => SyntaxKind.None
             };
 
             // convert to conditional, as booleans do not exist in SCT
             var expression = SyntaxFactory.BinaryExpression(@operator, exp1, exp2);
-            var condition = SyntaxFactory.ConditionalExpression(expression, SctTrue, SctFalse);
+            // Add parenthesis for debugging / testing readability.
+            // This is not required for correct precedence, as ternaries have lowest priority
+            var parenthesized = SyntaxFactory.ParenthesizedExpression(expression);
+            var condition = SyntaxFactory.ConditionalExpression(parenthesized, SctTrue, SctFalse);
             var parenthesizedCondition = SyntaxFactory.ParenthesizedExpression(condition);
             _stack.Push(parenthesizedCondition);
         }

@@ -90,6 +90,7 @@ namespace Sct
             var tree = SyntaxFactory.ParseSyntaxTree(sourceText);
 
             Type[] referenceTypes = [typeof(object), typeof(IRuntimeContext), typeof(System.Dynamic.DynamicObject), typeof(Microsoft.CSharp.RuntimeBinder.Binder)];
+            // Dark magic, maybe we can just do `referenceTypes.Select(GetReferenceFromType)` instead
             var references = Assembly.GetEntryAssembly()?.GetReferencedAssemblies().Select(r =>
                     MetadataReference.CreateFromFile(Assembly.Load(r).Location)
                     ).Concat(referenceTypes.Select(GetReferenceFromType))!;
@@ -99,7 +100,6 @@ namespace Sct
                 .AddReferences(references)
                 .AddSyntaxTrees(tree);
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), generatedAssemblyName);
             return compilation.Emit(outputStream);
         }
 
