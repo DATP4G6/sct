@@ -25,7 +25,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError("Setup function must return void and take no arguments"));
             }
-            return TypeTable.Void;
+            return TypeTable.None;
         }
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
@@ -50,7 +50,7 @@ namespace Sct.Compiler.Typechecker
 
             _ = _ctableBuilder.FinishClass();
 
-            return TypeTable.Void;
+            return TypeTable.None;
         }
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
@@ -65,7 +65,7 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
 
-            return type;
+            return TypeTable.None;
         }
 
         public override SctType VisitType([NotNull] SctParser.TypeContext context)
@@ -86,7 +86,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
-            return TypeTable.Void;
+            return TypeTable.None;
         }
 
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
@@ -95,7 +95,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
-            return TypeTable.Void;
+            return TypeTable.None;
         }
     }
 }
