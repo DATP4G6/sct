@@ -14,11 +14,6 @@ namespace Sct.Compiler.Typechecker
         {
             _ = base.VisitStart(context);
 
-            // This spot used to check if there was a setup function and if it was of the correct type.
-            // This can no longer be done here, as the setup function can be defined in any file.
-            // And the TableVisitor is run on each file separately.
-            // TODO: Find another way to check this.
-
             return TypeTable.None;
         }
 
