@@ -15,19 +15,13 @@ namespace Sct.Compiler.Translator
     {
         public const string GeneratedNamespace = "SctGenerated";
         public const string GeneratedGlobalClass = "GlobalClass";
-
         public const string RunSimulationFunctionName = "RunSimulation";
 
-        private static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
-        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(ContextIdentifier);
-        private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(RunSimulationFunctionName);
+        public static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
 
         // boolean values are either 0 or 1
         private static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
         private static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
-
-
-        private const string NAME_MANGLE_PREFIX = "__sct_";
 
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
@@ -44,7 +38,7 @@ namespace Sct.Compiler.Translator
             .ClassDeclaration(GeneratedGlobalClass)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddMembers(members)
-            .AddMembers(MakeRunMethod());
+            .AddMembers(TranslatorUtils.MakeRunMethod());
 
             string[] usingStrings = [typeof(BaseAgent).Namespace!, nameof(System), typeof(IDictionary<string, dynamic>).Namespace!];
 
@@ -72,86 +66,16 @@ namespace Sct.Compiler.Translator
             var @class = SyntaxFactory.ClassDeclaration(className)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddBaseListTypes(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(nameof(BaseAgent))))
-            .AddMembers(CreateClassFields(fields))
-            .AddMembers(CreateConstructor(className))
+            .AddMembers(TranslatorUtils.CreateClassFields(fields))
+            .AddMembers(TranslatorUtils.CreateConstructor(className))
             .AddMembers(members)
-            .AddMembers(CreateUpdateMethod());
+            .AddMembers(TranslatorUtils.CreateUpdateMethod(_stateNames));
+
+            _stateNames = new(); // reset state names
 
             _stack.Push(@class);
         }
 
-        private MethodDeclarationSyntax CreateUpdateMethod()
-        {
-            var @switch = SyntaxFactory.SwitchExpression(
-                        SyntaxFactory.IdentifierName(nameof(BaseAgent.State)),
-                        // Add cases for each state in stateNames, calling the corresponding method of the same name
-                        SyntaxFactory.SeparatedList(
-                            _stateNames.Select(stateName => SyntaxFactory.SwitchExpressionArm(
-                                    SyntaxFactory.ConstantPattern(
-                                        SyntaxFactory.LiteralExpression(
-                                            SyntaxKind.StringLiteralExpression,
-                                            SyntaxFactory.Literal(stateName)
-                                            )
-                                        ),
-                                    SyntaxFactory.InvocationExpression(
-                                        SyntaxFactory.IdentifierName(stateName),
-                                        WithContextArgument([])
-                                        )
-                                    ))
-                            )
-                        );
-
-            var discardAssignment = SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
-                SyntaxKind.SimpleAssignmentExpression,
-                SyntaxFactory.IdentifierName("_"),
-                @switch
-            ));
-            var body = SyntaxFactory.Block().AddStatements(discardAssignment);
-
-            _stateNames = new();
-
-            var updateMethod = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                nameof(BaseAgent.Update)
-            )
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.OverrideKeyword))
-            .WithParameterList(WithContextParameter([]))
-            .WithBody(body);
-
-            return updateMethod;
-        }
-
-        private static ConstructorDeclarationSyntax CreateConstructor(string className)
-        {
-            var stateIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.State).ToLower(CultureInfo.InvariantCulture));
-            var fieldsIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.Fields).ToLower(CultureInfo.InvariantCulture));
-            // base parameters for constructor is string 'state' and IDictionary<string, dynamic> 'fields'
-            var parameters = SyntaxFactory.ParameterList(
-                SyntaxFactory.SeparatedList(new[]
-                {
-                    SyntaxFactory.Parameter(stateIdentifier)
-                        .WithType(SyntaxFactory.ParseTypeName(typeof(string).Name)),
-                    SyntaxFactory.Parameter(fieldsIdentifier)
-                        .WithType(SyntaxFactory.ParseTypeName(typeof(IDictionary<string, dynamic>).GenericName()))
-                })
-            );
-
-            return SyntaxFactory.ConstructorDeclaration(className)
-            .WithParameterList(parameters) // Add parameters
-            .WithBody(SyntaxFactory.Block()) // Add empty body
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            // Add base constructor call
-            .WithInitializer(SyntaxFactory.ConstructorInitializer(SyntaxKind.BaseConstructorInitializer,
-                SyntaxFactory.ArgumentList(
-                    // BaseAgent takes two parameters
-                    SyntaxFactory.SeparatedList(new[]
-                    {
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(stateIdentifier)),
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(fieldsIdentifier))
-                    })
-                )
-            ));
-        }
         public override void ExitExpressionStatement([NotNull] SctParser.ExpressionStatementContext context)
         {
             // convert expression to statement in eg. a void function call
@@ -249,7 +173,7 @@ namespace Sct.Compiler.Translator
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)), // all decorators return bool
                 mangledName
             )
-            .WithParameterList(WithContextParameter([])) // all decorators take 0 arguments;
+            .WithParameterList(TranslatorUtils.WithContextParameter([])) // all decorators take 0 arguments;
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
             .WithBody(childBlock);
 
@@ -259,7 +183,7 @@ namespace Sct.Compiler.Translator
         public override void ExitFunction([NotNull] SctParser.FunctionContext context)
         {
             var childBlock = _stack.Pop<BlockSyntax>();
-            var @params = WithContextParameter(_stack.Pop<ParameterListSyntax>());
+            var @params = TranslatorUtils.WithContextParameter(_stack.Pop<ParameterListSyntax>());
             var mangledName = TranslatorUtils.GetMangledName(context.ID().GetText());
 
             var method = SyntaxFactory.MethodDeclaration(
@@ -284,7 +208,7 @@ namespace Sct.Compiler.Translator
             // push decorator to the stack as method call
             var state = SyntaxFactory.InvocationExpression(
                 SyntaxFactory.IdentifierName(mangledName),
-                WithContextArgument([])
+                TranslatorUtils.WithContextArgument([])
             );
 
             _stack.Push(state);
@@ -349,7 +273,7 @@ namespace Sct.Compiler.Translator
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
                 name
             )
-            .WithParameterList(WithContextParameter([])) // state only takes context
+            .WithParameterList(TranslatorUtils.WithContextParameter([])) // state only takes context
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
             .WithBody(body);
 
@@ -496,7 +420,7 @@ namespace Sct.Compiler.Translator
 
         public override void ExitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
-            var args = WithContextArgument(_stack.Pop<ArgumentListSyntax>());
+            var args = TranslatorUtils.WithContextArgument(_stack.Pop<ArgumentListSyntax>());
             var call = TranslatorUtils.GetFunction(context.ID().GetText(), args);
             _stack.Push(call);
         }
@@ -648,7 +572,7 @@ namespace Sct.Compiler.Translator
             var invocation = SyntaxFactory.ExpressionStatement(
                     SyntaxFactory.InvocationExpression(
                     SyntaxFactory.IdentifierName(BaseAgent.EnterMethodName),
-                    WithContextArgument([SyntaxFactory.Argument(state)])
+                    TranslatorUtils.WithContextArgument([SyntaxFactory.Argument(state)])
                 )
             );
             var @return = SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression));
@@ -662,161 +586,6 @@ namespace Sct.Compiler.Translator
         {
             // return true to stop further execution
             _stack.Push(SyntaxFactory.ReturnStatement(SyntaxFactory.LiteralExpression(SyntaxKind.TrueLiteralExpression)));
-        }
-
-        /// <summary>
-        /// Returns a <see cref="ParameterListSyntax"/> with an <see cref="IRuntimeContext"/> <code>ctx</code> parameter added.
-        /// </summary>
-        private static ParameterListSyntax WithContextParameter(ParameterListSyntax p) => WithContextParameter(p.Parameters);
-
-        /// <summary>
-        /// Returns a <see cref="ParameterListSyntax"/> with an <see cref="IRuntimeContext"/> <code>ctx</code> parameter added.
-        /// </summary>
-        private static ParameterListSyntax WithContextParameter(IEnumerable<ParameterSyntax> p)
-        {
-            // create new parameter list
-            return SyntaxFactory.ParameterList(
-                SyntaxFactory.SeparatedList(
-                    p.Prepend( // prepend context to the original parameters
-                        SyntaxFactory.Parameter(ContextIdentifier)
-                        .WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)))
-                    )
-                )
-            );
-        }
-
-
-        private static ArgumentListSyntax WithContextArgument(IEnumerable<ArgumentSyntax> a) => SyntaxFactory.ArgumentList(
-                SyntaxFactory.SeparatedList(a.Prepend(
-                            SyntaxFactory.Argument(SyntaxFactory.IdentifierName(ContextIdentifier))
-                        ))
-                );
-        private static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
-
-        private static MethodDeclarationSyntax MakeRunMethod()
-        {
-
-            var runtimeId = SyntaxFactory.Identifier("runtime");
-            var runtime = SyntaxFactory.LocalDeclarationStatement(
-                SyntaxFactory.VariableDeclaration(
-                    SyntaxFactory.ParseTypeName(nameof(Runtime))
-                )
-                .AddVariables(
-                    SyntaxFactory.VariableDeclarator(
-                        runtimeId
-                    )
-                    .WithInitializer(
-                        SyntaxFactory.EqualsValueClause(
-                            SyntaxFactory.ObjectCreationExpression(
-                                SyntaxFactory.ParseTypeName(nameof(Runtime))
-                            )
-                            // need to add empty argument list to invoke constructor
-                            .WithArgumentList(
-                                SyntaxFactory.ArgumentList(
-                                    SyntaxFactory.SeparatedList<ArgumentSyntax>()
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-
-            var setup = SyntaxFactory.ExpressionStatement(
-                TranslatorUtils.GetFunction("Setup",
-                    SyntaxFactory.Argument(ContextIdentifierName)
-                )
-            );
-
-            var run = SyntaxFactory.ExpressionStatement(
-                SyntaxFactory.InvocationExpression(
-                    TranslatorUtils.BuildAccessor(nameof(IRuntime.Run), runtimeId),
-                    SyntaxFactory.ArgumentList(
-                        SyntaxFactory.SeparatedList([SyntaxFactory.Argument(ContextIdentifierName)])
-                    )
-                )
-            );
-
-            var runtimeParameter = SyntaxFactory.Parameter(ContextIdentifier).WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)));
-
-            var runMethod = SyntaxFactory.MethodDeclaration(
-                SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
-                RunSimulationIdentifier
-            )
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword), SyntaxFactory.Token(SyntaxKind.StaticKeyword))
-            .AddParameterListParameters(runtimeParameter)
-            .WithBody(SyntaxFactory.Block()
-            .AddStatements(runtime, setup, run));
-
-            return runMethod;
-
-        }
-
-
-        /// <summary>
-        /// Create getters and setters for all fields in a class
-        /// </summary>
-        /// <param name="fields">Fields in the class</param>
-        /// <returns></returns>
-        private static PropertyDeclarationSyntax[] CreateClassFields(ParameterListSyntax fields)
-        {
-            var fieldDeclarations = fields.Parameters.Select(p =>
-            {
-                var name = p.Identifier.Text;
-                var type = p.Type ?? SyntaxFactory.ParseTypeName("dynamic"); // should never happen. TODO: Find a way to use typeof()-like naming for "dynamic"
-
-                var getter = SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
-                .WithExpressionBody(
-                    SyntaxFactory.ArrowExpressionClause(
-                        SyntaxFactory.ElementAccessExpression(
-                            SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)),
-                            CreateBracketedArgumentList(name)) // get value from dictionary
-                    )
-                )
-                // accessordeclaration does not insert this aparently
-                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-
-                var setter = SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
-                .WithExpressionBody(
-                    SyntaxFactory.ArrowExpressionClause(
-                        SyntaxFactory.AssignmentExpression(
-                            SyntaxKind.SimpleAssignmentExpression,
-                            SyntaxFactory.ElementAccessExpression(
-                                SyntaxFactory.IdentifierName(nameof(BaseAgent.Fields)),
-                                CreateBracketedArgumentList(name) // get value from dictionary
-                            ),
-                            SyntaxFactory.IdentifierName("value") // set equal to value from setter
-                        )
-                    )
-                )
-                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-
-                // convert to public property declaration
-                return SyntaxFactory.PropertyDeclaration(type, name)
-                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PrivateKeyword))
-                .AddAccessorListAccessors(getter, setter);
-            });
-
-            return fieldDeclarations.ToArray();
-        }
-
-        /// <summary>
-        /// Creates a bracketed argument, accessing a dictionary with a key
-        /// Helper method for the CreateClassFields method
-        /// </summary>
-        /// <param name="name">The key to find</param>
-        /// <returns></returns>
-        private static BracketedArgumentListSyntax CreateBracketedArgumentList(string name)
-        {
-            return SyntaxFactory.BracketedArgumentList(
-                SyntaxFactory.SingletonSeparatedList(
-                    SyntaxFactory.Argument(
-                        SyntaxFactory.LiteralExpression(
-                            SyntaxKind.StringLiteralExpression,
-                            SyntaxFactory.Literal(name)
-                        )
-                    )
-                )
-            );
         }
     }
 }
