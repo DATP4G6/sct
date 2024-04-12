@@ -13,7 +13,7 @@ namespace Sct.Compiler
         {
             _stack.Push(new StackItem<TBase>(node));
         }
-        public TBase Pop() => Pop<TBase>();
+
         public T Pop<T>() where T : TBase
         {
             var node = _stack.Pop();
@@ -24,30 +24,18 @@ namespace Sct.Compiler
             throw new UnrecognizedNodeException(typeof(T).GenericName(), (node?.Value?.GetType().Name) ?? "null");
         }
 
-        public TBase Peek() => Peek<TBase>();
-        public T Peek<T>() where T : TBase
+        public bool TryPop<T>(out T? poppedValue) where T : TBase
         {
-            var node = _stack.Peek();
-            if (node.Value is T t)
+            if (_stack.Peek().Value is T value)
             {
-                return t;
-            }
-            throw new UnrecognizedNodeException(typeof(T).GenericName(), (node?.Value?.GetType().Name) ?? "null");
-        }
-
-        public bool TryPeek(out TBase? peekedValue) => TryPeek<TBase>(out peekedValue);
-        public bool TryPeek<T>(out T? peekedValue) where T : TBase
-        {
-            if (_stack.TryPeek(out var node) && node.Value is T value)
-            {
-                peekedValue = value;
+                poppedValue = value;
+                _ = _stack.Pop();
                 return true;
             }
-            peekedValue = default;
+            poppedValue = default;
             return false;
         }
 
-        public TBase[] ToArray() => ToArray<TBase>();
         public T[] ToArray<T>() where T : TBase
         {
             var typedArr = _stack.Select(x => x.Value).OfType<T>().ToArray();
@@ -63,10 +51,9 @@ namespace Sct.Compiler
             where TItem : TBase
         {
             List<TItem> items = [];
-            while (_stack.Peek().Value is TItem item and not TParent)
+            while (TryPop(out TItem? item))
             {
-                items.Add(item);
-                _ = _stack.Pop();
+                items.Add(item!);
             }
 
             var node = _stack.Pop().Value;
@@ -87,10 +74,9 @@ namespace Sct.Compiler
         public TItem[] PopWhile<TItem>() where TItem : TBase
         {
             List<TItem> items = [];
-            while (_stack.Peek().Value is TItem item)
+            while (TryPop(out TItem? item))
             {
-                items.Add(item);
-                _ = _stack.Pop();
+                items.Add(item!);
             }
 
             // Popping stack reversed order of items
@@ -101,14 +87,12 @@ namespace Sct.Compiler
         public void PushMarker() => _stack.Push(new StackItem<TBase>());
 
         public TBase[] PopUntilMarker() => PopUntilMarker<TBase>();
-
         public T[] PopUntilMarker<T>() where T : TBase
         {
             List<T> items = [];
-            while (_stack.Peek().Value is T item && _stack.Peek().IsMarker == false)
+            while (TryPop(out T? item))
             {
-                items.Add(item);
-                _ = _stack.Pop();
+                items.Add(item!);
             }
 
             var node = _stack.Pop();
@@ -122,6 +106,7 @@ namespace Sct.Compiler
             return items.ToArray();
         }
 
+        // only used for debugging
         public override string ToString()
         {
             return string.Join("\n", _stack.Select(x => x.Value?.GetType().Name ?? (x.IsMarker ? "Marker" : "null")));
