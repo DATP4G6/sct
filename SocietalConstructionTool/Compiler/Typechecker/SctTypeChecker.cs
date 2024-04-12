@@ -280,31 +280,27 @@ namespace Sct.Compiler.Typechecker
             var targetAgentFields = targetAgent.Fields;
             var agentArgumentIds = context.args_agent().ID();
 
-            var agentArgs = new Dictionary<string, SctType>();
+            var seenFields = new HashSet<string>();
 
-            foreach (var id in agentArgumentIds)
+            foreach (var (id, expression) in agentArgumentIds.Zip(context.args_agent().expression()))
             {
-                if (!targetAgentFields.TryGetValue(id.GetText(), out _))
+                if (!targetAgentFields.ContainsKey(id.GetText()))
                 {
                     _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
-                    agentArgs.Add(id.GetText(), TypeTable.Int);
                     continue;
                 }
 
-                if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
+                if (!seenFields.Add(id.GetText()))
                 {
                     _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
+                    continue;
                 }
-            }
 
-            foreach (var arg in agentArgs)
-            {
-                if (targetAgentFields.TryGetValue(arg.Key, out var type))
+                var targetAgentFieldType = targetAgentFields[id.GetText()];
+                var agentfieldType = expression.Accept(this);
+                if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
                 {
-                    if (TypeTable.GetCompatibleType(type, arg.Value) is null)
-                    {
-                        _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {type.TargetType} in predicate.", context.Start.Line, context.Start.Column));
-                    }
+                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TargetType} to {targetAgentFieldType.TargetType} in predicate.", context.Start.Line, context.Start.Column));
                 }
             }
 
@@ -332,37 +328,34 @@ namespace Sct.Compiler.Typechecker
             var targetAgentFields = targetAgent.Fields;
             var agentArgumentIds = context.args_agent().ID();
 
-            var agentArgs = new Dictionary<string, SctType>();
 
-            foreach (var id in agentArgumentIds)
+            var seenFields = new HashSet<string>();
+
+            foreach (var (id, expression) in agentArgumentIds.Zip(context.args_agent().expression()))
             {
                 if (!targetAgentFields.ContainsKey(id.GetText()))
                 {
                     _errors.Add(new CompilerError($"Field {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
-                    agentArgs.Add(id.GetText(), TypeTable.Int);
                     continue;
                 }
 
-                if (!agentArgs.TryAdd(id.GetText(), context.args_agent().expression(agentArgs.Count).Accept(this)))
+                if (!seenFields.Add(id.GetText()))
                 {
                     _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
+                    continue;
                 }
-            }
 
-            foreach (var arg in agentArgs)
-            {
-                if (targetAgentFields.TryGetValue(arg.Key, out var type))
+                var targetAgentFieldType = targetAgentFields[id.GetText()];
+                var agentfieldType = expression.Accept(this);
+                if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
                 {
-                    if (TypeTable.GetCompatibleType(type, arg.Value) is null)
-                    {
-                        _errors.Add(new CompilerError($"Cannot convert {arg.Value.TargetType} to {type.TargetType}", context.Start.Line, context.Start.Column));
-                    }
+                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TargetType} to {targetAgentFieldType.TargetType}", context.Start.Line, context.Start.Column));
                 }
             }
 
             foreach (var field in targetAgentFields)
             {
-                if (!agentArgs.ContainsKey(field.Key))
+                if (!seenFields.Contains(field.Key))
                 {
                     _errors.Add(new CompilerError($"Missing argument {field.Key} in agent create.", context.Start.Line, context.Start.Column));
                 }
