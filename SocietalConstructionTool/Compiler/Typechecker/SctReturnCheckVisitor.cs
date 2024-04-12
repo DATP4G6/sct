@@ -16,7 +16,7 @@ namespace Sct.Compiler.Typechecker
 
             if (!returns)
             {
-                _errors.Add(new CompilerError($"Not all code paths return a value in function {context.ID().GetText()}"));
+                _errors.Add(new CompilerError($"Not all code paths return a value in function {context.ID().GetText()}", context.Start.Line, context.Start.Column));
             }
             return returns;
         }
@@ -26,7 +26,7 @@ namespace Sct.Compiler.Typechecker
             var returns = context.statement_list().Accept(this);
             if (!returns)
             {
-                _errors.Add(new CompilerError($"Not all code paths return a value in state {context.ID().GetText()}"));
+                _errors.Add(new CompilerError($"Not all code paths return a value in state {context.ID().GetText()}", context.Start.Line, context.Start.Column));
             }
             return returns;
         }
