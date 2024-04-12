@@ -2,29 +2,23 @@ using Antlr4.Runtime.Misc;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctTableVisitor : SctBaseVisitor<SctType>, IErrorReporter
+    public class SctTableVisitor(CTableBuilder cTableBuilder) : SctBaseVisitor<SctType>, IErrorReporter
     {
         public CTable? Ctable { get; private set; }
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
-        private readonly CTableBuilder _ctableBuilder = new();
+        private readonly CTableBuilder _ctableBuilder = cTableBuilder;
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
             _ = base.VisitStart(context);
 
-            Ctable = _ctableBuilder.BuildCtable();
+            // This spot used to check if there was a setup function and if it was of the correct type.
+            // This can no longer be done here, as the setup function can be defined in any file.
+            // And the TableVisitor is run on each file separately.
+            // TODO: Find another way to check this.
 
-            var setupType = Ctable.GlobalClass.LookupFunctionType("Setup");
-            if (setupType is null)
-            {
-                _errors.Add(new CompilerError("No setup function found"));
-            }
-            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
-            {
-                _errors.Add(new CompilerError("Setup function must return void and take no arguments"));
-            }
             return TypeTable.None;
         }
 

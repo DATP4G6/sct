@@ -5,6 +5,7 @@ namespace Sct.Compiler
         public string Message { get; }
         public int? Line { get; }
         public int? Column { get; }
+        public string? Filename { get; set; }
 
         public CompilerError(string message)
         {
@@ -24,8 +25,30 @@ namespace Sct.Compiler
             Column = column;
         }
 
+        public CompilerError(string message, string fileName, int line, int column)
+        {
+            Message = message;
+            Filename = fileName;
+            Line = line;
+            Column = column;
+        }
+
         public override string ToString()
         {
+
+            if (Filename is not null)
+            {
+                if (Line is null)
+                {
+                    return $"{Filename}: {Message}";
+                }
+                if (Column is null)
+                {
+                    return $"{Filename}, Line {Line}: {Message}";
+                }
+                return $"{Filename}, Line {Line}, Column {Column}: {Message}";
+            }
+
             if (Line is null)
             {
                 return Message;
