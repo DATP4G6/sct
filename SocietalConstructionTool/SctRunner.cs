@@ -92,7 +92,8 @@ namespace Sct
             if (setupType is null)
             {
                 errors.Add(new CompilerError("No setup function found"));
-            } else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            }
+            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
             {
                 errors.Add(new CompilerError("Setup function must return void and take no arguments"));
             }
