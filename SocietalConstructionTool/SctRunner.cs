@@ -36,6 +36,9 @@ namespace Sct
             CTableBuilder cTableBuilder = new();
             var errors = new List<CompilerError>();
 
+            // Store parses for each file to avoid having to recreate them for type checking.
+            Dictionary<string, SctParser> parsers = new();
+
             // Run static analysis on each file separately.
             foreach (var file in filenames)
             {
@@ -43,8 +46,10 @@ namespace Sct
                 ICharStream fileStream = CharStreams.fromString(input);
                 ITokenSource fileLexer = new SctLexer(fileStream);
                 ITokenStream fileTokens = new CommonTokenStream(fileLexer);
-                SctParser fileParser = new(fileTokens);
-                var startNode = fileParser.start();
+
+                // Save parser for later use.
+                parsers[file] = new SctParser(fileTokens);
+                var startNode = parsers[file].start();
 
                 KeywordContextCheckVisitor keywordChecker = new();
 
@@ -74,6 +79,9 @@ namespace Sct
                 }
 
                 errors.AddRange(sctTableVisitor.Errors);
+
+                // Reset the parser to be able to type check the file later.
+                parsers[file].Reset();
             }
 
             // Build the CTable after all files have been visited.
@@ -93,17 +101,11 @@ namespace Sct
             // Identifiers from other files are known because the CTable is built from all files.
             foreach (var file in filenames)
             {
-                string input = File.ReadAllText(file);
-                ICharStream fileStream = CharStreams.fromString(input);
-                ITokenSource fileLexer = new SctLexer(fileStream);
-                ITokenStream fileTokens = new CommonTokenStream(fileLexer);
-                SctParser fileParser = new(fileTokens);
-                var startNode = fileParser.start();
+                var startNode = parsers[file].start();
 
                 // Run visitor that checks the types.
                 var sctTypeChecker = new SctTypeChecker(cTable);
                 _ = startNode.Accept(sctTypeChecker);
-                fileParser.Reset();
 
                 foreach (var error in sctTypeChecker.Errors)
                 {
@@ -111,6 +113,9 @@ namespace Sct
                 }
 
                 errors.AddRange(sctTypeChecker.Errors);
+
+                // Reset the parser because its good practice.
+                parsers[file].Reset();
             }
 
             // Concatenate all files into one string and run the translator on it.
