@@ -56,6 +56,14 @@ namespace Sct
                 }
                 errors.AddRange(keywordErrors);
 
+                SctReturnCheckVisitor returnChecker = new();
+                _ = startNode.Accept(returnChecker);
+                foreach (var error in returnChecker.Errors)
+                {
+                    error.Filename = file;
+                }
+                errors.AddRange(returnChecker.Errors);
+
                 // Run visitor that populates the tables using the CTableBuilder.
                 var sctTableVisitor = new SctTableVisitor(cTableBuilder);
                 _ = startNode.Accept(sctTableVisitor);
@@ -71,6 +79,15 @@ namespace Sct
             // Build the CTable after all files have been visited.
             // The CTable is used for type checking.
             CTable cTable = cTableBuilder.BuildCtable();
+
+            var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
+            if (setupType is null)
+            {
+                errors.Add(new CompilerError("No Setup function found."));
+            } else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            {
+                errors.Add(new CompilerError("Setup function must return void and take no arguments"));
+            }
 
             // Typecheck each file separately.
             // Identifiers from other files are known because the CTable is built from all files.
