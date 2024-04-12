@@ -587,11 +587,9 @@ namespace Sct.Compiler.Translator
         {
             // TODO: check if we can return before doing it
             var @return = SyntaxFactory.ReturnStatement();
-            var valueExists = _stack.TryPeek<ExpressionSyntax>(out var peekedValue);
-            if (valueExists)
+            if (_stack.TryPop<ExpressionSyntax>(out var expr))
             {
-                _ = _stack.Pop();
-                @return = @return.WithExpression(peekedValue);
+                @return = @return.WithExpression(expr);
             }
             _stack.Push(@return);
         }
@@ -618,7 +616,7 @@ namespace Sct.Compiler.Translator
         private IfStatementSyntax IfHelper()
         {
             // Stack order is either <block> <exp> or <else> <block> <exp>
-            var @else = _stack.Peek() is ElseClauseSyntax ? _stack.Pop<ElseClauseSyntax>() : null;
+            _ = _stack.TryPop<ElseClauseSyntax>(out var @else);
             var block = _stack.Pop<BlockSyntax>();
             var expression = _stack.Pop<ExpressionSyntax>();
             var condition = ConvertToBooleanCondition(expression);
