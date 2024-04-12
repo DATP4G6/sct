@@ -20,7 +20,7 @@ The repository is split into two distinct projects
 - `dotnet` v8+
 - `antlr4`
 
-On **Unix-like systems**, the parser files are **automatically generated** after cleaning as part of the build process.
+On **Unix-like systems**, the parser files are **automatically generated** before building as part of the build process.
 
 On **Windows**, the parser code must be **generated manually**:
 
