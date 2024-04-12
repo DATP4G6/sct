@@ -37,9 +37,21 @@ namespace SocietalConstructionToolTests
             _ = startNode.Accept(returnChecker);
             errors.AddRange(returnChecker.Errors);
 
-            var sctTableVisitor = new SctTableVisitor();
+            var cTableBuilder = new CTableBuilder();
+
+            var sctTableVisitor = new SctTableVisitor(cTableBuilder);
             _ = sctTableVisitor.Visit(startNode);
-            var ctable = sctTableVisitor.Ctable;
+            var ctable = cTableBuilder.BuildCtable();
+
+            var setupType = ctable.GlobalClass.LookupFunctionType("Setup");
+            if (setupType is null)
+            {
+                errors.Add(new CompilerError("No setup function found"));
+            } else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            {
+                errors.Add(new CompilerError("Setup function must return void and take no arguments"));
+            }
+
             errors.AddRange(sctTableVisitor.Errors);
 
             var sctTypeChecker = new SctTypeChecker(ctable!);

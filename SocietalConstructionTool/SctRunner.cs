@@ -83,7 +83,7 @@ namespace Sct
             var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
             if (setupType is null)
             {
-                errors.Add(new CompilerError("No Setup function found."));
+                errors.Add(new CompilerError("No setup function found"));
             } else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
             {
                 errors.Add(new CompilerError("Setup function must return void and take no arguments"));
