@@ -1,2 +1,2 @@
-﻿Line 6, Column 4: Cannot convert System.Double to System.Int32 in call expression.
-Line 7, Column 4: Cannot convert System.Double to System.Int32 in call expression.
+﻿Line 6, Column 4: Cannot convert float to int in call expression.
+Line 7, Column 4: Cannot convert float to int in call expression.

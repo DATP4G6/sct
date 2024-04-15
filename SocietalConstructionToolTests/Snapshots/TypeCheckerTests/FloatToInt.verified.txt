@@ -1,2 +1,2 @@
-﻿Line 2, Column 4: Cannot assign System.Double to System.Int32
-Line 3, Column 4: Cannot assign System.Double to System.Int32 
+﻿Line 2, Column 4: Cannot assign float to int
+Line 3, Column 4: Cannot assign float to int 

@@ -1,2 +1,2 @@
-﻿Line 4, Column 8: Cannot typecast from System.Int32 to System.Void.
-Line 4, Column 4: Cannot assign System.Void to System.Double 
+﻿Line 4, Column 8: Cannot typecast from int to void.
+Line 4, Column 4: Cannot assign void to float 
