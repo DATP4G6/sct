@@ -60,13 +60,13 @@ namespace Sct.Compiler.Typechecker
             // TODO: Maybe add predicate later :)
             if (type == TypeTable.Predicate || type == TypeTable.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type: {type.TargetType}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable cannot be of type: {type.TypeName}", context.Start.Line, context.Start.Column));
             }
 
             SctType expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TargetType} to {type.TargetType}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {type.TypeName}", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
@@ -158,7 +158,7 @@ namespace Sct.Compiler.Typechecker
                 {
                     if (TypeTable.GetCompatibleType(functionParamType, argumentType) is null)
                     {
-                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TargetType} to {functionParamType.TargetType} in call expression.", context.Start.Line, context.Start.Column));
+                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TypeName} to {functionParamType.TypeName} in call expression.", context.Start.Line, context.Start.Column));
                     }
                 }
             }
@@ -187,7 +187,7 @@ namespace Sct.Compiler.Typechecker
             {
                 if (returnType != TypeTable.Void)
                 {
-                    _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TargetType}, got no expression.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName}, got no expression.", context.Start.Line, context.Start.Column));
                 }
                 return TypeTable.Void;
             }
@@ -195,7 +195,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(returnType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot convert the returned type to the function's expected return type, expected expression of type {returnType.TargetType}, got {expressionType.TargetType}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot convert the returned type to the function's expected return type, expected expression of type {returnType.TypeName}, got {expressionType.TypeName}.", context.Start.Line, context.Start.Column));
                 expressionType = returnType;
             }
             return expressionType;
@@ -232,7 +232,7 @@ namespace Sct.Compiler.Typechecker
 
             if (TypeTable.GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TargetType} to {variableType.TargetType} ", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName} ", context.Start.Line, context.Start.Column));
             }
 
             return variableType;
@@ -255,7 +255,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
-                _errors.Add(new CompilerError($"Cannot typecast from {expressionType.TargetType} to {targetType.TargetType}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot typecast from {expressionType.TypeName} to {targetType.TypeName}.", context.Start.Line, context.Start.Column));
             }
             return targetType;
         }
@@ -300,7 +300,7 @@ namespace Sct.Compiler.Typechecker
                 var agentfieldType = expression.Accept(this);
                 if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TargetType} to {targetAgentFieldType.TargetType} in predicate.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TypeName} to {targetAgentFieldType.TypeName} in predicate.", context.Start.Line, context.Start.Column));
                 }
             }
 
@@ -349,7 +349,7 @@ namespace Sct.Compiler.Typechecker
                 var agentfieldType = expression.Accept(this);
                 if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TargetType} to {targetAgentFieldType.TargetType}", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TypeName} to {targetAgentFieldType.TypeName}", context.Start.Line, context.Start.Column));
                 }
             }
 

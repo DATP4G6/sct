@@ -1,1 +1,1 @@
-﻿Line 4, Column 4: Cannot convert System.Int32 to System.Void in call expression.
+﻿Line 4, Column 4: Cannot convert int to void in call expression.
