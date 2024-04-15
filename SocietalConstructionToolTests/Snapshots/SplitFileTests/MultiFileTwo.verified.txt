@@ -6,23 +6,6 @@
 
     public class GlobalClass
     {
-        public static long __sct_endCheck(IRuntimeContext ctx)
-        {
-            if ((2 > 3 ? 1 : 0) != 0)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
-        }
-
-        public static void __sct_Setup(IRuntimeContext ctx)
-        {
-            ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1), new KeyValuePair<String, dynamic>("__sct_space", 50) })));
-        }
-
         public class __sct_Town : BaseAgent
         {
             private int __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
@@ -34,7 +17,7 @@
 
             private bool __sct_Growing(IRuntimeContext ctx)
             {
-                if (__sct_endCheck(ctx) != 0)
+                if (1 != 0)
                 {
                     Enter(ctx, "__sct_End");
                     return true;
@@ -59,6 +42,11 @@
                     "__sct_Growing" => __sct_Growing(ctx),
                     "__sct_End" => __sct_End(ctx)};
             }
+        }
+
+        public static void __sct_Setup(IRuntimeContext ctx)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1), new KeyValuePair<String, dynamic>("__sct_space", 50) })));
         }
 
         public static void RunSimulation(IRuntimeContext ctx)
