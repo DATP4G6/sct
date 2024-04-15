@@ -14,14 +14,14 @@ namespace SocietalConstructionToolTests
 
         [DataTestMethod]
         [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
-        public async Task RunFiles(params string[] files)
+        public void RunFiles(params string[] files)
         {
             UseProjectRelativeDirectory("Snapshots/SplitFileTests"); // save snapshots here
 
             var (outputText, errors) = SctRunner.CompileSct(GetFiles());
 
             Assert.IsTrue(errors.Count() == 0, string.Join("\n", errors));
-            _ = await Verify(outputText)
+            _ = Verify(outputText)
                 .UseFileName(Path.GetFileNameWithoutExtension(files[0]));
         }
 
