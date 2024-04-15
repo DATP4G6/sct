@@ -1,0 +1,17 @@
+class Town(int id, int space) {
+    state Growing {
+        if (endCheck()) {
+            enter End;
+        }
+        enter Growing;
+    }
+    state End {
+        exit;
+    }
+}
+
+function Setup() -> void {
+    // Create a town in the state growing with the id of 1 and space for 50 people
+    create Town::Growing(id: 1, space: 50);
+
+}
