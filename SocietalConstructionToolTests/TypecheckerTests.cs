@@ -39,10 +39,10 @@ namespace SocietalConstructionToolTests
 
             var sctTableVisitor = new SctTableVisitor();
             _ = sctTableVisitor.Visit(startNode);
-            var ctable = sctTableVisitor.Ctable;
+            var ctable = sctTableVisitor.CTable;
             errors.AddRange(sctTableVisitor.Errors);
 
-            var sctTypeChecker = new SctTypeChecker(ctable!);
+            var sctTypeChecker = new SctTypeChecker(ctable);
             _ = startNode.Accept(sctTypeChecker);
 
             errors.AddRange(sctTypeChecker.Errors);
