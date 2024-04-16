@@ -1,0 +1,23 @@
+class Citizen(int townId) {
+    state Child {
+        enter Adult;
+    }
+
+    state Adult {
+        enter Adult;
+    }
+}
+
+function duplicate(Predicate p) -> int{
+    if (count(p) > 1) {
+        return 1;
+    }
+    return 0;
+}
+
+function Setup() -> void {
+    Predicate x = Citizen::Child(townId:1);
+    if (duplicate(x)) {
+        exit();
+    }
+}

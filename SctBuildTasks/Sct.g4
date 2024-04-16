@@ -89,10 +89,11 @@ agent_predicate:
 FUNCTION: 'function';
 RIGHT_ARROW: '->';
 
-type: T_INT | T_FLOAT | T_VOID;
+type: T_INT | T_FLOAT | T_VOID | T_PREDICATE;
 T_INT: 'int';
 T_FLOAT: 'float';
 T_VOID: 'void';
+T_PREDICATE: 'Predicate';
 
 ASSIGN: '=';
 IF: 'if';

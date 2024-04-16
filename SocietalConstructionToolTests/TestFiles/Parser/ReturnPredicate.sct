@@ -1,0 +1,18 @@
+class Citizen(int townId) {
+    state Child {
+        enter Adult;
+    }
+
+    state Adult {
+        enter Adult;
+    }
+}
+
+function getChildPredicate(int id) -> Predicate {
+    return Citizen::Child(townId: id);
+}
+
+function Setup() -> void {
+    int townId = 5;
+    int childrenCount = count(getChildPredicate(townId));
+}
