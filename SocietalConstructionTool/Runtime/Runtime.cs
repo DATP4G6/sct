@@ -5,7 +5,7 @@ namespace Sct.Runtime
         public void Run(IRuntimeContext initialContext)
         {
             IRuntimeContext prevCtx = initialContext;
-            while (!prevCtx.ShouldExit)
+            while (!prevCtx.ShouldExit && prevCtx.AgentHandler.Agents.Any())
             {
                 prevCtx.OnTick();
                 IRuntimeContext nextCtx = prevCtx.GetNextContext();
