@@ -57,8 +57,7 @@ namespace Sct.Compiler.Typechecker
         {
             var type = context.type().Accept(this);
 
-            // TODO: Maybe add predicate later :)
-            if (type == TypeTable.Predicate || type == TypeTable.Void)
+            if (type == TypeTable.Void)
             {
                 _errors.Add(new CompilerError($"Variable cannot be of type: {type.TypeName}", context.Start.Line, context.Start.Column));
             }
@@ -94,12 +93,6 @@ namespace Sct.Compiler.Typechecker
             // can never be null, as SctTableVisitor created the class
             _currentClass = _ctable.GetClassContent(context.ID().GetText())!;
             _vtable.EnterScope();
-
-            foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
-            {
-                _ = _vtable.AddEntry(id.GetText(), type.Accept(this));
-            }
-
             _ = base.VisitClass_def(context);
             _currentClass = _ctable.GlobalClass;
             _vtable.ExitScope();
@@ -139,10 +132,21 @@ namespace Sct.Compiler.Typechecker
             {
                 return TypeTable.Void;
             }
+            _vtable.EnterScope();
             _ = context.args_def().Accept(this);
             _ = context.type().Accept(this);
             _ = context.statement_list()?.Accept(this); // function may not have a body
+            _vtable.ExitScope();
+            return TypeTable.None;
+        }
 
+        public override SctType VisitArgs_def([NotNull] SctParser.Args_defContext context)
+        {
+            // return base.VisitArgs_def(context);
+            foreach (var (id, type) in context.ID().Zip(context.type()))
+            {
+                _ = _vtable.AddEntry(id.GetText(), type.Accept(this));
+            }
             return TypeTable.None;
         }
 

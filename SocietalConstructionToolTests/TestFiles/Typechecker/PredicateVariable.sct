@@ -1,0 +1,12 @@
+class Foo(int a, int b) {
+    state Bar {
+        enter Bar;
+    }
+}
+
+function Setup() -> void {
+    Predicate x = Foo::Bar(a:5);
+    if(exists(x)){
+        int y = 5;
+    }
+}

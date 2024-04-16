@@ -2,6 +2,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Sct.Compiler.Exceptions;
+using Sct.Runtime;
 
 namespace Sct.Compiler
 {
@@ -17,7 +18,7 @@ namespace Sct.Compiler
             { "int", new SctType(typeof(int), "int") },
             { "float", new SctType(typeof(double), "float") },
             { "void", new SctType(typeof(void), "void")},
-            { "Predicate", new SctType(typeof(void), "Predicate") },
+            { "Predicate", new SctType(typeof(QueryPredicate), "Predicate") },
             { "none", new SctType(typeof(void), "none")}
         };
 
@@ -25,21 +26,15 @@ namespace Sct.Compiler
 
         public static TypeSyntax GetTypeNode(string name)
         {
-            SctType sctType = (Types[name]) ?? throw new InvalidTypeException($"Type {name} does not exist");
-            if (sctType == Types["Predicate"])
+            if (Types[name] is null) throw new InvalidTypeException($"Type {name} does not exist");
+            static PredefinedTypeSyntax PredefinedType(SyntaxKind kind) => SyntaxFactory.PredefinedType(SyntaxFactory.Token(kind));
+            var @type = name switch
             {
-                throw new InvalidTypeException("Predicate type cannot be used as a syntax node");
-            }
-
-            var syntaxKind = name switch
-            {
-                "int" => SyntaxKind.LongKeyword,
-                "float" => SyntaxKind.DoubleKeyword,
-                "void" => SyntaxKind.VoidKeyword,
-                _ => throw new InvalidTypeException($"Got unknown type in translation: ${name}")
+                "int" => PredefinedType(SyntaxKind.LongKeyword),
+                "float" => PredefinedType(SyntaxKind.DoubleKeyword),
+                "void" => PredefinedType(SyntaxKind.VoidKeyword),
+                _ => SyntaxFactory.ParseTypeName(Types[name].TargetType.Name)
             };
-
-            var @type = SyntaxFactory.PredefinedType(SyntaxFactory.Token(syntaxKind));
 
             return @type;
         }
