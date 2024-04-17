@@ -1,0 +1,5 @@
+function Setup() -> void {
+    // Create a town in the state growing with the id of 1 and space for 50 people
+    create Town::Growing(id: 1, space: 50);
+
+}

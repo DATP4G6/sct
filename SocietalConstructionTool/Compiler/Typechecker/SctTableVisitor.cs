@@ -2,30 +2,19 @@ using Antlr4.Runtime.Misc;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctTableVisitor : SctBaseVisitor<SctType>, IErrorReporter
+    public class SctTableVisitor(CTableBuilder cTableBuilder) : SctBaseVisitor<SctType>, IErrorReporter
     {
         private CTable? InternalCTable { get; set; }
         public CTable CTable => InternalCTable ?? _ctableBuilder.BuildCtable();
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
-        private readonly CTableBuilder _ctableBuilder = new();
+        private readonly CTableBuilder _ctableBuilder = cTableBuilder;
 
         public override SctType VisitStart([NotNull] SctParser.StartContext context)
         {
             _ = base.VisitStart(context);
 
-            InternalCTable = _ctableBuilder.BuildCtable();
-
-            var setupType = InternalCTable.GlobalClass.LookupFunctionType("Setup");
-            if (setupType is null)
-            {
-                _errors.Add(new CompilerError("No setup function found"));
-            }
-            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
-            {
-                _errors.Add(new CompilerError("Setup function must return void and take no arguments"));
-            }
             return TypeTable.None;
         }
 

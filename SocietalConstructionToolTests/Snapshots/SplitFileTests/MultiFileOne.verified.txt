@@ -1,0 +1,59 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public class __sct_Town : BaseAgent
+        {
+            private int __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
+            private int __sct_space { get => Fields["__sct_space"]; set => Fields["__sct_space"] = value; }
+
+            public __sct_Town(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Growing(IRuntimeContext ctx)
+            {
+                if (1 != 0)
+                {
+                    Enter(ctx, "__sct_End");
+                    return true;
+                }
+
+                Enter(ctx, "__sct_Growing");
+                return true;
+                return false;
+            }
+
+            private bool __sct_End(IRuntimeContext ctx)
+            {
+                ctx.ExitRuntime();
+                return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Growing" => __sct_Growing(ctx),
+                    "__sct_End" => __sct_End(ctx)};
+            }
+        }
+
+        public static void __sct_Setup(IRuntimeContext ctx)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1), new KeyValuePair<String, dynamic>("__sct_space", 50) })));
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

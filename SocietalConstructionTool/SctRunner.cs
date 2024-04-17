@@ -20,44 +20,115 @@ namespace Sct
          * <summary>
          * Reads an SCT source file, statically chekcs it and translates it into C# code
          * </summary>
-         * <param name="filename">The path of the SCT source file</param>
+         * <param name="filenames">The path of the SCT source file</param>
          * <returns>The resulting C# source, or null if compilation failed</returns>
          */
-        public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(string filename)
+        public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(string[] filenames)
         {
-            // TODO: Add error handling
-            string input = File.ReadAllText(filename);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
-            var startNode = parser.start();
 
-            KeywordContextCheckVisitor keywordChecker = new();
-            var errors = startNode.Accept(keywordChecker).ToList();
+            // Make SctTableVisitor take a CTableBuilder as a parameter
+            // Analyse each file separately
+            // Add file name to each found error.
+            // Call CTabelBuilder.BuildCtable() after all files have been visited
+            // Run the translator on all files concatenated.
 
+            // Create a CTableBuilder that is used for all files.
+            CTableBuilder cTableBuilder = new();
+            var errors = new List<CompilerError>();
 
-            // Run visitor that populates the tables.
-            var sctTableVisitor = new SctTableVisitor();
-            _ = startNode.Accept(sctTableVisitor);
-            var ctable = sctTableVisitor.CTable;
-            errors.AddRange(sctTableVisitor.Errors);
+            // Store parses for each file to avoid having to recreate them for type checking.
+            Dictionary<string, SctParser.StartContext> startNodes = new();
 
-            // Run visitor that checks the types.
-            var sctTypeChecker = new SctTypeChecker(ctable);
-            _ = startNode.Accept(sctTypeChecker);
-            parser.Reset();
+            // Run static analysis on each file separately.
+            foreach (var file in filenames)
+            {
+                string input = File.ReadAllText(file);
+                ICharStream fileStream = CharStreams.fromString(input);
+                ITokenSource fileLexer = new SctLexer(fileStream);
+                ITokenStream fileTokens = new CommonTokenStream(fileLexer);
 
-            errors.AddRange(sctTypeChecker.Errors);
+                var fileParser = new SctParser(fileTokens);
+                // Save parser for later use.
+                startNodes[file] = fileParser.start();
+                var startNode = startNodes[file];
 
-            var translator = new SctTranslator();
-            parser.AddParseListener(translator);
-            _ = parser.start();
+                KeywordContextCheckVisitor keywordChecker = new();
+
+                // Annotate each error with the filename.
+                var keywordErrors = startNode.Accept(keywordChecker).ToList();
+                foreach (var error in keywordErrors)
+                {
+                    error.Filename = file;
+                }
+                errors.AddRange(keywordErrors);
+
+                SctReturnCheckVisitor returnChecker = new();
+                _ = startNode.Accept(returnChecker);
+                foreach (var error in returnChecker.Errors)
+                {
+                    error.Filename = file;
+                }
+                errors.AddRange(returnChecker.Errors);
+
+                // Run visitor that populates the tables using the CTableBuilder.
+                var sctTableVisitor = new SctTableVisitor(cTableBuilder);
+                _ = startNode.Accept(sctTableVisitor);
+
+                foreach (var error in sctTableVisitor.Errors)
+                {
+                    error.Filename = file;
+                }
+
+                errors.AddRange(sctTableVisitor.Errors);
+            }
+
+            // Build the CTable after all files have been visited.
+            // The CTable is used for type checking.
+            CTable cTable = cTableBuilder.BuildCtable();
+
+            var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
+            if (setupType is null)
+            {
+                errors.Add(new CompilerError("No setup function found"));
+            }
+            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            {
+                errors.Add(new CompilerError("Setup function must return void and take no arguments"));
+            }
+
+            // Typecheck each file separately.
+            // Identifiers from other files are known because the CTable is built from all files.
+            foreach (var file in filenames)
+            {
+                var startNode = startNodes[file];
+
+                // Run visitor that checks the types.
+                var sctTypeChecker = new SctTypeChecker(cTable);
+                _ = startNode.Accept(sctTypeChecker);
+
+                foreach (var error in sctTypeChecker.Errors)
+                {
+                    error.Filename = file;
+                }
+
+                errors.AddRange(sctTypeChecker.Errors);
+            }
 
             if (errors.Count > 0)
             {
                 return (null, errors);
             }
+
+            // Concatenate all files into one string and run the translator on it.
+            string fullInput = ConcatenateFiles(filenames);
+            ICharStream stream = CharStreams.fromString(fullInput);
+            ITokenSource lexer = new SctLexer(stream);
+            ITokenStream tokens = new CommonTokenStream(lexer);
+            SctParser parser = new(tokens);
+
+            var translator = new SctTranslator();
+            parser.AddParseListener(translator);
+            _ = parser.start();
 
             if (translator.Root is null)
             {
@@ -144,10 +215,10 @@ namespace Sct
          */
         public static void CompileAndRun(string[] filenames, IOutputLogger logger)
         {
-            // TODO: Actually concatenate the files. Isak is working on this.
-            var filename = filenames[0];
-            var (outputText, errors) = CompileSct(filename);
 
+            var (outputText, errors) = CompileSct(filenames);
+
+            // TODO: Handle errors from ANTLR. They are not currently being passed to the errors list.
             if (errors.Any() || outputText is null)
             {
                 Console.Error.WriteLine("Compilation failed:");
@@ -168,6 +239,18 @@ namespace Sct
             var assembly = Assembly.Load(memoryStream.ToArray());
 
             Run(assembly, logger);
+        }
+
+        private static string ConcatenateFiles(string[] filenames)
+        {
+
+            string result = string.Empty;
+            foreach (var file in filenames)
+            {
+                result += File.ReadAllText(file);
+            }
+
+            return result;
         }
     }
 }
