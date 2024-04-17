@@ -37,7 +37,7 @@ namespace Sct
             var errors = new List<CompilerError>();
 
             // Store parses for each file to avoid having to recreate them for type checking.
-            Dictionary<string, SctParser> parsers = new();
+            Dictionary<string, SctParser.StartContext> startNodes = new();
 
             // Run static analysis on each file separately.
             foreach (var file in filenames)
@@ -47,9 +47,10 @@ namespace Sct
                 ITokenSource fileLexer = new SctLexer(fileStream);
                 ITokenStream fileTokens = new CommonTokenStream(fileLexer);
 
+                var fileParser = new SctParser(fileTokens);
                 // Save parser for later use.
-                parsers[file] = new SctParser(fileTokens);
-                var startNode = parsers[file].start();
+                startNodes[file] = fileParser.start();
+                var startNode = startNodes[file];
 
                 KeywordContextCheckVisitor keywordChecker = new();
 
@@ -79,9 +80,6 @@ namespace Sct
                 }
 
                 errors.AddRange(sctTableVisitor.Errors);
-
-                // Reset the parser to be able to type check the file later.
-                parsers[file].Reset();
             }
 
             // Build the CTable after all files have been visited.
@@ -102,7 +100,7 @@ namespace Sct
             // Identifiers from other files are known because the CTable is built from all files.
             foreach (var file in filenames)
             {
-                var startNode = parsers[file].start();
+                var startNode = startNodes[file];
 
                 // Run visitor that checks the types.
                 var sctTypeChecker = new SctTypeChecker(cTable);
@@ -116,7 +114,12 @@ namespace Sct
                 errors.AddRange(sctTypeChecker.Errors);
 
                 // Reset the parser because its good practice.
-                parsers[file].Reset();
+                // startNodes[file].Reset();
+            }
+
+            if (errors.Count > 0)
+            {
+                return (null, errors);
             }
 
             // Concatenate all files into one string and run the translator on it.
@@ -129,11 +132,6 @@ namespace Sct
             var translator = new SctTranslator();
             parser.AddParseListener(translator);
             _ = parser.start();
-
-            if (errors.Count > 0)
-            {
-                return (null, errors);
-            }
 
             if (translator.Root is null)
             {
