@@ -10,15 +10,15 @@ namespace Sct.Compiler.Typechecker
         {
             _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent("Global"));
             _currentClass = _globalClass;
-            _ = AddFunction("count", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
-            _ = AddFunction("exists", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
-            _ = AddFunction("rand", new FunctionType(TypeTable.Float, []));
-            _ = AddFunction("seed", new FunctionType(TypeTable.Void, [TypeTable.Int]));
+            _ = TryAddFunction("count", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
+            _ = TryAddFunction("exists", new FunctionType(TypeTable.Int, [TypeTable.Predicate]));
+            _ = TryAddFunction("rand", new FunctionType(TypeTable.Float, []));
+            _ = TryAddFunction("seed", new FunctionType(TypeTable.Void, [TypeTable.Int]));
         }
 
         public CTable BuildCtable() => new(_classes, _globalClass.Value);
 
-        public bool StartClass(string className)
+        public bool TryStartClass(string className)
         {
             if (_classes.ContainsKey(className))
             {
@@ -28,15 +28,13 @@ namespace Sct.Compiler.Typechecker
             return true;
         }
 
-        public bool FinishClass()
+        public void FinishClass()
         {
             _classes.Add(_currentClass.Key, _currentClass.Value);
             _currentClass = _globalClass;
-
-            return _classes.ContainsKey(_currentClass.Key);
         }
 
-        public bool AddField(string name, SctType type)
+        public bool TryAddField(string name, SctType type)
         {
             if (_currentClass.Value.Fields.ContainsKey(name))
             {
@@ -45,7 +43,7 @@ namespace Sct.Compiler.Typechecker
             return _currentClass.Value.AddField(name, type);
         }
 
-        public bool AddFunction(string functionName, FunctionType functionType)
+        public bool TryAddFunction(string functionName, FunctionType functionType)
         {
             if (IDExistsGlobal(functionName))
             {
@@ -54,7 +52,7 @@ namespace Sct.Compiler.Typechecker
             return _currentClass.Value.AddFunction(functionName, functionType);
         }
 
-        public bool AddState(string name)
+        public bool TryAddState(string name)
         {
             if (IDExistsGlobal(name))
             {
@@ -63,7 +61,7 @@ namespace Sct.Compiler.Typechecker
             return _currentClass.Value.AddState(name);
         }
 
-        public bool AddDecorator(string name)
+        public bool TryAddDecorator(string name)
         {
             if (IDExistsGlobal(name))
             {

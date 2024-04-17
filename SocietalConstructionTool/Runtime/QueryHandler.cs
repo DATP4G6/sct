@@ -1,17 +1,11 @@
 namespace Sct.Runtime
 {
-    public class QueryHandler : IQueryHandler
+    public class QueryHandler(IEnumerable<BaseAgent> agents) : IQueryHandler
     {
-        private readonly IEnumerable<BaseAgent> _agents;
-        public QueryHandler(IEnumerable<BaseAgent> agents)
-        {
-            _agents = agents;
-        }
-
-        private IEnumerable<BaseAgent> Filter(IQueryPredicate predicate) => _agents.Where(a => predicate.Test(a));
+        private IEnumerable<BaseAgent> Filter(IQueryPredicate predicate) => agents.Where(predicate.Test);
 
         public int Count(IQueryPredicate predicate) => Filter(predicate).Count();
 
-        public bool Exists(IQueryPredicate predicate) => Count(predicate) > 0;
+        public bool Exists(IQueryPredicate predicate) => Filter(predicate).Any();
     }
 }

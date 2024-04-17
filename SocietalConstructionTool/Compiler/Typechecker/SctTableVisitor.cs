@@ -4,7 +4,8 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctTableVisitor(CTableBuilder cTableBuilder) : SctBaseVisitor<SctType>, IErrorReporter
     {
-        public CTable? Ctable { get; private set; }
+        private CTable? InternalCTable { get; set; }
+        public CTable CTable => InternalCTable ?? _ctableBuilder.BuildCtable();
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
@@ -21,14 +22,14 @@ namespace Sct.Compiler.Typechecker
         {
             string className = context.ID().GetText();
 
-            if (!_ctableBuilder.StartClass(className))
+            if (!_ctableBuilder.TryStartClass(className))
             {
                 _errors.Add(new CompilerError($"ID {className} already exists", context.Start.Line, context.Start.Column));
             }
 
             foreach (var (id, type) in context.args_def().ID().Zip(context.args_def().type()))
             {
-                if (!_ctableBuilder.AddField(id.GetText(), type.Accept(this)))
+                if (!_ctableBuilder.TryAddField(id.GetText(), type.Accept(this)))
                 {
                     _errors.Add(new CompilerError($"ID {id.GetText()} already exists", id.Symbol.Line, id.Symbol.Column));
                 }
@@ -37,7 +38,7 @@ namespace Sct.Compiler.Typechecker
 
             _ = base.VisitClass_def(context);
 
-            _ = _ctableBuilder.FinishClass();
+            _ctableBuilder.FinishClass();
 
             return TypeTable.None;
         }
@@ -49,7 +50,7 @@ namespace Sct.Compiler.Typechecker
 
             var functionType = new FunctionType(type, argsTypes);
 
-            if (!_ctableBuilder.AddFunction(context.ID().GetText(), functionType))
+            if (!_ctableBuilder.TryAddFunction(context.ID().GetText(), functionType))
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
@@ -71,7 +72,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitState([NotNull] SctParser.StateContext context)
         {
-            if (!_ctableBuilder.AddState(context.ID().GetText()))
+            if (!_ctableBuilder.TryAddState(context.ID().GetText()))
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
@@ -80,7 +81,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
         {
-            if (!_ctableBuilder.AddDecorator(context.ID().GetText()))
+            if (!_ctableBuilder.TryAddDecorator(context.ID().GetText()))
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }

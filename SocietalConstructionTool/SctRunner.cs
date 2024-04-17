@@ -158,7 +158,7 @@ namespace Sct
          * <param name="outputStream">The stream to output into</param>
          * <returns>The result of emitting</returns>
          */
-        public static EmitResult Emit(string sourceText, Stream outputStream)
+        private static EmitResult Emit(string sourceText, Stream outputStream)
         {
             string generatedAssemblyName = "sctGenerated";
             var tree = SyntaxFactory.ParseSyntaxTree(sourceText);
@@ -190,7 +190,7 @@ namespace Sct
          * <param name="assembly">The assembly to run</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        public static void Run(Assembly assembly, IOutputLogger logger)
+        private static void Run(Assembly assembly, IOutputLogger logger)
         {
             IRuntimeContext ctx = RuntimeContextFactory.Create(logger);
             Run(assembly, ctx);
@@ -203,7 +203,7 @@ namespace Sct
          * <param name="assembly">The assembly to run</param>
          * <param name="initialContext">The initial context of the simulation</param>
          */
-        public static void Run(Assembly assembly, IRuntimeContext initialContext)
+        private static void Run(Assembly assembly, IRuntimeContext initialContext)
         {
             var globalClassName = $"{SctTranslator.GeneratedNamespace}.{SctTranslator.GeneratedGlobalClass}";
             _ = assembly.GetType(globalClassName)?.GetMethod(SctTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);

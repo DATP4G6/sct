@@ -55,7 +55,7 @@ namespace SocietalConstructionToolTests
 
             errors.AddRange(sctTableVisitor.Errors);
 
-            var sctTypeChecker = new SctTypeChecker(ctable!);
+            var sctTypeChecker = new SctTypeChecker(ctable);
             _ = startNode.Accept(sctTypeChecker);
 
             errors.AddRange(sctTypeChecker.Errors);
