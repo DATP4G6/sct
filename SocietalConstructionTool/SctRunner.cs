@@ -112,9 +112,6 @@ namespace Sct
                 }
 
                 errors.AddRange(sctTypeChecker.Errors);
-
-                // Reset the parser because its good practice.
-                // startNodes[file].Reset();
             }
 
             if (errors.Count > 0)
