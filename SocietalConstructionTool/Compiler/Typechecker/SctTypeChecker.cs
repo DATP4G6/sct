@@ -50,7 +50,7 @@ namespace Sct.Compiler.Typechecker
         {
             _ = base.VisitStart(context);
 
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
@@ -96,7 +96,7 @@ namespace Sct.Compiler.Typechecker
             _ = base.VisitClass_def(context);
             _currentClass = _ctable.GlobalClass;
             _vtable.ExitScope();
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
 
@@ -117,7 +117,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
@@ -137,17 +137,16 @@ namespace Sct.Compiler.Typechecker
             _ = context.type().Accept(this);
             _ = context.statement_list()?.Accept(this); // function may not have a body
             _vtable.ExitScope();
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitArgs_def([NotNull] SctParser.Args_defContext context)
         {
-            // return base.VisitArgs_def(context);
             foreach (var (id, type) in context.ID().Zip(context.type()))
             {
                 _ = _vtable.AddEntry(id.GetText(), type.Accept(this));
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
@@ -320,13 +319,13 @@ namespace Sct.Compiler.Typechecker
             if (targetAgent is null)
             {
                 _errors.Add(new CompilerError($"Agent {agentName} does not exist", context.Start.Line, context.Start.Column));
-                return TypeTable.None;
+                return TypeTable.Ok;
             }
 
             if (!targetAgent.HasState(stateName))
             {
                 _errors.Add(new CompilerError($"State {stateName} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
-                return TypeTable.None;
+                return TypeTable.Ok;
             }
 
             var targetAgentFields = targetAgent.Fields;
@@ -365,7 +364,7 @@ namespace Sct.Compiler.Typechecker
                 }
             }
 
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitStatement_list([NotNull] SctParser.Statement_listContext context)
@@ -373,7 +372,7 @@ namespace Sct.Compiler.Typechecker
             _vtable.EnterScope();
             _ = base.VisitStatement_list(context);
             _vtable.ExitScope();
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitIf([NotNull] SctParser.IfContext context)
@@ -388,7 +387,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _ = context.@else().Accept(this);
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitElseif([NotNull] SctParser.ElseifContext context)
@@ -403,14 +402,14 @@ namespace Sct.Compiler.Typechecker
             {
                 _ = context.@else().Accept(this);
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitWhile([NotNull] SctParser.WhileContext context)
         {
             _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         private bool CheckBooleanExpression(SctParser.ExpressionContext context)

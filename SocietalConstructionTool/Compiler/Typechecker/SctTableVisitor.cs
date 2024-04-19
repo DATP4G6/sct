@@ -4,9 +4,6 @@ namespace Sct.Compiler.Typechecker
 {
     public class SctTableVisitor(CTableBuilder cTableBuilder) : SctBaseVisitor<SctType>, IErrorReporter
     {
-        private CTable? InternalCTable { get; set; }
-        public CTable CTable => InternalCTable ?? _ctableBuilder.BuildCtable();
-
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
         private readonly CTableBuilder _ctableBuilder = cTableBuilder;
@@ -15,7 +12,7 @@ namespace Sct.Compiler.Typechecker
         {
             _ = base.VisitStart(context);
 
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
@@ -40,7 +37,7 @@ namespace Sct.Compiler.Typechecker
 
             _ctableBuilder.FinishClass();
 
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
@@ -55,7 +52,7 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
 
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitType([NotNull] SctParser.TypeContext context)
@@ -76,7 +73,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
 
         public override SctType VisitDecorator([NotNull] SctParser.DecoratorContext context)
@@ -85,7 +82,7 @@ namespace Sct.Compiler.Typechecker
             {
                 _errors.Add(new CompilerError($"ID {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
             }
-            return TypeTable.None;
+            return TypeTable.Ok;
         }
     }
 }
