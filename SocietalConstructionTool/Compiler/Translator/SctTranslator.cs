@@ -19,10 +19,6 @@ namespace Sct.Compiler.Translator
 
         public static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
 
-        // boolean values are either 0 or 1
-        private static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-        private static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
-
         public NamespaceDeclarationSyntax? Root { get; private set; }
         private readonly StackAdapter<CSharpSyntaxNode> _stack = new();
 
@@ -298,7 +294,7 @@ namespace Sct.Compiler.Translator
         {
             var childBlock = _stack.Pop<BlockSyntax>();
             var expression = _stack.Pop<ExpressionSyntax>();
-            var condition = ConvertToBooleanCondition(expression);
+            var condition = TranslatorUtils.IntToBool(expression);
 
             var @while = SyntaxFactory.WhileStatement(
                 condition,
@@ -307,15 +303,6 @@ namespace Sct.Compiler.Translator
             _stack.Push(@while);
         }
 
-        /// <summary>
-        /// Converts an expression to a boolean condion by comparing it to 0
-        /// </summary>
-        /// <param name="expression">Expression to be compared</param>
-        /// <returns>expression != 0</returns>
-        private static BinaryExpressionSyntax ConvertToBooleanCondition(ExpressionSyntax expression)
-        {
-            return SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression, SctFalse);
-        }
 
         // TODO: Split this rule up if we want literals that aren't just numeric
         public override void ExitLiteralExpression([NotNull] SctParser.LiteralExpressionContext context)
@@ -370,15 +357,22 @@ namespace Sct.Compiler.Translator
 
             var @operator = context.op.Type switch
             {
-                { } op when op == SctLexer.GT => SyntaxKind.GreaterThanExpression,
-                { } op when op == SctLexer.LT => SyntaxKind.LessThanExpression,
-                { } op when op == SctLexer.GTE => SyntaxKind.GreaterThanOrEqualExpression,
-                { } op when op == SctLexer.LTE => SyntaxKind.LessThanOrEqualExpression,
-                { } op when op == SctLexer.EQ => SyntaxKind.EqualsExpression,
-                { } op when op == SctLexer.NEQ => SyntaxKind.NotEqualsExpression,
-                { } op when op == SctLexer.AND => SyntaxKind.LogicalAndExpression,
-                { } op when op == SctLexer.OR => SyntaxKind.LogicalOrExpression,
+                SctLexer.GT => SyntaxKind.GreaterThanExpression,
+                SctLexer.LT => SyntaxKind.LessThanExpression,
+                SctLexer.GTE => SyntaxKind.GreaterThanOrEqualExpression,
+                SctLexer.LTE => SyntaxKind.LessThanOrEqualExpression,
+                SctLexer.EQ => SyntaxKind.EqualsExpression,
+                SctLexer.NEQ => SyntaxKind.NotEqualsExpression,
+                SctLexer.AND => SyntaxKind.LogicalAndExpression,
+                SctLexer.OR => SyntaxKind.LogicalOrExpression,
                 _ => SyntaxKind.None
+            };
+
+            // If the operator is && or ||, we need to convert the operands to bools
+            (exp1, exp2) = context.op.Type switch
+            {
+                SctLexer.AND or SctLexer.OR => (TranslatorUtils.IntToBool(exp1), TranslatorUtils.IntToBool(exp2)),
+                _ => (exp1, exp2)
             };
 
             // convert to conditional, as booleans do not exist in SCT
@@ -386,7 +380,7 @@ namespace Sct.Compiler.Translator
             // Add parenthesis for debugging / testing readability.
             // This is not required for correct precedence, as ternaries have lowest priority
             var parenthesized = SyntaxFactory.ParenthesizedExpression(expression);
-            var condition = SyntaxFactory.ConditionalExpression(parenthesized, SctTrue, SctFalse);
+            var condition = TranslatorUtils.BoolToInt(parenthesized);
             var parenthesizedCondition = SyntaxFactory.ParenthesizedExpression(condition);
             _stack.Push(parenthesizedCondition);
         }
@@ -407,10 +401,10 @@ namespace Sct.Compiler.Translator
         public override void ExitLogicalNotExpression([NotNull] SctParser.LogicalNotExpressionContext context)
         {
             var expression = _stack.Pop<ExpressionSyntax>();
-            var @operator = SyntaxKind.NotEqualsExpression;
+            var @operator = SyntaxKind.EqualsExpression;
             // compare with 0, and convert to SctBoolean via conditional
-            var condition = SyntaxFactory.BinaryExpression(@operator, expression, SctFalse);
-            _stack.Push(SyntaxFactory.ConditionalExpression(condition, SctFalse, SctTrue));
+            var condition = SyntaxFactory.BinaryExpression(@operator, expression, TranslatorUtils.SctFalse);
+            _stack.Push(TranslatorUtils.BoolToInt(condition));
         }
 
 
@@ -545,7 +539,7 @@ namespace Sct.Compiler.Translator
             _ = _stack.TryPop<ElseClauseSyntax>(out var @else);
             var block = _stack.Pop<BlockSyntax>();
             var expression = _stack.Pop<ExpressionSyntax>();
-            var condition = ConvertToBooleanCondition(expression);
+            var condition = TranslatorUtils.IntToBool(expression);
 
             // Add else if it exists
             var @if = SyntaxFactory.IfStatement(condition, block);
