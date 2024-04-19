@@ -213,7 +213,7 @@ namespace Sct
          * <param name="filename">The path of the SCT source file</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        public static void CompileAndRun(string[] filenames, IOutputLogger logger)
+        public static IEnumerable<CompilerError> CompileAndRun(string[] filenames, IOutputLogger logger)
         {
 
             var (outputText, errors) = CompileSct(filenames);
@@ -223,7 +223,7 @@ namespace Sct
             {
                 Console.Error.WriteLine("Compilation failed:");
                 Console.Error.WriteLine(string.Join('\n', errors));
-                return;
+                return errors;
             }
 
             // Write the compiled C# into memory
@@ -239,6 +239,8 @@ namespace Sct
             var assembly = Assembly.Load(memoryStream.ToArray());
 
             Run(assembly, logger);
+
+            return [];
         }
 
         private static string ConcatenateFiles(string[] filenames)

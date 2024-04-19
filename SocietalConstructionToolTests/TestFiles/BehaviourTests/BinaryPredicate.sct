@@ -1,0 +1,79 @@
+// Add behavour which tests if stuff is equal
+class Foo(int a, int b) {
+    state Bar {
+        exit;
+    }
+
+    state Baz {
+        exit;
+    }
+}
+
+class Output() {
+    state Equal { exit; }
+    state Unequal { exit; }
+}
+
+function Setup() -> void {
+    // Arrange
+    Predicate fullEqual = Foo::Bar(a: 1, b: 2);
+    Predicate fullEqual2 = Foo::Bar(a: 1, b: 2);
+    Predicate fullDifferent = Foo::Bar(a: 2, b: 3);
+
+    Predicate partialEqual = Foo::Bar(a: 1);
+    Predicate partialEqual2 = Foo::Bar(a: 1);
+    Predicate partialDifferent = Foo::Bar(a: 2);
+
+    Predicate wildcardEqual = Foo::?(a: 1, b: 2);
+    Predicate wildcardEqual2 = Foo::?(a: 1, b: 2);
+    Predicate wildcardDifferent = Foo::?(a: 2, b: 3);
+
+    // Assert
+    int equal = fullEqual == fullEqual2;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+
+    equal = partialEqual == partialEqual2;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+
+    equal = wildcardEqual == wildcardEqual2;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+
+    equal = fullEqual == fullDifferent;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+
+    equal = partialEqual == partialDifferent;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+
+    equal = wildcardEqual == wildcardDifferent;
+
+    if (equal) {
+        create Output::Equal();
+    } else {
+        create Output::Unequal();
+    }
+}

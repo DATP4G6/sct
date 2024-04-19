@@ -44,7 +44,7 @@ rootCommand.SetHandler((sourceFiles, outputToConsole, outputFile) =>
                 Console.Error.WriteLine("Either -o with output files or -c must be specified");
                 return;
             }
-            SctRunner.CompileAndRun(sourceFiles.Select(f => f.FullName).ToArray(), logger);
+            _ = SctRunner.CompileAndRun(sourceFiles.Select(f => f.FullName).ToArray(), logger);
         }, sourceFilesArgument, outputToConsoleOption, outputFileOption);
 
 

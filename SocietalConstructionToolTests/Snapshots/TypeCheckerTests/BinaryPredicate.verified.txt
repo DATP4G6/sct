@@ -1,0 +1,4 @@
+﻿Line 39, Column 16: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed
+Line 40, Column 12: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed
+Line 41, Column 12: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed
+Line 42, Column 12: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed
