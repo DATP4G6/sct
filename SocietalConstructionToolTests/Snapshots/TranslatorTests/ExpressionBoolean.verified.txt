@@ -8,8 +8,8 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            long __sct_a = ((1 && 1) ? 1 : 0);
-            __sct_a = ((1 || 0) ? 1 : 0);
+            long __sct_a = ((1 != 0 && 1 != 0) ? 1 : 0);
+            __sct_a = ((1 != 0 || 0 != 0) ? 1 : 0);
             __sct_a = ((2 == 2) ? 1 : 0);
             __sct_a = ((3 != 4) ? 1 : 0);
             __sct_a = ((3 > 2) ? 1 : 0);

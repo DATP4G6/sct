@@ -17,6 +17,10 @@ namespace Sct.Compiler.Translator
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
         private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
 
+        // boolean values are either 0 or 1
+        public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
+        public static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+
         // Due to the way static fields are initialized, this field MUST be placed after the identifiers
         // A full day has gone to waste debugging this...
         private static readonly Dictionary<string, MemberAccessExpressionSyntax> Types = new()
@@ -322,5 +326,14 @@ namespace Sct.Compiler.Translator
                 )
             );
         }
+
+        public static ExpressionSyntax BoolToInt(ExpressionSyntax exp) => SyntaxFactory.ConditionalExpression(exp, SctTrue, SctFalse);
+
+        /// <summary>
+        /// Converts an expression to a boolean condion by comparing it to 0
+        /// </summary>
+        /// <param name="expression">Expression to be compared</param>
+        /// <returns>expression != 0</returns>
+        public static BinaryExpressionSyntax IntToBool(ExpressionSyntax expression) => SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression, SctFalse);
     }
 }
