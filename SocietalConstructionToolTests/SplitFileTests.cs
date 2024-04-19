@@ -31,7 +31,7 @@ namespace SocietalConstructionToolTests
         // This method is used to get all files to pass to CompileSct.
         private static string[] GetFiles()
         {
-            return Files.SelectMany(f => f).ToArray();
+            return Files.SelectMany(f => f).Order().ToArray();
         }
     }
 }
