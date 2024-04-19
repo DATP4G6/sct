@@ -55,6 +55,8 @@ namespace Sct.Compiler.Translator
             Root = @namespace;
         }
 
+        public override void EnterClass_def([NotNull] SctParser.Class_defContext context) => _isInAgent = true;
+
         public override void ExitClass_def([NotNull] SctParser.Class_defContext context)
         {
             _isInAgent = false;

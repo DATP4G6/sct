@@ -2,7 +2,7 @@ namespace Sct.Runtime
 {
     public interface IQueryHandler
     {
-        public int Count(IQueryPredicate predicate);
-        public bool Exists(IQueryPredicate predicate);
+        public int Count(IRuntimeContext ctx, IQueryPredicate predicate);
+        public bool Exists(IRuntimeContext ctx, IQueryPredicate predicate);
     }
 }
