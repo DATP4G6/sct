@@ -1,0 +1,32 @@
+﻿[
+  {
+    "State": "__sct_Equal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  },
+  {
+    "State": "__sct_Equal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  },
+  {
+    "State": "__sct_Equal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  },
+  {
+    "State": "__sct_Unequal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  },
+  {
+    "State": "__sct_Unequal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  },
+  {
+    "State": "__sct_Unequal",
+    "Fields": {},
+    "ClassName": "__sct_Output"
+  }
+][]

@@ -10,6 +10,8 @@
         </BuildDependsOn>
         <AnalysisLevel>latest-recommended</AnalysisLevel>
         <NoWarn>$(NoWarn);CA1720</NoWarn>
+        <NoWarn>$(NoWarn);CS0660</NoWarn>
+        <NoWarn>$(NoWarn);CS0661</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

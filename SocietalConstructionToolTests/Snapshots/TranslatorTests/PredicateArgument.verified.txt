@@ -9,7 +9,7 @@
         public static void __sct_Setup(IRuntimeContext ctx)
         {
             QueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1) }));
-            if (__sct_duplicate(ctx, __sct_x) != 0)
+            if ((__sct_duplicate(ctx, __sct_x)) != 0)
             {
                 ctx.ExitRuntime();
                 return true;
@@ -18,7 +18,7 @@
 
         public static long __sct_duplicate(IRuntimeContext ctx, Predicate __sct_p)
         {
-            if (((ctx.QueryHandler.Count(ctx, __sct_p) > 1) ? 1 : 0) != 0)
+            if ((((ctx.QueryHandler.Count(ctx, __sct_p) > 1) ? 1 : 0)) != 0)
             {
                 return 1;
             }

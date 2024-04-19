@@ -539,7 +539,8 @@ namespace Sct.Compiler.Translator
             _ = _stack.TryPop<ElseClauseSyntax>(out var @else);
             var block = _stack.Pop<BlockSyntax>();
             var expression = _stack.Pop<ExpressionSyntax>();
-            var condition = TranslatorUtils.IntToBool(expression);
+            var parenthesized = SyntaxFactory.ParenthesizedExpression(expression);
+            var condition = TranslatorUtils.IntToBool(parenthesized);
 
             // Add else if it exists
             var @if = SyntaxFactory.IfStatement(condition, block);

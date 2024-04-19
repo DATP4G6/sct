@@ -1,0 +1,43 @@
+class Foo(int a, int b) {
+    state Bar {
+        exit;
+    }
+
+    state Baz {
+        exit;
+    }
+}
+
+function Setup() -> void {
+    // Arrange
+    Predicate fullEqual = Foo::Bar(a: 1, b: 2);
+    Predicate fullEqual2 = Foo::Bar(a: 1, b: 2);
+    Predicate fullDifferent = Foo::Bar(a: 2, b: 3);
+
+    Predicate partialEqual = Foo::Bar(a: 1);
+    Predicate partialEqual2 = Foo::Bar(a: 1);
+    Predicate partialDifferent = Foo::Bar(a: 2);
+
+    Predicate wildcardEqual = Foo::?(a: 1, b: 2);
+    Predicate wildcardEqual2 = Foo::?(a: 1, b: 2);
+    Predicate wildcardDifferent = Foo::?(a: 2, b: 3);
+
+    // Assert
+    int equal = fullEqual == fullEqual2;
+    equal = partialEqual == partialEqual2;
+    equal = wildcardEqual == wildcardEqual2;
+
+    int different = fullEqual == fullDifferent;
+    different = fullEqual == partialEqual;
+    different = fullEqual == wildcardEqual;
+
+    different = partialEqual == partialDifferent;
+    different = partialEqual == wildcardEqual;
+
+    different = wildcardEqual == wildcardDifferent;
+
+    int error = fullEqual < fullEqual2;
+    error = fullEqual > fullEqual2;
+    error = fullEqual <= fullEqual2;
+    error = fullEqual >= fullEqual2;
+}

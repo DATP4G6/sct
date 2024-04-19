@@ -245,9 +245,14 @@ namespace Sct.Compiler.Typechecker
         {
             var leftType = context.expression(0).Accept(this);
             var rightType = context.expression(1).Accept(this);
-            if (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
+            if (// Types are not numeric
+                (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
+                // Types are not predicates or operators do not allow it
+                && !(leftType == rightType && leftType == TypeTable.Predicate
+                    && context.op.Type is SctLexer.EQ or SctLexer.NEQ)
+                )
             {
-                _errors.Add(new CompilerError("Boolean expression must be numeric types", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError("Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Int;
         }
