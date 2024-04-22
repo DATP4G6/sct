@@ -1,11 +1,11 @@
-using Antlr4.Runtime;
+using Sct;
 
 namespace SocietalConstructionToolTests
 {
     [TestClass]
     public class ParserTests : AbstractSnapshotTests
     {
-        private static new IEnumerable<string[]> Files => AbstractSnapshotTests.Files;
+        private static IEnumerable<string[]> Files => GetTestFiles("Parser");
 
         [DataTestMethod]
         [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
@@ -13,12 +13,8 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/ParserTests"); // save snapshots here
 
-            string input = await File.ReadAllTextAsync(testFile);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
-            SctParser.StartContext result = parser.start();
+            var parser = await SctRunner.GetParserAsync(testFile);
+            var result = parser.start();
 
             _ = await Verify(result.ToStringTree(parser))
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));

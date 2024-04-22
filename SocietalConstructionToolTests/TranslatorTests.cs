@@ -1,7 +1,6 @@
-using Antlr4.Runtime;
-
 using Microsoft.CodeAnalysis;
 
+using Sct;
 using Sct.Compiler.Translator;
 
 namespace SocietalConstructionToolTests
@@ -9,7 +8,7 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class TranslatorTests : AbstractSnapshotTests
     {
-        private static new IEnumerable<string[]> Files => AbstractSnapshotTests.Files;
+        private static IEnumerable<string[]> Files => GetTestFiles("Parser");
 
         // Run each file as a seperate test
         [DataTestMethod]
@@ -18,11 +17,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/TranslatorTests"); // save snapshots here
 
-            string input = File.ReadAllText(file);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
+            SctParser parser = await SctRunner.GetParserAsync(file);
             var listener = new SctTranslator();
             parser.AddParseListener(listener);
             _ = parser.start();

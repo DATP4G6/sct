@@ -1,5 +1,4 @@
-using Antlr4.Runtime;
-
+using Sct;
 using Sct.Compiler.Typechecker;
 
 namespace SocietalConstructionToolTests
@@ -7,10 +6,7 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class StaticCheckerTests : AbstractSnapshotTests
     {
-
-        private static new IEnumerable<string[]> Files =>
-            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "StaticCheckTests"))
-            .Select(f => new[] { f });
+        private static IEnumerable<string[]> Files => GetTestFiles("StaticCheckTests");
 
         // Run each file as a seperate test
         [DataTestMethod]
@@ -19,12 +15,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/StaticCheckTests"); // save snapshots here
 
-            string input = File.ReadAllText(file);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
-
+            SctParser parser = await SctRunner.GetParserAsync(file);
             var startNode = parser.start();
 
             KeywordContextCheckVisitor keywordChecker = new();
@@ -34,5 +25,4 @@ namespace SocietalConstructionToolTests
                 .UseFileName(Path.GetFileNameWithoutExtension(file));
         }
     }
-
 }

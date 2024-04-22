@@ -1,5 +1,3 @@
-using Microsoft.CodeAnalysis;
-
 using Sct;
 using Sct.Runtime.Trace;
 
@@ -8,10 +6,7 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class BehaviourTests : AbstractSnapshotTests
     {
-
-        private static new IEnumerable<string[]> Files =>
-            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "BehaviourTests"))
-            .Select(f => new[] { f });
+        private static IEnumerable<string[]> Files => GetTestFiles("BehaviourTests");
 
         // Run each file as a seperate test
         [DataTestMethod]
@@ -32,5 +27,4 @@ namespace SocietalConstructionToolTests
                 .UseFileName(Path.GetFileNameWithoutExtension(file));
         }
     }
-
 }

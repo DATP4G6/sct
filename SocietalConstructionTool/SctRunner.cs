@@ -16,6 +16,30 @@ namespace Sct
 {
     public static class SctRunner
     {
+        /// <summary>
+        /// Return the parser for the given SCT source file
+        /// </summary>
+        /// <param name="filename">File to parse</param>
+        /// <returns>The parser from ANTLR</returns>
+        public static SctParser GetParser(string filename) =>
+            GetSctParser(File.ReadAllText(filename));
+
+        /// <summary>
+        /// Return the parser for the given SCT source file asynchronously
+        /// </summary>
+        /// <param name="filename">File to parse</param>
+        /// <returns>The parser from ANTLR</returns>
+        public static async Task<SctParser> GetParserAsync(string filename) =>
+            GetSctParser(await File.ReadAllTextAsync(filename));
+
+        private static SctParser GetSctParser(string input)
+        {
+            ICharStream stream = CharStreams.fromString(input);
+            ITokenSource lexer = new SctLexer(stream);
+            ITokenStream tokens = new CommonTokenStream(lexer);
+            return new SctParser(tokens);
+        }
+
         /**
          * <summary>
          * Reads an SCT source file, statically chekcs it and translates it into C# code
@@ -25,7 +49,6 @@ namespace Sct
          */
         public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(string[] filenames)
         {
-
             // Make SctTableVisitor take a CTableBuilder as a parameter
             // Analyse each file separately
             // Add file name to each found error.
@@ -42,14 +65,8 @@ namespace Sct
             // Run static analysis on each file separately.
             foreach (var file in filenames)
             {
-                string input = File.ReadAllText(file);
-                ICharStream fileStream = CharStreams.fromString(input);
-                ITokenSource fileLexer = new SctLexer(fileStream);
-                ITokenStream fileTokens = new CommonTokenStream(fileLexer);
-
-                var fileParser = new SctParser(fileTokens);
                 // Save parser for later use.
-                startNodes[file] = fileParser.start();
+                startNodes[file] = GetParser(file).start();
                 var startNode = startNodes[file];
 
                 KeywordContextCheckVisitor keywordChecker = new();

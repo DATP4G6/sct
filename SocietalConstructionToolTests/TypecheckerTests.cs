@@ -1,22 +1,13 @@
-using Antlr4.Runtime;
-
+using Sct;
 using Sct.Compiler;
 using Sct.Compiler.Typechecker;
 
 namespace SocietalConstructionToolTests
 {
     [TestClass]
-    public class TypeCheckerTests : VerifyBase
+    public class TypeCheckerTests : AbstractSnapshotTests
     {
-        private static IEnumerable<string[]> Files =>
-            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles/Typechecker"))
-            .Select(f => new[] { f });
-
-        [ClassInitialize]
-        public static void Setup(TestContext _)
-        {
-            DiffEngine.DiffRunner.Disabled = true; // avoid destroying your terminal
-        }
+        private static IEnumerable<string[]> Files => GetTestFiles("Typechecker");
 
         [DataTestMethod]
         [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
@@ -24,14 +15,9 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/TypeCheckerTests"); // save snapshots here
 
-            string input = await File.ReadAllTextAsync(testFile);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-
-            List<CompilerError> errors = new();
-            SctParser parser = new(tokens);
+            SctParser parser = await SctRunner.GetParserAsync(testFile);
             SctParser.StartContext startNode = parser.start();
+            List<CompilerError> errors = new();
 
             var returnChecker = new SctReturnCheckVisitor();
             _ = startNode.Accept(returnChecker);
