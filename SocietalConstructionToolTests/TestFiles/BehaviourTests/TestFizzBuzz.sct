@@ -1,0 +1,60 @@
+class Fizz(int triggerNumber) {
+    state Triggered {
+        destroy;
+    }
+}
+
+class Buzz(int triggerNumber) {
+    state Triggered {
+        destroy;
+    }
+}
+
+class FizzBuzz(int triggerNumber) {
+    state Triggered {
+        destroy;
+    }
+}
+
+class Manager(int startCount) {
+
+    decorator Increment {
+        startCount = startCount + 1;
+    }
+
+    @Increment
+    state Managing {
+        if (startCount % 3 == 0 && startCount % 5 == 0) {
+            create FizzBuzz::Triggered(triggerNumber: startCount);
+            enter Managing;
+        }
+        if (startCount % 3 == 0) {
+            create Fizz::Triggered(triggerNumber: startCount);
+            enter Managing;
+        }
+        if (startCount % 5 == 0) {
+            create Buzz::Triggered(triggerNumber: startCount);
+            enter Managing;
+        }
+        enter Managing;
+    }
+}
+
+class Terminator(int generationLimit, int generationCount) {
+    state Charging {
+        if (generationCount == generationLimit) {
+            enter Terminating;
+        }
+        generationCount = generationCount + 1;
+        enter Charging;
+    }
+
+    state Terminating {
+        exit;
+    }
+}
+
+function Setup() -> void {
+    create Manager::Managing(startCount: 0);
+    create Terminator::Charging(generationLimit: 30, generationCount: 0);
+}

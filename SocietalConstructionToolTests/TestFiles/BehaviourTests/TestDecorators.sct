@@ -1,0 +1,42 @@
+class Terminator(int generationLimit, int generationCount) {
+    state Charging {
+        if (generationCount == generationLimit) {
+            enter Terminating;
+        }
+        generationCount = generationCount + 1;
+        enter Charging;
+    }
+
+    state Terminating {
+        exit;
+    }
+}
+
+class Town(int generationCount, int everyCalled, int everyOtherCalled) {
+
+    decorator shouldBeCalledEveryGeneration {
+        everyCalled = everyCalled + 1;
+    }
+
+    decorator shouldBeCalledEveryOtherGeneration {
+        everyOtherCalled = everyOtherCalled + 1;
+    }
+
+    @shouldBeCalledEveryGeneration
+    @shouldBeCalledEveryOtherGeneration
+    state Even {
+        generationCount = generationCount + 1;
+        enter Odd;
+    }
+
+    @shouldBeCalledEveryGeneration
+    state Odd {
+        generationCount = generationCount + 1;
+        enter Even;
+    }
+}
+
+function Setup() -> void {
+    create Town::Even(generationCount: 0, everyCalled: 0, everyOtherCalled: 0);
+    create Terminator::Charging(generationLimit: 10, generationCount: 0);
+}

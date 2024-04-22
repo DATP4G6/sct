@@ -1,0 +1,484 @@
+﻿[
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_EqualTest"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_EqualTest"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 3
+    },
+    "ClassName": "__sct_NotEqualTest"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 2
+    },
+    "ClassName": "__sct_NotEqualTest"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 2
+    },
+    "ClassName": "__sct_GreaterThan"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThan"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 6,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThan"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 4
+    },
+    "ClassName": "__sct_LesserThan"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 6,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 1,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 1,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 0
+    },
+    "ClassName": "__sct_Not"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 1
+    },
+    "ClassName": "__sct_Not"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 0,
+      "__sct_a": 1,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 1,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Testing",
+    "Fields": {},
+    "ClassName": "__sct_Tester"
+  }
+][
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_EqualTest"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_EqualTest"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 2,
+      "__sct_b": 3
+    },
+    "ClassName": "__sct_NotEqualTest"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 2
+    },
+    "ClassName": "__sct_NotEqualTest"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 5,
+      "__sct_b": 2
+    },
+    "ClassName": "__sct_GreaterThan"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 2,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThan"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 6,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_GreaterThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThan"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 5,
+      "__sct_b": 4
+    },
+    "ClassName": "__sct_LesserThan"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 4,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 5,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 6,
+      "__sct_b": 5
+    },
+    "ClassName": "__sct_LesserThanEqual"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 1,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 1,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 0,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_Or"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 0
+    },
+    "ClassName": "__sct_Not"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 1
+    },
+    "ClassName": "__sct_Not"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 1,
+      "__sct_got": 1,
+      "__sct_a": 1,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 1,
+      "__sct_b": 0
+    },
+    "ClassName": "__sct_And"
+  },
+  {
+    "State": "__sct_Pass",
+    "Fields": {
+      "__sct_expected": 0,
+      "__sct_got": 0,
+      "__sct_a": 0,
+      "__sct_b": 1
+    },
+    "ClassName": "__sct_And"
+  }
+]

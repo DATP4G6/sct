@@ -1,0 +1,243 @@
+class EqualTest(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a == b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class NotEqualTest(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a != b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class GreaterThan(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a > b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class GreaterThanEqual(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a >= b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class LesserThan(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a < b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class LesserThanEqual(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a <= b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class Or(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a || b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class Not(int expected, int got, int a) {
+
+    state Testing {
+
+        got = !a;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class And(int expected, int got, int a, int b) {
+
+    state Testing {
+
+        got = a && b;
+
+        if (expected == got) {
+            enter Pass;
+        } else {
+            enter Fail;
+        }
+    }
+
+    state Pass {
+        destroy;
+    }
+
+    state Fail {
+        destroy;
+    }
+}
+
+class Tester() {
+    state Testing {
+        exit;
+    }
+}
+
+function Setup() -> void {
+
+    create EqualTest::Testing(expected: 1, got: 0, a: 5, b: 5);
+    create EqualTest::Testing(expected: 0, got: 0, a: 2, b: 5);
+
+    create NotEqualTest::Testing(expected: 1, got: 0, a: 2, b: 3);
+    create NotEqualTest::Testing(expected: 0, got: 0, a: 2, b: 2);
+
+    create GreaterThan::Testing(expected: 1, got: 0, a: 5, b: 2);
+    create GreaterThan::Testing(expected: 0, got: 0, a: 2, b: 5);
+
+    create GreaterThanEqual::Testing(expected: 1, got: 0, a: 5, b: 5);
+    create GreaterThanEqual::Testing(expected: 1, got: 0, a: 6, b: 5);
+    create GreaterThanEqual::Testing(expected: 0, got: 0, a: 4, b: 5);
+
+    create LesserThan::Testing(expected: 1, got: 0, a: 4, b: 5);
+    create LesserThan::Testing(expected: 0, got: 0, a: 5, b: 4);
+
+    create LesserThanEqual::Testing(expected: 1, got: 0, a: 4, b: 5);
+    create LesserThanEqual::Testing(expected: 1, got: 0, a: 5, b: 5);
+    create LesserThanEqual::Testing(expected: 0, got: 0, a: 6, b: 5);
+
+    create Or::Testing(expected: 1, got: 0, a: 1, b: 0);
+    create Or::Testing(expected: 1, got: 0, a: 1, b: 1);
+    create Or::Testing(expected: 1, got: 0, a: 0, b: 1);
+    create Or::Testing(expected: 0, got: 0, a: 0, b: 0);
+
+    create Not::Testing(expected: 1, got: 0, a: 0);
+    create Not::Testing(expected: 0, got: 0, a: 1);
+
+    create And::Testing(expected: 1, got: 0, a: 1, b: 1);
+    create And::Testing(expected: 0, got: 0, a: 0, b: 0);
+    create And::Testing(expected: 0, got: 0, a: 1, b: 0);
+    create And::Testing(expected: 0, got: 0, a: 0, b: 1);
+
+
+    create Tester::Testing();
+}
+

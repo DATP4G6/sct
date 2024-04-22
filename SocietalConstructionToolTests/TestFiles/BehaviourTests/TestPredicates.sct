@@ -1,0 +1,39 @@
+class Citizen(int townId) {
+
+    state Alive {
+        enter Alive;
+    }
+}
+
+class Town(int id, int citizenCount) {
+
+    decorator updateCitizenCount {
+        citizenCount = count(Citizen::?(townId: id));
+    }
+
+    @updateCitizenCount
+    state Stable {
+        create Citizen::Alive(townId: id);
+        enter Stable;
+    }
+}
+
+class Counter(int generation) {
+    state Counting {
+        generation = generation + 1;
+        if (generation > 2) {
+            exit;
+        }
+        enter Counting;
+    }
+}
+
+function Setup() -> void {
+    create Town::Stable(id: 1, citizenCount: 0);
+    create Citizen::Alive(townId: 1);
+    create Counter::Counting(generation: 0);
+}
+
+
+
+

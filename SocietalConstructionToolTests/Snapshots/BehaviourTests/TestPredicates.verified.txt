@@ -1,0 +1,128 @@
+﻿[
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_id": 1,
+      "__sct_citizenCount": 0
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Counting",
+    "Fields": {
+      "__sct_generation": 0
+    },
+    "ClassName": "__sct_Counter"
+  }
+][
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_id": 1,
+      "__sct_citizenCount": 1
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Counting",
+    "Fields": {
+      "__sct_generation": 1
+    },
+    "ClassName": "__sct_Counter"
+  }
+][
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_id": 1,
+      "__sct_citizenCount": 2
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Counting",
+    "Fields": {
+      "__sct_generation": 2
+    },
+    "ClassName": "__sct_Counter"
+  }
+][
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  },
+  {
+    "State": "__sct_Stable",
+    "Fields": {
+      "__sct_id": 1,
+      "__sct_citizenCount": 3
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Alive",
+    "Fields": {
+      "__sct_townId": 1
+    },
+    "ClassName": "__sct_Citizen"
+  }
+]
