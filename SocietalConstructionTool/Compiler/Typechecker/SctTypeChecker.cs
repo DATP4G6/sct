@@ -282,7 +282,6 @@ namespace Sct.Compiler.Typechecker
             if (context.QUESTION() is null && !targetAgent.HasState(context.ID(1).GetText()))
             {
                 _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
-                return TypeTable.Predicate;
             }
 
             var targetAgentFields = targetAgent.Fields;
