@@ -1,7 +1,31 @@
 ﻿[
   {
-    Message: Cannot convert the returned type to the function's expected return type, expected expression of type void, got int.,
-    Line: 2,
+    Message: Return type does not match the function's returned type, expected expression of type float, got Predicate.,
+    Line: 5,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+  },
+  {
+    Message: Return type does not match the function's returned type, expected expression of type void, got int.,
+    Line: 9,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+  },
+  {
+    Message: Return type does not match the function's returned type, expected expression of type int, got no expression.,
+    Line: 13,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+  },
+  {
+    Message: Return type does not match the function's returned type, expected expression of type float, got no expression.,
+    Line: 17,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+  },
+  {
+    Message: Return type does not match the function's returned type, expected expression of type Predicate, got no expression.,
+    Line: 21,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
   }

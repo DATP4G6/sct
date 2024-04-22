@@ -4,11 +4,5 @@
     Line: 2,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/EnterInFunction.sct
-  },
-  {
-    Message: State A does not exist in class Global,
-    Line: 2,
-    Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/EnterInFunction.sct
   }
 ]

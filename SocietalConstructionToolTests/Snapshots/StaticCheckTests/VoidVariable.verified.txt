@@ -1,12 +1,12 @@
 ﻿[
   {
-    Message: Variable cannot be of type: void,
+    Message: Variable cannot be of type void.,
     Line: 2,
     Column: 3,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VoidVariable.Sct
   },
   {
-    Message: Cannot assign int to void,
+    Message: Cannot assign int to void.,
     Line: 2,
     Column: 3,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VoidVariable.Sct

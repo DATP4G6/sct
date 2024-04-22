@@ -1,5 +1,25 @@
+class Agent007() {}
+
+function MI6() -> float {
+    Predicate x = Agent007::?();
+    return x;
+}
+
 function test() -> void {
     return 15;
 }
+
+function foo() -> int {
+    return;
+}
+
+function bar() -> float {
+    return;
+}
+
+function baz() -> Predicate {
+    return;
+}
+
 
 function Setup() -> void {}

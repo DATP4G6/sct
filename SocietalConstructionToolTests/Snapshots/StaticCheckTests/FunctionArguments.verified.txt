@@ -1,12 +1,12 @@
 ﻿[
   {
-    Message: Cannot convert float to int in call expression.,
+    Message: Cannot convert float to int in call to function 'test'.,
     Line: 6,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FunctionArguments.sct
   },
   {
-    Message: Cannot convert float to int in call expression.,
+    Message: Cannot convert float to int in call to function 'test'.,
     Line: 7,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FunctionArguments.sct

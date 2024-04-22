@@ -26,7 +26,7 @@ namespace Sct.Compiler.Typechecker
             var returns = context.statement_list().Accept(this);
             if (!returns)
             {
-                _errors.Add(new CompilerError($"Not all code paths return a value in state {context.ID().GetText()}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Not all code paths specify an end condition in state {context.ID().GetText()}", context.Start.Line, context.Start.Column));
             }
             return returns;
         }

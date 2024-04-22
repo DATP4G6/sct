@@ -6,7 +6,7 @@
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/TypecastMismatch.sct
   },
   {
-    Message: Cannot assign void to float,
+    Message: Cannot assign void to float.,
     Line: 4,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/TypecastMismatch.sct
