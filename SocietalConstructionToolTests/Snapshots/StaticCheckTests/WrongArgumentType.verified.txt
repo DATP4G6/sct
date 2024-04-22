@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Cannot convert int to void in call expression.,
+    Line: 4,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongArgumentType.Sct
+  }
+]

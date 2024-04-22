@@ -55,81 +55,7 @@ namespace Sct
             // Call CTabelBuilder.BuildCtable() after all files have been visited
             // Run the translator on all files concatenated.
 
-            // Create a CTableBuilder that is used for all files.
-            CTableBuilder cTableBuilder = new();
-            var errors = new List<CompilerError>();
-
-            // Store parses for each file to avoid having to recreate them for type checking.
-            Dictionary<string, SctParser.StartContext> startNodes = new();
-
-            // Run static analysis on each file separately.
-            foreach (var file in filenames)
-            {
-                // Save parser for later use.
-                startNodes[file] = GetParser(file).start();
-                var startNode = startNodes[file];
-
-                KeywordContextCheckVisitor keywordChecker = new();
-
-                // Annotate each error with the filename.
-                var keywordErrors = startNode.Accept(keywordChecker).ToList();
-                foreach (var error in keywordErrors)
-                {
-                    error.Filename = file;
-                }
-                errors.AddRange(keywordErrors);
-
-                SctReturnCheckVisitor returnChecker = new();
-                _ = startNode.Accept(returnChecker);
-                foreach (var error in returnChecker.Errors)
-                {
-                    error.Filename = file;
-                }
-                errors.AddRange(returnChecker.Errors);
-
-                // Run visitor that populates the tables using the CTableBuilder.
-                var sctTableVisitor = new SctTableVisitor(cTableBuilder);
-                _ = startNode.Accept(sctTableVisitor);
-
-                foreach (var error in sctTableVisitor.Errors)
-                {
-                    error.Filename = file;
-                }
-
-                errors.AddRange(sctTableVisitor.Errors);
-            }
-
-            // Build the CTable after all files have been visited.
-            // The CTable is used for type checking.
-            CTable cTable = cTableBuilder.BuildCtable();
-
-            var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
-            if (setupType is null)
-            {
-                errors.Add(new CompilerError("No setup function found"));
-            }
-            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
-            {
-                errors.Add(new CompilerError("Setup function must return void and take no arguments"));
-            }
-
-            // Typecheck each file separately.
-            // Identifiers from other files are known because the CTable is built from all files.
-            foreach (var file in filenames)
-            {
-                var startNode = startNodes[file];
-
-                // Run visitor that checks the types.
-                var sctTypeChecker = new SctTypeChecker(cTable);
-                _ = startNode.Accept(sctTypeChecker);
-
-                foreach (var error in sctTypeChecker.Errors)
-                {
-                    error.Filename = file;
-                }
-
-                errors.AddRange(sctTypeChecker.Errors);
-            }
+            var errors = RunStaticChecks(filenames);
 
             if (errors.Count > 0)
             {
@@ -138,10 +64,7 @@ namespace Sct
 
             // Concatenate all files into one string and run the translator on it.
             string fullInput = ConcatenateFiles(filenames);
-            ICharStream stream = CharStreams.fromString(fullInput);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
+            SctParser parser = GetSctParser(fullInput);
 
             var translator = new SctTranslator();
             parser.AddParseListener(translator);
@@ -162,6 +85,81 @@ namespace Sct
             var outputText = translator.Root.NormalizeWhitespace().ToFullString();
 
             return (outputText, []);
+        }
+
+        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder)
+        {
+            var errors = new List<CompilerError>();
+
+            KeywordContextCheckVisitor keywordChecker = new();
+            var keywordErrors = startNode.Accept(keywordChecker).ToList();
+            errors.AddRange(keywordErrors);
+
+            SctReturnCheckVisitor returnChecker = new();
+            _ = startNode.Accept(returnChecker);
+            errors.AddRange(returnChecker.Errors);
+
+            // Run visitor that populates the tables using the CTableBuilder.
+            var sctTableVisitor = new SctTableVisitor(cTableBuilder);
+            _ = startNode.Accept(sctTableVisitor);
+            errors.AddRange(sctTableVisitor.Errors);
+            return errors;
+        }
+
+        private static List<CompilerError> RunSecondPassChecks(ParserRuleContext startNode, CTable cTable)
+        {
+            var typeChecker = new SctTypeChecker(cTable);
+            _ = startNode.Accept(typeChecker);
+            return typeChecker.Errors.ToList();
+        }
+
+        public static List<CompilerError> RunStaticChecks(string[] filenames)
+        {
+            // Create a CTableBuilder that is used for all files.
+            CTableBuilder cTableBuilder = new();
+            var errors = new List<CompilerError>();
+
+            // Store parses for each file to avoid having to recreate them for type checking.
+            Dictionary<string, SctParser.StartContext> startNodes = [];
+
+            // Run static analysis on each file separately.
+            foreach (var file in filenames)
+            {
+                // Save parser for later use.
+                startNodes[file] = GetParser(file).start();
+                var startNode = startNodes[file];
+
+                // Run checks
+                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
+
+                // Annotate each error with the filename.
+                foreach (var error in fileErrors)
+                {
+                    error.Filename = file;
+                }
+                errors.AddRange(fileErrors);
+            }
+
+            // Build the CTable after all files have been visited.
+            // The CTable is used for type checking.
+            var (cTable, tableErrors) = cTableBuilder.BuildCtable();
+            errors.AddRange(tableErrors);
+
+            // Typecheck each file separately.
+            // Identifiers from other files are known because the CTable is built from all files.
+            foreach (var file in filenames)
+            {
+                var fileErrors = RunSecondPassChecks(startNodes[file], cTable);
+
+                foreach (var error in fileErrors)
+                {
+                    error.Filename = file;
+                }
+
+                errors.AddRange(fileErrors);
+            }
+
+            return errors;
         }
 
         /**

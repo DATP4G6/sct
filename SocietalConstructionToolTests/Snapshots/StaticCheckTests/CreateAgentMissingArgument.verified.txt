@@ -1,0 +1,26 @@
+﻿[
+  {
+    Message: Missing argument b in agent create.,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentMissingArgument.sct
+  },
+  {
+    Message: Missing argument a in agent create.,
+    Line: 9,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentMissingArgument.sct
+  },
+  {
+    Message: Missing argument a in agent create.,
+    Line: 10,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentMissingArgument.sct
+  },
+  {
+    Message: Missing argument b in agent create.,
+    Line: 10,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentMissingArgument.sct
+  }
+]

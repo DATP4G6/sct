@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Cannot convert the returned type to the function's expected return type, expected expression of type void, got int.,
+    Line: 2,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+  }
+]

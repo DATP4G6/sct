@@ -1,2 +1,0 @@
-﻿Line 2, Column 4: Cannot assign float to int
-Line 3, Column 4: Cannot assign float to int 

@@ -1,0 +1,20 @@
+﻿[
+  {
+    Message: Field b does not exist in agent Foo,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  },
+  {
+    Message: Missing argument a in agent create.,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  },
+  {
+    Message: Field b does not exist in agent Foo,
+    Line: 9,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  }
+]

@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Duplicate argument a in agent predicate.,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentDuplicateArgument.sct
+  },
+  {
+    Message: Duplicate argument a in agent predicate.,
+    Line: 9,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentDuplicateArgument.sct
+  }
+]

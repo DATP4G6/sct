@@ -3,6 +3,10 @@ using Antlr4.Runtime.Misc;
 
 namespace Sct.Compiler.Typechecker
 {
+    /// <summary>
+    /// Checks that keywords are in the correct context,
+    /// e.g. that break is only used within loops
+    /// </summary>
     public class KeywordContextCheckVisitor : SctBaseVisitor<CompilerError[]>
     {
 

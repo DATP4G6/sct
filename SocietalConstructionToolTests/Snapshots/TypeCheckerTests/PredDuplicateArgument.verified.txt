@@ -1,1 +1,0 @@
-﻿Line 12, Column 19: Duplicate argument townId in agent predicate.

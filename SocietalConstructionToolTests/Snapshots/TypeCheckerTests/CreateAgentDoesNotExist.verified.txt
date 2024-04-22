@@ -1,4 +1,0 @@
-﻿No setup function found
-Line 4, Column 11: Agent Bar does not exist
-Line 5, Column 11: Agent Bar does not exist
-Line 6, Column 11: Agent Bar does not exist

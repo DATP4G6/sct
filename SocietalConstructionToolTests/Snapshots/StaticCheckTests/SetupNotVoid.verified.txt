@@ -1,0 +1,5 @@
+﻿[
+  {
+    Message: Setup function must return void and take no arguments
+  }
+]

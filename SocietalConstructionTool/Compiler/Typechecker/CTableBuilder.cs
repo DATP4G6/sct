@@ -16,7 +16,23 @@ namespace Sct.Compiler.Typechecker
             _ = TryAddFunction("seed", new FunctionType(TypeTable.Void, [TypeTable.Int]));
         }
 
-        public CTable BuildCtable() => new(_classes, _globalClass.Value);
+        public (CTable cTable, List<CompilerError> errors) BuildCtable()
+        {
+            CTable cTable = new(_classes, _globalClass.Value);
+            var errors = new List<CompilerError>();
+
+            var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
+            if (setupType is null)
+            {
+                errors.Add(new CompilerError("No setup function found"));
+            }
+            else if (setupType.ReturnType != TypeTable.Void || setupType.ParameterTypes.Count != 0)
+            {
+                errors.Add(new CompilerError("Setup function must return void and take no arguments"));
+            }
+
+            return (cTable, errors);
+        }
 
         public bool TryStartClass(string className)
         {

@@ -4,6 +4,7 @@ class C() {
     }
 
     state S {
+        enter S;
     }
 }
 

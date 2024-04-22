@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Cannot assign float to int,
+    Line: 2,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FloatToInt.Sct
+  },
+  {
+    Message: Cannot assign float to int,
+    Line: 3,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FloatToInt.Sct
+  }
+]
