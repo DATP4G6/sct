@@ -9,5 +9,5 @@ class Citizen(int townId) {
 }
 
 function Setup() -> void {
-    int x = exists(Citizen::Dead(townId: 5, townId: 13));
+    int x = exists(Citizen::Dead(townId: 5));
 }
