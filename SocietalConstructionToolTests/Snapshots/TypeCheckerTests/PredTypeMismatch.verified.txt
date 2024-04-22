@@ -1,2 +1,0 @@
-﻿Line 5, Column 15: Cannot convert float to int in predicate.
-Line 7, Column 15: Cannot convert float to int in predicate.

@@ -1,4 +1,0 @@
-﻿Line 4, Column 8: Boolean expression must be numeric.
-Line 5, Column 13: Boolean expression must be numeric.
-Line 7, Column 8: Boolean expression must be numeric.
-Line 8, Column 13: Boolean expression must be numeric.

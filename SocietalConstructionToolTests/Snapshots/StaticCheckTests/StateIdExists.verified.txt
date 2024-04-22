@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: ID foo already exists,
+    Line: 6,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/StateIdExists.sct
+  },
+  {
+    Message: ID child already exists,
+    Line: 12,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/StateIdExists.sct
+  }
+]

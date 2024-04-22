@@ -1,3 +1,0 @@
-﻿Line 8, Column 11: Field b does not exist in agent Foo
-Line 8, Column 11: Missing argument a in agent create.
-Line 9, Column 11: Field b does not exist in agent Foo

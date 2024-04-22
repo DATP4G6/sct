@@ -1,2 +1,0 @@
-﻿Line 8, Column 11: Duplicate argument a in agent predicate.
-Line 9, Column 11: Duplicate argument a in agent predicate.

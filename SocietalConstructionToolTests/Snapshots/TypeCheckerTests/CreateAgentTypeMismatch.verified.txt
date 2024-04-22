@@ -1,2 +1,0 @@
-﻿Line 10, Column 11: Cannot convert float to int
-Line 11, Column 11: Cannot convert float to int

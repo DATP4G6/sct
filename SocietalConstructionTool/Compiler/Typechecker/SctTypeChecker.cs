@@ -235,7 +235,7 @@ namespace Sct.Compiler.Typechecker
 
             if (TypeTable.GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName} ", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName}", context.Start.Line, context.Start.Column));
             }
 
             return variableType;

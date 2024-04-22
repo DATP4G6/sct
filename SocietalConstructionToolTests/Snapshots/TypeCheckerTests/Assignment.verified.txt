@@ -1,2 +1,0 @@
-﻿Line 7, Column 4: Cannot assign float to int 
-Line 8, Column 4: Cannot assign Predicate to int 

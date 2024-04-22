@@ -1,1 +1,0 @@
-﻿Line 2, Column 4: Function foo does not exist

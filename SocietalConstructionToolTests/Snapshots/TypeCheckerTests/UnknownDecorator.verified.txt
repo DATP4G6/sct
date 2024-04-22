@@ -1,1 +1,0 @@
-﻿Line 9, Column 4: Decorator someDecorator does not exist in class Citizen

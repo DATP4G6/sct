@@ -2,6 +2,7 @@
   {
     Message: Cannot use 'exit' inside function,
     Line: 2,
-    Column: 4
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/ExitInFunction.sct
   }
 ]
