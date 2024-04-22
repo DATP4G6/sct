@@ -8,9 +8,9 @@ namespace Sct.Runtime
             return s_random.NextDouble();
         }
 
-        public static void Seed(IRuntimeContext _, int seed)
+        public static void Seed(IRuntimeContext _, long seed)
         {
-            s_random = new Random(seed);
+            s_random = new Random((int)seed);
         }
     }
 }
