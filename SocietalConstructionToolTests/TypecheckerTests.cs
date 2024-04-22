@@ -19,10 +19,6 @@ namespace SocietalConstructionToolTests
             SctParser.StartContext startNode = parser.start();
             List<CompilerError> errors = new();
 
-            var returnChecker = new SctReturnCheckVisitor();
-            _ = startNode.Accept(returnChecker);
-            errors.AddRange(returnChecker.Errors);
-
             var cTableBuilder = new CTableBuilder();
 
             var sctTableVisitor = new SctTableVisitor(cTableBuilder);

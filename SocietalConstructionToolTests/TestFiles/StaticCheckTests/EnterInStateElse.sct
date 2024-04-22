@@ -1,0 +1,12 @@
+class C() {
+    state S {
+        if (1) {
+            enter S;
+        } else {
+            enter S;
+        }
+    }
+}
+
+function Setup() -> void {
+}

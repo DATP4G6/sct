@@ -1,0 +1,7 @@
+﻿[
+  {
+    Message: Not all code paths return a value in state S,
+    Line: 2,
+    Column: 4
+  }
+]

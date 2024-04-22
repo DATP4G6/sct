@@ -1,0 +1,10 @@
+function baz() -> int {
+    if (1) {
+        return 5;
+    } else if (0) {
+        return 10;
+    }
+    return 15;
+}
+
+function Setup() -> void {}
