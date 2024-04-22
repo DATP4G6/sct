@@ -3,19 +3,19 @@
     Message: No setup function found
   },
   {
-    Message: Agent Bar does not exist,
+    Message: Class 'Bar' does not exist,
     Line: 4,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentDoesNotExist.sct
   },
   {
-    Message: Agent Bar does not exist,
+    Message: Class 'Bar' does not exist,
     Line: 5,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentDoesNotExist.sct
   },
   {
-    Message: Agent Bar does not exist,
+    Message: Class 'Bar' does not exist,
     Line: 6,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentDoesNotExist.sct

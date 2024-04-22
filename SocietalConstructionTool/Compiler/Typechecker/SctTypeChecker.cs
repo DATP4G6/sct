@@ -31,7 +31,7 @@ namespace Sct.Compiler.Typechecker
             {
                 return globalFunctionType;
             }
-            _errors.Add(new CompilerError($"Function {functionName} does not exist", line, col));
+            _errors.Add(new CompilerError($"Function '{functionName}' does not exist.", line, col));
             return new FunctionType(TypeTable.Void, []);
         }
 
@@ -40,7 +40,7 @@ namespace Sct.Compiler.Typechecker
             var variableType = _vtable.Lookup(variableName);
             if (variableType is null)
             {
-                _errors.Add(new CompilerError($"Variable {variableName} does not exist", line, col));
+                _errors.Add(new CompilerError($"Variable '{variableName}' does not exist.", line, col));
                 return TypeTable.Int;
             }
             return variableType;
@@ -59,18 +59,18 @@ namespace Sct.Compiler.Typechecker
 
             if (type == TypeTable.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type: {type.TypeName}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable cannot be of type {type.TypeName}.", context.Start.Line, context.Start.Column));
             }
 
             SctType expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {type.TypeName}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {type.TypeName}.", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
             {
-                _errors.Add(new CompilerError($"Variable {context.ID().GetText()} already exists", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable '{context.ID().GetText()}' already exists.", context.Start.Line, context.Start.Column));
                 return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
             }
 
@@ -84,7 +84,7 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitType([NotNull] SctParser.TypeContext context)
         {
-            var type = TypeTable.GetType(context.GetText()) ?? throw new InvalidTypeException($"Type {context.GetText()} does not exist");
+            var type = TypeTable.GetType(context.GetText()) ?? throw new InvalidTypeException($"Type '{context.GetText()}' does not exist");
             return type;
         }
 
@@ -103,9 +103,10 @@ namespace Sct.Compiler.Typechecker
         public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var stateName = context.ID().GetText();
-            if (!_currentClass.HasState(stateName))
+            // supress error if we are in the global class (return checker throws error instead)
+            if (!_currentClass.HasState(stateName) && !(_currentClass == _ctable.GlobalClass))
             {
-                _errors.Add(new CompilerError($"State {stateName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"State '{stateName}' does not exist in class '{_currentClass.Name}'.", context.Start.Line, context.Start.Column));
             }
             return base.VisitEnter(context);
         }
@@ -115,7 +116,7 @@ namespace Sct.Compiler.Typechecker
             var decoratorName = context.ID().GetText();
             if (!_currentClass.HasDecorator(decoratorName))
             {
-                _errors.Add(new CompilerError($"Decorator {decoratorName} does not exist in class {_currentClass.Name}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Decorator '{decoratorName}' does not exist in class '{_currentClass.Name}'.", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Ok;
         }
@@ -161,13 +162,13 @@ namespace Sct.Compiler.Typechecker
                 {
                     if (TypeTable.GetCompatibleType(functionParamType, argumentType) is null)
                     {
-                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TypeName} to {functionParamType.TypeName} in call expression.", context.Start.Line, context.Start.Column));
+                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TypeName} to {functionParamType.TypeName} in call to function '{functionName}'.", context.Start.Line, context.Start.Column));
                     }
                 }
             }
             else
             {
-                _errors.Add(new CompilerError($"Function {functionName} expected {functionParamTypes.Count} arguments, but {argumentTypes.Count} were provided", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Function '{functionName}' expected {functionParamTypes.Count} arguments, but {argumentTypes.Count} were provided.", context.Start.Line, context.Start.Column));
             }
             return functionType.ReturnType;
         }
@@ -177,7 +178,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.TypeIsNumeric(expressionType))
             {
-                _errors.Add(new CompilerError("Unary minus expression must have numeric type", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError("Unary minus expression must have numeric type.", context.Start.Line, context.Start.Column));
             }
             return expressionType;
         }
@@ -198,7 +199,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(returnType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot convert the returned type to the function's expected return type, expected expression of type {returnType.TypeName}, got {expressionType.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName}, got {expressionType.TypeName}.", context.Start.Line, context.Start.Column));
                 expressionType = returnType;
             }
             return expressionType;
@@ -210,7 +211,7 @@ namespace Sct.Compiler.Typechecker
             var rightType = context.expression(1).Accept(this);
             if (!TypeTable.TypeIsNumeric(leftType) || !TypeTable.TypeIsNumeric(rightType))
             {
-                _errors.Add(new CompilerError("Binary expression must have numeric types", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError("Binary expression must have numeric types.", context.Start.Line, context.Start.Column));
                 leftType = TypeTable.Int;
                 rightType = TypeTable.Int;
             }
@@ -235,7 +236,7 @@ namespace Sct.Compiler.Typechecker
 
             if (TypeTable.GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName}.", context.Start.Line, context.Start.Column));
             }
 
             return variableType;
@@ -252,7 +253,7 @@ namespace Sct.Compiler.Typechecker
                     && context.op.Type is SctLexer.EQ or SctLexer.NEQ)
                 )
             {
-                _errors.Add(new CompilerError("Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError("Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.", context.Start.Line, context.Start.Column));
             }
             return TypeTable.Int;
         }
@@ -270,44 +271,44 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
         {
-            var agentName = context.ID(0).GetText();
-            var targetAgent = _ctable.GetClassContent(agentName);
+            var className = context.ID(0).GetText();
+            var targetClass = _ctable.GetClassContent(className);
 
-            if (targetAgent is null)
+            if (targetClass is null)
             {
-                _errors.Add(new CompilerError($"Agent {agentName} does not exist", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Class '{className}' does not exist.", context.Start.Line, context.Start.Column));
                 return TypeTable.Predicate;
             }
 
-            if (context.QUESTION() is null && !targetAgent.HasState(context.ID(1).GetText()))
+            if (context.QUESTION() is null && !targetClass.HasState(context.ID(1).GetText()))
             {
-                _errors.Add(new CompilerError($"State {context.ID(1).GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"State '{context.ID(1).GetText()}' does not exist in class '{className}'.", context.Start.Line, context.Start.Column));
             }
 
-            var targetAgentFields = targetAgent.Fields;
-            var agentArgumentIds = context.args_agent().ID();
+            var targetAgentFields = targetClass.Fields;
+            var classArgumentIds = context.args_agent().ID();
 
             var seenFields = new HashSet<string>();
 
-            foreach (var (id, expression) in agentArgumentIds.Zip(context.args_agent().expression()))
+            foreach (var (id, expression) in classArgumentIds.Zip(context.args_agent().expression()))
             {
                 if (!targetAgentFields.ContainsKey(id.GetText()))
                 {
-                    _errors.Add(new CompilerError($"Variable {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Field '{id.GetText()}' does not exist in class '{className}'.", context.Start.Line, context.Start.Column));
                     continue;
                 }
 
                 if (!seenFields.Add(id.GetText()))
                 {
-                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Duplicate argument '{id.GetText()}' in predicate.", context.Start.Line, context.Start.Column));
                     continue;
                 }
 
-                var targetAgentFieldType = targetAgentFields[id.GetText()];
-                var agentfieldType = expression.Accept(this);
-                if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
+                var targetClassFieldType = targetAgentFields[id.GetText()];
+                var classFieldType = expression.Accept(this);
+                if (TypeTable.GetCompatibleType(targetClassFieldType, classFieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TypeName} to {targetAgentFieldType.TypeName} in predicate.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName} to {targetClassFieldType.TypeName} in predicate.", context.Start.Line, context.Start.Column));
                 }
             }
 
@@ -316,55 +317,55 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType VisitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
-            var agentName = context.ID(0).GetText();
+            var className = context.ID(0).GetText();
             var stateName = context.ID(1).GetText();
-            var targetAgent = _ctable.GetClassContent(agentName);
+            var targetClass = _ctable.GetClassContent(className);
 
-            if (targetAgent is null)
+            if (targetClass is null)
             {
-                _errors.Add(new CompilerError($"Agent {agentName} does not exist", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Class '{className}' does not exist", context.Start.Line, context.Start.Column));
                 return TypeTable.Ok;
             }
 
-            if (!targetAgent.HasState(stateName))
+            if (!targetClass.HasState(stateName))
             {
-                _errors.Add(new CompilerError($"State {stateName} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"State '{stateName}' does not exist in class '{className}'", context.Start.Line, context.Start.Column));
                 return TypeTable.Ok;
             }
 
-            var targetAgentFields = targetAgent.Fields;
-            var agentArgumentIds = context.args_agent().ID();
+            var targetClassFields = targetClass.Fields;
+            var classArgumentIds = context.args_agent().ID();
 
 
             var seenFields = new HashSet<string>();
 
-            foreach (var (id, expression) in agentArgumentIds.Zip(context.args_agent().expression()))
+            foreach (var (id, expression) in classArgumentIds.Zip(context.args_agent().expression()))
             {
-                if (!targetAgentFields.ContainsKey(id.GetText()))
+                if (!targetClassFields.ContainsKey(id.GetText()))
                 {
-                    _errors.Add(new CompilerError($"Field {id.GetText()} does not exist in agent {agentName}", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Field '{id.GetText()}' does not exist in class '{className}'.", context.Start.Line, context.Start.Column));
                     continue;
                 }
 
                 if (!seenFields.Add(id.GetText()))
                 {
-                    _errors.Add(new CompilerError($"Duplicate argument {id.GetText()} in agent predicate.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Duplicate argument '{id.GetText()}' in create statement.", context.Start.Line, context.Start.Column));
                     continue;
                 }
 
-                var targetAgentFieldType = targetAgentFields[id.GetText()];
-                var agentfieldType = expression.Accept(this);
-                if (TypeTable.GetCompatibleType(targetAgentFieldType, agentfieldType) is null)
+                var targetClassFieldType = targetClassFields[id.GetText()];
+                var classFieldType = expression.Accept(this);
+                if (TypeTable.GetCompatibleType(targetClassFieldType, classFieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {agentfieldType.TypeName} to {targetAgentFieldType.TypeName}", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName} to {targetClassFieldType.TypeName}.", context.Start.Line, context.Start.Column));
                 }
             }
 
-            foreach (var field in targetAgentFields)
+            foreach (var field in targetClassFields)
             {
                 if (!seenFields.Contains(field.Key))
                 {
-                    _errors.Add(new CompilerError($"Missing argument {field.Key} in agent create.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Missing argument '{field.Key}' in create statement.", context.Start.Line, context.Start.Column));
                 }
             }
 

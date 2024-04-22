@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: Cannot convert int to void in call expression.,
+    Message: Cannot convert int to void in call to function 'test'.,
     Line: 4,
     Column: 4,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongArgumentType.Sct

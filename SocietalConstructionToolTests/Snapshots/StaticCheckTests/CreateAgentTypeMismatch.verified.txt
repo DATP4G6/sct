@@ -1,12 +1,12 @@
 ﻿[
   {
-    Message: Cannot convert float to int,
+    Message: Cannot convert float to int.,
     Line: 10,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentTypeMismatch.sct
   },
   {
-    Message: Cannot convert float to int,
+    Message: Cannot convert float to int.,
     Line: 11,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentTypeMismatch.sct
