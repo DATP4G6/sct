@@ -1,0 +1,45 @@
+class Random(float randomId, float depth) {
+
+    decorator Generate {
+        if (rand() < 0.5) {
+            create Random::A(randomId: rand(), depth: depth + 1);
+        }
+        else {
+            create Random::B(randomId: rand(), depth: depth + 1);
+        }
+    }
+
+    decorator StopAtDepth {
+        if (depth > 2) {
+            exit;
+        }
+    }
+
+    @Generate
+    @StopAtDepth
+    state A {
+        enter A;
+    }
+
+    @Generate
+    @StopAtDepth
+    state B {
+        enter B;
+    }
+}
+
+class Failsafe(int count) {
+    state Counting {
+        if (count > 10) {
+            exit;
+        }
+        count = count + 1;
+        enter Counting;
+    }
+}
+
+
+function Setup() -> void {
+    seed(7);
+    create Random::A(randomId: 0, depth: 0);
+}

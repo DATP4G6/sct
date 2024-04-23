@@ -4,7 +4,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class GlobalClass
+    public class GlobalClass : BaseGlobalClass
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
@@ -21,7 +21,7 @@
         {
             private int __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
 
-            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields, int seed) : base(state, fields, seed)
             {
             }
 

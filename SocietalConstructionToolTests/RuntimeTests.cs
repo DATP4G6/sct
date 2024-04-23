@@ -19,7 +19,7 @@ namespace SocietalConstructionToolTests
 
             return contextMock;
         }
-        private static Mock<BaseAgent> GetAgentMock() => new("", new Dictionary<string, dynamic>());
+        private static Mock<BaseAgent> GetAgentMock() => new("", new Dictionary<string, dynamic>(), 1);
 
         [TestMethod]
         public void TestRuntimeExits()

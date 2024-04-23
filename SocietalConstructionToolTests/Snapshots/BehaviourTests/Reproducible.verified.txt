@@ -1,0 +1,250 @@
+﻿[
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0,
+      "__sct_depth": 0
+    },
+    "ClassName": "__sct_Random"
+  }
+]
+[
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0,
+      "__sct_depth": 0
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.42416487281404663,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  }
+]
+[
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.10613502241025446,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0,
+      "__sct_depth": 0
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.41856958457202165,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.42416487281404663,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  }
+]
+[
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.41856958457202165,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.12708145991297506,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.707012712819042,
+      "__sct_depth": 3
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.5602042957023737,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.42416487281404663,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.4781757586068361,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.10613502241025446,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0,
+      "__sct_depth": 0
+    },
+    "ClassName": "__sct_Random"
+  }
+]
+[
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.12708145991297506,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.41856958457202165,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.18880902891457502,
+      "__sct_depth": 3
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.7399132343660636,
+      "__sct_depth": 4
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.638265635184136,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.5602042957023737,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0,
+      "__sct_depth": 0
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.269328549629696,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.04919133943002268,
+      "__sct_depth": 3
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.10678049181903736,
+      "__sct_depth": 3
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.5562370980885983,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.10613502241025446,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.9404754512666145,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_A",
+    "Fields": {
+      "__sct_randomId": 0.4781757586068361,
+      "__sct_depth": 2
+    },
+    "ClassName": "__sct_Random"
+  },
+  {
+    "State": "__sct_B",
+    "Fields": {
+      "__sct_randomId": 0.42416487281404663,
+      "__sct_depth": 1
+    },
+    "ClassName": "__sct_Random"
+  }
+]

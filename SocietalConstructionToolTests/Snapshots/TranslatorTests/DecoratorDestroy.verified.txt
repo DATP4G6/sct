@@ -4,11 +4,11 @@
     using System;
     using System.Collections.Generic;
 
-    public class GlobalClass
+    public class GlobalClass : BaseGlobalClass
     {
         public class __sct_Town : BaseAgent
         {
-            public __sct_Town(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            public __sct_Town(String state, IDictionary<String, dynamic> fields, int seed) : base(state, fields, seed)
             {
             }
 

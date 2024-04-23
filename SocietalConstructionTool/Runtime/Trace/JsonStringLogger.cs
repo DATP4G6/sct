@@ -1,6 +1,8 @@
 using System.Text;
 using System.Text.Json;
 
+using Sct.Extensions;
+
 namespace Sct.Runtime.Trace
 {
     public class JsonStringLogger : IOutputLogger
@@ -11,6 +13,10 @@ namespace Sct.Runtime.Trace
 
         public void OnExit() => Output = _builder.ToString();
 
-        public void OnTick(IRuntimeContext context) => _builder.Append(JsonSerializer.Serialize(context.AgentHandler.Agents, SerializerOptions));
+        public void OnTick(IRuntimeContext context)
+        {
+            var ordered = context.AgentHandler.Agents.DeterministicOrder();
+            _ = _builder.Append(JsonSerializer.Serialize(ordered, SerializerOptions) + '\n');
+        }
     }
 }

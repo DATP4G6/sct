@@ -15,6 +15,7 @@ class Output() {
 }
 
 function Setup() -> void {
+    seed(2);
     // Arrange
     Predicate fullEqual = Foo::Bar(a: 1, b: 2);
     Predicate fullEqual2 = Foo::Bar(a: 1, b: 2);

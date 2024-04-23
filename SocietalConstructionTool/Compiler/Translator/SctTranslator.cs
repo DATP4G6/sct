@@ -15,6 +15,7 @@ namespace Sct.Compiler.Translator
     {
         public const string GeneratedNamespace = "SctGenerated";
         public const string GeneratedGlobalClass = "GlobalClass";
+        public const string GeneratedGlobalClassParent = nameof(BaseGlobalClass);
         public const string RunSimulationFunctionName = "RunSimulation";
 
         public static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
@@ -34,7 +35,10 @@ namespace Sct.Compiler.Translator
             .ClassDeclaration(GeneratedGlobalClass)
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddMembers(members)
-            .AddMembers(TranslatorUtils.MakeRunMethod());
+            .AddMembers(TranslatorUtils.MakeRunMethod())
+            .AddBaseListTypes(SyntaxFactory.SimpleBaseType(
+                SyntaxFactory.ParseTypeName(GeneratedGlobalClassParent)
+            ));
 
             string[] usingStrings = [typeof(BaseAgent).Namespace!, nameof(System), typeof(IDictionary<string, dynamic>).Namespace!];
 
@@ -438,7 +442,13 @@ namespace Sct.Compiler.Translator
                             SyntaxKind.StringLiteralExpression,
                             SyntaxFactory.Literal(state)
                         )),
-                        SyntaxFactory.Argument(fields)
+                        SyntaxFactory.Argument(fields),
+                        SyntaxFactory.Argument(
+                            SyntaxFactory.InvocationExpression(
+                                SyntaxFactory.IdentifierName(nameof(IRandom.RandInt)),
+                                TranslatorUtils.WithContextArgument([])
+                            )
+                        )
                     })
                 )
             );

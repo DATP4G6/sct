@@ -15,7 +15,6 @@ namespace Sct.Compiler.Translator
         private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(SctTranslator.RunSimulationFunctionName);
         private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(SctTranslator.ContextIdentifier);
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
-        private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
 
         // boolean values are either 0 or 1
         public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
@@ -25,10 +24,16 @@ namespace Sct.Compiler.Translator
         // A full day has gone to waste debugging this...
         private static readonly Dictionary<string, MemberAccessExpressionSyntax> Types = new()
         {
-            { "rand", BuildAccessor(nameof(Stdlib.Rand), StdlibIdentifier) },
-            { "seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
             { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
             { "count", BuildAccessor(nameof(IQueryHandler.Count), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
+        };
+
+        private static readonly Dictionary<string, IdentifierNameSyntax> Identifiers = new(){
+            { "rand", SyntaxFactory.IdentifierName(nameof(IRandom.Rand)) },
+            { "randInt", SyntaxFactory.IdentifierName(nameof(IRandom.RandInt)) },
+            { "seed", SyntaxFactory.IdentifierName(nameof(IRandom.Seed)) },
+            { "print", SyntaxFactory.IdentifierName(nameof(BaseGlobalClass.PrintPredicate)) },
+            { "printCount", SyntaxFactory.IdentifierName(nameof(BaseGlobalClass.PrintPredicateCount)) },
         };
 
         public static MemberAccessExpressionSyntax BuildAccessor(string accessor, params SyntaxToken[] members)
@@ -89,11 +94,19 @@ namespace Sct.Compiler.Translator
         /// <returns>InvocationExpressionSyntax</returns>
         public static InvocationExpressionSyntax GetFunction(string identifier, ArgumentListSyntax? args)
         {
+            // Check if a reserved / known function is being invoked
             if (Types.TryGetValue(identifier, out MemberAccessExpressionSyntax? function))
             {
                 return SyntaxFactory.InvocationExpression(function, args ?? SyntaxFactory.ArgumentList());
             }
 
+            // Check if function is globally available. Fx Rand, which is defined both globally and on each agent
+            if (Identifiers.TryGetValue(identifier, out IdentifierNameSyntax? simpleFunction))
+            {
+                return SyntaxFactory.InvocationExpression(simpleFunction, args ?? SyntaxFactory.ArgumentList());
+            }
+
+            // Base case: Create invocation expression with arguments
             return SyntaxFactory.InvocationExpression(
                 SyntaxFactory.IdentifierName(GetMangledName(identifier)),
                 args ?? SyntaxFactory.ArgumentList()
@@ -137,6 +150,7 @@ namespace Sct.Compiler.Translator
         {
             var stateIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.State).ToLower(CultureInfo.InvariantCulture));
             var fieldsIdentifier = SyntaxFactory.Identifier(nameof(BaseAgent.Fields).ToLower(CultureInfo.InvariantCulture));
+            var seedIdenfifier = SyntaxFactory.Identifier("seed");
             // base parameters for constructor is string 'state' and IDictionary<string, dynamic> 'fields'
             var parameters = SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(new[]
@@ -144,7 +158,9 @@ namespace Sct.Compiler.Translator
                     SyntaxFactory.Parameter(stateIdentifier)
                         .WithType(SyntaxFactory.ParseTypeName(typeof(string).Name)),
                     SyntaxFactory.Parameter(fieldsIdentifier)
-                        .WithType(SyntaxFactory.ParseTypeName(typeof(IDictionary<string, dynamic>).GenericName()))
+                        .WithType(SyntaxFactory.ParseTypeName(typeof(IDictionary<string, dynamic>).GenericName())),
+                    SyntaxFactory.Parameter(seedIdenfifier)
+                        .WithType(SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.IntKeyword)))
                 })
             );
 
@@ -159,7 +175,8 @@ namespace Sct.Compiler.Translator
                     SyntaxFactory.SeparatedList(new[]
                     {
                         SyntaxFactory.Argument(SyntaxFactory.IdentifierName(stateIdentifier)),
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(fieldsIdentifier))
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(fieldsIdentifier)),
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(seedIdenfifier))
                     })
                 )
             ));

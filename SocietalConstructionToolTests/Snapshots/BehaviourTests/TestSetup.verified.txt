@@ -11,7 +11,8 @@
     },
     "ClassName": "__sct_Town"
   }
-][
+]
+[
   {
     "State": "__sct_Child",
     "Fields": {},
@@ -24,7 +25,8 @@
     },
     "ClassName": "__sct_Town"
   }
-][
+]
+[
   {
     "State": "__sct_Stable",
     "Fields": {

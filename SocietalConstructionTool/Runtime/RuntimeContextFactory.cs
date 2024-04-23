@@ -4,7 +4,7 @@ namespace Sct.Runtime
 {
     public class RuntimeContextFactory
     {
-        public static IRuntimeContext Create(IOutputLogger logger) => new RuntimeContext(new AgentHandler(), new QueryHandler([]), logger);
+        public static IRuntimeContext Create(IOutputLogger? logger) => new RuntimeContext(new AgentHandler(), new QueryHandler([]), logger);
 
         /// <summary>
         /// Create the next RuntimeContext based on the current context.

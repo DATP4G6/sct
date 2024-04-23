@@ -25,12 +25,7 @@ rootCommand.AddArgument(sourceFilesArgument);
 
 rootCommand.SetHandler((sourceFiles, outputToConsole, outputFile) =>
         {
-            if (outputToConsole && outputFile is not null)
-            {
-                Console.Error.WriteLine("Cannot output to the console and a file at the same time");
-                return;
-            }
-            IOutputLogger logger;
+            IOutputLogger? logger = null;
             if (outputFile is not null)
             {
                 logger = new JsonFileLogger(outputFile.FullName);
@@ -41,8 +36,7 @@ rootCommand.SetHandler((sourceFiles, outputToConsole, outputFile) =>
             }
             else
             {
-                Console.Error.WriteLine("Either -o with output files or -c must be specified");
-                return;
+                Console.WriteLine("Warning: No output has been specified");
             }
             _ = SctRunner.CompileAndRun(sourceFiles.Select(f => f.FullName).ToArray(), logger);
         }, sourceFilesArgument, outputToConsoleOption, outputFileOption);

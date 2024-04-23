@@ -1,0 +1,23 @@
+class Agent(int count)
+{
+    state Alive
+    {
+        create Agent::Alive(count: count * 2);
+        create Agent::Alive(count: count * 2);
+        destroy;
+    }
+}
+
+class Printer() {
+    state Printing {
+        printCount(Agent::Alive());
+        enter Printing;
+    }
+}
+
+function Setup() -> void {
+    seed(1);
+    create Agent::Alive(count: 1);
+    create Printer::Printing();
+}
+

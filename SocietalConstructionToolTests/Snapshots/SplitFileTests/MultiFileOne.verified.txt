@@ -4,14 +4,14 @@
     using System;
     using System.Collections.Generic;
 
-    public class GlobalClass
+    public class GlobalClass : BaseGlobalClass
     {
         public class __sct_Town : BaseAgent
         {
             private int __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
             private int __sct_space { get => Fields["__sct_space"]; set => Fields["__sct_space"] = value; }
 
-            public __sct_Town(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            public __sct_Town(String state, IDictionary<String, dynamic> fields, int seed) : base(state, fields, seed)
             {
             }
 
@@ -46,7 +46,7 @@
 
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1), new KeyValuePair<String, dynamic>("__sct_space", 50) })));
+            ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1), new KeyValuePair<String, dynamic>("__sct_space", 50) }), RandInt(ctx)));
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

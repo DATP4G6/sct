@@ -20,6 +20,7 @@ class Town(int townId) {
 }
 
 function Setup() -> void {
+    seed(1);
     create Citizen::Adult();
     create Town::Stable(townId: 0);
 }

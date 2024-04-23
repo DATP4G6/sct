@@ -4,14 +4,14 @@
     using System;
     using System.Collections.Generic;
 
-    public class GlobalClass
+    public class GlobalClass : BaseGlobalClass
     {
         public class __sct_Citizen : BaseAgent
         {
             private int __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
             private float __sct_latitude { get => Fields["__sct_latitude"]; set => Fields["__sct_latitude"] = value; }
 
-            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields, int seed) : base(state, fields, seed)
             {
             }
 

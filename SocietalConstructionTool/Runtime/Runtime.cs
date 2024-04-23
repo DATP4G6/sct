@@ -9,10 +9,7 @@ namespace Sct.Runtime
             {
                 prevCtx.OnTick();
                 IRuntimeContext nextCtx = prevCtx.GetNextContext();
-                foreach (var agent in prevCtx.AgentHandler.Agents)
-                {
-                    agent.Update(nextCtx);
-                }
+                _ = Parallel.ForEach(prevCtx.AgentHandler.Agents, agent => agent.Update(nextCtx));
                 prevCtx = nextCtx;
             }
 
