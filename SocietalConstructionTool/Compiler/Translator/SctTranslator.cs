@@ -87,7 +87,7 @@ namespace Sct.Compiler.Translator
             var @params = context.ID().Select(id => TranslatorUtils.GetMangledName(id.GetText()))
             .Zip(context.type(), (id, type) =>
                 SyntaxFactory.Parameter(id) // set name
-                    .WithType(SyntaxFactory.ParseTypeName(type.GetText())) // set type
+                    .WithType(TypeTable.GetTypeNode(type.GetText())) // set type
             );
 
             // add to parameter list

@@ -8,8 +8,8 @@
     {
         public class __sct_Town : BaseAgent
         {
-            private int __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
-            private int __sct_space { get => Fields["__sct_space"]; set => Fields["__sct_space"] = value; }
+            private long __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
+            private long __sct_space { get => Fields["__sct_space"]; set => Fields["__sct_space"] = value; }
 
             public __sct_Town(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
