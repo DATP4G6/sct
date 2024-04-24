@@ -182,7 +182,10 @@ namespace Sct
                     ).Concat(referenceTypes.Select(GetReferenceFromType))!;
 
             var compilation = CSharpCompilation.Create(generatedAssemblyName)
-                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary))
+                .WithOptions(
+                        new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                            .WithOptimizationLevel(OptimizationLevel.Release)
+                        )
                 .AddReferences(references)
                 .AddSyntaxTrees(tree);
 
