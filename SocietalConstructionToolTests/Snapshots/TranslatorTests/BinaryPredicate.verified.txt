@@ -18,7 +18,7 @@
             QueryPredicate __sct_wildcardEqual2 = new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 1), new KeyValuePair<String, dynamic>("__sct_b", 2) }));
             QueryPredicate __sct_wildcardDifferent = new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 2), new KeyValuePair<String, dynamic>("__sct_b", 3) }));
             long __sct_equal = ((__sct_fullEqual == __sct_fullEqual2) ? 1 : 0);
-            if ((__sct_equal) != 0)
+            if (((__sct_equal)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
@@ -28,7 +28,7 @@
             }
 
             __sct_equal = ((__sct_partialEqual == __sct_partialEqual2) ? 1 : 0);
-            if ((__sct_equal) != 0)
+            if (((__sct_equal)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
@@ -38,7 +38,7 @@
             }
 
             __sct_equal = ((__sct_wildcardEqual == __sct_wildcardEqual2) ? 1 : 0);
-            if ((__sct_equal) != 0)
+            if (((__sct_equal)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
@@ -48,7 +48,7 @@
             }
 
             long __sct_unequal = ((__sct_fullEqual == __sct_fullDifferent) ? 1 : 0);
-            if ((__sct_unequal == 0 ? 1 : 0) != 0)
+            if (((__sct_unequal == 0 ? 1 : 0)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
@@ -58,7 +58,7 @@
             }
 
             __sct_unequal = ((__sct_partialEqual == __sct_partialDifferent) ? 1 : 0);
-            if ((__sct_unequal == 0 ? 1 : 0) != 0)
+            if (((__sct_unequal == 0 ? 1 : 0)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
@@ -68,7 +68,7 @@
             }
 
             __sct_unequal = ((__sct_wildcardEqual == __sct_wildcardDifferent) ? 1 : 0);
-            if ((__sct_unequal == 0 ? 1 : 0) != 0)
+            if (((__sct_unequal == 0 ? 1 : 0)) != 0)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Output("__sct_Equal", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }

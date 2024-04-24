@@ -17,7 +17,7 @@
 
             private bool __sct_Growing(IRuntimeContext ctx)
             {
-                if ((1) != 0)
+                if (((1)) != 0)
                 {
                     Enter(ctx, "__sct_End");
                     return true;
