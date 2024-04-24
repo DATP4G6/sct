@@ -4,7 +4,7 @@ namespace Sct.Runtime
     {
         private IEnumerable<BaseAgent> Filter(IQueryPredicate predicate) => agents.Where(predicate.Test);
 
-        public int Count(IRuntimeContext ctx, IQueryPredicate predicate) => Filter(predicate).Count();
-        public bool Exists(IRuntimeContext ctx, IQueryPredicate predicate) => Filter(predicate).Any();
+        public long Count(IRuntimeContext ctx, IQueryPredicate predicate) => Filter(predicate).Count();
+        public long Exists(IRuntimeContext ctx, IQueryPredicate predicate) => Filter(predicate).Any() ? 1 : 0;
     }
 }
