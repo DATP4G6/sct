@@ -56,38 +56,6 @@ namespace Sct
             // Run the translator on all files concatenated.
 
             var errors = RunStaticChecks(filenames);
-            // TODO: Add error handling
-            string input = File.ReadAllText(filename);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
-
-            var errorListener = new SctErrorListener();
-            parser.AddErrorListener(errorListener);
-            var errors = errorListener.Errors.ToList();
-            var startNode = parser.start();
-
-            KeywordContextCheckVisitor keywordChecker = new();
-            errors.AddRange(startNode.Accept(keywordChecker).ToList());
-
-
-            // Run visitor that populates the tables.
-            var sctTableVisitor = new SctTableVisitor();
-            _ = startNode.Accept(sctTableVisitor);
-            var ctable = sctTableVisitor.Ctable;
-            errors.AddRange(sctTableVisitor.Errors);
-
-            // Run visitor that checks the types.
-            var sctTypeChecker = new SctTypeChecker(ctable!);
-            _ = startNode.Accept(sctTypeChecker);
-            parser.Reset();
-
-            errors.AddRange(sctTypeChecker.Errors);
-
-            var translator = new SctTranslator();
-            parser.AddParseListener(translator);
-            _ = parser.start();
 
             if (errors.Count > 0)
             {
@@ -119,9 +87,13 @@ namespace Sct
             return (outputText, []);
         }
 
-        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder)
+        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder, SctParser parser)
         {
             var errors = new List<CompilerError>();
+
+            var errorListener = new SctErrorListener();
+            parser.AddErrorListener(errorListener);
+            errors.AddRange(errorListener.Errors.ToList());
 
             KeywordContextCheckVisitor keywordChecker = new();
             var keywordErrors = startNode.Accept(keywordChecker).ToList();
@@ -158,11 +130,12 @@ namespace Sct
             foreach (var file in filenames)
             {
                 // Save parser for later use.
-                startNodes[file] = GetParser(file).start();
+                var parser = GetParser(file);
+                startNodes[file] = parser.start();
                 var startNode = startNodes[file];
 
                 // Run checks
-                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
+                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder, parser);
 
                 // Annotate each error with the filename.
                 foreach (var error in fileErrors)

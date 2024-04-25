@@ -7,7 +7,7 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class SyntaxTests : AbstractSnapshotTests
     {
-        private static new IEnumerable<string[]> Files =>
+        private static IEnumerable<string[]> Files =>
            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "SyntaxTests"))
            .Select(f => new[] { f });
 
