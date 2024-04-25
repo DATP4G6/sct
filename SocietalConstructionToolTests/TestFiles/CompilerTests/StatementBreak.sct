@@ -1,0 +1,5 @@
+function Setup() -> void {
+    while (1) {
+        break;
+    }
+}

@@ -1,0 +1,12 @@
+class Citizen(int townId) {
+    state Child {
+        enter Child;
+    }
+}
+
+function Setup() -> void {
+    int x = count(Citizen::Child(townId: 5));
+    x = exists(Citizen::Child(townId: 5));
+    float y = rand();
+    seed(12345);
+}

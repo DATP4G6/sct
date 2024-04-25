@@ -1,0 +1,3 @@
+function Setup() -> void {
+    int a = (2 + 3 * 4) / (2 - 1);
+}
