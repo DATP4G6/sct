@@ -1,0 +1,7 @@
+﻿[
+  {
+    Message: mismatched input 'sttate' expecting '}',
+    Line: 2,
+    Column: 4
+  }
+]

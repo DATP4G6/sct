@@ -1,0 +1,12 @@
+﻿[
+  {
+    Message: missing '}' at 'state',
+    Line: 3,
+    Column: 8
+  },
+  {
+    Message: extraneous input '}' expecting {<EOF>, 'function', 'class'},
+    Line: 7,
+    Column: 0
+  }
+]

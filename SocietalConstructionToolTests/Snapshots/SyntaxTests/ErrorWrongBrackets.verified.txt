@@ -1,0 +1,12 @@
+﻿[
+  {
+    Message: extraneous input '{' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Line: 2,
+    Column: 17
+  },
+  {
+    Message: extraneous input '}' expecting ';',
+    Line: 2,
+    Column: 23
+  }
+]

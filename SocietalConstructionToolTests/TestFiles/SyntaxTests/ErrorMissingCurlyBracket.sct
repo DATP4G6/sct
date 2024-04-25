@@ -1,0 +1,5 @@
+class Citizen() {
+    state Adult 
+        create Citizen::Adult();
+    }
+}

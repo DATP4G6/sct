@@ -1,0 +1,7 @@
+﻿[
+  {
+    Message: missing ')' at ';',
+    Line: 2,
+    Column: 23
+  }
+]
