@@ -1,0 +1,98 @@
+class Citizen(int townId) {
+
+    decorator deathCheck {
+
+        if (rand() < 0.25) {
+            enter Dead;
+        }
+    }
+
+    @deathCheck
+    state Adult {
+        enter Adult;
+    }
+
+    @deathCheck
+    state Child {
+
+        if ((int) rand() < 0.05) {
+            enter Adult;
+        }
+
+        enter Child;
+    }
+
+    state Dead {
+        enter Dead;
+    }
+}
+
+class Town(int id) {
+
+    decorator checkExit {
+        if (countCitizens() < 2) {
+            exit;
+        }
+    }
+
+    function countCitizens() -> int {
+
+        int children = count(Citizen::Child(townId: id));
+        int adults = count(Citizen::Adult(townId: id));
+        int count = children + adults;
+        return count;
+    }
+
+    @checkExit
+    state Small {
+        if (countCitizens() > 10 && countCitizens() < 20){
+            enter Medium;
+        } else if (countCitizens() > 20) {
+            enter Large;
+        }
+        enter Small;
+    }
+
+    @checkExit
+    state Medium {
+        if (countCitizens() > 20) {
+            enter Large;
+        } else if (countCitizens() < 10) {
+            enter Small;
+        }
+        enter Medium;
+    }
+
+    @checkExit
+    state Large {
+        int a = countCitizens();
+        if (a < 20 && a > 10){
+            enter Medium;
+        } else if (countCitizens() < 10) {
+            enter Small;
+        }
+        enter Large;
+    }
+}
+
+class GenerationCounter(int generation, int seed) {
+    state Counting {
+        generation = generation + 1;
+        enter Counting;
+    }
+}
+
+function Setup() -> void {
+    seed(123);
+    create GenerationCounter::Counting(generation: 0, seed: 123);
+    create Town::Small(id: 1);
+    int i = 0;
+    while (i < 5) {
+        create Citizen::Child(townId: 1);
+        i = i + 1;
+    }
+}
+
+
+
+

@@ -16,8 +16,8 @@
 
         public class __sct_Foo : BaseAgent
         {
-            private int __sct_a { get => Fields["__sct_a"]; set => Fields["__sct_a"] = value; }
-            private int __sct_b { get => Fields["__sct_b"]; set => Fields["__sct_b"] = value; }
+            private long __sct_a { get => Fields["__sct_a"]; set => Fields["__sct_a"] = value; }
+            private long __sct_b { get => Fields["__sct_b"]; set => Fields["__sct_b"] = value; }
 
             public __sct_Foo(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {

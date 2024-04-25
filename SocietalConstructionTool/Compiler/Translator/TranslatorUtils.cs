@@ -334,6 +334,6 @@ namespace Sct.Compiler.Translator
         /// </summary>
         /// <param name="expression">Expression to be compared</param>
         /// <returns>expression != 0</returns>
-        public static BinaryExpressionSyntax IntToBool(ExpressionSyntax expression) => SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, expression, SctFalse);
+        public static BinaryExpressionSyntax IntToBool(ExpressionSyntax expression) => SyntaxFactory.BinaryExpression(SyntaxKind.NotEqualsExpression, SyntaxFactory.ParenthesizedExpression(expression), SctFalse);
     }
 }

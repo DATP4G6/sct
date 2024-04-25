@@ -1,0 +1,227 @@
+﻿[
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 0,
+      "__sct_everyCalled": 0,
+      "__sct_everyOtherCalled": 0
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 0
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 1,
+      "__sct_everyCalled": 1,
+      "__sct_everyOtherCalled": 1
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 1
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 2,
+      "__sct_everyCalled": 2,
+      "__sct_everyOtherCalled": 1
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 2
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 3,
+      "__sct_everyCalled": 3,
+      "__sct_everyOtherCalled": 2
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 3
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 4,
+      "__sct_everyCalled": 4,
+      "__sct_everyOtherCalled": 2
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 4
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 5,
+      "__sct_everyCalled": 5,
+      "__sct_everyOtherCalled": 3
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 5
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 6,
+      "__sct_everyCalled": 6,
+      "__sct_everyOtherCalled": 3
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 6
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 7,
+      "__sct_everyCalled": 7,
+      "__sct_everyOtherCalled": 4
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 7
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 8,
+      "__sct_everyCalled": 8,
+      "__sct_everyOtherCalled": 4
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 8
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 9,
+      "__sct_everyCalled": 9,
+      "__sct_everyOtherCalled": 5
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 9
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 10,
+      "__sct_everyCalled": 10,
+      "__sct_everyOtherCalled": 5
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Charging",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 10
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Odd",
+    "Fields": {
+      "__sct_generationCount": 11,
+      "__sct_everyCalled": 11,
+      "__sct_everyOtherCalled": 6
+    },
+    "ClassName": "__sct_Town"
+  },
+  {
+    "State": "__sct_Terminating",
+    "Fields": {
+      "__sct_generationLimit": 10,
+      "__sct_generationCount": 10
+    },
+    "ClassName": "__sct_Terminator"
+  }
+][
+  {
+    "State": "__sct_Even",
+    "Fields": {
+      "__sct_generationCount": 12,
+      "__sct_everyCalled": 12,
+      "__sct_everyOtherCalled": 6
+    },
+    "ClassName": "__sct_Town"
+  }
+]

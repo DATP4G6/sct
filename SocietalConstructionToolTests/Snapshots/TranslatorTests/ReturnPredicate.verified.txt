@@ -12,14 +12,14 @@
             long __sct_childrenCount = ctx.QueryHandler.Count(ctx, __sct_getChildPredicate(ctx, __sct_townId));
         }
 
-        public static QueryPredicate __sct_getChildPredicate(IRuntimeContext ctx, int __sct_id)
+        public static QueryPredicate __sct_getChildPredicate(IRuntimeContext ctx, long __sct_id)
         {
             return new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", __sct_id) }));
         }
 
         public class __sct_Citizen : BaseAgent
         {
-            private int __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
+            private long __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
 
             public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {

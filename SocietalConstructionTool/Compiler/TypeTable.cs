@@ -15,7 +15,7 @@ namespace Sct.Compiler
         public static SctType Ok => Types["ok"];
         private static readonly Dictionary<string, SctType> Types = new()
         {
-            { "int", new SctType(typeof(int), "int") },
+            { "int", new SctType(typeof(long), "int") },
             { "float", new SctType(typeof(double), "float") },
             { "void", new SctType(typeof(void), "void")},
             { "Predicate", new SctType(typeof(QueryPredicate), "Predicate") },

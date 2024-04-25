@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static void __sct_testFunctionArgs(IRuntimeContext ctx, int __sct_intArgument, float __sct_floatArgument)
+        public static void __sct_testFunctionArgs(IRuntimeContext ctx, long __sct_intArgument, double __sct_floatArgument)
         {
         }
 
