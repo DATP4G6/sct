@@ -332,15 +332,13 @@ namespace Sct.Compiler.Translator
             var exp2 = _stack.Pop<ExpressionSyntax>();
             var exp1 = _stack.Pop<ExpressionSyntax>();
 
-            // switch expression does not need to descructure the context,
-            // so we determine it based on 'when'
             var @operator = context.op.Type switch
             {
-                { } op when op == SctLexer.PLUS => SyntaxKind.AddExpression,
-                { } op when op == SctLexer.MINUS => SyntaxKind.SubtractExpression,
-                { } op when op == SctLexer.MULT => SyntaxKind.MultiplyExpression,
-                { } op when op == SctLexer.DIV => SyntaxKind.DivideExpression,
-                { } op when op == SctLexer.MOD => SyntaxKind.ModuloExpression,
+                SctLexer.PLUS => SyntaxKind.AddExpression,
+                SctLexer.MINUS => SyntaxKind.SubtractExpression,
+                SctLexer.MULT => SyntaxKind.MultiplyExpression,
+                SctLexer.DIV => SyntaxKind.DivideExpression,
+                SctLexer.MOD => SyntaxKind.ModuloExpression,
                 _ => SyntaxKind.None
             };
 
