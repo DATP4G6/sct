@@ -6,5 +6,7 @@ pkgs.mkShell {
     dotnetCorePackages.runtime_8_0
     omnisharp-roslyn
     netcoredbg # Debug adapter interfacing with the nvim-dab bridge
+    hyperfine
+    python3
   ];
 }
