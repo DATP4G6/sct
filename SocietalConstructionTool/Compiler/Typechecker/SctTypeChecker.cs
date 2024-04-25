@@ -53,7 +53,8 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context) {
+        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
+        {
 
             return context.expression().Accept(this);
         }
