@@ -1,0 +1,45 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Type: {
+                    Type: Int
+                  },
+                  Value: 1
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: []
+                  }
+                },
+                Else: null
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

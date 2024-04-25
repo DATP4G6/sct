@@ -1,0 +1,43 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: []
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int
+              },
+              Id: townId
+            },
+            {
+              Type: {
+                Type: Float
+              },
+              Id: latitude
+            }
+          ]
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: []
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Float
+                },
+                Id: a,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Type: {
+                    Type: Float
+                  },
+                  Value: 1.5
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: b,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Type: {
+                      Type: Int
+                    },
+                    Value: 2
+                  },
+                  Right: {
+                    $type: SctTypecastExpressionSyntax,
+                    Type: {
+                      Type: Int
+                    },
+                    Expression: {
+                      $type: SctIdExpressionSyntax,
+                      Id: a
+                    }
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Float
+                },
+                Id: b,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Type: {
+                      Type: Int
+                    },
+                    Value: 4
+                  },
+                  Right: {
+                    $type: SctTypecastExpressionSyntax,
+                    Type: {
+                      Type: Float
+                    },
+                    Expression: {
+                      $type: SctIdExpressionSyntax,
+                      Id: b
+                    }
+                  },
+                  Op: Plus
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}
