@@ -53,6 +53,12 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
+        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
+        {
+
+            return context.expression().Accept(this);
+        }
+
         public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
             var type = context.type().Accept(this);
