@@ -170,7 +170,7 @@ namespace Sct
          * <param name="outputStream">The stream to output into</param>
          * <returns>The result of emitting</returns>
          */
-        private static EmitResult Emit(string sourceText, Stream outputStream)
+        public static EmitResult Emit(string sourceText, Stream outputStream)
         {
             string generatedAssemblyName = "sctGenerated";
             var tree = SyntaxFactory.ParseSyntaxTree(sourceText);

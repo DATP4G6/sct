@@ -1,0 +1,5 @@
+function Setup() -> void {
+    if (1) {
+
+    }
+}

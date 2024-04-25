@@ -1,0 +1,12 @@
+function Setup() -> void {
+    int a = count(TestAgent::A());
+    int b = count(TestAgent::?());
+    int c = exists(TestAgent::A());
+    int d = exists(TestAgent::?());
+}
+
+class TestAgent() {
+    state A {
+        exit;
+    }
+}

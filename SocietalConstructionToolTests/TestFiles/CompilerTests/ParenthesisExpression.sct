@@ -1,0 +1,10 @@
+class Test(int id) {
+    state Exiting {
+        exit;
+    }
+}
+
+function Setup() -> void {
+    int a = (2-1);
+    create Test::Exiting(id: a);
+}
