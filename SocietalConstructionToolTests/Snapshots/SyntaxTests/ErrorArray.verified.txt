@@ -1,0 +1,17 @@
+﻿[
+  {
+    Message: mismatched input '[' expecting ID,
+    Line: 2,
+    Column: 7
+  },
+  {
+    Message: extraneous input '[' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Line: 2,
+    Column: 19
+  },
+  {
+    Message: mismatched input ',' expecting ';',
+    Line: 2,
+    Column: 21
+  }
+]
