@@ -422,3 +422,5 @@ obj/
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,csharp
 
 **/.DS_Store
+
+benchmark/benchmark_files/*

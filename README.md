@@ -49,3 +49,18 @@ Or with Nix with flakes enabled:
 ```sh
 nix run
 ```
+
+## Benchmarking
+Benchmarking requires the following additional dependencies:
+- `hyperfine` to perform benchmarking
+- Python 3.11+ to generate the benchmark files
+
+To run the benchmarks, run the following commands:
+```sh
+cd benchmark
+./runBenchmark.sh <size>
+```
+
+The `size` argument given to the `runBenchmark` script determines the number of benchmark files to generate and run.
+Each benchmark file creates $2^n\cdot 1000$ agents (or 0 for $n=0$), where $n$ is the index of the benchmark file and simulate them for 10'000 ticks.
+As it is currently not possible to compile an SCT project without running or vice versa, the first test only runs a single tick, so that the timings can adjust for the compilation time.

@@ -205,7 +205,7 @@ namespace Sct
          * <param name="assembly">The assembly to run</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        private static void Run(Assembly assembly, IOutputLogger logger)
+        private static void Run(Assembly assembly, IOutputLogger? logger)
         {
             IRuntimeContext ctx = RuntimeContextFactory.Create(logger);
             Run(assembly, ctx);
@@ -231,7 +231,7 @@ namespace Sct
          * <param name="filename">The path of the SCT source file</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        public static IEnumerable<CompilerError> CompileAndRun(string[] filenames, IOutputLogger logger)
+        public static IEnumerable<CompilerError> CompileAndRun(string[] filenames, IOutputLogger? logger)
         {
 
             var (outputText, errors) = CompileSct(filenames);
