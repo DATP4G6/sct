@@ -2,16 +2,19 @@
   {
     Message: mismatched input '[' expecting ID,
     Line: 2,
-    Column: 7
+    Column: 7,
+    Filename: null
   },
   {
     Message: extraneous input '[' expecting {'-', '!', '(', ID, INT, FLOAT},
     Line: 2,
-    Column: 19
+    Column: 19,
+    Filename: null
   },
   {
     Message: mismatched input ',' expecting ';',
     Line: 2,
-    Column: 21
+    Column: 21,
+    Filename: null
   }
 ]

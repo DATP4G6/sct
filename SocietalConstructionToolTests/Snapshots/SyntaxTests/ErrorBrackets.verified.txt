@@ -2,6 +2,7 @@
   {
     Message: missing ')' at ';',
     Line: 2,
-    Column: 23
+    Column: 23,
+    Filename: null
   }
 ]
