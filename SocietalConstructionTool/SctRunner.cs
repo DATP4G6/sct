@@ -125,9 +125,19 @@ namespace Sct
             // Run static analysis on each file separately.
             foreach (var file in filenames)
             {
+
+                var parser = GetParser(file);
+
+                //adds an error listener before the parser starts
+                var errorListener = new SctErrorListener();
+                parser.AddErrorListener(errorListener);
+
                 // Save parser for later use.
-                startNodes[file] = GetParser(file).start();
+                startNodes[file] = parser.start();
                 var startNode = startNodes[file];
+
+                //adds syntax errors
+                errors.AddRange(errorListener.Errors.ToList());
 
                 // Run checks
                 var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
