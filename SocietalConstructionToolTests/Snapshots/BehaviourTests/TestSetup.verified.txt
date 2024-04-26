@@ -1,35 +1,35 @@
 ﻿[
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {},
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Stable",
+    "State": "Stable",
     "Fields": {
-      "__sct_townId": 0
+      "townId": 0
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   }
 ][
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {},
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Critical",
+    "State": "Critical",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   }
 ][
   {
-    "State": "__sct_Stable",
+    "State": "Stable",
     "Fields": {
-      "__sct_townId": 2
+      "townId": 2
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   }
 ]

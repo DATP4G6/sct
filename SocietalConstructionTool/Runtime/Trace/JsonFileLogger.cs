@@ -13,6 +13,10 @@ namespace Sct.Runtime.Trace
             file.Write(Encoding.UTF8.GetBytes(_builder.ToString()));
         }
 
-        public void OnTick(IRuntimeContext context) => _builder.Append(JsonSerializer.Serialize(context.AgentHandler.Agents) + '\n');
+        public void OnTick(IRuntimeContext context)
+            => _builder.Append(
+                JsonSerializer.Serialize(
+                    context.AgentHandler.Agents.Select(a => new AgentDemangler(a))
+                ) + '\n');
     }
 }
