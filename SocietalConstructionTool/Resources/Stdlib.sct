@@ -1,0 +1,68 @@
+class stdCounter(int x) {
+    state Counting {
+        if (x <= 0) {
+            exit;
+        }
+        x = x - 1;
+        enter Counting;
+    }
+}
+
+class stdPredicateExists(Predicate p) {
+    state ExitWhen {
+        if (exists(p)) {
+            exit;
+        }
+        enter ExitWhen;
+    }
+
+    state ExitWhenNo {
+        if (!exists(p)) {
+            exit;
+        }
+        enter ExitWhenNo;
+    }
+}
+
+class stdPredicateAmount(Predicate p, int x) {
+    state ExitLessThan {
+        if (count(p) < x) {
+            exit;
+        }
+        enter ExitLessThan;
+    }
+
+    state ExitMoreThan {
+        if (count(p) > x) {
+            exit;
+        }
+        enter ExitMoreThan;
+    }
+}
+
+
+
+// exit the simulation after the specified amount of ticks
+function ExitAfterTicks(int ticks) -> void {
+    create stdCounter::Counting(x: ticks);
+}
+
+// exit the simulation when there exists an agent fulfilling `pred`
+function ExitWhenExists(Predicate pred) -> void {
+    create stdPredicateExists::ExitWhen(p: pred);
+}
+
+// exit the simulation when there no longer exists any agents fulfilling `pred`
+function ExitWhenNoLongerExists(Predicate pred) -> void {
+    create stdPredicateExists::ExitWhenNo(p: pred);
+}
+
+// exit the simulation when there exists `amount` agents fulfilling `pred`
+function ExitWhenMoreThan(Predicate pred, int amount) -> void {
+    create stdPredicateAmount::ExitMoreThan(p: pred, x: amount);
+}
+
+// exit the simulation when there are less than `amount` agents fulfilling `pred`
+function ExitWhenLessThan(Predicate pred, int amount) -> void {
+    create stdPredicateAmount::ExitLessThan(p: pred, x: amount);
+}

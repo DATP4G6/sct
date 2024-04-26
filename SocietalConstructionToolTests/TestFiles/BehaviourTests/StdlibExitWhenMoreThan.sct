@@ -1,0 +1,14 @@
+class Foo() {
+    state Bar {
+        enter Baz;
+    }
+    state Baz {
+        create Foo::Bar();
+        enter Baz;
+    }
+}
+
+function Setup() -> void {
+    create Foo::Bar();
+    ExitWhenMoreThan(Foo::Baz(), 1);
+}

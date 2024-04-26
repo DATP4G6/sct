@@ -1,0 +1,47 @@
+﻿[
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitLessThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": null,
+        "Fields": {}
+      },
+      "x": 2
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitLessThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": null,
+        "Fields": {}
+      },
+      "x": 2
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][]

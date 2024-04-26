@@ -1,0 +1,41 @@
+﻿[
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitWhenNo",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Bar",
+        "Fields": {}
+      }
+    },
+    "ClassName": "stdPredicateExists"
+  }
+][
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitWhenNo",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Bar",
+        "Fields": {}
+      }
+    },
+    "ClassName": "stdPredicateExists"
+  }
+][
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  }
+]

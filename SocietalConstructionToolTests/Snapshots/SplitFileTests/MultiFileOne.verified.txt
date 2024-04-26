@@ -6,6 +6,148 @@
 
     public class GlobalClass
     {
+        public static void __sct_ExitWhenLessThan(IRuntimeContext ctx, QueryPredicate __sct_pred, long __sct_amount)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicateAmount("__sct_ExitLessThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred), new KeyValuePair<String, dynamic>("__sct_x", __sct_amount) })));
+        }
+
+        public static void __sct_ExitWhenMoreThan(IRuntimeContext ctx, QueryPredicate __sct_pred, long __sct_amount)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicateAmount("__sct_ExitMoreThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred), new KeyValuePair<String, dynamic>("__sct_x", __sct_amount) })));
+        }
+
+        public static void __sct_ExitWhenNoLongerExists(IRuntimeContext ctx, QueryPredicate __sct_pred)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicateExists("__sct_ExitWhenNo", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred) })));
+        }
+
+        public static void __sct_ExitWhenExists(IRuntimeContext ctx, QueryPredicate __sct_pred)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicateExists("__sct_ExitWhen", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred) })));
+        }
+
+        public static void __sct_ExitAfterTicks(IRuntimeContext ctx, long __sct_ticks)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdCounter("__sct_Counting", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_x", __sct_ticks) })));
+        }
+
+        public class __sct_stdPredicateAmount : BaseAgent
+        {
+            private QueryPredicate __sct_p { get => Fields["__sct_p"]; set => Fields["__sct_p"] = value; }
+            private long __sct_x { get => Fields["__sct_x"]; set => Fields["__sct_x"] = value; }
+
+            public __sct_stdPredicateAmount(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_ExitLessThan(IRuntimeContext ctx)
+            {
+                if (((((ctx.QueryHandler.Count(ctx, __sct_p) < __sct_x) ? 1 : 0))) != 0)
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                Enter(ctx, "__sct_ExitLessThan");
+                return true;
+                return false;
+            }
+
+            private bool __sct_ExitMoreThan(IRuntimeContext ctx)
+            {
+                if (((((ctx.QueryHandler.Count(ctx, __sct_p) > __sct_x) ? 1 : 0))) != 0)
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                Enter(ctx, "__sct_ExitMoreThan");
+                return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_ExitLessThan" => __sct_ExitLessThan(ctx),
+                    "__sct_ExitMoreThan" => __sct_ExitMoreThan(ctx)};
+            }
+        }
+
+        public class __sct_stdPredicateExists : BaseAgent
+        {
+            private QueryPredicate __sct_p { get => Fields["__sct_p"]; set => Fields["__sct_p"] = value; }
+
+            public __sct_stdPredicateExists(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_ExitWhen(IRuntimeContext ctx)
+            {
+                if (((ctx.QueryHandler.Exists(ctx, __sct_p))) != 0)
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                Enter(ctx, "__sct_ExitWhen");
+                return true;
+                return false;
+            }
+
+            private bool __sct_ExitWhenNo(IRuntimeContext ctx)
+            {
+                if (((ctx.QueryHandler.Exists(ctx, __sct_p) == 0 ? 1 : 0)) != 0)
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                Enter(ctx, "__sct_ExitWhenNo");
+                return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_ExitWhen" => __sct_ExitWhen(ctx),
+                    "__sct_ExitWhenNo" => __sct_ExitWhenNo(ctx)};
+            }
+        }
+
+        public class __sct_stdCounter : BaseAgent
+        {
+            private long __sct_x { get => Fields["__sct_x"]; set => Fields["__sct_x"] = value; }
+
+            public __sct_stdCounter(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Counting(IRuntimeContext ctx)
+            {
+                if (((((__sct_x <= 0) ? 1 : 0))) != 0)
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                __sct_x = (__sct_x - 1);
+                Enter(ctx, "__sct_Counting");
+                return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Counting" => __sct_Counting(ctx)};
+            }
+        }
+
         public class __sct_Town : BaseAgent
         {
             private long __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
