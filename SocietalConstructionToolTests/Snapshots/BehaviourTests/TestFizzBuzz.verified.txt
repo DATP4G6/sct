@@ -1,619 +1,619 @@
 ﻿[
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 0
+      "startCount": 0
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 0
+      "generationLimit": 30,
+      "generationCount": 0
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 1
+      "startCount": 1
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 1
+      "generationLimit": 30,
+      "generationCount": 1
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 2
+      "startCount": 2
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 2
+      "generationLimit": 30,
+      "generationCount": 2
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 3
+      "triggerNumber": 3
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 3
+      "startCount": 3
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 3
+      "generationLimit": 30,
+      "generationCount": 3
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 4
+      "startCount": 4
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 4
+      "generationLimit": 30,
+      "generationCount": 4
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 5
+      "triggerNumber": 5
     },
-    "ClassName": "__sct_Buzz"
+    "ClassName": "Buzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 5
+      "startCount": 5
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 5
+      "generationLimit": 30,
+      "generationCount": 5
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 6
+      "triggerNumber": 6
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 6
+      "startCount": 6
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 6
+      "generationLimit": 30,
+      "generationCount": 6
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 7
+      "startCount": 7
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 7
+      "generationLimit": 30,
+      "generationCount": 7
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 8
+      "startCount": 8
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 8
+      "generationLimit": 30,
+      "generationCount": 8
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 9
+      "triggerNumber": 9
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 9
+      "startCount": 9
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 9
+      "generationLimit": 30,
+      "generationCount": 9
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 10
+      "triggerNumber": 10
     },
-    "ClassName": "__sct_Buzz"
+    "ClassName": "Buzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 10
+      "startCount": 10
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 10
+      "generationLimit": 30,
+      "generationCount": 10
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 11
+      "startCount": 11
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 11
+      "generationLimit": 30,
+      "generationCount": 11
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 12
+      "triggerNumber": 12
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 12
+      "startCount": 12
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 12
+      "generationLimit": 30,
+      "generationCount": 12
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 13
+      "startCount": 13
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 13
+      "generationLimit": 30,
+      "generationCount": 13
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 14
+      "startCount": 14
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 14
+      "generationLimit": 30,
+      "generationCount": 14
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 15
+      "triggerNumber": 15
     },
-    "ClassName": "__sct_FizzBuzz"
+    "ClassName": "FizzBuzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 15
+      "startCount": 15
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 15
+      "generationLimit": 30,
+      "generationCount": 15
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 16
+      "startCount": 16
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 16
+      "generationLimit": 30,
+      "generationCount": 16
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 17
+      "startCount": 17
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 17
+      "generationLimit": 30,
+      "generationCount": 17
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 18
+      "triggerNumber": 18
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 18
+      "startCount": 18
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 18
+      "generationLimit": 30,
+      "generationCount": 18
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 19
+      "startCount": 19
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 19
+      "generationLimit": 30,
+      "generationCount": 19
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 20
+      "triggerNumber": 20
     },
-    "ClassName": "__sct_Buzz"
+    "ClassName": "Buzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 20
+      "startCount": 20
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 20
+      "generationLimit": 30,
+      "generationCount": 20
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 21
+      "triggerNumber": 21
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 21
+      "startCount": 21
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 21
+      "generationLimit": 30,
+      "generationCount": 21
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 22
+      "startCount": 22
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 22
+      "generationLimit": 30,
+      "generationCount": 22
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 23
+      "startCount": 23
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 23
+      "generationLimit": 30,
+      "generationCount": 23
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 24
+      "triggerNumber": 24
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 24
+      "startCount": 24
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 24
+      "generationLimit": 30,
+      "generationCount": 24
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 25
+      "triggerNumber": 25
     },
-    "ClassName": "__sct_Buzz"
+    "ClassName": "Buzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 25
+      "startCount": 25
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 25
+      "generationLimit": 30,
+      "generationCount": 25
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 26
+      "startCount": 26
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 26
+      "generationLimit": 30,
+      "generationCount": 26
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 27
+      "triggerNumber": 27
     },
-    "ClassName": "__sct_Fizz"
+    "ClassName": "Fizz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 27
+      "startCount": 27
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 27
+      "generationLimit": 30,
+      "generationCount": 27
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 28
+      "startCount": 28
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 28
+      "generationLimit": 30,
+      "generationCount": 28
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 29
+      "startCount": 29
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 29
+      "generationLimit": 30,
+      "generationCount": 29
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Triggered",
+    "State": "Triggered",
     "Fields": {
-      "__sct_triggerNumber": 30
+      "triggerNumber": 30
     },
-    "ClassName": "__sct_FizzBuzz"
+    "ClassName": "FizzBuzz"
   },
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 30
+      "startCount": 30
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Charging",
+    "State": "Charging",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 30
+      "generationLimit": 30,
+      "generationCount": 30
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 31
+      "startCount": 31
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   },
   {
-    "State": "__sct_Terminating",
+    "State": "Terminating",
     "Fields": {
-      "__sct_generationLimit": 30,
-      "__sct_generationCount": 30
+      "generationLimit": 30,
+      "generationCount": 30
     },
-    "ClassName": "__sct_Terminator"
+    "ClassName": "Terminator"
   }
 ][
   {
-    "State": "__sct_Managing",
+    "State": "Managing",
     "Fields": {
-      "__sct_startCount": 32
+      "startCount": 32
     },
-    "ClassName": "__sct_Manager"
+    "ClassName": "Manager"
   }
 ]

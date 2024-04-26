@@ -1,249 +1,249 @@
 ﻿[
   {
-    "State": "__sct_Counting",
+    "State": "Counting",
     "Fields": {
-      "__sct_generation": 0,
-      "__sct_seed": 123
+      "generation": 0,
+      "seed": 123
     },
-    "ClassName": "__sct_GenerationCounter"
+    "ClassName": "GenerationCounter"
   },
   {
-    "State": "__sct_Small",
+    "State": "Small",
     "Fields": {
-      "__sct_id": 1
+      "id": 1
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   },
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Child",
+    "State": "Child",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   }
 ][
   {
-    "State": "__sct_Counting",
+    "State": "Counting",
     "Fields": {
-      "__sct_generation": 1,
-      "__sct_seed": 123
+      "generation": 1,
+      "seed": 123
     },
-    "ClassName": "__sct_GenerationCounter"
+    "ClassName": "GenerationCounter"
   },
   {
-    "State": "__sct_Small",
+    "State": "Small",
     "Fields": {
-      "__sct_id": 1
+      "id": 1
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   }
 ][
   {
-    "State": "__sct_Counting",
+    "State": "Counting",
     "Fields": {
-      "__sct_generation": 2,
-      "__sct_seed": 123
+      "generation": 2,
+      "seed": 123
     },
-    "ClassName": "__sct_GenerationCounter"
+    "ClassName": "GenerationCounter"
   },
   {
-    "State": "__sct_Small",
+    "State": "Small",
     "Fields": {
-      "__sct_id": 1
+      "id": 1
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   }
 ][
   {
-    "State": "__sct_Counting",
+    "State": "Counting",
     "Fields": {
-      "__sct_generation": 3,
-      "__sct_seed": 123
+      "generation": 3,
+      "seed": 123
     },
-    "ClassName": "__sct_GenerationCounter"
+    "ClassName": "GenerationCounter"
   },
   {
-    "State": "__sct_Small",
+    "State": "Small",
     "Fields": {
-      "__sct_id": 1
+      "id": 1
     },
-    "ClassName": "__sct_Town"
+    "ClassName": "Town"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   }
 ][
   {
-    "State": "__sct_Counting",
+    "State": "Counting",
     "Fields": {
-      "__sct_generation": 4,
-      "__sct_seed": 123
+      "generation": 4,
+      "seed": 123
     },
-    "ClassName": "__sct_GenerationCounter"
+    "ClassName": "GenerationCounter"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Adult",
+    "State": "Adult",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   },
   {
-    "State": "__sct_Dead",
+    "State": "Dead",
     "Fields": {
-      "__sct_townId": 1
+      "townId": 1
     },
-    "ClassName": "__sct_Citizen"
+    "ClassName": "Citizen"
   }
 ]

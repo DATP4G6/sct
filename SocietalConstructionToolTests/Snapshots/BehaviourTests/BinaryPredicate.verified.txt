@@ -1,32 +1,32 @@
 ﻿[
   {
-    "State": "__sct_Equal",
+    "State": "Equal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   },
   {
-    "State": "__sct_Equal",
+    "State": "Equal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   },
   {
-    "State": "__sct_Equal",
+    "State": "Equal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   },
   {
-    "State": "__sct_Unequal",
+    "State": "Unequal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   },
   {
-    "State": "__sct_Unequal",
+    "State": "Unequal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   },
   {
-    "State": "__sct_Unequal",
+    "State": "Unequal",
     "Fields": {},
-    "ClassName": "__sct_Output"
+    "ClassName": "Output"
   }
 ][]
