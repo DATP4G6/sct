@@ -37,7 +37,9 @@ namespace Sct
             ICharStream stream = CharStreams.fromString(input);
             ITokenSource lexer = new SctLexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
-            return new SctParser(tokens);
+            SctParser parser = new(tokens);
+            parser.RemoveErrorListeners();
+            return parser;
         }
 
         /**
@@ -136,11 +138,11 @@ namespace Sct
                 startNodes[file] = parser.start();
                 var startNode = startNodes[file];
 
-                //adds syntax errors
-                errors.AddRange(errorListener.Errors.ToList());
-
                 // Run checks
                 var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
+
+                //adds syntax errors
+                fileErrors.AddRange(errorListener.Errors.ToList());
 
                 // Annotate each error with the filename.
                 foreach (var error in fileErrors)

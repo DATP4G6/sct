@@ -2,12 +2,14 @@
   {
     Message: mismatched input 'void' expecting {'-', '!', '(', ID, INT, FLOAT},
     Line: 4,
-    Column: 8
+    Column: 8,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongExpressionIf.sct
   },
   {
     Message: mismatched input 'void' expecting {'-', '!', '(', ID, INT, FLOAT},
     Line: 5,
-    Column: 13
+    Column: 13,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongExpressionIf.sct
   },
   {
     Message: Boolean expression must be numeric.,

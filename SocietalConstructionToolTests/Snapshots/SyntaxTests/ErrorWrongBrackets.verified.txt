@@ -2,11 +2,13 @@
   {
     Message: extraneous input '{' expecting {'-', '!', '(', ID, INT, FLOAT},
     Line: 2,
-    Column: 17
+    Column: 17,
+    Filename: null
   },
   {
     Message: extraneous input '}' expecting ';',
     Line: 2,
-    Column: 23
+    Column: 23,
+    Filename: null
   }
 ]

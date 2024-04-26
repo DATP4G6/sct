@@ -2,11 +2,13 @@
   {
     Message: missing '}' at 'state',
     Line: 3,
-    Column: 8
+    Column: 8,
+    Filename: null
   },
   {
     Message: extraneous input '}' expecting {<EOF>, 'function', 'class'},
     Line: 7,
-    Column: 0
+    Column: 0,
+    Filename: null
   }
 ]
