@@ -1,0 +1,19 @@
+class Foo() {
+    state A {
+        destroy;
+    }
+
+    state B {
+        enter B;
+    }
+
+    state C {
+        exit;
+    }
+
+    state D {
+
+    }
+}
+
+function Setup() -> void {}
