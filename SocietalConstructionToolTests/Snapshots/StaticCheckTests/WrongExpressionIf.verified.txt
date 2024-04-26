@@ -1,5 +1,15 @@
 ﻿[
   {
+    Message: mismatched input 'void' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Line: 4,
+    Column: 8
+  },
+  {
+    Message: mismatched input 'void' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Line: 5,
+    Column: 13
+  },
+  {
     Message: Boolean expression must be numeric.,
     Line: 4,
     Column: 8,

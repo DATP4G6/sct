@@ -1,4 +1,4 @@
-using Antlr4.Runtime;
+using Sct;
 
 using Sct.Compiler;
 
@@ -7,9 +7,7 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class SyntaxTests : AbstractSnapshotTests
     {
-        private static IEnumerable<string[]> Files =>
-           Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "TestFiles", "SyntaxTests"))
-           .Select(f => new[] { f });
+        private static IEnumerable<string[]> Files => GetTestFiles("SyntaxTests");
 
         [DataTestMethod]
         [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
@@ -18,11 +16,7 @@ namespace SocietalConstructionToolTests
             UseProjectRelativeDirectory("Snapshots/SyntaxTests"); // save snapshots here
             var snapshotFileName = Path.GetFileNameWithoutExtension(testFile);
 
-            string input = await File.ReadAllTextAsync(testFile);
-            ICharStream stream = CharStreams.fromString(input);
-            ITokenSource lexer = new SctLexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            SctParser parser = new(tokens);
+            var parser = await SctRunner.GetParserAsync(testFile);
             var errorListener = new SctErrorListener();
             parser.AddErrorListener(errorListener);
             _ = parser.start();

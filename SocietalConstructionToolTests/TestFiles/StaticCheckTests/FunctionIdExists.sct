@@ -9,7 +9,7 @@ function test(int var1) -> int {
 class Citizen(int townId) {
     function test(int var1) -> int {
         return 1;
-    };
+    }
 }
 
 function Setup() -> void {

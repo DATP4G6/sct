@@ -1,4 +1,3 @@
-
 using Antlr4.Runtime;
 
 namespace Sct.Compiler
@@ -12,7 +11,6 @@ namespace Sct.Compiler
         {
             _errors.Add(new CompilerError(msg, line, charPositionInLine));
         }
-
     }
 }
 

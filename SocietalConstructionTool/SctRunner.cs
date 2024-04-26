@@ -87,13 +87,9 @@ namespace Sct
             return (outputText, []);
         }
 
-        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder, SctParser parser)
+        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder)
         {
             var errors = new List<CompilerError>();
-
-            var errorListener = new SctErrorListener();
-            parser.AddErrorListener(errorListener);
-            errors.AddRange(errorListener.Errors.ToList());
 
             KeywordContextCheckVisitor keywordChecker = new();
             var keywordErrors = startNode.Accept(keywordChecker).ToList();
@@ -129,13 +125,22 @@ namespace Sct
             // Run static analysis on each file separately.
             foreach (var file in filenames)
             {
-                // Save parser for later use.
+
                 var parser = GetParser(file);
+
+                //adds an error listener before the parser starts
+                var errorListener = new SctErrorListener();
+                parser.AddErrorListener(errorListener);
+
+                // Save parser for later use.
                 startNodes[file] = parser.start();
                 var startNode = startNodes[file];
 
+                //adds syntax errors
+                errors.AddRange(errorListener.Errors.ToList());
+
                 // Run checks
-                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder, parser);
+                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
 
                 // Annotate each error with the filename.
                 foreach (var error in fileErrors)
