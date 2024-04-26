@@ -1,0 +1,16 @@
+class Foo() {
+    state Bar {
+        enter Baz;
+    }
+    state Baz {
+        destroy;
+    }
+}
+
+function Setup() -> void {
+    create Foo::Bar();
+    create Foo::Baz();
+    create Foo::Baz();
+    ExitWhenLessThan(Foo::?(), 2);
+}
+

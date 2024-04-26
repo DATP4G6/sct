@@ -42,6 +42,9 @@ namespace Sct
             return parser;
         }
 
+        private static IEnumerable<string> StdLibFilename =>
+            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources"));
+
         /**
          * <summary>
          * Reads an SCT source file, statically chekcs it and translates it into C# code
@@ -49,13 +52,10 @@ namespace Sct
          * <param name="filenames">The path of the SCT source file</param>
          * <returns>The resulting C# source, or null if compilation failed</returns>
          */
-        public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(string[] filenames)
+        public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(IEnumerable<string> filenames)
         {
-            // Make SctTableVisitor take a CTableBuilder as a parameter
-            // Analyse each file separately
-            // Add file name to each found error.
-            // Call CTabelBuilder.BuildCtable() after all files have been visited
-            // Run the translator on all files concatenated.
+            // Add stdlib to the list of files to compile
+            filenames = filenames.Concat(StdLibFilename);
 
             var errors = RunStaticChecks(filenames);
 
@@ -115,7 +115,7 @@ namespace Sct
             return typeChecker.Errors.ToList();
         }
 
-        public static List<CompilerError> RunStaticChecks(string[] filenames)
+        public static List<CompilerError> RunStaticChecks(IEnumerable<string> filenames)
         {
             // Create a CTableBuilder that is used for all files.
             CTableBuilder cTableBuilder = new();
@@ -243,9 +243,8 @@ namespace Sct
          * <param name="filename">The path of the SCT source file</param>
          * <param name="logger">The logger to use to output the result of the simulation</param>
          */
-        public static IEnumerable<CompilerError> CompileAndRun(string[] filenames, IOutputLogger? logger)
+        public static IEnumerable<CompilerError> CompileAndRun(IEnumerable<string> filenames, IOutputLogger? logger)
         {
-
             var (outputText, errors) = CompileSct(filenames);
 
             // TODO: Handle errors from ANTLR. They are not currently being passed to the errors list.
@@ -273,16 +272,7 @@ namespace Sct
             return [];
         }
 
-        private static string ConcatenateFiles(string[] filenames)
-        {
-
-            string result = string.Empty;
-            foreach (var file in filenames)
-            {
-                result += File.ReadAllText(file);
-            }
-
-            return result;
-        }
+        private static string ConcatenateFiles(IEnumerable<string> filenames)
+            => filenames.Select(File.ReadAllText).Aggregate((acc, next) => acc + next);
     }
 }

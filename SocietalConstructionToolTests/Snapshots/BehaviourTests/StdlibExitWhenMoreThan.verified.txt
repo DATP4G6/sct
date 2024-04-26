@@ -1,0 +1,114 @@
+﻿[
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitMoreThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Baz",
+        "Fields": {}
+      },
+      "x": 1
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitMoreThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Baz",
+        "Fields": {}
+      },
+      "x": 1
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitMoreThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Baz",
+        "Fields": {}
+      },
+      "x": 1
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "ExitMoreThan",
+    "Fields": {
+      "p": {
+        "ClassName": "__sct_Foo",
+        "State": "__sct_Baz",
+        "Fields": {}
+      },
+      "x": 1
+    },
+    "ClassName": "stdPredicateAmount"
+  }
+][
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Bar",
+    "Fields": {},
+    "ClassName": "Foo"
+  },
+  {
+    "State": "Baz",
+    "Fields": {},
+    "ClassName": "Foo"
+  }
+]

@@ -1,0 +1,13 @@
+class Foo() {
+    state Bar {
+        enter Baz;
+    }
+    state Baz {
+        enter Baz;
+    }
+}
+
+function Setup() -> void {
+    create Foo::Bar();
+    ExitWhenNoLongerExists(Foo::Bar());
+}
