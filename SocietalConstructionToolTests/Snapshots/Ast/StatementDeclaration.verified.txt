@@ -1,0 +1,56 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: []
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctDeclarationStatementSyntax,
+                      Type: {
+                        Type: Int
+                      },
+                      Id: age,
+                      Expression: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Type: {
+                          Type: Int
+                        },
+                        Value: 5
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      }
+    ]
+  }
+}

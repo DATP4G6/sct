@@ -1,0 +1,732 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: fullEqual,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: fullEqual2,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: fullDifferent,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 3
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: partialEqual,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: partialEqual2,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: partialDifferent,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: Bar,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: wildcardEqual,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: null,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: wildcardEqual2,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: null,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 1
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Predicate
+                },
+                Id: wildcardDifferent,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Foo,
+                  StateName: null,
+                  Fields: {
+                    a: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 2
+                    },
+                    b: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Type: {
+                        Type: Int
+                      },
+                      Value: 3
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: equal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: fullEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: fullEqual2
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctIdExpressionSyntax,
+                  Id: equal
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: equal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: partialEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: partialEqual2
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctIdExpressionSyntax,
+                  Id: equal
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: equal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: wildcardEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: wildcardEqual2
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctIdExpressionSyntax,
+                  Id: equal
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: unequal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: fullEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: fullDifferent
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctNotExpressionSyntax,
+                  Expression: {
+                    $type: SctIdExpressionSyntax,
+                    Id: unequal
+                  }
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: unequal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: partialEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: partialDifferent
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctNotExpressionSyntax,
+                  Expression: {
+                    $type: SctIdExpressionSyntax,
+                    Id: unequal
+                  }
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: unequal,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctIdExpressionSyntax,
+                    Id: wildcardEqual
+                  },
+                  Right: {
+                    $type: SctIdExpressionSyntax,
+                    Id: wildcardDifferent
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctIfStatementSyntax,
+                Expression: {
+                  $type: SctNotExpressionSyntax,
+                  Expression: {
+                    $type: SctIdExpressionSyntax,
+                    Id: unequal
+                  }
+                },
+                Block: {
+                  Statements: {
+                    $type: IEnumerable<SctStatementSyntax>,
+                    $values: [
+                      {
+                        $type: SctCreateStatementSyntax,
+                        Agent: {
+                          ClassName: Output,
+                          StateName: Equal,
+                          Fields: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                Else: {
+                  Block: {
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctCreateStatementSyntax,
+                          Agent: {
+                            ClassName: Output,
+                            StateName: Unequal,
+                            Fields: null
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Foo,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int
+              },
+              Id: a
+            },
+            {
+              Type: {
+                Type: Int
+              },
+              Id: b
+            }
+          ]
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Bar,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: End
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              Id: Baz,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: End
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              Id: End,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctExitStatementSyntax
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      },
+      {
+        Id: Output,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Equal,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Equal
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              Id: Unequal,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Equal
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      }
+    ]
+  }
+}

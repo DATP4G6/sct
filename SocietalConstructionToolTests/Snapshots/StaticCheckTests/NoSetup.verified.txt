@@ -1,5 +1,8 @@
 ﻿[
   {
-    Message: No setup function found
+    Message: No setup function found,
+    Line: null,
+    Column: null,
+    Filename: null
   }
 ]
