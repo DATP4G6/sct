@@ -292,11 +292,13 @@ namespace Sct.Compiler.Typechecker
             }
 
             var targetAgentFields = targetClass.Fields;
-            var classArgumentIds = context.args_agent().ID();
+            var classArgumentIds = context.args_agent()?.ID() ?? [];
+            var classArgumentExpressions = context.args_agent()?.expression() ?? [];
+
 
             var seenFields = new HashSet<string>();
 
-            foreach (var (id, expression) in classArgumentIds.Zip(context.args_agent().expression()))
+            foreach (var (id, expression) in classArgumentIds.Zip(classArgumentExpressions))
             {
                 if (!targetAgentFields.ContainsKey(id.GetText()))
                 {
@@ -340,12 +342,13 @@ namespace Sct.Compiler.Typechecker
             }
 
             var targetClassFields = targetClass.Fields;
-            var classArgumentIds = context.args_agent().ID();
+            var classArgumentIds = context.args_agent()?.ID() ?? [];
+            var classArgumentExpressions = context.args_agent()?.expression() ?? [];
 
 
             var seenFields = new HashSet<string>();
 
-            foreach (var (id, expression) in classArgumentIds.Zip(context.args_agent().expression()))
+            foreach (var (id, expression) in classArgumentIds.Zip(classArgumentExpressions))
             {
                 if (!targetClassFields.ContainsKey(id.GetText()))
                 {
