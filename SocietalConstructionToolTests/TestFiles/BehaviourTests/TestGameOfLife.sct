@@ -1,0 +1,92 @@
+// Cells are either alive or dead
+//
+// The rules are (from wikipedia):
+// - Any live cell with fewer than two live neighbors dies, as if by underpopulation.
+// - Any live cell with two or three live neighbors lives on to the next generation.
+// - Any live cell with more than three live neighbors dies, as if by overpopulation.
+// - Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+//
+// For more info, see https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+class Cell(int x, int y) {
+    state Alive {
+        int alive = countNeighboors(x, y);
+
+        // Die if less than 2 or more than 3 neighboors.
+        if (alive < 2 || alive > 3) {
+            enter Dead;
+        }
+        enter Alive;
+    }
+
+    state Dead {
+        if (countNeighboors(x, y) == 3) {
+            enter Alive;
+        }
+        enter Dead;
+    }
+}
+
+// Stop the game if all cells are dead
+class Observer() {
+    state Observing {
+        if (exists(Cell::Alive())) {
+            enter Observing;
+        }
+        exit;
+    }
+}
+
+// Count how many neighboors are alive
+function countNeighboors(int x, int y) -> int {
+    int alive = 0;
+    int nx = x-1;
+    while (nx < x+2) {
+        int ny = y-1;
+        while (ny < y+2) {
+            if (nx != x && ny != y) {
+                alive = alive + exists(Cell::Alive(x:nx, y:ny));
+            }
+            ny = ny+1;
+        }
+        nx = nx+1;
+    }
+    return alive;
+}
+
+function Setup() -> void {
+
+    int height = 10;
+    int width = 10;
+
+    // Fill board with dead cells
+    int x = 0;
+    while(x < height) {
+        int y = 0;
+        while (y < width) {
+            create Cell::Dead(x:x, y:y);
+            y = y+1;
+        }
+        x = x+1;
+    }
+
+    // Create observer to stop the game if all cells die
+    create Observer::Observing();
+
+    // Draw initial configuration
+    // This example draws the glider
+    //
+    // .o.
+    // ..o
+    // ooo
+
+    // .o.
+    create Cell::Alive(x:0, y:1);
+
+    // ..o
+    create Cell::Alive(x:1, y:2);
+
+    // ooo
+    create Cell::Alive(x:2, y:0);
+    create Cell::Alive(x:2, y:1);
+    create Cell::Alive(x:2, y:2);
+}
