@@ -1,0 +1,9 @@
+class Foo() {
+    state Bar {
+        exit;
+    }
+}
+
+function Setup() -> void {
+    Predicate p = Foo::Bar();
+}
