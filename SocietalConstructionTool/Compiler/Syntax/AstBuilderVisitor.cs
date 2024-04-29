@@ -274,6 +274,8 @@ namespace Sct.Compiler.Syntax
 
         private IEnumerable<SctNamedArgumentSyntax> ParseArgsAgent(SctParser.Args_agentContext argsAgent)
         {
+            if (argsAgent == null)
+                return Enumerable.Empty<SctNamedArgumentSyntax>();
             var ids = argsAgent.ID().Select(id => id.GetText());
             var expressions = argsAgent.expression().Select(expression => expression.Accept(this)).Cast<SctExpressionSyntax>();
             var fields = ids.Zip(expressions,
@@ -283,6 +285,8 @@ namespace Sct.Compiler.Syntax
 
         private IEnumerable<SctParameterSyntax> ParseParameters(SctParser.Args_defContext context)
         {
+            if (context == null)
+                return Enumerable.Empty<SctParameterSyntax>();
             var ids = context.ID().Select(id => id.GetText());
             var types = context.type().Select(type => (SctTypeSyntax)type.Accept(this));
             return ids.Zip(types, (id, type) => new SctParameterSyntax(context, type, id));
