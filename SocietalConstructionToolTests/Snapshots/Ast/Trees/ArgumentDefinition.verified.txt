@@ -1,0 +1,315 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: []
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 14
+                }
+              },
+              Id: townId,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Int,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 14
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            },
+            {
+              Type: {
+                Type: Float,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 26
+                }
+              },
+              Id: latitude,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Float,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 26
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            }
+          ]
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: []
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctParameterSyntax,
+              Type: {
+                Type: Int,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 14
+                }
+              },
+              Id: townId,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Int,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 14
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            },
+            {
+              $type: SctParameterSyntax,
+              Type: {
+                Type: Float,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 26
+                }
+              },
+              Id: latitude,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Float,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 26
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Children: {
+    $type: IEnumerable<SctSyntax>,
+    $values: [
+      {
+        $type: SctClassSyntax,
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 14
+                }
+              },
+              Id: townId,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Int,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 14
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            },
+            {
+              Type: {
+                Type: Float,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 26
+                }
+              },
+              Id: latitude,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Float,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 26
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            }
+          ]
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: []
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctParameterSyntax,
+              Type: {
+                Type: Int,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 14
+                }
+              },
+              Id: townId,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Int,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 14
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            },
+            {
+              $type: SctParameterSyntax,
+              Type: {
+                Type: Float,
+                Children: null,
+                Context: {
+                  Line: 1,
+                  Column: 26
+                }
+              },
+              Id: latitude,
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctTypeSyntax,
+                    Type: Float,
+                    Children: null,
+                    Context: {
+                      Line: 1,
+                      Column: 26
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 1,
+                Column: 14
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Context: {
+    Line: 1,
+    Column: 0
+  }
+}

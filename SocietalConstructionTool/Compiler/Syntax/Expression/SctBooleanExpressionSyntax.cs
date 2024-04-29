@@ -1,3 +1,5 @@
+using Antlr4.Runtime;
+
 namespace Sct.Compiler.Syntax
 {
     public enum SctBooleanOperator
@@ -13,10 +15,11 @@ namespace Sct.Compiler.Syntax
         Not
     }
 
-    public class SctBooleanExpressionSyntax(SctExpressionSyntax left, SctExpressionSyntax right, SctBooleanOperator op) : SctExpressionSyntax
+    public class SctBooleanExpressionSyntax(ParserRuleContext context, SctExpressionSyntax left, SctExpressionSyntax right, SctBooleanOperator op) : SctExpressionSyntax(context)
     {
         public SctExpressionSyntax Left => left;
         public SctExpressionSyntax Right => right;
         public SctBooleanOperator Op => op;
+        public override IEnumerable<SctSyntax> Children => [Left, Right];
     }
 }

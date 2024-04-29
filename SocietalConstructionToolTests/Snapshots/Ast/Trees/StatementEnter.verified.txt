@@ -1,0 +1,555 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: []
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Child,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 8,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 8,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctStateSyntax,
+              Id: Child,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 8,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 8,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Children: {
+    $type: IEnumerable<SctSyntax>,
+    $values: [
+      {
+        $type: SctClassSyntax,
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Child,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 8,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 8,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctStateSyntax,
+              Id: Child,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Adult,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 8,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 8,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Context: {
+    Line: 1,
+    Column: 0
+  }
+}

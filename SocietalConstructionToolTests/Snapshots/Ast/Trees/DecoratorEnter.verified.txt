@@ -1,0 +1,719 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: []
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Town,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: [
+            {
+              Id: decor,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            }
+          ]
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Stable,
+              Decorations: {
+                $type: IEnumerable<string>,
+                $values: [
+                  decor
+                ]
+              },
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 9,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 9,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            },
+            {
+              Id: Growing,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 13,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 13,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 11,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctDecoratorSyntax,
+              Id: decor,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Stable,
+              Decorations: {
+                $type: IEnumerable<string>,
+                $values: [
+                  decor
+                ]
+              },
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 9,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 9,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Growing,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 13,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 13,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 11,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Children: {
+    $type: IEnumerable<SctSyntax>,
+    $values: [
+      {
+        $type: SctClassSyntax,
+        Id: Town,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: [
+            {
+              Id: decor,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            }
+          ]
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Stable,
+              Decorations: {
+                $type: IEnumerable<string>,
+                $values: [
+                  decor
+                ]
+              },
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 9,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 9,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            },
+            {
+              Id: Growing,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 13,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 13,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 11,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        },
+        Children: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctDecoratorSyntax,
+              Id: decor,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Children: {
+                  $type: IEnumerable<SctSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Growing,
+                      Children: null,
+                      Context: {
+                        Line: 3,
+                        Column: 8
+                      }
+                    }
+                  ]
+                },
+                Context: {
+                  Line: 3,
+                  Column: 8
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Children: {
+                      $type: IEnumerable<SctSyntax>,
+                      $values: [
+                        {
+                          $type: SctEnterStatementSyntax,
+                          Id: Growing,
+                          Children: null,
+                          Context: {
+                            Line: 3,
+                            Column: 8
+                          }
+                        }
+                      ]
+                    },
+                    Context: {
+                      Line: 3,
+                      Column: 8
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 2,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Stable,
+              Decorations: {
+                $type: IEnumerable<string>,
+                $values: [
+                  decor
+                ]
+              },
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 9,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 9,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 6,
+                Column: 4
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Growing,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: []
+                },
+                Children: null,
+                Context: {
+                  Line: 13,
+                  Column: 4
+                }
+              },
+              Children: {
+                $type: IEnumerable<SctSyntax>,
+                $values: [
+                  {
+                    $type: SctBlockStatementSyntax,
+                    Statements: {
+                      $type: IEnumerable<SctStatementSyntax>,
+                      $values: []
+                    },
+                    Children: null,
+                    Context: {
+                      Line: 13,
+                      Column: 4
+                    }
+                  }
+                ]
+              },
+              Context: {
+                Line: 11,
+                Column: 4
+              }
+            }
+          ]
+        },
+        Context: {
+          Line: 1,
+          Column: 0
+        }
+      }
+    ]
+  },
+  Context: {
+    Line: 1,
+    Column: 0
+  }
+}

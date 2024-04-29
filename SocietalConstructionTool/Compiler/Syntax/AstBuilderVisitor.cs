@@ -10,7 +10,7 @@ namespace Sct.Compiler.Syntax
         {
             var functions = context.function().Select(f => f.Accept(this)).Cast<SctFunctionSyntax>();
             var classes = context.class_def().Select(c => c.Accept(this)).Cast<SctClassSyntax>();
-            return new SctProgramSyntax(functions, classes);
+            return new SctProgramSyntax(context, functions, classes);
         }
 
         public override SctSyntax VisitFunction([NotNull] SctParser.FunctionContext context)
@@ -20,7 +20,7 @@ namespace Sct.Compiler.Syntax
             var type = (SctTypeSyntax)context.type().Accept(this);
             var parameters = ParseParameters(context.args_def());
 
-            return new SctFunctionSyntax(name, parameters, type, body);
+            return new SctFunctionSyntax(context, name, parameters, type, body);
         }
 
         public override SctSyntax VisitClass_def([NotNull] SctParser.Class_defContext context)
@@ -32,7 +32,7 @@ namespace Sct.Compiler.Syntax
             var states = body.state().Select(s => s.Accept(this)).Cast<SctStateSyntax>();
             var functions = body.function().Select(f => f.Accept(this)).Cast<SctFunctionSyntax>();
             var decorators = body.decorator().Select(d => d.Accept(this)).Cast<SctDecoratorSyntax>();
-            return new SctClassSyntax(name, parameters, decorators, functions, states);
+            return new SctClassSyntax(context, name, parameters, decorators, functions, states);
         }
 
         public override SctSyntax VisitState([NotNull] SctParser.StateContext context)
@@ -40,14 +40,14 @@ namespace Sct.Compiler.Syntax
             var name = context.ID().GetText();
             var decorators = context.state_decorator().Select(d => d.ID().GetText());
             var body = (SctBlockStatementSyntax)context.statement_list().Accept(this);
-            return new SctStateSyntax(name, decorators, body);
+            return new SctStateSyntax(context, name, decorators, body);
         }
 
         public override SctSyntax VisitDecorator([NotNull] SctParser.DecoratorContext context)
         {
             var name = context.ID().GetText();
             var body = (SctBlockStatementSyntax)context.statement_list().Accept(this);
-            return new SctDecoratorSyntax(name, body);
+            return new SctDecoratorSyntax(context, name, body);
         }
 
         // Statements
@@ -55,13 +55,13 @@ namespace Sct.Compiler.Syntax
         public override SctSyntax VisitStatement_list([NotNull] SctParser.Statement_listContext context)
         {
             var statements = context.statement().Select(s => s.Accept(this)).Cast<SctStatementSyntax>();
-            return new SctBlockStatementSyntax(statements);
+            return new SctBlockStatementSyntax(context, statements);
         }
 
         public override SctSyntax VisitExpressionStatement([NotNull] SctParser.ExpressionStatementContext context)
         {
             var expression = (SctExpressionSyntax)context.expression_statement().Accept(this);
-            return new SctExpressionStatementSyntax(expression);
+            return new SctExpressionStatementSyntax(context, expression);
         }
 
         public override SctSyntax VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
@@ -69,14 +69,14 @@ namespace Sct.Compiler.Syntax
             var type = (SctTypeSyntax)context.type().Accept(this);
             var id = context.ID().GetText();
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctDeclarationStatementSyntax(type, id, expression);
+            return new SctDeclarationStatementSyntax(context, type, id, expression);
         }
 
         public override SctSyntax VisitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var id = context.ID().GetText();
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctAssignmentStatementSyntax(id, expression);
+            return new SctAssignmentStatementSyntax(context, id, expression);
         }
 
         public override SctSyntax VisitIf([NotNull] SctParser.IfContext context)
@@ -86,7 +86,7 @@ namespace Sct.Compiler.Syntax
             // using `as` to allow for null values instead of explicit cast which throws
             var @else = context.@else()?.Accept(this) as SctElseStatementSyntax;
             @else ??= context.elseif()?.Accept(this) as SctElseStatementSyntax;
-            return new SctIfStatementSyntax(condition, block, @else);
+            return new SctIfStatementSyntax(context, condition, block, @else);
         }
 
         public override SctSyntax VisitElseif([NotNull] SctParser.ElseifContext context)
@@ -96,60 +96,60 @@ namespace Sct.Compiler.Syntax
             // using `as` to allow for null values instead of explicit cast which throws
             var @else = context.@else()?.Accept(this) as SctElseStatementSyntax;
             @else ??= context.elseif()?.Accept(this) as SctElseStatementSyntax;
-            var @if = new SctIfStatementSyntax(condition, block, @else);
+            var @if = new SctIfStatementSyntax(context, condition, block, @else);
             // else if is actually an else block with an if statement inside
-            return new SctElseStatementSyntax(new SctBlockStatementSyntax([@if]));
+            return new SctElseStatementSyntax(context, new SctBlockStatementSyntax(context, [@if]));
         }
 
         public override SctSyntax VisitElse([NotNull] SctParser.ElseContext context)
         {
             var block = (SctBlockStatementSyntax)context.statement_list().Accept(this);
-            return new SctElseStatementSyntax(block);
+            return new SctElseStatementSyntax(context, block);
         }
 
         public override SctSyntax VisitWhile([NotNull] SctParser.WhileContext context)
         {
             var condition = (SctExpressionSyntax)context.expression().Accept(this);
             var block = (SctBlockStatementSyntax)context.statement_list().Accept(this);
-            return new SctWhileStatementSyntax(condition, block);
+            return new SctWhileStatementSyntax(context, condition, block);
         }
 
         public override SctSyntax VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var id = context.ID().GetText();
-            return new SctEnterStatementSyntax(id);
+            return new SctEnterStatementSyntax(context, id);
         }
 
         public override SctSyntax VisitExit([NotNull] SctParser.ExitContext context)
         {
-            return new SctExitStatementSyntax();
+            return new SctExitStatementSyntax(context);
         }
 
         public override SctSyntax VisitReturn([NotNull] SctParser.ReturnContext context)
         {
             var expression = (SctExpressionSyntax?)context.expression()?.Accept(this);
-            return new SctReturnStatementSyntax(expression);
+            return new SctReturnStatementSyntax(context, expression);
         }
 
         public override SctSyntax VisitBreak([NotNull] SctParser.BreakContext context)
         {
-            return new SctBreakStatementSyntax();
+            return new SctBreakStatementSyntax(context);
         }
 
         public override SctSyntax VisitContinue([NotNull] SctParser.ContinueContext context)
         {
-            return new SctContinueStatementSyntax();
+            return new SctContinueStatementSyntax(context);
         }
 
         public override SctSyntax VisitCreate([NotNull] SctParser.CreateContext context)
         {
             var agent = (SctAgentExpressionSyntax)context.agent_create().Accept(this);
-            return new SctCreateStatementSyntax(agent);
+            return new SctCreateStatementSyntax(context, agent);
         }
 
         public override SctSyntax VisitDestroy([NotNull] SctParser.DestroyContext context)
         {
-            return new SctDestroyStatementSyntax();
+            return new SctDestroyStatementSyntax(context);
         }
 
         // Expressions
@@ -164,8 +164,8 @@ namespace Sct.Compiler.Syntax
         {
             return context switch
             {
-                { } when context.INT() != null => new SctLiteralExpressionSyntax<long>(new SctTypeSyntax(SctType.Int), long.Parse(context.INT().GetText(), CultureInfo.InvariantCulture)),
-                { } when context.FLOAT() != null => new SctLiteralExpressionSyntax<double>(new SctTypeSyntax(SctType.Float), double.Parse(context.FLOAT().GetText(), CultureInfo.InvariantCulture)),
+                { } when context.INT() != null => new SctLiteralExpressionSyntax<long>(context, SctType.Int, long.Parse(context.INT().GetText(), CultureInfo.InvariantCulture)),
+                { } when context.FLOAT() != null => new SctLiteralExpressionSyntax<double>(context, SctType.Float, double.Parse(context.FLOAT().GetText(), CultureInfo.InvariantCulture)),
                 _ => throw new InvalidOperationException("Literal was not an INT or FLOAT")
             };
         }
@@ -173,39 +173,39 @@ namespace Sct.Compiler.Syntax
         public override SctSyntax VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
             var id = context.ID().GetText();
-            return new SctIdExpressionSyntax(id);
+            return new SctIdExpressionSyntax(context, id);
         }
 
         public override SctSyntax VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
         {
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctParenthesisExpressionSyntax(expression);
+            return new SctParenthesisExpressionSyntax(context, expression);
         }
 
         public override SctSyntax VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
             var type = (SctTypeSyntax)context.type().Accept(this);
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctTypecastExpressionSyntax(type, expression);
+            return new SctTypecastExpressionSyntax(context, type, expression);
         }
 
         public override SctSyntax VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var id = context.ID().GetText();
             var arguments = context.args_call().expression().Select(e => (SctExpressionSyntax)e.Accept(this));
-            return new SctCallExpressionSyntax(id, arguments);
+            return new SctCallExpressionSyntax(context, id, arguments);
         }
 
         public override SctSyntax VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
         {
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctUnaryMinusExpressionSyntax(expression);
+            return new SctUnaryMinusExpressionSyntax(context, expression);
         }
 
         public override SctSyntax VisitLogicalNotExpression([NotNull] SctParser.LogicalNotExpressionContext context)
         {
             var expression = (SctExpressionSyntax)context.expression().Accept(this);
-            return new SctNotExpressionSyntax(expression);
+            return new SctNotExpressionSyntax(context, expression);
         }
 
         public override SctSyntax VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
@@ -221,7 +221,7 @@ namespace Sct.Compiler.Syntax
                 SctLexer.MOD => SctBinaryOperator.Mod,
                 _ => throw new InvalidOperationException("Invalid binary operator")
             };
-            return new SctBinaryExpressionSyntax(left, right, @operator);
+            return new SctBinaryExpressionSyntax(context, left, right, @operator);
         }
 
         public override SctSyntax VisitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
@@ -240,7 +240,7 @@ namespace Sct.Compiler.Syntax
                 SctLexer.GTE => SctBooleanOperator.Gte,
                 _ => throw new InvalidOperationException("Invalid boolean operator")
             };
-            return new SctBooleanExpressionSyntax(left, right, @operator);
+            return new SctBooleanExpressionSyntax(context, left, right, @operator);
         }
 
         public override SctSyntax VisitAgent_create([NotNull] SctParser.Agent_createContext context)
@@ -248,7 +248,7 @@ namespace Sct.Compiler.Syntax
             var classId = context.ID(0).GetText();
             var stateId = context.ID(1).GetText();
             var fields = ParseArgsAgent(context.args_agent());
-            return new SctAgentExpressionSyntax(classId, stateId, fields);
+            return new SctAgentExpressionSyntax(context, classId, stateId, fields);
         }
 
         public override SctSyntax VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
@@ -256,7 +256,7 @@ namespace Sct.Compiler.Syntax
             var classId = context.ID(0).GetText();
             var stateId = context.QUESTION() != null ? null : context.ID(1).GetText();
             var fields = ParseArgsAgent(context.args_agent());
-            return new SctPredicateExpressionSyntax(classId, stateId, fields);
+            return new SctPredicateExpressionSyntax(context, classId, stateId, fields);
         }
 
         public override SctSyntax VisitType([NotNull] SctParser.TypeContext context)
@@ -269,16 +269,15 @@ namespace Sct.Compiler.Syntax
                 { } when context.T_VOID() != null => SctType.Void,
                 _ => throw new InvalidOperationException("Invalid type")
             };
-            return new SctTypeSyntax(type);
+            return new SctTypeSyntax(context, type);
         }
 
-        private Dictionary<string, SctExpressionSyntax> ParseArgsAgent(SctParser.Args_agentContext argsAgent)
+        private IEnumerable<SctNamedArgumentSyntax> ParseArgsAgent(SctParser.Args_agentContext argsAgent)
         {
             var ids = argsAgent.ID().Select(id => id.GetText());
             var expressions = argsAgent.expression().Select(expression => expression.Accept(this)).Cast<SctExpressionSyntax>();
             var fields = ids.Zip(expressions,
-                    (id, expression) => new KeyValuePair<string, SctExpressionSyntax>(id, expression))
-                .ToDictionary();
+                    (id, expression) => new SctNamedArgumentSyntax(argsAgent, id, expression));
             return fields;
         }
 
@@ -286,7 +285,7 @@ namespace Sct.Compiler.Syntax
         {
             var ids = context.ID().Select(id => id.GetText());
             var types = context.type().Select(type => (SctTypeSyntax)type.Accept(this));
-            return ids.Zip(types, (id, type) => new SctParameterSyntax(type, id));
+            return ids.Zip(types, (id, type) => new SctParameterSyntax(context, type, id));
         }
     }
 }

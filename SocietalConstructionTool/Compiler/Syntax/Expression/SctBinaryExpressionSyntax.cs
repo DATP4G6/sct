@@ -1,3 +1,5 @@
+using Antlr4.Runtime;
+
 namespace Sct.Compiler.Syntax
 {
     public enum SctBinaryOperator
@@ -9,10 +11,11 @@ namespace Sct.Compiler.Syntax
         Mod
     }
 
-    public class SctBinaryExpressionSyntax(SctExpressionSyntax left, SctExpressionSyntax right, SctBinaryOperator op) : SctExpressionSyntax
+    public class SctBinaryExpressionSyntax(ParserRuleContext context, SctExpressionSyntax left, SctExpressionSyntax right, SctBinaryOperator op) : SctExpressionSyntax(context)
     {
         public SctExpressionSyntax Left => left;
         public SctExpressionSyntax Right => right;
         public SctBinaryOperator Op => op;
+        public override IEnumerable<SctSyntax> Children => [Left, Right];
     }
 }
