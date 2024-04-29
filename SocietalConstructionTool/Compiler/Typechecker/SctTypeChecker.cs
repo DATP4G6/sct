@@ -1,17 +1,18 @@
 using Antlr4.Runtime.Misc;
 
 using Sct.Compiler.Exceptions;
+using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctTypeChecker : SctBaseVisitor<SctType>, IErrorReporter
+    public class SctTypeChecker : SctBaseVisitor<Syntax.SctType>, IErrorReporter
     {
         private readonly CTable _ctable;
         private readonly VTable _vtable = new();
 
         private ClassContent _currentClass;
 
-        private FunctionType _currentFunctionType = new(TypeTable.Void, []);
+        private FunctionType _currentFunctionType = new(Syntax.SctType.Void, []);
 
         private readonly List<CompilerError> _errors = new();
         public IEnumerable<CompilerError> Errors => _errors;
@@ -32,46 +33,45 @@ namespace Sct.Compiler.Typechecker
                 return globalFunctionType;
             }
             _errors.Add(new CompilerError($"Function '{functionName}' does not exist.", line, col));
-            return new FunctionType(TypeTable.Void, []);
+            return new FunctionType(Syntax.SctType.Void, []);
         }
 
-        private SctType LookupVariable(string variableName, int line, int col)
+        private Syntax.SctType LookupVariable(string variableName, int line, int col)
         {
             var variableType = _vtable.Lookup(variableName);
             if (variableType is null)
             {
                 _errors.Add(new CompilerError($"Variable '{variableName}' does not exist.", line, col));
-                return TypeTable.Int;
             }
-            return variableType;
+            return variableType ?? Syntax.SctType.Int;
         }
 
-        public override SctType VisitStart([NotNull] SctParser.StartContext context)
+        public override Syntax.SctType VisitStart([NotNull] SctParser.StartContext context)
         {
             _ = base.VisitStart(context);
 
-            return TypeTable.Ok;
+            return Syntax.SctType.Ok;
         }
 
-        public override SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
+        public override Syntax.SctType VisitParenthesisExpression([NotNull] SctParser.ParenthesisExpressionContext context)
         {
 
             return context.expression().Accept(this);
         }
 
-        public override SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
+        public override Syntax.SctType VisitVariableDeclaration([NotNull] SctParser.VariableDeclarationContext context)
         {
             var type = context.type().Accept(this);
 
-            if (type == TypeTable.Void)
+            if (type == Syntax.SctType.Void)
             {
-                _errors.Add(new CompilerError($"Variable cannot be of type {type.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Variable cannot be of type {type.TypeName()}.", context.Start.Line, context.Start.Column));
             }
 
-            SctType expressionType = context.expression().Accept(this);
+            Syntax.SctType expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(type, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {type.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName()} to {type.TypeName()}.", context.Start.Line, context.Start.Column));
             }
 
             if (!_vtable.AddEntry(context.ID().GetText(), type))
@@ -83,18 +83,18 @@ namespace Sct.Compiler.Typechecker
             return type;
         }
 
-        public override SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
+        public override Syntax.SctType VisitIDExpression([NotNull] SctParser.IDExpressionContext context)
         {
             return LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
         }
 
-        public override SctType VisitType([NotNull] SctParser.TypeContext context)
+        public override Syntax.SctType VisitType([NotNull] SctParser.TypeContext context)
         {
             var type = TypeTable.GetType(context.GetText()) ?? throw new InvalidTypeException($"Type '{context.GetText()}' does not exist");
             return type;
         }
 
-        public override SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
+        public override Syntax.SctType VisitClass_def([NotNull] SctParser.Class_defContext context)
         {
             // can never be null, as SctTableVisitor created the class
             _currentClass = _ctable.GetClassContent(context.ID().GetText())!;
@@ -106,7 +106,7 @@ namespace Sct.Compiler.Typechecker
         }
 
 
-        public override SctType VisitEnter([NotNull] SctParser.EnterContext context)
+        public override Syntax.SctType VisitEnter([NotNull] SctParser.EnterContext context)
         {
             var stateName = context.ID().GetText();
             // supress error if we are in the global class (return checker throws error instead)
@@ -117,7 +117,7 @@ namespace Sct.Compiler.Typechecker
             return base.VisitEnter(context);
         }
 
-        public override SctType VisitState_decorator([NotNull] SctParser.State_decoratorContext context)
+        public override Syntax.SctType VisitState_decorator([NotNull] SctParser.State_decoratorContext context)
         {
             var decoratorName = context.ID().GetText();
             if (!_currentClass.HasDecorator(decoratorName))
@@ -127,7 +127,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitFunction([NotNull] SctParser.FunctionContext context)
+        public override Syntax.SctType VisitFunction([NotNull] SctParser.FunctionContext context)
         {
             var functionName = context.ID().GetText();
             _currentFunctionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
@@ -147,7 +147,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitArgs_def([NotNull] SctParser.Args_defContext context)
+        public override Syntax.SctType VisitArgs_def([NotNull] SctParser.Args_defContext context)
         {
             foreach (var (id, type) in context.ID().Zip(context.type()))
             {
@@ -156,7 +156,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
+        public override Syntax.SctType VisitCallExpression([NotNull] SctParser.CallExpressionContext context)
         {
             var functionName = context.ID().GetText();
             var functionType = GetFunctionType(functionName, context.Start.Line, context.Start.Column);
@@ -168,7 +168,7 @@ namespace Sct.Compiler.Typechecker
                 {
                     if (TypeTable.GetCompatibleType(functionParamType, argumentType) is null)
                     {
-                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TypeName} to {functionParamType.TypeName} in call to function '{functionName}'.", context.Start.Line, context.Start.Column));
+                        _errors.Add(new CompilerError($"Cannot convert {argumentType.TypeName()} to {functionParamType.TypeName()} in call to function '{functionName}'.", context.Start.Line, context.Start.Column));
                     }
                 }
             }
@@ -179,7 +179,7 @@ namespace Sct.Compiler.Typechecker
             return functionType.ReturnType;
         }
 
-        public override SctType VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
+        public override Syntax.SctType VisitUnaryMinusExpression([NotNull] SctParser.UnaryMinusExpressionContext context)
         {
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.TypeIsNumeric(expressionType))
@@ -189,7 +189,7 @@ namespace Sct.Compiler.Typechecker
             return expressionType;
         }
 
-        public override SctType VisitReturn([NotNull] SctParser.ReturnContext context)
+        public override Syntax.SctType VisitReturn([NotNull] SctParser.ReturnContext context)
         {
             var returnType = _currentFunctionType.ReturnType;
 
@@ -197,7 +197,7 @@ namespace Sct.Compiler.Typechecker
             {
                 if (returnType != TypeTable.Void)
                 {
-                    _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName}, got no expression.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName()}, got no expression.", context.Start.Line, context.Start.Column));
                 }
                 return TypeTable.Void;
             }
@@ -205,13 +205,13 @@ namespace Sct.Compiler.Typechecker
             var expressionType = context.expression().Accept(this);
             if (TypeTable.GetCompatibleType(returnType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName}, got {expressionType.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Return type does not match the function's returned type, expected expression of type {returnType.TypeName()}, got {expressionType.TypeName()}.", context.Start.Line, context.Start.Column));
                 expressionType = returnType;
             }
             return expressionType;
         }
 
-        public override SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
+        public override Syntax.SctType VisitBinaryExpression([NotNull] SctParser.BinaryExpressionContext context)
         {
             var leftType = context.expression(0).Accept(this);
             var rightType = context.expression(1).Accept(this);
@@ -225,7 +225,7 @@ namespace Sct.Compiler.Typechecker
             return (leftType == rightType) ? leftType : TypeTable.Float; // If we have two different types (int and float), we return float.
         }
 
-        public override SctType VisitLiteral([NotNull] SctParser.LiteralContext context)
+        public override Syntax.SctType VisitLiteral([NotNull] SctParser.LiteralContext context)
         {
             return context switch
             {
@@ -235,20 +235,20 @@ namespace Sct.Compiler.Typechecker
             };
         }
 
-        public override SctType VisitAssignment([NotNull] SctParser.AssignmentContext context)
+        public override Syntax.SctType VisitAssignment([NotNull] SctParser.AssignmentContext context)
         {
             var variableType = LookupVariable(context.ID().GetText(), context.Start.Line, context.Start.Column);
             var expressionType = context.expression().Accept(this);
 
             if (TypeTable.GetCompatibleType(variableType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName} to {variableType.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot assign {expressionType.TypeName()} to {variableType.TypeName()}.", context.Start.Line, context.Start.Column));
             }
 
             return variableType;
         }
 
-        public override SctType VisitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
+        public override Syntax.SctType VisitBooleanExpression([NotNull] SctParser.BooleanExpressionContext context)
         {
             var leftType = context.expression(0).Accept(this);
             var rightType = context.expression(1).Accept(this);
@@ -264,18 +264,18 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Int;
         }
 
-        public override SctType VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
+        public override Syntax.SctType VisitTypecastExpression([NotNull] SctParser.TypecastExpressionContext context)
         {
             var targetType = context.type().Accept(this);
             var expressionType = context.expression().Accept(this);
             if (!TypeTable.IsTypeCastable(expressionType, targetType))
             {
-                _errors.Add(new CompilerError($"Cannot typecast from {expressionType.TypeName} to {targetType.TypeName}.", context.Start.Line, context.Start.Column));
+                _errors.Add(new CompilerError($"Cannot typecast from {expressionType.TypeName()} to {targetType.TypeName()}.", context.Start.Line, context.Start.Column));
             }
             return targetType;
         }
 
-        public override SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
+        public override Syntax.SctType VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
         {
             var className = context.ID(0).GetText();
             var targetClass = _ctable.GetClassContent(className);
@@ -316,14 +316,14 @@ namespace Sct.Compiler.Typechecker
                 var classFieldType = expression.Accept(this);
                 if (TypeTable.GetCompatibleType(targetClassFieldType, classFieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName} to {targetClassFieldType.TypeName} in predicate.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName()} to {targetClassFieldType.TypeName()} in predicate.", context.Start.Line, context.Start.Column));
                 }
             }
 
             return TypeTable.Predicate;
         }
 
-        public override SctType VisitAgent_create([NotNull] SctParser.Agent_createContext context)
+        public override Syntax.SctType VisitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
             var className = context.ID(0).GetText();
             var stateName = context.ID(1).GetText();
@@ -366,7 +366,7 @@ namespace Sct.Compiler.Typechecker
                 var classFieldType = expression.Accept(this);
                 if (TypeTable.GetCompatibleType(targetClassFieldType, classFieldType) is null)
                 {
-                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName} to {targetClassFieldType.TypeName}.", context.Start.Line, context.Start.Column));
+                    _errors.Add(new CompilerError($"Cannot convert {classFieldType.TypeName()} to {targetClassFieldType.TypeName()}.", context.Start.Line, context.Start.Column));
                 }
             }
 
@@ -381,7 +381,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitStatement_list([NotNull] SctParser.Statement_listContext context)
+        public override Syntax.SctType VisitStatement_list([NotNull] SctParser.Statement_listContext context)
         {
             _vtable.EnterScope();
             _ = base.VisitStatement_list(context);
@@ -389,7 +389,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitIf([NotNull] SctParser.IfContext context)
+        public override Syntax.SctType VisitIf([NotNull] SctParser.IfContext context)
         {
             _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);
@@ -404,7 +404,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitElseif([NotNull] SctParser.ElseifContext context)
+        public override Syntax.SctType VisitElseif([NotNull] SctParser.ElseifContext context)
         {
             _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);
@@ -419,7 +419,7 @@ namespace Sct.Compiler.Typechecker
             return TypeTable.Ok;
         }
 
-        public override SctType VisitWhile([NotNull] SctParser.WhileContext context)
+        public override Syntax.SctType VisitWhile([NotNull] SctParser.WhileContext context)
         {
             _ = CheckBooleanExpression(context.expression());
             _ = context.statement_list().Accept(this);

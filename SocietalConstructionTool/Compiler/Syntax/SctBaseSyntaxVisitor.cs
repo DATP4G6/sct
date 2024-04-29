@@ -2,9 +2,9 @@ namespace Sct.Compiler.Syntax
 {
     public class SctBaseSyntaxVisitor<T>
     {
-        protected T VisitChildren(SctSyntax node) => node.Children.Select(c => c.Accept(this)).Aggregate(DefaultResult, AggregateResult);
-        protected T DefaultResult => default!;
-        protected T AggregateResult(T _, T nextResult) => nextResult;
+        protected virtual T VisitChildren(SctSyntax node) => node.Children.Select(c => c.Accept(this)).Aggregate(DefaultResult, AggregateResult);
+        protected virtual T DefaultResult => default!;
+        protected virtual T AggregateResult(T _, T nextResult) => nextResult;
 
         // Tell the visitor to use the more specific Visit overload
         // Casting to dynamic forces C# to look at the concrete class, even if current type is abstract

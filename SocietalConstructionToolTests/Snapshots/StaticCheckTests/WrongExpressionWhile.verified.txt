@@ -4,17 +4,5 @@
     Line: 4,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionWhile.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 4,
-    Column: 11,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionWhile.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 5,
-    Column: 11,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionWhile.sct
   }
 ]

@@ -10,29 +10,5 @@
     Line: 5,
     Column: 13,
     Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionIf.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 4,
-    Column: 8,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionIf.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 5,
-    Column: 13,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionIf.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 7,
-    Column: 8,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionIf.sct
-  },
-  {
-    Message: Boolean expression must be numeric.,
-    Line: 8,
-    Column: 13,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionIf.sct
   }
 ]
