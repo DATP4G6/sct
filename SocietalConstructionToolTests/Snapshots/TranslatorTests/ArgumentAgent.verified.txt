@@ -17,7 +17,7 @@
 
             private bool __sct_Adult(IRuntimeContext ctx)
             {
-                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 5), new KeyValuePair<String, dynamic>("__sct_height", 20.5) })));
+                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 5L), new KeyValuePair<String, dynamic>("__sct_height", 20.5) })));
                 return false;
             }
 

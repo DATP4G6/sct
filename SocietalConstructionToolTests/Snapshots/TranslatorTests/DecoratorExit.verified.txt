@@ -14,8 +14,11 @@
 
             private bool __sct_decor(IRuntimeContext ctx)
             {
-                ctx.ExitRuntime();
-                return true;
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
                 return false;
             }
 

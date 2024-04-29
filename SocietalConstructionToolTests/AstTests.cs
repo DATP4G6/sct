@@ -1,5 +1,3 @@
-using Sct;
-using Sct.Compiler.Syntax;
 using Sct.Compiler.Typechecker;
 
 namespace SocietalConstructionToolTests
@@ -10,13 +8,6 @@ namespace SocietalConstructionToolTests
         private static IEnumerable<string[]> ParserFiles => GetTestFiles("Parser");
         private static IEnumerable<string[]> StaticFiles => GetTestFiles("StaticCheckTests");
 
-        private static SctProgramSyntax BuildAst(string testFile)
-        {
-            var parser = SctRunner.GetParser(testFile);
-            var listener = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(listener);
-        }
-
         /// <summary>
         /// Test that the return check visitor works correctly.
         /// </summary>
@@ -25,7 +16,7 @@ namespace SocietalConstructionToolTests
         public async Task TestReturnCheckAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Static"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new SctReturnCheckAstVisitor();
             _ = ast.Accept(visitor);
             var errors = visitor.Errors;

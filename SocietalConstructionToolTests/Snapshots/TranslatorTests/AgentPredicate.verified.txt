@@ -8,10 +8,10 @@
     {
         public static void __sct_f(IRuntimeContext ctx)
         {
-            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 2), new KeyValuePair<String, dynamic>("__sct_b", 3) })));
-            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
-            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 3) })));
-            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
+            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 2L), new KeyValuePair<String, dynamic>("__sct_b", 3L) }));
+            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>[] { }));
+            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 3L) }));
+            ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", null, new Dictionary<String, dynamic>[] { }));
         }
 
         public class __sct_Foo : BaseAgent

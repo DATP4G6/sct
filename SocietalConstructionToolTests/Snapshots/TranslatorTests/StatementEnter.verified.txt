@@ -14,8 +14,11 @@
 
             private bool __sct_Child(IRuntimeContext ctx)
             {
-                Enter(ctx, "__sct_Adult");
-                return true;
+                {
+                    Enter(ctx, "__sct_Adult");
+                    return true;
+                }
+
                 return false;
             }
 

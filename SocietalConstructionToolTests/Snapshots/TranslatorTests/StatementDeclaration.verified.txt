@@ -14,7 +14,7 @@
 
             private bool __sct_Adult(IRuntimeContext ctx)
             {
-                long __sct_age = 5;
+                long __sct_age = 5L;
                 return false;
             }
 

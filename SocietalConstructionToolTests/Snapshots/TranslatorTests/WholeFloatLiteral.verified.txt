@@ -8,7 +8,7 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            double __sct_x = 2.0;
+            double __sct_x = 2;
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

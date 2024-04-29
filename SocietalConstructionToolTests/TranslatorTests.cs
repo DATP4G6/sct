@@ -1,6 +1,5 @@
 using Microsoft.CodeAnalysis;
 
-using Sct;
 using Sct.Compiler.Translator;
 
 namespace SocietalConstructionToolTests
@@ -16,13 +15,11 @@ namespace SocietalConstructionToolTests
         public async Task TranslateFile(string file)
         {
             UseProjectRelativeDirectory("Snapshots/TranslatorTests"); // save snapshots here
+            var ast = TestFileUtils.BuildAst(file);
+            var visitor = new SctAstTranslator();
+            var tree = ast.Accept(visitor);
 
-            SctParser parser = await SctRunner.GetParserAsync(file);
-            var listener = new SctTranslator();
-            parser.AddParseListener(listener);
-            _ = parser.start();
-
-            _ = await Verify(listener.Root?.NormalizeWhitespace().ToFullString())
+            _ = await Verify(tree.NormalizeWhitespace().ToFullString())
                 .UseFileName(Path.GetFileNameWithoutExtension(file));
         }
     }

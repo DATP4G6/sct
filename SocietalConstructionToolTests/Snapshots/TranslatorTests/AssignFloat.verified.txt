@@ -10,7 +10,7 @@
         {
             double __sct_pi = 3.14159;
             double __sct_a = 1.5;
-            double __sct_b = 2.0;
+            double __sct_b = 2;
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

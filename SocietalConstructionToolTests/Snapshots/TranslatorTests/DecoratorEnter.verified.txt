@@ -14,8 +14,11 @@
 
             private bool __sct_decor(IRuntimeContext ctx)
             {
-                Enter(ctx, "__sct_Growing");
-                return true;
+                {
+                    Enter(ctx, "__sct_Growing");
+                    return true;
+                }
+
                 return false;
             }
 

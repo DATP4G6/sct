@@ -8,21 +8,27 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            if (((1)) != 0)
-            {
-            }
-            else if (((((3 < 2) ? 1 : 0))) != 0)
-            {
-            }
-
-            if (((1)) != 0)
-            {
-            }
-            else if (((((4 > 5) ? 1 : 0))) != 0)
+            if ((1L) != 0L)
             {
             }
             else
             {
+                if ((((3L < 2L) ? 1L : 0L)) != 0L)
+                {
+                }
+            }
+
+            if ((1L) != 0L)
+            {
+            }
+            else
+            {
+                if ((((4L > 5L) ? 1L : 0L)) != 0L)
+                {
+                }
+                else
+                {
+                }
             }
         }
 
