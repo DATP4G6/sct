@@ -6,10 +6,12 @@ namespace SocietalConstructionToolTests
     [TestClass]
     public class StaticCheckTests : AbstractSnapshotTests
     {
-        private static IEnumerable<string[]> Files => GetTestFiles("StaticCheckTests");
+        private static IEnumerable<string[]> StaticFiles => GetTestFiles("StaticCheckTests");
+        private static IEnumerable<string[]> ParserErrorTestsFiles => GetTestFiles("ParserErrorTests");
 
         [DataTestMethod]
-        [DynamicData(nameof(Files), DynamicDataSourceType.Property)]
+        [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
+        [DynamicData(nameof(ParserErrorTestsFiles), DynamicDataSourceType.Property)]
         public async Task TestStaticChecks(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/StaticCheckTests"); // save snapshots here
