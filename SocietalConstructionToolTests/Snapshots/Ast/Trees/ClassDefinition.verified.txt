@@ -23,47 +23,8 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
-        },
-        Children: null,
-        Context: {
-          Line: 1,
-          Column: 0
         }
       }
     ]
-  },
-  Children: {
-    $type: IEnumerable<SctSyntax>,
-    $values: [
-      {
-        $type: SctClassSyntax,
-        Id: TestClass,
-        Parameters: {
-          $type: IEnumerable<SctParameterSyntax>,
-          $values: []
-        },
-        Decorators: {
-          $type: IEnumerable<SctDecoratorSyntax>,
-          $values: []
-        },
-        States: {
-          $type: IEnumerable<SctStateSyntax>,
-          $values: []
-        },
-        Functions: {
-          $type: IEnumerable<SctFunctionSyntax>,
-          $values: []
-        },
-        Children: null,
-        Context: {
-          Line: 1,
-          Column: 0
-        }
-      }
-    ]
-  },
-  Context: {
-    Line: 1,
-    Column: 0
   }
 }
