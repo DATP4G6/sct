@@ -1,0 +1,39 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public class __sct_Citizen : BaseAgent
+        {
+            private long __sct_id { get => Fields["__sct_id"]; set => Fields["__sct_id"] = value; }
+            private double __sct_height { get => Fields["__sct_height"]; set => Fields["__sct_height"] = value; }
+
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Adult(IRuntimeContext ctx)
+            {
+                ctx.AgentHandler.CreateAgent(new __sct_Citizen("__sct_Adult", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 5L), new KeyValuePair<String, dynamic>("__sct_height", 20.5) })));
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Adult" => __sct_Adult(ctx)};
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

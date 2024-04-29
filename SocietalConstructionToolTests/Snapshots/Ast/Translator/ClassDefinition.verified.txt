@@ -6,23 +6,17 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public class __sct_TestClass : BaseAgent
         {
-            if (((1)) != 0L)
-            {
-            }
-            else if (((((3 < 2) ? 1L : 0L))) != 0L)
+            public __sct_TestClass(String state, IDictionary<String, dynamic> fields) : base(state, fields)
             {
             }
 
-            if (((1)) != 0L)
+            public override void Update(IRuntimeContext ctx)
             {
-            }
-            else if (((((4 > 5) ? 1L : 0L))) != 0L)
-            {
-            }
-            else
-            {
+                _ = State switch
+                {
+                };
             }
         }
 

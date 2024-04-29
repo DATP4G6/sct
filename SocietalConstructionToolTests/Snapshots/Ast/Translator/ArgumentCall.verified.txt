@@ -6,11 +6,13 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_testFunction(IRuntimeContext ctx)
         {
-            while ((1) != 0L)
-            {
-            }
+            __sct_testFunctionArgs(ctx, 1L, 1.5);
+        }
+
+        public static void __sct_testFunctionArgs(IRuntimeContext ctx, long __sct_intArgument, double __sct_floatArgument)
+        {
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

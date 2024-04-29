@@ -4,6 +4,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Sct.Compiler.Exceptions;
+using Sct.Compiler.Syntax;
 using Sct.Extensions;
 using Sct.Runtime;
 
@@ -18,8 +20,8 @@ namespace Sct.Compiler.Translator
         private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
 
         // boolean values are either 0 or 1
-        public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-        public static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+        public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1L));
+        public static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0L));
 
         // Due to the way static fields are initialized, this field MUST be placed after the identifiers
         // A full day has gone to waste debugging this...
@@ -30,6 +32,18 @@ namespace Sct.Compiler.Translator
             { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
             { "count", BuildAccessor(nameof(IQueryHandler.Count), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
         };
+
+        public static TypeSyntax GetType(SctTypeSyntax type)
+        {
+            return type.Type switch
+            {
+                Syntax.SctType.Int => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.LongKeyword)),
+                Syntax.SctType.Float => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.DoubleKeyword)),
+                Syntax.SctType.Predicate => SyntaxFactory.ParseTypeName(nameof(IQueryPredicate)),
+                Syntax.SctType.Void => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                _ => throw new InvalidTypeException($"Type {type.Type} does not exist"),
+            };
+        }
 
         public static MemberAccessExpressionSyntax BuildAccessor(string accessor, params SyntaxToken[] members)
         {

@@ -8,14 +8,14 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            long __sct_a = (((1) != 0 && (1) != 0) ? 1 : 0);
-            __sct_a = (((1) != 0 || (0) != 0) ? 1 : 0);
-            __sct_a = ((2 == 2) ? 1 : 0);
-            __sct_a = ((3 != 4) ? 1 : 0);
-            __sct_a = ((3 > 2) ? 1 : 0);
-            __sct_a = ((4 >= 3) ? 1 : 0);
-            __sct_a = ((1 < 5) ? 1 : 0);
-            __sct_a = ((2 <= 5) ? 1 : 0);
+            long __sct_a = (((1) != 0L && (1) != 0L) ? 1L : 0L);
+            __sct_a = (((1) != 0L || (0) != 0L) ? 1L : 0L);
+            __sct_a = ((2 == 2) ? 1L : 0L);
+            __sct_a = ((3 != 4) ? 1L : 0L);
+            __sct_a = ((3 > 2) ? 1L : 0L);
+            __sct_a = ((4 >= 3) ? 1L : 0L);
+            __sct_a = ((1 < 5) ? 1L : 0L);
+            __sct_a = ((2 <= 5) ? 1L : 0L);
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

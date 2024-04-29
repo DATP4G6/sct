@@ -42,7 +42,7 @@
 
             private bool __sct_ExitLessThan(IRuntimeContext ctx)
             {
-                if (((((ctx.QueryHandler.Count(ctx, __sct_p) < __sct_x) ? 1 : 0))) != 0)
+                if (((((ctx.QueryHandler.Count(ctx, __sct_p) < __sct_x) ? 1L : 0L))) != 0L)
                 {
                     ctx.ExitRuntime();
                     return true;
@@ -55,7 +55,7 @@
 
             private bool __sct_ExitMoreThan(IRuntimeContext ctx)
             {
-                if (((((ctx.QueryHandler.Count(ctx, __sct_p) > __sct_x) ? 1 : 0))) != 0)
+                if (((((ctx.QueryHandler.Count(ctx, __sct_p) > __sct_x) ? 1L : 0L))) != 0L)
                 {
                     ctx.ExitRuntime();
                     return true;
@@ -85,7 +85,7 @@
 
             private bool __sct_ExitWhen(IRuntimeContext ctx)
             {
-                if (((ctx.QueryHandler.Exists(ctx, __sct_p))) != 0)
+                if (((ctx.QueryHandler.Exists(ctx, __sct_p))) != 0L)
                 {
                     ctx.ExitRuntime();
                     return true;
@@ -98,7 +98,7 @@
 
             private bool __sct_ExitWhenNo(IRuntimeContext ctx)
             {
-                if (((ctx.QueryHandler.Exists(ctx, __sct_p) == 0 ? 1 : 0)) != 0)
+                if (((ctx.QueryHandler.Exists(ctx, __sct_p) == 0L ? 1L : 0L)) != 0L)
                 {
                     ctx.ExitRuntime();
                     return true;
@@ -128,7 +128,7 @@
 
             private bool __sct_Counting(IRuntimeContext ctx)
             {
-                if (((((__sct_x <= 0) ? 1 : 0))) != 0)
+                if (((((__sct_x <= 0) ? 1L : 0L))) != 0L)
                 {
                     ctx.ExitRuntime();
                     return true;
@@ -159,7 +159,7 @@
 
             private bool __sct_Growing(IRuntimeContext ctx)
             {
-                if (((1)) != 0)
+                if (((1)) != 0L)
                 {
                     Enter(ctx, "__sct_End");
                     return true;

@@ -6,11 +6,8 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_f(IRuntimeContext ctx)
         {
-            while ((1) != 0L)
-            {
-            }
         }
 
         public static void RunSimulation(IRuntimeContext ctx)
