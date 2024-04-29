@@ -4,7 +4,7 @@ on:
     # Only run on pull requests.
     # The option only-changed-files is not supported for push events.
     pull_request:
-        branches: ["main"]
+        branches: ["main", "ast"]
 
 jobs:
     dotnet-format:
