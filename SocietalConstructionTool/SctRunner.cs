@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 
 using Sct.Compiler;
+using Sct.Compiler.Syntax;
 using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
 using Sct.Runtime;
@@ -89,7 +90,7 @@ namespace Sct
             return (outputText, []);
         }
 
-        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder)
+        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder, SctSyntax rootNode)
         {
             var errors = new List<CompilerError>();
 
@@ -102,8 +103,8 @@ namespace Sct
             errors.AddRange(returnChecker.Errors);
 
             // Run visitor that populates the tables using the CTableBuilder.
-            var sctTableVisitor = new SctTableVisitor(cTableBuilder);
-            _ = startNode.Accept(sctTableVisitor);
+            var sctTableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            _ = rootNode.Accept(sctTableVisitor);
             errors.AddRange(sctTableVisitor.Errors);
             return errors;
         }
@@ -124,6 +125,7 @@ namespace Sct
             // Store parses for each file to avoid having to recreate them for type checking.
             Dictionary<string, SctParser.StartContext> startNodes = [];
 
+            bool syntaxError = false;
             // Run static analysis on each file separately.
             foreach (var file in filenames)
             {
@@ -138,11 +140,20 @@ namespace Sct
                 startNodes[file] = parser.start();
                 var startNode = startNodes[file];
 
-                // Run checks
-                var fileErrors = RunFirstPassChecks(startNode, cTableBuilder);
-
                 //adds syntax errors
-                fileErrors.AddRange(errorListener.Errors.ToList());
+                var fileErrors = errorListener.Errors.ToList();
+
+                // The AST is likely broken if there were any syntax errors
+                if (fileErrors.Count <= 0)
+                {
+                    // Run checks
+                    var firstPassErrors = RunFirstPassChecks(startNode, cTableBuilder, startNode.Accept(new AstBuilderVisitor()));
+                    fileErrors.AddRange(firstPassErrors);
+                }
+                else
+                {
+                    syntaxError = true;
+                }
 
                 // Annotate each error with the filename.
                 foreach (var error in fileErrors)
@@ -150,6 +161,12 @@ namespace Sct
                     error.Filename = file;
                 }
                 errors.AddRange(fileErrors);
+            }
+
+            // Again, the AST is likely broken if there were any syntax errors, so we can't really run our second pass
+            if (syntaxError)
+            {
+                return errors;
             }
 
             // Build the CTable after all files have been visited.

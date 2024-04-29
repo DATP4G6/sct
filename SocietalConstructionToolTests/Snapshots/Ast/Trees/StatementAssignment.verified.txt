@@ -56,6 +56,44 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
+        },
+        Body: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctStateSyntax,
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctDeclarationStatementSyntax,
+                      Type: {
+                        Type: Int
+                      },
+                      Id: age,
+                      Expression: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 5,
+                        Type: Int
+                      }
+                    },
+                    {
+                      $type: SctAssignmentStatementSyntax,
+                      Id: age,
+                      Expression: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 10,
+                        Type: Int
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     ]

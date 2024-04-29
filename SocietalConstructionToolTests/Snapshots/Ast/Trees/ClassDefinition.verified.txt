@@ -23,7 +23,8 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
-        }
+        },
+        Body: null
       }
     ]
   }
