@@ -6,44 +6,23 @@
 
     public class GlobalClass
     {
-        public class __sct_Exiter : BaseAgent
+        public static long __sct_duplicate(IRuntimeContext ctx, IQueryPredicate __sct_p)
         {
-            public __sct_Exiter(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            if ((((ctx.QueryHandler.Count(ctx, __sct_p) > 1L) ? 1L : 0L)) != 0L)
             {
+                return 1L;
             }
 
-            private bool __sct_Exiting(IRuntimeContext ctx)
-            {
-                ctx.ExitRuntime();
-                return true;
-                return false;
-            }
-
-            public override void Update(IRuntimeContext ctx)
-            {
-                _ = State switch
-                {
-                    "__sct_Exiting" => __sct_Exiting(ctx)};
-            }
+            return 0L;
         }
 
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            QueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1) }));
-            if (((__sct_duplicate(ctx, __sct_x))) != 0L)
+            IQueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1L) }));
+            if ((__sct_duplicate(ctx, __sct_x)) != 0L)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Exiter("__sct_Exiting", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             }
-        }
-
-        public static long __sct_duplicate(IRuntimeContext ctx, QueryPredicate __sct_p)
-        {
-            if (((((ctx.QueryHandler.Count(ctx, __sct_p) > 1) ? 1L : 0L))) != 0L)
-            {
-                return 1;
-            }
-
-            return 0;
         }
 
         public class __sct_Citizen : BaseAgent
@@ -56,15 +35,21 @@
 
             private bool __sct_Child(IRuntimeContext ctx)
             {
-                Enter(ctx, "__sct_Adult");
-                return true;
+                {
+                    Enter(ctx, "__sct_Adult");
+                    return true;
+                }
+
                 return false;
             }
 
             private bool __sct_Adult(IRuntimeContext ctx)
             {
-                Enter(ctx, "__sct_Adult");
-                return true;
+                {
+                    Enter(ctx, "__sct_Adult");
+                    return true;
+                }
+
                 return false;
             }
 
@@ -74,6 +59,30 @@
                 {
                     "__sct_Child" => __sct_Child(ctx),
                     "__sct_Adult" => __sct_Adult(ctx)};
+            }
+        }
+
+        public class __sct_Exiter : BaseAgent
+        {
+            public __sct_Exiter(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Exiting(IRuntimeContext ctx)
+            {
+                {
+                    ctx.ExitRuntime();
+                    return true;
+                }
+
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Exiting" => __sct_Exiting(ctx)};
             }
         }
 
