@@ -1,5 +1,3 @@
-using Antlr4.Runtime;
-
 using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler

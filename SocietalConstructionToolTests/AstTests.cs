@@ -17,6 +17,16 @@ namespace SocietalConstructionToolTests
             return (SctProgramSyntax)parser.start().Accept(listener);
         }
 
+        [DataTestMethod]
+        [DynamicData(nameof(ParserFiles), DynamicDataSourceType.Property)]
+        public async Task TestAst(string testFile)
+        {
+            UseProjectRelativeDirectory("Snapshots/Ast/Trees"); // Save snapshots here
+            var ast = BuildAst(testFile);
+            _ = await Verify(ast)
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+        }
+
         /// <summary>
         /// Test that the return check visitor works correctly.
         /// </summary>
