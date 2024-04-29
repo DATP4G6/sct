@@ -1,3 +1,7 @@
+using Antlr4.Runtime;
+
+using Sct.Compiler.Syntax;
+
 namespace Sct.Compiler
 {
     public class CompilerError
@@ -31,6 +35,13 @@ namespace Sct.Compiler
             Filename = fileName;
             Line = line;
             Column = column;
+        }
+
+        public CompilerError(string message, SctSyntaxContext context)
+        {
+            Message = message;
+            Line = context.Line;
+            Column = context.Column;
         }
 
         public override string ToString()
