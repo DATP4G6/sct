@@ -1,0 +1,334 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: x,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Value: 9.571428571428571,
+                  Type: Float
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: mod,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: two,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 2,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: two,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 2,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: twohalf,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Value: 2.5,
+                  Type: Float
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: neg,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: -8,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: b,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 0,
+                    Type: Int
+                  },
+                  Op: Div
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 0,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 1,
+                  Type: Int
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

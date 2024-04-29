@@ -9,53 +9,13 @@
           $values: []
         },
         ReturnType: {
-          Type: Void,
-          Children: null,
-          Context: {
-            Line: 1,
-            Column: 16
-          }
+          Type: Void
         },
         Block: {
           Statements: {
             $type: IEnumerable<SctStatementSyntax>,
             $values: []
-          },
-          Children: null,
-          Context: {
-            Line: 2,
-            Column: 0
           }
-        },
-        Children: {
-          $type: IEnumerable<SctSyntax>,
-          $values: [
-            {
-              $type: SctTypeSyntax,
-              Type: Void,
-              Children: null,
-              Context: {
-                Line: 1,
-                Column: 16
-              }
-            },
-            {
-              $type: SctBlockStatementSyntax,
-              Statements: {
-                $type: IEnumerable<SctStatementSyntax>,
-                $values: []
-              },
-              Children: null,
-              Context: {
-                Line: 2,
-                Column: 0
-              }
-            }
-          ]
-        },
-        Context: {
-          Line: 1,
-          Column: 0
         }
       }
     ]
@@ -63,71 +23,5 @@
   Classes: {
     $type: IEnumerable<SctClassSyntax>,
     $values: []
-  },
-  Children: {
-    $type: IEnumerable<SctSyntax>,
-    $values: [
-      {
-        $type: SctFunctionSyntax,
-        Id: f,
-        Parameters: {
-          $type: IEnumerable<SctParameterSyntax>,
-          $values: []
-        },
-        ReturnType: {
-          Type: Void,
-          Children: null,
-          Context: {
-            Line: 1,
-            Column: 16
-          }
-        },
-        Block: {
-          Statements: {
-            $type: IEnumerable<SctStatementSyntax>,
-            $values: []
-          },
-          Children: null,
-          Context: {
-            Line: 2,
-            Column: 0
-          }
-        },
-        Children: {
-          $type: IEnumerable<SctSyntax>,
-          $values: [
-            {
-              $type: SctTypeSyntax,
-              Type: Void,
-              Children: null,
-              Context: {
-                Line: 1,
-                Column: 16
-              }
-            },
-            {
-              $type: SctBlockStatementSyntax,
-              Statements: {
-                $type: IEnumerable<SctStatementSyntax>,
-                $values: []
-              },
-              Children: null,
-              Context: {
-                Line: 2,
-                Column: 0
-              }
-            }
-          ]
-        },
-        Context: {
-          Line: 1,
-          Column: 0
-        }
-      }
-    ]
-  },
-  Context: {
-    Line: 1,
-    Column: 0
   }
 }
