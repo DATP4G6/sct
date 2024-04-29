@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Division by zero,
+    Line: 17,
+    Column: 12,
+    Filename: null
+  }
+]
