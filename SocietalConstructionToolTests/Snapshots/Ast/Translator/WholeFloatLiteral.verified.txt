@@ -8,22 +8,7 @@
     {
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            if (((1)) != 0L)
-            {
-            }
-            else if (((((3 < 2) ? 1L : 0L))) != 0L)
-            {
-            }
-
-            if (((1)) != 0L)
-            {
-            }
-            else if (((((4 > 5) ? 1L : 0L))) != 0L)
-            {
-            }
-            else
-            {
-            }
+            double __sct_x = 2;
         }
 
         public static void RunSimulation(IRuntimeContext ctx)

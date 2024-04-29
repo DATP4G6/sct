@@ -1,0 +1,33 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public class __sct_Citizen : BaseAgent
+        {
+            private long __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
+            private double __sct_latitude { get => Fields["__sct_latitude"]; set => Fields["__sct_latitude"] = value; }
+
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                };
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

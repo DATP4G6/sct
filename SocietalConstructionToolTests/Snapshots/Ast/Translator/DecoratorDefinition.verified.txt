@@ -1,0 +1,49 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public class __sct_Town : BaseAgent
+        {
+            public __sct_Town(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_decor1(IRuntimeContext ctx)
+            {
+                return false;
+            }
+
+            private bool __sct_decor2(IRuntimeContext ctx)
+            {
+                return false;
+            }
+
+            private bool __sct_Stable(IRuntimeContext ctx)
+            {
+                if (__sct_decor1(ctx))
+                    return true;
+                if (__sct_decor2(ctx))
+                    return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Stable" => __sct_Stable(ctx)};
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

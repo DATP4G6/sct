@@ -1,8 +1,10 @@
 using System.Text.Json;
 
-using Sct;
+using Microsoft.CodeAnalysis;
+
 using Sct.Compiler;
 using Sct.Compiler.Syntax;
+using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
 
 namespace SocietalConstructionToolTests
@@ -25,19 +27,13 @@ namespace SocietalConstructionToolTests
             }
         }
 
-        private static SctProgramSyntax BuildAst(string testFile)
-        {
-            var parser = SctRunner.GetParser(testFile);
-            var listener = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(listener);
-        }
 
         [DataTestMethod]
         [DynamicData(nameof(ParserFiles), DynamicDataSourceType.Property)]
         public async Task TestAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Trees"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             _ = await Verify(ast, IgnoreContext)
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));
         }
@@ -50,7 +46,7 @@ namespace SocietalConstructionToolTests
         public async Task TestReturnCheckAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/ReturnCheck"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new SctReturnCheckAstVisitor();
             _ = ast.Accept(visitor);
             var errors = visitor.Errors;
@@ -67,7 +63,7 @@ namespace SocietalConstructionToolTests
         public void TestCloneAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Clone"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new SctBaseBuilderSyntaxVisitor();
             var clonedAst = (SctProgramSyntax)ast.Accept(visitor);
 
@@ -83,6 +79,22 @@ namespace SocietalConstructionToolTests
         }
 
         /// <summary>
+        /// Test that the AST translator works correctly.
+        /// </summary>
+        [DataTestMethod]
+        [DynamicData(nameof(ParserFiles), DynamicDataSourceType.Property)]
+        public async Task TestTranslatorAst(string testFile)
+        {
+            UseProjectRelativeDirectory("Snapshots/Ast/Translator"); // Save snapshots here
+            var ast = TestFileUtils.BuildAst(testFile);
+            var visitor = new SctAstTranslator();
+            var tree = ast.Accept(visitor);
+
+            _ = await Verify(tree.NormalizeWhitespace().ToFullString())
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+        }
+
+        /// <summary>
         /// Test that constants are folded correctly.
         /// </summary>
         [DataTestMethod]
@@ -90,7 +102,7 @@ namespace SocietalConstructionToolTests
         public async Task TestFoldingAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Folding"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new AstFolderSyntaxVisitor();
             var foldedAst = (SctProgramSyntax)ast.Accept(visitor);
 
@@ -106,7 +118,7 @@ namespace SocietalConstructionToolTests
         public async Task TestFoldingErrorsAst(string testFile)
         {
             UseProjectRelativeDirectory("Snapshots/Ast/FoldingErrors"); // Save snapshots here
-            var ast = BuildAst(testFile);
+            var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new AstFolderSyntaxVisitor();
             var foldedAst = (SctProgramSyntax)ast.Accept(visitor);
             foldedAst.ForceEvaluation();
