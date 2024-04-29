@@ -16,6 +16,7 @@ namespace Sct.Compiler.Syntax
         public IEnumerable<SctDecoratorSyntax> Decorators => decorators;
         public IEnumerable<SctStateSyntax> States => states;
         public IEnumerable<SctFunctionSyntax> Functions => functions;
-        public override IEnumerable<SctSyntax> Children => [.. Parameters, .. Decorators, .. Functions, .. States];
+        public override IEnumerable<SctSyntax> Children => [.. Parameters, .. Body];
+        public IEnumerable<SctSyntax> Body => [.. Decorators, .. Functions, .. States];
     }
 }

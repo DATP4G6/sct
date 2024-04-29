@@ -753,6 +753,58 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
+        },
+        Body: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctStateSyntax,
+              Id: Bar,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: End
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Baz,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: End
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: End,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctExitStatementSyntax
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       },
       {
@@ -803,6 +855,43 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
+        },
+        Body: {
+          $type: IEnumerable<SctSyntax>,
+          $values: [
+            {
+              $type: SctStateSyntax,
+              Id: Equal,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Equal
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              $type: SctStateSyntax,
+              Id: Unequal,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Equal
+                    }
+                  ]
+                }
+              }
+            }
+          ]
         }
       }
     ]
