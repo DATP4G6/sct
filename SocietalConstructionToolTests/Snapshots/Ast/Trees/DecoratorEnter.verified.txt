@@ -64,53 +64,6 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
-        },
-        Body: {
-          $type: IEnumerable<SctSyntax>,
-          $values: [
-            {
-              $type: SctDecoratorSyntax,
-              Id: decor,
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: [
-                    {
-                      $type: SctEnterStatementSyntax,
-                      Id: Growing
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              $type: SctStateSyntax,
-              Id: Stable,
-              Decorations: {
-                $type: IEnumerable<string>,
-                $values: [
-                  decor
-                ]
-              },
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: []
-                }
-              }
-            },
-            {
-              $type: SctStateSyntax,
-              Id: Growing,
-              Decorations: null,
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: []
-                }
-              }
-            }
-          ]
         }
       }
     ]

@@ -164,43 +164,6 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
-        },
-        Body: {
-          $type: IEnumerable<SctSyntax>,
-          $values: [
-            {
-              $type: SctStateSyntax,
-              Id: Child,
-              Decorations: null,
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: [
-                    {
-                      $type: SctEnterStatementSyntax,
-                      Id: Adult
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              $type: SctStateSyntax,
-              Id: Adult,
-              Decorations: null,
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: [
-                    {
-                      $type: SctEnterStatementSyntax,
-                      Id: Adult
-                    }
-                  ]
-                }
-              }
-            }
-          ]
         }
       }
     ]
