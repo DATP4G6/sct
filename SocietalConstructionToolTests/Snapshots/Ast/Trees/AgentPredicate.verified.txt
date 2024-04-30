@@ -175,22 +175,6 @@
         Functions: {
           $type: IEnumerable<SctFunctionSyntax>,
           $values: []
-        },
-        Body: {
-          $type: IEnumerable<SctSyntax>,
-          $values: [
-            {
-              $type: SctStateSyntax,
-              Id: Bar,
-              Decorations: null,
-              Block: {
-                Statements: {
-                  $type: IEnumerable<SctStatementSyntax>,
-                  $values: []
-                }
-              }
-            }
-          ]
         }
       }
     ]

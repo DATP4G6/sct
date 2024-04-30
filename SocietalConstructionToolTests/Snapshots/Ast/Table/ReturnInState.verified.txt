@@ -1,0 +1,51 @@
+﻿{
+  Classes: {
+    A: {
+      Name: A,
+      FTable: {
+        Functions: null
+      },
+      STable: [
+        B
+      ],
+      DTable: null,
+      Fields: null
+    }
+  },
+  GlobalClass: {
+    Name: Global,
+    FTable: {
+      Functions: {
+        count: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        exists: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        rand: {
+          ReturnType: Float,
+          ParameterTypes: null
+        },
+        seed: {
+          ReturnType: Void,
+          ParameterTypes: [
+            Int
+          ]
+        },
+        Setup: {
+          ReturnType: Void,
+          ParameterTypes: null
+        }
+      }
+    },
+    STable: null,
+    DTable: null,
+    Fields: null
+  }
+}
