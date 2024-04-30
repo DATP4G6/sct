@@ -33,7 +33,7 @@ namespace Sct.Compiler.Typechecker
         }
 
         public override bool Visit(SctBlockStatementSyntax node) => node.Statements.Any(s => s.Accept(this));
-        public override bool Visit(SctIfStatementSyntax node) => node.Then.Accept(this) && (node.Else?.Accept(this) ?? true);
+        public override bool Visit(SctIfStatementSyntax node) => node.Then.Accept(this) && (node.Else?.Accept(this) ?? false);
         public override bool Visit(SctElseStatementSyntax node) => node.Block.Accept(this);
 
         public override bool Visit(SctReturnStatementSyntax node) => true;
