@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: ID test already exists,
+    Line: 5,
+    Column: 0,
+    Filename: null
+  },
+  {
+    Message: ID test already exists,
+    Line: 10,
+    Column: 4,
+    Filename: null
+  }
+]

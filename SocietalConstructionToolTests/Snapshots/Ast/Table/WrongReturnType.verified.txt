@@ -1,0 +1,69 @@
+﻿{
+  Classes: {
+    Agent007: {
+      Name: Agent007,
+      FTable: {
+        Functions: null
+      },
+      STable: null,
+      DTable: null,
+      Fields: null
+    }
+  },
+  GlobalClass: {
+    Name: Global,
+    FTable: {
+      Functions: {
+        bar: {
+          ReturnType: Float,
+          ParameterTypes: null
+        },
+        baz: {
+          ReturnType: Predicate,
+          ParameterTypes: null
+        },
+        count: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        exists: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        foo: {
+          ReturnType: Int,
+          ParameterTypes: null
+        },
+        MI6: {
+          ReturnType: Float,
+          ParameterTypes: null
+        },
+        rand: {
+          ReturnType: Float,
+          ParameterTypes: null
+        },
+        seed: {
+          ReturnType: Void,
+          ParameterTypes: [
+            Int
+          ]
+        },
+        Setup: {
+          ReturnType: Void,
+          ParameterTypes: null
+        },
+        test: {
+          ReturnType: Void,
+          ParameterTypes: null
+        }
+      }
+    },
+    STable: null,
+    DTable: null,
+    Fields: null
+  }
+}

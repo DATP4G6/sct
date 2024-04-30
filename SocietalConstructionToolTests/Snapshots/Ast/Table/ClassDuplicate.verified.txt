@@ -1,0 +1,92 @@
+﻿{
+  Classes: {
+    Global: {
+      Name: Global,
+      FTable: {
+        Functions: {
+          count: {
+            ReturnType: Int,
+            ParameterTypes: [
+              Predicate
+            ]
+          },
+          exists: {
+            ReturnType: Int,
+            ParameterTypes: [
+              Predicate
+            ]
+          },
+          rand: {
+            ReturnType: Float,
+            ParameterTypes: null
+          },
+          seed: {
+            ReturnType: Void,
+            ParameterTypes: [
+              Int
+            ]
+          },
+          Setup: {
+            ReturnType: Void,
+            ParameterTypes: null
+          }
+        }
+      },
+      STable: null,
+      DTable: null,
+      Fields: {
+        id: Int
+      }
+    },
+    Town: {
+      Name: Town,
+      FTable: {
+        Functions: null
+      },
+      STable: null,
+      DTable: null,
+      Fields: {
+        id: Int,
+        space: Int
+      }
+    }
+  },
+  GlobalClass: {
+    Name: Global,
+    FTable: {
+      Functions: {
+        count: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        exists: {
+          ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        rand: {
+          ReturnType: Float,
+          ParameterTypes: null
+        },
+        seed: {
+          ReturnType: Void,
+          ParameterTypes: [
+            Int
+          ]
+        },
+        Setup: {
+          ReturnType: Void,
+          ParameterTypes: null
+        }
+      }
+    },
+    STable: null,
+    DTable: null,
+    Fields: {
+      id: Int
+    }
+  }
+}

@@ -23,6 +23,7 @@ namespace SocietalConstructionToolTests
                 var settings = new VerifySettings();
                 settings.IgnoreMember<SctSyntax>(x => x.Context);
                 settings.IgnoreMember<SctSyntax>(x => x.Children);
+                settings.IgnoreMember<SctClassSyntax>(x => x.Body);
                 return settings;
             }
         }
@@ -124,6 +125,35 @@ namespace SocietalConstructionToolTests
             foldedAst.ForceEvaluation();
 
             _ = await Verify(visitor.Errors.ToList())
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+        }
+
+        /// <summary>
+        /// Test that the table builder visitor works correctly.
+        /// </summary>
+        [DataTestMethod]
+        [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
+        public async Task TestTableBuilder(string testFile)
+        {
+            UseProjectRelativeDirectory("Snapshots/Ast/Table"); // Save snapshots here
+            var ast = TestFileUtils.BuildAst(testFile);
+            var cTableBuilder = new CTableBuilder();
+            var visitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            _ = ast.Accept(visitor);
+
+            var (table, errors) = cTableBuilder.BuildCtable();
+            errors.AddRange(visitor.Errors);
+
+            var settings = IgnoreContext;
+            // Include CTable classes
+            settings.AlwaysIncludeMembersWithType(typeof(Dictionary<string, ClassContent>));
+            settings.AlwaysIncludeMembersWithType(typeof(Dictionary<string, FunctionType>));
+
+            _ = await Verify(table, settings)
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+
+            UseProjectRelativeDirectory("Snapshots/Ast/Table/Errors");
+            _ = await Verify(errors)
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));
         }
     }
