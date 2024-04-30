@@ -156,5 +156,21 @@ namespace SocietalConstructionToolTests
             _ = await Verify(errors)
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));
         }
+
+        /// <summary>
+        /// Test that keyword usage is checked correctly.
+        /// </summary>
+        [DataTestMethod]
+        [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
+        public async Task TestKeywordCheckAst(string testFile)
+        {
+            UseProjectRelativeDirectory("Snapshots/Ast/Keywords"); // Save snapshots here
+            var ast = TestFileUtils.BuildAst(testFile);
+            var visitor = new KeywordContextCheckSyntaxVisitor();
+            var errors = ast.Accept(visitor);
+
+            _ = await Verify(errors)
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+        }
     }
 }
