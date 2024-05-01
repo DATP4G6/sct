@@ -1,24 +1,29 @@
 using Sct.Compiler.Syntax;
 
-namespace Sct.Compiler.Typechecker {
-    public class SctAstTypeChecker : SctBaseSyntaxVisitor<Syntax.SctType> {
+namespace Sct.Compiler.Typechecker
+{
+    public class SctAstTypeChecker : SctBaseSyntaxVisitor<Syntax.SctType>
+    {
         private readonly CTable _ctable;
         private readonly VTable _vtable = new();
         private ClassContent _currentClass;
         private FunctionType _currentFunctionType = new(Syntax.SctType.Void, []);
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;
-        public SctAstTypeChecker(CTable cTable) {
+        public SctAstTypeChecker(CTable cTable)
+        {
             _ctable = cTable;
             _currentClass = _ctable.GlobalClass;
         }
 
-        public override Syntax.SctType Visit(SctProgramSyntax node) {
+        public override Syntax.SctType Visit(SctProgramSyntax node)
+        {
 
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctFunctionSyntax node) {
+        public override Syntax.SctType Visit(SctFunctionSyntax node)
+        {
 
             var functionName = node.Id;
             _currentFunctionType = GetFunctionType(functionName, node);
@@ -38,21 +43,25 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctParenthesisExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctParenthesisExpressionSyntax node)
+        {
             return VisitChildren(node);
         }
 
-        public override Syntax.SctType Visit(SctIdExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctIdExpressionSyntax node)
+        {
 
             return LookupVariable(node.Id, node);
         }
 
-        public override Syntax.SctType Visit(SctTypeSyntax node) {
+        public override Syntax.SctType Visit(SctTypeSyntax node)
+        {
 
             return node.Type;
         }
 
-        public override Syntax.SctType Visit(SctClassSyntax node) {
+        public override Syntax.SctType Visit(SctClassSyntax node)
+        {
             // can never be null, as SctTableVisitor created the class
             _currentClass = _ctable.GetClassContent(node.Id)!;
             _vtable.EnterScope();
@@ -62,20 +71,24 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctEnterStatementSyntax node) {
+        public override Syntax.SctType Visit(SctEnterStatementSyntax node)
+        {
 
             var stateName = node.Id;
 
-            if (!_currentClass.HasState(stateName) && !(_currentClass == _ctable.GlobalClass)) {
+            if (!_currentClass.HasState(stateName) && !(_currentClass == _ctable.GlobalClass))
+            {
                 _errors.Add(new CompilerError($"State '{stateName}' does not exist.", node.Context));
             }
 
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctDecoratorSyntax node) {
+        public override Syntax.SctType Visit(SctDecoratorSyntax node)
+        {
 
-            if(!_currentClass.HasDecorator(node.Id)) {
+            if (!_currentClass.HasDecorator(node.Id))
+            {
                 _errors.Add(new CompilerError($"Decorator '{node.Id}' does not exist.", node.Context));
 
             }
@@ -83,69 +96,85 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctNamedArgumentSyntax node) {
+        public override Syntax.SctType Visit(SctNamedArgumentSyntax node)
+        {
             return VisitChildren(node);
         }
 
-        public override Syntax.SctType Visit(SctParameterSyntax node) {
+        public override Syntax.SctType Visit(SctParameterSyntax node)
+        {
             _ = _vtable.AddEntry(node.Id, Visit(node.Type));
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctCallExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctCallExpressionSyntax node)
+        {
             var functionType = GetFunctionType(node.Target, node);
 
-            if (functionType.ParameterTypes.Count == node.Expressions.Count()) {
+            if (functionType.ParameterTypes.Count == node.Expressions.Count())
+            {
 
-                foreach (var (expression, parameterType) in node.Expressions.Zip(functionType.ParameterTypes)) {
-                    if (GetCompatibleType(Visit(expression), parameterType) is null) {
+                foreach (var (expression, parameterType) in node.Expressions.Zip(functionType.ParameterTypes))
+                {
+                    if (GetCompatibleType(Visit(expression), parameterType) is null)
+                    {
                         _errors.Add(new CompilerError($"Type mismatch in function call. Expected {parameterType}, or compatible type, but got {expression}", node.Context));
                     }
                 }
-            } else {
+            }
+            else
+            {
                 _errors.Add(new CompilerError($"Function '{node.Target}' expects {functionType.ParameterTypes.Count} arguments, but got {node.Expressions.Count()}", node.Context));
             }
 
             return functionType.ReturnType;
         }
 
-        public override Syntax.SctType Visit(SctUnaryMinusExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctUnaryMinusExpressionSyntax node)
+        {
 
             var expressionType = Visit(node.Expression);
 
-            if (!TypeIsNumeric(expressionType)) {
+            if (!TypeIsNumeric(expressionType))
+            {
                 _errors.Add(new CompilerError("Unary minus expression must be numeric type", node.Context));
                 expressionType = Syntax.SctType.Int;
             }
             return expressionType;
         }
 
-        public override Syntax.SctType Visit(SctReturnStatementSyntax node) {
+        public override Syntax.SctType Visit(SctReturnStatementSyntax node)
+        {
 
             var returnType = _currentFunctionType.ReturnType;
 
-            if (node.Expression is null) {
+            if (node.Expression is null)
+            {
 
-                if (returnType != Syntax.SctType.Void) {
+                if (returnType != Syntax.SctType.Void)
+                {
                     _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType} but got void", node.Context));
                 }
                 return Syntax.SctType.Void;
             }
 
             var expressionType = Visit(node.Expression);
-            if (GetCompatibleType(returnType, expressionType) is null) {
+            if (GetCompatibleType(returnType, expressionType) is null)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType} but got {expressionType}", node.Context));
                 expressionType = returnType;
             }
             return expressionType;
         }
 
-        public override Syntax.SctType Visit(SctBinaryExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctBinaryExpressionSyntax node)
+        {
 
             var leftType = Visit(node.Left);
             var rightType = Visit(node.Right);
 
-            if (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType)) {
+            if (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
+            {
                 _errors.Add(new CompilerError("Binary expression must be numeric types", node.Context));
                 leftType = Syntax.SctType.Int;
                 rightType = Syntax.SctType.Int;
@@ -154,19 +183,22 @@ namespace Sct.Compiler.Typechecker {
             return (leftType == rightType) ? leftType : Syntax.SctType.Float; // If we have two different types (int and float), we return float.
         }
 
-        public override Syntax.SctType Visit(SctAssignmentStatementSyntax node) {
+        public override Syntax.SctType Visit(SctAssignmentStatementSyntax node)
+        {
 
             var targetType = LookupVariable(node.Id, node);
             var expressionType = Visit(node.Expression);
 
-            if (GetCompatibleType(targetType, expressionType) is null) {
+            if (GetCompatibleType(targetType, expressionType) is null)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in assignment. Cannot assign {expressionType} to {targetType}", node.Context));
             }
 
             return targetType;
         }
 
-        public override Syntax.SctType Visit(SctBooleanExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctBooleanExpressionSyntax node)
+        {
 
             var leftType = Visit(node.Left);
             var rightType = Visit(node.Right);
@@ -184,30 +216,35 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Int;
         }
 
-        public override Syntax.SctType Visit(SctTypecastExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctTypecastExpressionSyntax node)
+        {
 
             var targetType = Visit(node.Type);
             var expressionType = Visit(node.Expression);
 
-            if (!IsTypeCastable(expressionType, targetType)) {
+            if (!IsTypeCastable(expressionType, targetType))
+            {
                 _errors.Add(new CompilerError($"Type mismatch in typecast. Cannot cast {expressionType} to {targetType}", node.Context));
             }
 
             return targetType;
         }
 
-        public override Syntax.SctType Visit(SctPredicateExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctPredicateExpressionSyntax node)
+        {
 
             var target = _ctable.GetClassContent(node.ClassName);
 
             // Check if target class exists
-            if (target is null) {
+            if (target is null)
+            {
                 _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
                 return Syntax.SctType.Predicate;
             }
 
             // Check if state exists in predicate and target class
-            if (node.StateName is not null && !target.HasState(node.StateName)) {
+            if (node.StateName is not null && !target.HasState(node.StateName))
+            {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
             }
 
@@ -215,14 +252,17 @@ namespace Sct.Compiler.Typechecker {
 
             var seenFields = new HashSet<string>();
 
-            foreach (var field in node.Fields) {
+            foreach (var field in node.Fields)
+            {
 
-                if (!target.Fields.ContainsKey(field.Id)) {
+                if (!target.Fields.ContainsKey(field.Id))
+                {
                     _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
                     continue;
                 }
 
-                if (!seenFields.Add(field.Id)) {
+                if (!seenFields.Add(field.Id))
+                {
                     _errors.Add(new CompilerError($"Field '{field.Id}' is already defined in predicate.", field.Context));
                     continue;
                 }
@@ -230,7 +270,8 @@ namespace Sct.Compiler.Typechecker {
                 var targetClassFieldType = target.Fields[field.Id];
                 var targetFieldExpressionType = Visit(field.Expression);
 
-                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null) {
+                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
+                {
                     _errors.Add(new CompilerError($"Type mismatch in predicate. Expected {targetClassFieldType}, or compatible type, but got {targetFieldExpressionType}", field.Context));
                 }
             }
@@ -238,33 +279,40 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Predicate;
         }
 
-        public override Syntax.SctType Visit(SctIfStatementSyntax node) {
+        public override Syntax.SctType Visit(SctIfStatementSyntax node)
+        {
 
-            if (Visit(node.Expression) != Syntax.SctType.Int) {
+            if (Visit(node.Expression) != Syntax.SctType.Int)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in if statement. Condition must be boolean", node.Context));
             }
 
-            if (node.Then != null) {
+            if (node.Then != null)
+            {
                 _ = Visit(node.Then);
             }
 
-            if (node.Else != null) {
+            if (node.Else != null)
+            {
                 _ = Visit(node.Else);
             }
 
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctElseStatementSyntax node) {
+        public override Syntax.SctType Visit(SctElseStatementSyntax node)
+        {
 
             _ = VisitChildren(node);
 
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctWhileStatementSyntax node) {
+        public override Syntax.SctType Visit(SctWhileStatementSyntax node)
+        {
 
-            if (Visit(node.Expression) != Syntax.SctType.Int) {
+            if (Visit(node.Expression) != Syntax.SctType.Int)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in while statement. Condition must be numerical", node.Context));
             }
 
@@ -273,44 +321,57 @@ namespace Sct.Compiler.Typechecker {
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctExpressionStatementSyntax node) {
+        public override Syntax.SctType Visit(SctExpressionStatementSyntax node)
+        {
             return VisitChildren(node);
         }
 
-        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node) {
+        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node)
+        {
 
-            if (node.Type != Syntax.SctType.Int) {
+            if (node.Type != Syntax.SctType.Int)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Int} but got {node.Type}", node.Context));
             }
 
             return Syntax.SctType.Int;
         }
 
-        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<double> node) {
+        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<double> node)
+        {
 
-            if (node.Type != Syntax.SctType.Int) {
+            if (node.Type != Syntax.SctType.Int)
+            {
                 _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Float} but got {node.Type}", node.Context));
             }
 
             return Syntax.SctType.Float;
         }
 
-        public override Syntax.SctType Visit(SctDeclarationStatementSyntax node) {
+        public override Syntax.SctType Visit(SctDeclarationStatementSyntax node)
+        {
 
             var type = Visit(node.Type);
 
-            if (node.Expression != null) {
+            if (node.Expression != null)
+            {
                 Syntax.SctType expressionType = Visit(node.Expression);
-                if (expressionType != type) {
+                if (expressionType != type)
+                {
                     _errors.Add(new CompilerError($"Type mismatch in declaration of variable {node.Id}. Expected {node.Type.Type} but got {expressionType}", node.Context));
-                } else if (type == Syntax.SctType.Void) {
+                }
+                else if (type == Syntax.SctType.Void)
+                {
                     _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type}", node.Context));
                 }
-            } else {
+            }
+            else
+            {
                 _errors.Add(new CompilerError($"Variable {node.Id} is not initialized", node.Context));
             }
 
-            if (_vtable.AddEntry(node.Id, type) is false) {
+            if (_vtable.AddEntry(node.Id, type) is false)
+            {
                 _errors.Add(new CompilerError($"Variable '{node.Id}' is already defined in this scope.", node.Context));
                 return LookupVariable(node.Id, node);
             }
@@ -318,7 +379,8 @@ namespace Sct.Compiler.Typechecker {
             return type;
         }
 
-        public override Syntax.SctType Visit(SctBlockStatementSyntax node) {
+        public override Syntax.SctType Visit(SctBlockStatementSyntax node)
+        {
 
             _vtable.EnterScope();
             _ = VisitChildren(node);
@@ -328,16 +390,19 @@ namespace Sct.Compiler.Typechecker {
         }
 
         // This is the "create Agent::State(FieldID: Expression, ...)" syntax, not to be confused with the definition of an agent.
-        public override Syntax.SctType Visit(SctAgentExpressionSyntax node) {
+        public override Syntax.SctType Visit(SctAgentExpressionSyntax node)
+        {
 
             var target = _ctable.GetClassContent(node.ClassName);
 
-            if (target is null) {
+            if (target is null)
+            {
                 _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
                 return Syntax.SctType.Ok;
             }
 
-            if (!target.HasState(node.StateName)) {
+            if (!target.HasState(node.StateName))
+            {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
                 return Syntax.SctType.Ok;
             }
@@ -347,14 +412,17 @@ namespace Sct.Compiler.Typechecker {
 
             var seenFields = new HashSet<string>();
 
-            foreach (var field in node.Fields) {
+            foreach (var field in node.Fields)
+            {
 
-                if (!targetClassFields.ContainsKey(field.Id)) {
+                if (!targetClassFields.ContainsKey(field.Id))
+                {
                     _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
                     continue;
                 }
 
-                if (!seenFields.Add(field.Id)) {
+                if (!seenFields.Add(field.Id))
+                {
                     _errors.Add(new CompilerError($"Field '{field.Id}' is already defined in agent.", field.Context));
                     continue;
                 }
@@ -362,13 +430,16 @@ namespace Sct.Compiler.Typechecker {
                 var targetClassFieldType = targetClassFields[field.Id];
                 var targetFieldExpressionType = Visit(field.Expression);
 
-                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null) {
+                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
+                {
                     _errors.Add(new CompilerError($"Type mismatch in agent expression. Expected {targetClassFieldType}, or compatible type, but got {targetFieldExpressionType}", field.Context));
                 }
             }
 
-            foreach (var field in targetClassFields) {
-                if (!seenFields.Contains(field.Key)) {
+            foreach (var field in targetClassFields)
+            {
+                if (!seenFields.Contains(field.Key))
+                {
                     _errors.Add(new CompilerError($"Missing argument '{field.Key}' in create statement.", node.Context));
                 }
             }
