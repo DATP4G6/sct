@@ -4,7 +4,7 @@ namespace Sct.Compiler.Typechecker
     {
         private readonly StackAdapter<VTableEntry> _entries = new();
 
-        public bool AddEntry(string name, SctType type)
+        public bool AddEntry(string name, Syntax.SctType type)
         {
             if (_entries.Any(x => x.Name == name))
             {
