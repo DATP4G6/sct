@@ -158,6 +158,38 @@ namespace SocietalConstructionToolTests
         }
 
         /// <summary>
+        /// Test that the type checker visitor works correctly.
+        /// </summary>
+        [DataTestMethod]
+        [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
+        public async Task TestTypeChecker(string testFile)
+        {
+
+            UseProjectRelativeDirectory("Snapshots/Ast/TypeCheck"); // Save snapshots here
+
+            // Build the CTable
+            var ast = TestFileUtils.BuildAst(testFile);
+
+            var cTableBuilder = new CTableBuilder();
+            var tableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            _ = ast.Accept(tableVisitor);
+
+            var (table, tableErrors) = cTableBuilder.BuildCtable();
+            tableErrors.AddRange(tableVisitor.Errors);
+
+            // Type check the AST
+            var typeChecker = new SctAstTypeChecker(table);
+            _ = typeChecker.Visit(ast);
+            var typeErrors = typeChecker.Errors;
+
+            _ = await Verify(typeErrors)
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+
+
+
+        }
+
+        /// <summary>
         /// Test that keyword usage is checked correctly.
         /// </summary>
         [DataTestMethod]

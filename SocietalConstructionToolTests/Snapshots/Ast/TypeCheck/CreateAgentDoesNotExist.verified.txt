@@ -1,0 +1,20 @@
+﻿[
+  {
+    Message: Class 'Bar' does not exist.,
+    Line: 4,
+    Column: 11,
+    Filename: null
+  },
+  {
+    Message: Class 'Bar' does not exist.,
+    Line: 5,
+    Column: 11,
+    Filename: null
+  },
+  {
+    Message: Class 'Bar' does not exist.,
+    Line: 6,
+    Column: 11,
+    Filename: null
+  }
+]

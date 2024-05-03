@@ -18,7 +18,7 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctProgramSyntax node)
         {
-
+            _ = VisitChildren(node);
             return Syntax.SctType.Ok;
         }
 
@@ -84,9 +84,23 @@ namespace Sct.Compiler.Typechecker
             return Syntax.SctType.Ok;
         }
 
+        public override Syntax.SctType Visit(SctStateSyntax node)
+        {
+            for (var i = 0; i < node.Decorations.Count(); i++)
+            {
+                if (!_currentClass.HasDecorator(node.Decorations.ElementAt(i)))
+                {
+                    _errors.Add(new CompilerError($"Decorator '{node.Decorations.ElementAt(i)}' does not exist.", node.Context));
+                }
+            }
+
+            _ = VisitChildren(node);
+
+            return Syntax.SctType.Ok;
+        }
+
         public override Syntax.SctType Visit(SctDecoratorSyntax node)
         {
-
             if (!_currentClass.HasDecorator(node.Id))
             {
                 _errors.Add(new CompilerError($"Decorator '{node.Id}' does not exist.", node.Context));
@@ -110,15 +124,16 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctCallExpressionSyntax node)
         {
             var functionType = GetFunctionType(node.Target, node);
-
             if (functionType.ParameterTypes.Count == node.Expressions.Count())
             {
-
                 foreach (var (expression, parameterType) in node.Expressions.Zip(functionType.ParameterTypes))
                 {
-                    if (GetCompatibleType(Visit(expression), parameterType) is null)
+                    var expressionType = Visit(expression);
+                    var compatibleType = GetCompatibleType(parameterType, expressionType);
+
+                    if (compatibleType is null)
                     {
-                        _errors.Add(new CompilerError($"Type mismatch in function call. Expected {parameterType}, or compatible type, but got {expression}", node.Context));
+                        _errors.Add(new CompilerError($"Type mismatch in function call. Expected {parameterType.TypeName()}, or compatible type, but got {expressionType.TypeName()}", node.Context));
                     }
                 }
             }
@@ -153,7 +168,7 @@ namespace Sct.Compiler.Typechecker
 
                 if (returnType != Syntax.SctType.Void)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType} but got void", node.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType.TypeName()} but got void", node.Context));
                 }
                 return Syntax.SctType.Void;
             }
@@ -161,7 +176,7 @@ namespace Sct.Compiler.Typechecker
             var expressionType = Visit(node.Expression);
             if (GetCompatibleType(returnType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType} but got {expressionType}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType.TypeName()} but got {expressionType.TypeName()}", node.Context));
                 expressionType = returnType;
             }
             return expressionType;
@@ -191,8 +206,9 @@ namespace Sct.Compiler.Typechecker
 
             if (GetCompatibleType(targetType, expressionType) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in assignment. Cannot assign {expressionType} to {targetType}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in assignment. Cannot assign {expressionType.TypeName()} to {targetType.TypeName()}", node.Context));
             }
+
 
             return targetType;
         }
@@ -224,7 +240,7 @@ namespace Sct.Compiler.Typechecker
 
             if (!IsTypeCastable(expressionType, targetType))
             {
-                _errors.Add(new CompilerError($"Type mismatch in typecast. Cannot cast {expressionType} to {targetType}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in typecast. Cannot cast {expressionType.TypeName()} to {targetType.TypeName()}", node.Context));
             }
 
             return targetType;
@@ -246,6 +262,7 @@ namespace Sct.Compiler.Typechecker
             if (node.StateName is not null && !target.HasState(node.StateName))
             {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
+                return Syntax.SctType.Predicate;
             }
 
             // Check if all fields exist in target class
@@ -272,7 +289,7 @@ namespace Sct.Compiler.Typechecker
 
                 if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in predicate. Expected {targetClassFieldType}, or compatible type, but got {targetFieldExpressionType}", field.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in predicate. Expected {targetClassFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
                 }
             }
 
@@ -329,20 +346,25 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node)
         {
 
-            if (node.Type != Syntax.SctType.Int)
+            if (GetCompatibleType(Syntax.SctType.Int, node.Type) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Int} but got {node.Type}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Int} but got {node.Type.TypeName()}", node.Context));
             }
 
             return Syntax.SctType.Int;
         }
 
+        public override Syntax.SctType Visit(SctBreakStatementSyntax node)
+        {
+            return Syntax.SctType.Ok;
+        }
+
         public override Syntax.SctType Visit(SctLiteralExpressionSyntax<double> node)
         {
 
-            if (node.Type != Syntax.SctType.Int)
+            if (GetCompatibleType(Syntax.SctType.Float, node.Type) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Float} but got {node.Type}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Float} but got {node.Type.TypeName()}", node.Context));
             }
 
             return Syntax.SctType.Float;
@@ -352,17 +374,22 @@ namespace Sct.Compiler.Typechecker
         {
 
             var type = Visit(node.Type);
+            if (type == Syntax.SctType.Void)
+            {
+                _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type.TypeName()}", node.Context));
+                return Syntax.SctType.Int;
+            }
 
             if (node.Expression != null)
             {
                 Syntax.SctType expressionType = Visit(node.Expression);
-                if (expressionType != type)
+                if (GetCompatibleType(type, expressionType) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in declaration of variable {node.Id}. Expected {node.Type.Type} but got {expressionType}", node.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in declaration of variable {node.Id}. Expected {node.Type.Type.TypeName()} but got {expressionType.TypeName()}", node.Context));
                 }
                 else if (type == Syntax.SctType.Void)
                 {
-                    _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type}", node.Context));
+                    _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type.TypeName()}", node.Context));
                 }
             }
             else
@@ -432,7 +459,7 @@ namespace Sct.Compiler.Typechecker
 
                 if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in agent expression. Expected {targetClassFieldType}, or compatible type, but got {targetFieldExpressionType}", field.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in agent expression. Expected {targetClassFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
                 }
             }
 
@@ -484,6 +511,7 @@ namespace Sct.Compiler.Typechecker
             if (variableType is null)
             {
                 _errors.Add(new CompilerError($"Variable '{variableName}' does not exist.", node.Context));
+                return Syntax.SctType.Int;
             }
             return (Syntax.SctType)variableType!;
         }

@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Function 'foo' does not exist.,
+    Line: 2,
+    Column: 4,
+    Filename: null
+  }
+]

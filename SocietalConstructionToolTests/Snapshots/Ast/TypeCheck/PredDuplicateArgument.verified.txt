@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Field 'townId' is already defined in predicate.,
+    Line: 12,
+    Column: 34,
+    Filename: null
+  }
+]
