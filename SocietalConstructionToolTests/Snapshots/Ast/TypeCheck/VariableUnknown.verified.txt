@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Variable 'x' does not exist.,
+    Line: 6,
+    Column: 4,
+    Filename: null
+  }
+]

@@ -9,11 +9,11 @@ namespace Sct.Compiler.Syntax
         // Tell the visitor to use the more specific Visit overload
         // Casting to dynamic forces C# to look at the concrete class, even if current type is abstract
         public virtual T Visit(SctSyntax node) => Visit((dynamic)node);
-
         public virtual T Visit(SctNamedArgumentSyntax node) => VisitChildren(node);
         public virtual T Visit(SctParameterSyntax node) => VisitChildren(node);
         public virtual T Visit(SctProgramSyntax node) => VisitChildren(node);
         public virtual T Visit(SctTypeSyntax node) => VisitChildren(node);
+        public virtual T Visit(SctExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctClassSyntax node) => VisitChildren(node);
         public virtual T Visit(SctDecoratorSyntax node) => VisitChildren(node);
         public virtual T Visit(SctDefinitionSyntax node) => VisitChildren(node);
@@ -23,7 +23,6 @@ namespace Sct.Compiler.Syntax
         public virtual T Visit(SctBinaryExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctBooleanExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctCallExpressionSyntax node) => VisitChildren(node);
-        public virtual T Visit(SctExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctIdExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctLiteralExpressionSyntax<long> node) => VisitChildren(node);
         public virtual T Visit(SctLiteralExpressionSyntax<double> node) => VisitChildren(node);

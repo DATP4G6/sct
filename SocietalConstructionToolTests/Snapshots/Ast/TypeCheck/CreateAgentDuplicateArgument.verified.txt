@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Field 'a' is already defined in agent.,
+    Line: 8,
+    Column: 20,
+    Filename: null
+  },
+  {
+    Message: Field 'a' is already defined in agent.,
+    Line: 9,
+    Column: 20,
+    Filename: null
+  }
+]

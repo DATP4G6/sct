@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Variable x cannot be of type void,
+    Line: 2,
+    Column: 3,
+    Filename: null
+  }
+]
