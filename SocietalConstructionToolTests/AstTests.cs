@@ -174,8 +174,7 @@ namespace SocietalConstructionToolTests
             var tableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
             _ = ast.Accept(tableVisitor);
 
-            var (table, tableErrors) = cTableBuilder.BuildCtable();
-            tableErrors.AddRange(tableVisitor.Errors);
+            var (table, _) = cTableBuilder.BuildCtable();
 
             // Type check the AST
             var typeChecker = new SctAstTypeChecker(table);

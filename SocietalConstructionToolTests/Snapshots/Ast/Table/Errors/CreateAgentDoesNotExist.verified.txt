@@ -1,8 +1,1 @@
-﻿[
-  {
-    Message: No setup function found,
-    Line: null,
-    Column: null,
-    Filename: null
-  }
-]
+﻿[]

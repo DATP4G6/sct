@@ -27,20 +27,18 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctProgramSyntax node)
         {
             MakeChildrenAccept(node);
-            // _ = VisitChildren(node);
             return Syntax.SctType.Ok;
         }
 
         public override Syntax.SctType Visit(SctFunctionSyntax node)
         {
-
             var functionName = node.Id;
             _currentFunctionType = GetFunctionType(functionName, node);
 
             // this only happens when multiple functions exist with the same name
             // we already log this in the SctTableVisitor (when we build the CTable)
             // but need this, to be able to continue typechecking
-            if (_currentFunctionType.ReturnType != Visit(node.ReturnType))
+            if (_currentFunctionType.ReturnType != node.ReturnType.Accept(this))
             {
                 return Syntax.SctType.Void;
             }
@@ -56,20 +54,13 @@ namespace Sct.Compiler.Typechecker
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctParenthesisExpressionSyntax node)
-        {
-            return node.Expression.Accept(this);
-        }
-
         public override Syntax.SctType Visit(SctIdExpressionSyntax node)
         {
-
             return LookupVariable(node.Id, node);
         }
 
         public override Syntax.SctType Visit(SctTypeSyntax node)
         {
-
             return node.Type;
         }
 
@@ -86,7 +77,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctEnterStatementSyntax node)
         {
-
             var stateName = node.Id;
 
             if (!_currentClass.HasState(stateName) && !(_currentClass == _ctable.GlobalClass))
@@ -123,14 +113,9 @@ namespace Sct.Compiler.Typechecker
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctNamedArgumentSyntax node)
-        {
-            return node.Expression.Accept(this);
-        }
-
         public override Syntax.SctType Visit(SctParameterSyntax node)
         {
-            _ = _vtable.AddEntry(node.Id, Visit(node.Type));
+            _ = _vtable.AddEntry(node.Id, node.Type.Accept(this));
             return Syntax.SctType.Ok;
         }
 
@@ -160,7 +145,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctUnaryMinusExpressionSyntax node)
         {
-
             var expressionType = node.Expression.Accept(this);
 
             if (!TypeIsNumeric(expressionType))
@@ -247,7 +231,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctTypecastExpressionSyntax node)
         {
-
             var targetType = node.Type.Accept(this);
             var expressionType = node.Expression.Accept(this);
 
@@ -261,7 +244,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctPredicateExpressionSyntax node)
         {
-
             var target = _ctable.GetClassContent(node.ClassName);
 
             // Check if target class exists
@@ -284,7 +266,6 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var field in node.Fields)
             {
-
                 if (!target.Fields.ContainsKey(field.Id))
                 {
                     _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
@@ -311,7 +292,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctIfStatementSyntax node)
         {
-
             if (node.Expression.Accept(this) != Syntax.SctType.Int)
             {
                 _errors.Add(new CompilerError($"Type mismatch in if statement. Condition must be boolean", node.Context));
@@ -332,7 +312,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctElseStatementSyntax node)
         {
-
             MakeChildrenAccept(node);
 
             return Syntax.SctType.Ok;
@@ -340,8 +319,7 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctWhileStatementSyntax node)
         {
-
-            if (Visit(node.Expression) != Syntax.SctType.Int)
+            if (node.Expression.Accept(this) != Syntax.SctType.Int)
             {
                 _errors.Add(new CompilerError($"Type mismatch in while statement. Condition must be numerical", node.Context));
             }
@@ -351,14 +329,9 @@ namespace Sct.Compiler.Typechecker
             return Syntax.SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctExpressionStatementSyntax node)
-        {
-            return node.Expression.Accept(this);
-        }
 
         public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node)
         {
-
             if (GetCompatibleType(Syntax.SctType.Int, node.Type) is null)
             {
                 _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Int} but got {node.Type.TypeName()}", node.Context));
@@ -374,7 +347,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctLiteralExpressionSyntax<double> node)
         {
-
             if (GetCompatibleType(Syntax.SctType.Float, node.Type) is null)
             {
                 _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Float} but got {node.Type.TypeName()}", node.Context));
@@ -385,7 +357,6 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctDeclarationStatementSyntax node)
         {
-
             var type = node.Type.Accept(this);
             if (type == Syntax.SctType.Void)
             {
@@ -500,6 +471,7 @@ namespace Sct.Compiler.Typechecker
             _errors.Add(new CompilerError($"Function '{functionName}' does not exist.", node.Context));
             return new FunctionType(Syntax.SctType.Void, []);
         }
+
         public static bool TypeIsNumeric(Syntax.SctType type) => type is Syntax.SctType.Int or Syntax.SctType.Float;
 
         public static bool IsTypeCastable(Syntax.SctType from, Syntax.SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));

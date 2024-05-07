@@ -7,4 +7,6 @@ function Setup() -> void {
     x = 5 == Town::?();
     x = test() != 10 && Town::?() == 0;
     x = 5 > 6.0 == 0;
+    x = Town::?() == Town::?();
+    x = Town::?() < Town::?();
 }

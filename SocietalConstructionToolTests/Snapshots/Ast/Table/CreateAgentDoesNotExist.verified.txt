@@ -36,7 +36,7 @@
             Int
           ]
         },
-        setup: {
+        Setup: {
           ReturnType: Void,
           ParameterTypes: null
         }
