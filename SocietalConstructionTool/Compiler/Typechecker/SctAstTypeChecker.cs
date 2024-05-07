@@ -1,5 +1,3 @@
-using System.Linq.Expressions;
-
 using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
@@ -18,8 +16,10 @@ namespace Sct.Compiler.Typechecker
             _currentClass = _ctable.GlobalClass;
         }
 
-        private void MakeChildrenAccept(SctSyntax node){
-            foreach(var child in node.Children){
+        private void MakeChildrenAccept(SctSyntax node)
+        {
+            foreach (var child in node.Children)
+            {
                 _ = child.Accept(this);
             }
         }
