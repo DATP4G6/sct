@@ -13,6 +13,7 @@ namespace Sct.Compiler.Syntax
         public virtual T Visit(SctParameterSyntax node) => VisitChildren(node);
         public virtual T Visit(SctProgramSyntax node) => VisitChildren(node);
         public virtual T Visit(SctTypeSyntax node) => VisitChildren(node);
+        public virtual T Visit(SctExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctClassSyntax node) => VisitChildren(node);
         public virtual T Visit(SctDecoratorSyntax node) => VisitChildren(node);
         public virtual T Visit(SctDefinitionSyntax node) => VisitChildren(node);

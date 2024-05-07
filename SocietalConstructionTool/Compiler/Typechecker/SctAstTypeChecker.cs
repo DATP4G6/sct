@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
@@ -16,9 +18,16 @@ namespace Sct.Compiler.Typechecker
             _currentClass = _ctable.GlobalClass;
         }
 
+        private void MakeChildrenAccept(SctSyntax node){
+            foreach(var child in node.Children){
+                _ = child.Accept(this);
+            }
+        }
+
         public override Syntax.SctType Visit(SctProgramSyntax node)
         {
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
+            // _ = VisitChildren(node);
             return Syntax.SctType.Ok;
         }
 
@@ -36,16 +45,20 @@ namespace Sct.Compiler.Typechecker
                 return Syntax.SctType.Void;
             }
             _vtable.EnterScope();
-            _ = node.Parameters.Select(Visit);
-            _ = Visit(node.ReturnType);
-            _ = Visit(node.Block);
+
+            foreach (var parameter in node.Parameters)
+            {
+                MakeChildrenAccept(parameter);
+            }
+            _ = node.ReturnType.Accept(this);
+            _ = node.Block.Accept(this);
             _vtable.ExitScope();
             return Syntax.SctType.Ok;
         }
 
         public override Syntax.SctType Visit(SctParenthesisExpressionSyntax node)
         {
-            return VisitChildren(node);
+            return node.Expression.Accept(this);
         }
 
         public override Syntax.SctType Visit(SctIdExpressionSyntax node)
@@ -65,7 +78,7 @@ namespace Sct.Compiler.Typechecker
             // can never be null, as SctTableVisitor created the class
             _currentClass = _ctable.GetClassContent(node.Id)!;
             _vtable.EnterScope();
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
             _vtable.ExitScope();
 
             return Syntax.SctType.Ok;
@@ -94,7 +107,7 @@ namespace Sct.Compiler.Typechecker
                 }
             }
 
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
 
             return Syntax.SctType.Ok;
         }
@@ -106,13 +119,13 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"Decorator '{node.Id}' does not exist.", node.Context));
 
             }
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
             return Syntax.SctType.Ok;
         }
 
         public override Syntax.SctType Visit(SctNamedArgumentSyntax node)
         {
-            return VisitChildren(node);
+            return node.Expression.Accept(this);
         }
 
         public override Syntax.SctType Visit(SctParameterSyntax node)
@@ -128,7 +141,7 @@ namespace Sct.Compiler.Typechecker
             {
                 foreach (var (expression, parameterType) in node.Expressions.Zip(functionType.ParameterTypes))
                 {
-                    var expressionType = Visit(expression);
+                    var expressionType = expression.Accept(this);
                     var compatibleType = GetCompatibleType(parameterType, expressionType);
 
                     if (compatibleType is null)
@@ -148,7 +161,7 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctUnaryMinusExpressionSyntax node)
         {
 
-            var expressionType = Visit(node.Expression);
+            var expressionType = node.Expression.Accept(this);
 
             if (!TypeIsNumeric(expressionType))
             {
@@ -173,7 +186,7 @@ namespace Sct.Compiler.Typechecker
                 return Syntax.SctType.Void;
             }
 
-            var expressionType = Visit(node.Expression);
+            var expressionType = node.Expression.Accept(this);
             if (GetCompatibleType(returnType, expressionType) is null)
             {
                 _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType.TypeName()} but got {expressionType.TypeName()}", node.Context));
@@ -185,8 +198,8 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctBinaryExpressionSyntax node)
         {
 
-            var leftType = Visit(node.Left);
-            var rightType = Visit(node.Right);
+            var leftType = node.Left.Accept(this);
+            var rightType = node.Right.Accept(this);
 
             if (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
             {
@@ -202,7 +215,7 @@ namespace Sct.Compiler.Typechecker
         {
 
             var targetType = LookupVariable(node.Id, node);
-            var expressionType = Visit(node.Expression);
+            var expressionType = node.Expression.Accept(this);
 
             if (GetCompatibleType(targetType, expressionType) is null)
             {
@@ -216,8 +229,8 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctBooleanExpressionSyntax node)
         {
 
-            var leftType = Visit(node.Left);
-            var rightType = Visit(node.Right);
+            var leftType = node.Left.Accept(this);
+            var rightType = node.Right.Accept(this);
 
             if (// Types are not numeric
                 (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
@@ -235,8 +248,8 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctTypecastExpressionSyntax node)
         {
 
-            var targetType = Visit(node.Type);
-            var expressionType = Visit(node.Expression);
+            var targetType = node.Type.Accept(this);
+            var expressionType = node.Expression.Accept(this);
 
             if (!IsTypeCastable(expressionType, targetType))
             {
@@ -285,7 +298,7 @@ namespace Sct.Compiler.Typechecker
                 }
 
                 var targetClassFieldType = target.Fields[field.Id];
-                var targetFieldExpressionType = Visit(field.Expression);
+                var targetFieldExpressionType = field.Expression.Accept(this);
 
                 if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
                 {
@@ -299,19 +312,19 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctIfStatementSyntax node)
         {
 
-            if (Visit(node.Expression) != Syntax.SctType.Int)
+            if (node.Expression.Accept(this) != Syntax.SctType.Int)
             {
                 _errors.Add(new CompilerError($"Type mismatch in if statement. Condition must be boolean", node.Context));
             }
 
             if (node.Then != null)
             {
-                _ = Visit(node.Then);
+                _ = node.Then.Accept(this);
             }
 
             if (node.Else != null)
             {
-                _ = Visit(node.Else);
+                _ = node.Else.Accept(this);
             }
 
             return Syntax.SctType.Ok;
@@ -320,7 +333,7 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctElseStatementSyntax node)
         {
 
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
 
             return Syntax.SctType.Ok;
         }
@@ -333,14 +346,14 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"Type mismatch in while statement. Condition must be numerical", node.Context));
             }
 
-            _ = Visit(node.Block);
+            _ = node.Block.Accept(this);
 
             return Syntax.SctType.Ok;
         }
 
         public override Syntax.SctType Visit(SctExpressionStatementSyntax node)
         {
-            return VisitChildren(node);
+            return node.Expression.Accept(this);
         }
 
         public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node)
@@ -373,7 +386,7 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctDeclarationStatementSyntax node)
         {
 
-            var type = Visit(node.Type);
+            var type = node.Type.Accept(this);
             if (type == Syntax.SctType.Void)
             {
                 _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type.TypeName()}", node.Context));
@@ -382,7 +395,7 @@ namespace Sct.Compiler.Typechecker
 
             if (node.Expression != null)
             {
-                Syntax.SctType expressionType = Visit(node.Expression);
+                Syntax.SctType expressionType = node.Expression.Accept(this);
                 if (GetCompatibleType(type, expressionType) is null)
                 {
                     _errors.Add(new CompilerError($"Type mismatch in declaration of variable {node.Id}. Expected {node.Type.Type.TypeName()} but got {expressionType.TypeName()}", node.Context));
@@ -410,7 +423,7 @@ namespace Sct.Compiler.Typechecker
         {
 
             _vtable.EnterScope();
-            _ = VisitChildren(node);
+            MakeChildrenAccept(node);
             _vtable.ExitScope();
 
             return Syntax.SctType.Ok;
@@ -455,7 +468,7 @@ namespace Sct.Compiler.Typechecker
                 }
 
                 var targetClassFieldType = targetClassFields[field.Id];
-                var targetFieldExpressionType = Visit(field.Expression);
+                var targetFieldExpressionType = field.Expression.Accept(this);
 
                 if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
                 {
