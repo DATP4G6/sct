@@ -104,28 +104,19 @@ namespace Sct
             return (outputText, []);
         }
 
-        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder, SctSyntax rootNode)
+        private static (List<CompilerError>, CTable) RunFirstPassChecks(SctProgramSyntax startNode)
         {
-            var errors = new List<CompilerError>();
-
-            KeywordContextCheckVisitor keywordChecker = new();
-            var keywordErrors = startNode.Accept(keywordChecker).ToList();
-            errors.AddRange(keywordErrors);
-
-            SctReturnCheckVisitor returnChecker = new();
-            _ = startNode.Accept(returnChecker);
-            errors.AddRange(returnChecker.Errors);
-
-            // Run visitor that populates the tables using the CTableBuilder.
-            var sctTableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
-            _ = rootNode.Accept(sctTableVisitor);
-            errors.AddRange(sctTableVisitor.Errors);
-            return errors;
+            var cTableBuilder = new CTableBuilder();
+            var visitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            _ = startNode.Accept(visitor);
+            var (table, errors) = cTableBuilder.BuildCtable();
+            errors.AddRange(visitor.Errors);
+            return (errors, table);
         }
 
-        private static List<CompilerError> RunSecondPassChecks(ParserRuleContext startNode, CTable cTable)
+        private static List<CompilerError> RunSecondPassChecks(SctProgramSyntax startNode, CTable table)
         {
-            var typeChecker = new SctTypeChecker(cTable);
+            var typeChecker = new SctAstTypeChecker(table);
             _ = startNode.Accept(typeChecker);
             return typeChecker.Errors.ToList();
         }
@@ -142,10 +133,13 @@ namespace Sct
             _ = ast.Accept(returnVisitor);
             errors.AddRange(returnVisitor.Errors);
 
-            // Run first typechecker pass here
+            // The first pass of the typechecker that populates the tables using the CTableBuilder.
+            var (firstPassErrors, table) = RunFirstPassChecks(ast);
+            errors.AddRange(firstPassErrors);
 
-            // Run second pass here
-
+            // The second pass of the typechecker
+            var secondPassErrors = RunSecondPassChecks(ast, table);
+            errors.AddRange(secondPassErrors);
 
             return errors;
         }
