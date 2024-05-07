@@ -1,0 +1,39 @@
+﻿[
+  {
+    "State": "TestState",
+    "Fields": {
+      "calledFirst": 0,
+      "calledSecond": 0,
+      "calledThird": 0,
+      "success": 0
+    },
+    "ClassName": "Test"
+  }
+][
+  {
+    "State": "Terminating",
+    "Fields": {},
+    "ClassName": "Terminator"
+  },
+  {
+    "State": "tested",
+    "Fields": {
+      "calledFirst": 1,
+      "calledSecond": 1,
+      "calledThird": 1,
+      "success": 1
+    },
+    "ClassName": "Test"
+  }
+][
+  {
+    "State": "tested",
+    "Fields": {
+      "calledFirst": 1,
+      "calledSecond": 1,
+      "calledThird": 1,
+      "success": 1
+    },
+    "ClassName": "Test"
+  }
+]

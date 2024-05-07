@@ -1,0 +1,44 @@
+class Test(int calledFirst, int calledSecond, int calledThird, int success) {
+
+    decorator shouldBeCalledFirst {
+        calledFirst = 1;
+    }
+
+    decorator shouldBeCalledSecond {
+        if (calledFirst) {
+            calledSecond = 1;
+        }
+    }
+
+    decorator shouldBeCalledThird {
+        if (calledSecond) {
+            calledThird = 1;
+        }
+    }
+
+    @shouldBeCalledFirst
+    @shouldBeCalledSecond
+    @shouldBeCalledThird
+    state TestState {
+        if (calledFirst && calledSecond) {
+            success = 1;
+        }
+        create Terminator::Terminating();
+        enter tested;
+    }
+
+    state tested {
+        enter tested;
+    }
+}
+
+class Terminator() {
+    state Terminating {
+        exit;
+    }
+}
+
+
+function Setup() -> void {
+    create Test::TestState(calledFirst: 0, calledSecond: 0, calledThird: 0, success: 0);
+}
