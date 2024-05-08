@@ -1,8 +1,0 @@
-﻿[
-  {
-    Message: ID Town already exists,
-    Line: 3,
-    Column: 0,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/ClassDuplicate.sct
-  }
-]

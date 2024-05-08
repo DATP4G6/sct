@@ -63,7 +63,6 @@ namespace SocietalConstructionToolTests
         [DynamicData(nameof(ParserFiles), DynamicDataSourceType.Property)]
         public void TestCloneAst(string testFile)
         {
-            UseProjectRelativeDirectory("Snapshots/Ast/Clone"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
             var visitor = new SctBaseBuilderSyntaxVisitor();
             var clonedAst = (SctProgramSyntax)ast.Accept(visitor);
@@ -164,7 +163,6 @@ namespace SocietalConstructionToolTests
         [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
         public async Task TestTypeChecker(string testFile)
         {
-
             UseProjectRelativeDirectory("Snapshots/Ast/TypeCheck"); // Save snapshots here
 
             // Build the CTable
@@ -183,9 +181,6 @@ namespace SocietalConstructionToolTests
 
             _ = await Verify(typeErrors)
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));
-
-
-
         }
 
         /// <summary>

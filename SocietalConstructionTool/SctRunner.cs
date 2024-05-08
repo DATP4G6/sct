@@ -213,8 +213,8 @@ namespace Sct
          */
         private static void Run(Assembly assembly, IRuntimeContext initialContext)
         {
-            var globalClassName = $"{SctTranslator.GeneratedNamespace}.{SctTranslator.GeneratedGlobalClass}";
-            _ = assembly.GetType(globalClassName)?.GetMethod(SctTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
+            var globalClassName = $"{SctAstTranslator.GeneratedNamespace}.{SctAstTranslator.GeneratedGlobalClass}";
+            _ = assembly.GetType(globalClassName)?.GetMethod(SctAstTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
         }
 
         /**

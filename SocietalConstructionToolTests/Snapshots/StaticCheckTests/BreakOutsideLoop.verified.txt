@@ -1,8 +1,0 @@
-﻿[
-  {
-    Message: Cannot use 'break' inside function,
-    Line: 2,
-    Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BreakOutsideLoop.sct
-  }
-]
