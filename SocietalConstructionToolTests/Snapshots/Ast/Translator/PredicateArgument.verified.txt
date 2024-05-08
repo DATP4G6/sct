@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static long __sct_duplicate(IRuntimeContext ctx, IQueryPredicate __sct_p)
+        public static long __sct_duplicate(IRuntimeContext ctx, QueryPredicate __sct_p)
         {
             if ((((ctx.QueryHandler.Count(ctx, __sct_p) > 1L) ? 1L : 0L)) != 0L)
             {
@@ -18,7 +18,7 @@
 
         public static void __sct_Setup(IRuntimeContext ctx)
         {
-            IQueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1L) }));
+            QueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1L) }));
             if ((__sct_duplicate(ctx, __sct_x)) != 0L)
             {
                 ctx.AgentHandler.CreateAgent(new __sct_Exiter("__sct_Exiting", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));

@@ -39,7 +39,7 @@ namespace Sct.Compiler.Translator
             {
                 Syntax.SctType.Int => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.LongKeyword)),
                 Syntax.SctType.Float => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.DoubleKeyword)),
-                Syntax.SctType.Predicate => SyntaxFactory.ParseTypeName(nameof(IQueryPredicate)),
+                Syntax.SctType.Predicate => SyntaxFactory.ParseTypeName(nameof(QueryPredicate)),
                 Syntax.SctType.Void => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
                 _ => throw new InvalidTypeException($"Type {type.Type} does not exist"),
             };
