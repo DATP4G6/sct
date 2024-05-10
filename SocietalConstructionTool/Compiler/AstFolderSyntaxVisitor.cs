@@ -14,53 +14,54 @@ namespace Sct.Compiler
             var left = (SctExpressionSyntax)node.Left.Accept(this);
             var right = (SctExpressionSyntax)node.Right.Accept(this);
 
-            // Handle 0 division by catching expression
-            try
-            {
-                return (left, right) switch
+            { // Extra scope as the if syntax declares intRight and floatRight in the same scope as the match below
+                // Check for division by zero
+                if (node.Op == SctBinaryOperator.Div && (
+                    right is SctLiteralExpressionSyntax<long> intRight && intRight.Value == 0
+                    || right is SctLiteralExpressionSyntax<double> floatRight && floatRight.Value == 0)
+                   )
                 {
-                    // Both nodes are ints
-                    (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<long> intRight) =>
-                        new SctLiteralExpressionSyntax<long>(
-                            node.Context,
-                            Syntax.SctType.Int,
-                            Calculate(intLeft.Value, intRight.Value, node.Op)
-                        ),
-                    // One is int, the other is float
-                    (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<double> floatRight) =>
-                        new SctLiteralExpressionSyntax<double>(
-                            node.Context,
-                            Syntax.SctType.Float,
-                            Calculate(intLeft.Value, floatRight.Value, node.Op)
-                        ),
-                    // One is float, the other is int
-                    (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<long> intRight) =>
-                        new SctLiteralExpressionSyntax<double>(
-                            node.Context,
-                            Syntax.SctType.Float,
-                            Calculate(floatLeft.Value, intRight.Value, node.Op)
-                        ),
-                    // Both nodes are floats
-                    (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<double> floatRight) =>
-                        new SctLiteralExpressionSyntax<double>(
-                            node.Context,
-                            Syntax.SctType.Float,
-                            Calculate(floatLeft.Value, floatRight.Value, node.Op)
-                        ),
-                    _ => node
-                };
+                    var error = new CompilerError("Division by zero", node.Context);
+                    // Only add the error if it's not already in the List
+                    // This is to avoid duplicate errors, as nodes may be visited multiple times
+                    if (!_errors.Any(e => e.ToString() == error.ToString()))
+                        _errors.Add(error);
+                    return base.Visit(node);
+                }
+            }
 
-            }
-            catch (DivideByZeroException)
+            return (left, right) switch
             {
-                _errors.Add(new CompilerError("Division by zero", node.Context));
-                return new SctBinaryExpressionSyntax(
-                    node.Context.OriginalContext,
-                    left,
-                    right,
-                    node.Op
-                );
-            }
+                // Both nodes are ints
+                (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<long> intRight) =>
+                    new SctLiteralExpressionSyntax<long>(
+                        node.Context,
+                        SctType.Int,
+                        Calculate(intLeft.Value, intRight.Value, node.Op)
+                    ),
+                // One is int, the other is float
+                (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<double> floatRight) =>
+                    new SctLiteralExpressionSyntax<double>(
+                        node.Context,
+                        SctType.Float,
+                        Calculate(intLeft.Value, floatRight.Value, node.Op)
+                    ),
+                // One is float, the other is int
+                (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<long> intRight) =>
+                    new SctLiteralExpressionSyntax<double>(
+                        node.Context,
+                        SctType.Float,
+                        Calculate(floatLeft.Value, intRight.Value, node.Op)
+                    ),
+                // Both nodes are floats
+                (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<double> floatRight) =>
+                    new SctLiteralExpressionSyntax<double>(
+                        node.Context,
+                        SctType.Float,
+                        Calculate(floatLeft.Value, floatRight.Value, node.Op)
+                    ),
+                _ => base.Visit(node)
+            };
         }
 
         public override SctSyntax Visit(SctBooleanExpressionSyntax node)
@@ -74,31 +75,31 @@ namespace Sct.Compiler
                 (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<long> intRight) =>
                     new SctLiteralExpressionSyntax<long>(
                         node.Context,
-                        Syntax.SctType.Int,
+                        SctType.Int,
                         Calculate(intLeft.Value, intRight.Value, node.Op)
                     ),
                 // One is int, the other is float
                 (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<double> floatRight) =>
                     new SctLiteralExpressionSyntax<double>(
                         node.Context,
-                        Syntax.SctType.Int,
+                        SctType.Int,
                         Calculate(intLeft.Value, floatRight.Value, node.Op)
                     ),
                 // One is float, the other is int
                 (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<long> intRight) =>
                     new SctLiteralExpressionSyntax<double>(
                         node.Context,
-                        Syntax.SctType.Int,
+                        SctType.Int,
                         Calculate(floatLeft.Value, intRight.Value, node.Op)
                     ),
                 // Both nodes are floats
                 (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<double> floatRight) =>
                     new SctLiteralExpressionSyntax<double>(
                         node.Context,
-                        Syntax.SctType.Int,
+                        SctType.Int,
                         Calculate(floatLeft.Value, floatRight.Value, node.Op)
                     ),
-                _ => node
+                _ => base.Visit(node)
             };
         }
 
@@ -110,15 +111,15 @@ namespace Sct.Compiler
             {
                 SctLiteralExpressionSyntax<long> intNode => new SctLiteralExpressionSyntax<long>(
                     node.Context,
-                    Syntax.SctType.Int,
+                    SctType.Int,
                     -intNode.Value
                 ),
                 SctLiteralExpressionSyntax<double> floatNode => new SctLiteralExpressionSyntax<double>(
                     node.Context,
-                    Syntax.SctType.Float,
+                    SctType.Float,
                     -floatNode.Value
                 ),
-                _ => node
+                _ => base.Visit(node)
             };
         }
 
@@ -130,15 +131,15 @@ namespace Sct.Compiler
             {
                 SctLiteralExpressionSyntax<long> intNode => new SctLiteralExpressionSyntax<long>(
                     node.Context,
-                    Syntax.SctType.Int,
+                    SctType.Int,
                     intNode.Value == 0 ? 1 : 0
                 ),
                 SctLiteralExpressionSyntax<double> floatNode => new SctLiteralExpressionSyntax<long>(
                     node.Context,
-                    Syntax.SctType.Int,
+                    SctType.Int,
                     floatNode.Value == 0 ? 1 : 0
                 ),
-                _ => node
+                _ => base.Visit(node)
             };
         }
 
@@ -146,20 +147,10 @@ namespace Sct.Compiler
         {
             var expression = node.Expression.Accept(this);
 
-            return expression switch
-            {
-                SctLiteralExpressionSyntax<long> intNode => new SctLiteralExpressionSyntax<long>(
-                    node.Context,
-                    Syntax.SctType.Int,
-                    intNode.Value
-                ),
-                SctLiteralExpressionSyntax<double> floatNode => new SctLiteralExpressionSyntax<double>(
-                    node.Context,
-                    Syntax.SctType.Float,
-                    floatNode.Value
-                ),
-                _ => node
-            };
+            if (expression is AbstractSctLiteralExpressionSyntax literal)
+                return literal;
+
+            return base.Visit(node);
         }
 
         public override SctSyntax Visit(SctTypecastExpressionSyntax node)
@@ -170,23 +161,23 @@ namespace Sct.Compiler
             {
                 SctLiteralExpressionSyntax<long> intNode => node.Type.Type switch
                 {
-                    Syntax.SctType.Float => new SctLiteralExpressionSyntax<double>(
+                    SctType.Float => new SctLiteralExpressionSyntax<double>(
                         node.Context,
-                        Syntax.SctType.Float,
+                        SctType.Float,
                         intNode.Value
                     ),
                     _ => intNode
                 },
                 SctLiteralExpressionSyntax<double> floatNode => node.Type.Type switch
                 {
-                    Syntax.SctType.Int => new SctLiteralExpressionSyntax<long>(
+                    SctType.Int => new SctLiteralExpressionSyntax<long>(
                         node.Context,
-                        Syntax.SctType.Int,
+                        SctType.Int,
                         (long)floatNode.Value
                     ),
                     _ => floatNode
                 },
-                _ => node
+                _ => base.Visit(node)
             };
         }
 
@@ -197,7 +188,6 @@ namespace Sct.Compiler
                 SctBinaryOperator.Plus => left + right,
                 SctBinaryOperator.Minus => left - right,
                 SctBinaryOperator.Mult => left * right,
-                SctBinaryOperator.Div when T.IsZero(right) => throw new DivideByZeroException(),
                 SctBinaryOperator.Div => left / right,
                 SctBinaryOperator.Mod => left % right,
                 _ => throw new InvalidOperationException("Invalid operator")

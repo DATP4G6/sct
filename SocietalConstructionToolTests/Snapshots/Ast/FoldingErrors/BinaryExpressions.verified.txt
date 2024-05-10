@@ -4,5 +4,11 @@
     Line: 17,
     Column: 12,
     Filename: null
+  },
+  {
+    Message: Division by zero,
+    Line: 47,
+    Column: 10,
+    Filename: null
   }
 ]
