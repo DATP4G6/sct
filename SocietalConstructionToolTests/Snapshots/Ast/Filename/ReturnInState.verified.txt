@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Cannot use 'return' inside state,
+    Line: 3,
+    Column: 8,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/ReturnInState.sct
+  }
+]

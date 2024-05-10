@@ -14,23 +14,9 @@ namespace Sct.Compiler
             Message = message;
         }
 
-        public CompilerError(string message, int line)
-        {
-            Message = message;
-            Line = line;
-        }
-
         public CompilerError(string message, int line, int column)
         {
             Message = message;
-            Line = line;
-            Column = column;
-        }
-
-        public CompilerError(string message, string fileName, int line, int column)
-        {
-            Message = message;
-            Filename = fileName;
             Line = line;
             Column = column;
         }
@@ -45,7 +31,6 @@ namespace Sct.Compiler
 
         public override string ToString()
         {
-
             if (Filename is not null)
             {
                 if (Line is null)

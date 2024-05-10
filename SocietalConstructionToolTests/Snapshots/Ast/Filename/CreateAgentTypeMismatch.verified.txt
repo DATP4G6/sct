@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Type mismatch in agent expression. Expected int, or compatible type, but got float,
+    Line: 10,
+    Column: 20,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentTypeMismatch.sct
+  },
+  {
+    Message: Type mismatch in agent expression. Expected int, or compatible type, but got float,
+    Line: 11,
+    Column: 20,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentTypeMismatch.sct
+  }
+]

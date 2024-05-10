@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Field 'weight' does not exist in class 'Citizen'.,
+    Line: 4,
+    Column: 30,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/PredVariableDoesNotExist.sct
+  }
+]

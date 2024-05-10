@@ -4,7 +4,8 @@ namespace Sct.Compiler.Syntax
     {
         private string Filename { get; } = filename;
 
-        public override SctSyntax Visit(SctSyntax node) {
+        public override SctSyntax Visit(SctSyntax node)
+        {
             var newNode = base.Visit(node);
             newNode.Context.Filename = Filename;
             return newNode;

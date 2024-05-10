@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: State 'Dead' does not exist.,
+    Line: 7,
+    Column: 8,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/EnterUnknownState.Sct
+  }
+]

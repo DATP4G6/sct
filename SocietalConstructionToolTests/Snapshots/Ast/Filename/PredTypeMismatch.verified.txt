@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Type mismatch in predicate. Expected int, or compatible type, but got float,
+    Line: 5,
+    Column: 26,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/PredTypeMismatch.sct
+  },
+  {
+    Message: Type mismatch in predicate. Expected int, or compatible type, but got float,
+    Line: 7,
+    Column: 26,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/PredTypeMismatch.sct
+  }
+]

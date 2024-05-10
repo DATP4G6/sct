@@ -2,6 +2,7 @@ using System.Text.Json;
 
 using Microsoft.CodeAnalysis;
 
+using Sct;
 using Sct.Compiler;
 using Sct.Compiler.Syntax;
 using Sct.Compiler.Translator;
@@ -93,6 +94,24 @@ namespace SocietalConstructionToolTests
             _ = await Verify(tree.NormalizeWhitespace().ToFullString())
                 .UseFileName(Path.GetFileNameWithoutExtension(testFile));
         }
+
+        /// <summary>
+        /// Test that the filename visitor works correctly
+        /// </summary>
+        [DataTestMethod]
+        [DynamicData(nameof(StaticFiles), DynamicDataSourceType.Property)]
+        public async Task TestFilenameVisitor(string testFile)
+        {
+            UseProjectRelativeDirectory("Snapshots/Ast/Filename"); // Save snapshots here
+            var ast = TestFileUtils.BuildAst(testFile);
+            var filenameVisitor = new AstFilenameVisitor(testFile);
+            var tree = ast.Accept(filenameVisitor);
+            var errors = SctRunner.RunStaticChecks((SctProgramSyntax)tree);
+
+            _ = await Verify(errors)
+                .UseFileName(Path.GetFileNameWithoutExtension(testFile));
+        }
+
 
         /// <summary>
         /// Test that constants are folded correctly.

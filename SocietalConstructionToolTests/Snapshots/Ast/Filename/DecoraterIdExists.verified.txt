@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: ID randomDeath already exists,
+    Line: 8,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/DecoraterIdExists.sct
+  }
+]

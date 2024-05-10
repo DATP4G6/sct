@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Cannot use 'destroy' inside function,
+    Line: 2,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/DestroyInFunction.sct
+  }
+]

@@ -65,11 +65,11 @@ namespace Sct
             return newAstList;
         }
 
-        private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList, string rootNode)
+        private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList)
         {
             IEnumerable<SctClassSyntax> classes = astList.SelectMany(ast => ast.Classes);
             IEnumerable<SctFunctionSyntax> functions = astList.SelectMany(ast => ast.Functions);
-            var context = GetParser(rootNode).start();
+            var context = astList.First().Context.OriginalContext;
             return new SctProgramSyntax(context, functions, classes);
         }
 
@@ -89,7 +89,7 @@ namespace Sct
 
             astList = AddFilenameToContext(astList, filenames);
 
-            var ast = GetMergedAst(astList, filenames.First());
+            var ast = GetMergedAst(astList);
 
             var errors = RunStaticChecks(ast);
 

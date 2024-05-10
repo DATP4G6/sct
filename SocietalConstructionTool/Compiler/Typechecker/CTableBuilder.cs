@@ -36,11 +36,11 @@ namespace Sct.Compiler.Typechecker
 
         public bool TryStartClass(string className)
         {
-            _currentClass = new KeyValuePair<string, ClassContent>(className, new ClassContent(className));
             if (IDExistsGlobal(className))
             {
                 return false;
             }
+            _currentClass = new KeyValuePair<string, ClassContent>(className, new ClassContent(className));
             return true;
         }
 

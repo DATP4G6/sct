@@ -1,0 +1,20 @@
+﻿[
+  {
+    Message: Field 'b' does not exist in class 'Foo'.,
+    Line: 8,
+    Column: 20,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  },
+  {
+    Message: Missing argument 'a' in create statement.,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  },
+  {
+    Message: Field 'b' does not exist in class 'Foo'.,
+    Line: 9,
+    Column: 20,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentInvalidField.sct
+  }
+]
