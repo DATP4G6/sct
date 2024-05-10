@@ -41,4 +41,8 @@ function Setup() -> void {
     b = 0 || 0;
     b = !1;
     b = !0;
+
+    // Partial folds
+    x = (x+3*4);
+    x = !((1 + 1) * x / (1-1));
 }

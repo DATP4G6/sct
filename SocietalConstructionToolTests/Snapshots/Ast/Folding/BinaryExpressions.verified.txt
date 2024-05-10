@@ -320,6 +320,58 @@
                   Value: 1,
                   Type: Int
                 }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: x,
+                Expression: {
+                  $type: SctParenthesisExpressionSyntax,
+                  Expression: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctIdExpressionSyntax,
+                      Id: x
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 12,
+                      Type: Int
+                    },
+                    Op: Plus
+                  }
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: x,
+                Expression: {
+                  $type: SctNotExpressionSyntax,
+                  Expression: {
+                    $type: SctParenthesisExpressionSyntax,
+                    Expression: {
+                      $type: SctBinaryExpressionSyntax,
+                      Left: {
+                        $type: SctBinaryExpressionSyntax,
+                        Left: {
+                          $type: SctLiteralExpressionSyntax<long>,
+                          Value: 2,
+                          Type: Int
+                        },
+                        Right: {
+                          $type: SctIdExpressionSyntax,
+                          Id: x
+                        },
+                        Op: Mult
+                      },
+                      Right: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 0,
+                        Type: Int
+                      },
+                      Op: Div
+                    }
+                  }
+                }
               }
             ]
           }
