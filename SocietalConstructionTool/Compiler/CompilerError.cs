@@ -14,12 +14,6 @@ namespace Sct.Compiler
             Message = message;
         }
 
-        public CompilerError(string message, int line)
-        {
-            Message = message;
-            Line = line;
-        }
-
         public CompilerError(string message, int line, int column)
         {
             Message = message;
@@ -27,24 +21,16 @@ namespace Sct.Compiler
             Column = column;
         }
 
-        public CompilerError(string message, string fileName, int line, int column)
-        {
-            Message = message;
-            Filename = fileName;
-            Line = line;
-            Column = column;
-        }
-
         public CompilerError(string message, SctSyntaxContext context)
         {
             Message = message;
+            Filename = context.Filename;
             Line = context.Line;
             Column = context.Column;
         }
 
         public override string ToString()
         {
-
             if (Filename is not null)
             {
                 if (Line is null)

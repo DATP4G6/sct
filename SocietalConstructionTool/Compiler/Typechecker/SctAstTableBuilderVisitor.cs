@@ -16,7 +16,7 @@ namespace Sct.Compiler.Typechecker
 
             if (!_ctableBuilder.TryStartClass(className))
             {
-                _errors.Add(new CompilerError($"ID {className} already exists", node.Context.Line, node.Context.Column));
+                _errors.Add(new CompilerError($"ID {className} already exists", node.Context));
             }
 
             foreach (var parameter in node.Parameters)
@@ -25,7 +25,7 @@ namespace Sct.Compiler.Typechecker
                 var type = parameter.Type;
                 if (!_ctableBuilder.TryAddField(id, type.Accept(this)))
                 {
-                    _errors.Add(new CompilerError($"ID {id} already exists", parameter.Context.Line, parameter.Context.Column));
+                    _errors.Add(new CompilerError($"ID {id} already exists", node.Context));
                 }
 
             }
@@ -48,7 +48,7 @@ namespace Sct.Compiler.Typechecker
 
             if (!_ctableBuilder.TryAddFunction(node.Id, functionType))
             {
-                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context.Line, node.Context.Column));
+                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context));
             }
 
             _ = node.Block.Accept(this);
@@ -62,7 +62,7 @@ namespace Sct.Compiler.Typechecker
         {
             if (!_ctableBuilder.TryAddState(node.Id))
             {
-                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context.Line, node.Context.Column));
+                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context));
             }
             return Syntax.SctType.Ok;
         }
@@ -71,7 +71,7 @@ namespace Sct.Compiler.Typechecker
         {
             if (!_ctableBuilder.TryAddDecorator(node.Id))
             {
-                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context.Line, node.Context.Column));
+                _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context));
             }
             return Syntax.SctType.Ok;
         }

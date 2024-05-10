@@ -1,8 +1,0 @@
-﻿[
-  {
-    Message: Decorator 'someDecorator' does not exist in class 'Citizen'.,
-    Line: 9,
-    Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/UnknownDecorator.Sct
-  }
-]

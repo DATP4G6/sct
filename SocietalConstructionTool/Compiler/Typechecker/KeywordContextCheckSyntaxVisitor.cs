@@ -94,6 +94,6 @@ namespace Sct.Compiler.Typechecker
         });
 
         private CompilerError ErrorFromContext(SctSyntaxContext context, string ruleName) =>
-            new($"Cannot use '{ruleName}' inside {LocationContext.ContextName}", context.Line, context.Column);
+            new($"Cannot use '{ruleName}' inside {LocationContext.ContextName}", context);
     }
 }

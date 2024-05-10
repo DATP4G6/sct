@@ -13,8 +13,8 @@ namespace SocietalConstructionToolTests
         public static SctProgramSyntax BuildAst(string testFile)
         {
             var parser = SctRunner.GetParser(testFile);
-            var listener = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(listener);
+            var visitor = new AstBuilderVisitor();
+            return (SctProgramSyntax)parser.start().Accept(visitor);
         }
     }
 }

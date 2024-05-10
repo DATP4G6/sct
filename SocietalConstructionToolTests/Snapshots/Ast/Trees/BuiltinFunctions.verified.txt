@@ -110,7 +110,12 @@
               Block: {
                 Statements: {
                   $type: IEnumerable<SctStatementSyntax>,
-                  $values: []
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Bar
+                    }
+                  ]
                 }
               }
             }

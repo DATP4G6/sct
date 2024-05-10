@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: State 'Baz' does not exist in class 'Foo'.,
+    Line: 8,
+    Column: 11,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentStateDoesNotExist.sct
+  }
+]

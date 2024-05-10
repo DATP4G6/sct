@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static IQueryPredicate __sct_getChildPredicate(IRuntimeContext ctx, long __sct_id)
+        public static QueryPredicate __sct_getChildPredicate(IRuntimeContext ctx, long __sct_id)
         {
             return new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", __sct_id) }));
         }

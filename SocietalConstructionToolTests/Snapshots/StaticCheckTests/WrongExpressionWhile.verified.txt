@@ -1,8 +1,0 @@
-﻿[
-  {
-    Message: mismatched input 'void' expecting {'-', '!', '(', ID, INT, FLOAT},
-    Line: 4,
-    Column: 11,
-    Filename: {CurrentDirectory}TestFiles/ParserErrorTests/WrongExpressionWhile.sct
-  }
-]

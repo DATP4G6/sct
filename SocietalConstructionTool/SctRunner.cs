@@ -43,12 +43,39 @@ namespace Sct
             return parser;
         }
 
+        public static SctProgramSyntax GetAst(string filename)
+        {
+            var parser = GetParser(filename);
+            var visitor = new AstBuilderVisitor();
+            return (SctProgramSyntax)parser.start().Accept(visitor);
+        }
+
         private static IEnumerable<string> StdLibFilename =>
             Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources"));
 
+        private static List<SctProgramSyntax> AddFilenameToContext(IEnumerable<SctProgramSyntax> astList, IEnumerable<string> filenames)
+        {
+            List<SctProgramSyntax> newAstList = [];
+            foreach (var (ast, filename) in astList.Zip(filenames))
+            {
+                var filenameVisitor = new AstFilenameVisitor(filename);
+                var newAst = ast.Accept(filenameVisitor);
+                newAstList.Add((SctProgramSyntax)newAst);
+            }
+            return newAstList;
+        }
+
+        private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList)
+        {
+            IEnumerable<SctClassSyntax> classes = astList.SelectMany(ast => ast.Classes);
+            IEnumerable<SctFunctionSyntax> functions = astList.SelectMany(ast => ast.Functions);
+            var context = astList.First().Context.OriginalContext;
+            return new SctProgramSyntax(context, functions, classes);
+        }
+
         /**
          * <summary>
-         * Reads an SCT source file, statically chekcs it and translates it into C# code
+         * Reads an SCT source file, statically checks it and translates it into C# code
          * </summary>
          * <param name="filenames">The path of the SCT source file</param>
          * <returns>The resulting C# source, or null if compilation failed</returns>
@@ -58,26 +85,21 @@ namespace Sct
             // Add stdlib to the list of files to compile
             filenames = filenames.Concat(StdLibFilename);
 
-            var errors = RunStaticChecks(filenames);
+            var astList = filenames.Select(GetAst).ToList();
+
+            astList = AddFilenameToContext(astList, filenames);
+
+            var ast = GetMergedAst(astList);
+
+            var errors = RunStaticChecks(ast);
 
             if (errors.Count > 0)
             {
                 return (null, errors);
             }
 
-            // Concatenate all files into one string and run the translator on it.
-            string fullInput = ConcatenateFiles(filenames);
-            SctParser parser = GetSctParser(fullInput);
-
-            var translator = new SctTranslator();
-            parser.AddParseListener(translator);
-            _ = parser.start();
-
-            if (translator.Root is null)
-            {
-                throw new InvalidOperationException("Translation failed");
-            }
-
+            var translator = new SctAstTranslator();
+            var tree = ast.Accept(translator);
 
             // HACK: We do something bad in our translator somewhere that means that we produce a syntax tree that is not valid,
             // but its string representation is.
@@ -85,108 +107,47 @@ namespace Sct
             // The correct way to represent this would (roughly) be: `(member_access (id "foo") (id "bar"))`
             // However, writing it as `(id "foo.bar")` produces the same string, but causes problems when C#
             // tries to traverse the tree. As far as I can tell, the error we get isn't very telling, so for now we just deal with it.
-            var outputText = translator.Root.NormalizeWhitespace().ToFullString();
+            var outputText = tree.NormalizeWhitespace().ToFullString();
 
             return (outputText, []);
         }
 
-        private static List<CompilerError> RunFirstPassChecks(ParserRuleContext startNode, CTableBuilder cTableBuilder, SctSyntax rootNode)
+        private static (List<CompilerError>, CTable) RunFirstPassChecks(SctProgramSyntax startNode)
         {
-            var errors = new List<CompilerError>();
-
-            KeywordContextCheckVisitor keywordChecker = new();
-            var keywordErrors = startNode.Accept(keywordChecker).ToList();
-            errors.AddRange(keywordErrors);
-
-            SctReturnCheckVisitor returnChecker = new();
-            _ = startNode.Accept(returnChecker);
-            errors.AddRange(returnChecker.Errors);
-
-            // Run visitor that populates the tables using the CTableBuilder.
-            var sctTableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
-            _ = rootNode.Accept(sctTableVisitor);
-            errors.AddRange(sctTableVisitor.Errors);
-            return errors;
+            var cTableBuilder = new CTableBuilder();
+            var visitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            _ = startNode.Accept(visitor);
+            var (table, errors) = cTableBuilder.BuildCtable();
+            errors.AddRange(visitor.Errors);
+            return (errors, table);
         }
 
-        private static List<CompilerError> RunSecondPassChecks(ParserRuleContext startNode, CTable cTable)
+        private static List<CompilerError> RunSecondPassChecks(SctProgramSyntax startNode, CTable table)
         {
-            var typeChecker = new SctTypeChecker(cTable);
+            var typeChecker = new SctAstTypeChecker(table);
             _ = startNode.Accept(typeChecker);
             return typeChecker.Errors.ToList();
         }
 
-        public static List<CompilerError> RunStaticChecks(IEnumerable<string> filenames)
+        public static List<CompilerError> RunStaticChecks(SctProgramSyntax ast)
         {
-            // Create a CTableBuilder that is used for all files.
-            CTableBuilder cTableBuilder = new();
             var errors = new List<CompilerError>();
 
-            // Store parses for each file to avoid having to recreate them for type checking.
-            Dictionary<string, SctParser.StartContext> startNodes = [];
+            KeywordContextCheckSyntaxVisitor keywordChecker = new();
+            var keywordErrors = ast.Accept(keywordChecker).ToList();
+            errors.AddRange(keywordErrors);
 
-            bool syntaxError = false;
-            // Run static analysis on each file separately.
-            foreach (var file in filenames)
-            {
+            var returnVisitor = new SctReturnCheckAstVisitor();
+            _ = ast.Accept(returnVisitor);
+            errors.AddRange(returnVisitor.Errors);
 
-                var parser = GetParser(file);
+            // The first pass of the typechecker that populates the tables using the CTableBuilder.
+            var (firstPassErrors, table) = RunFirstPassChecks(ast);
+            errors.AddRange(firstPassErrors);
 
-                //adds an error listener before the parser starts
-                var errorListener = new SctErrorListener();
-                parser.AddErrorListener(errorListener);
-
-                // Save parser for later use.
-                startNodes[file] = parser.start();
-                var startNode = startNodes[file];
-
-                //adds syntax errors
-                var fileErrors = errorListener.Errors.ToList();
-
-                // The AST is likely broken if there were any syntax errors
-                if (fileErrors.Count <= 0)
-                {
-                    // Run checks
-                    var firstPassErrors = RunFirstPassChecks(startNode, cTableBuilder, startNode.Accept(new AstBuilderVisitor()));
-                    fileErrors.AddRange(firstPassErrors);
-                }
-                else
-                {
-                    syntaxError = true;
-                }
-
-                // Annotate each error with the filename.
-                foreach (var error in fileErrors)
-                {
-                    error.Filename = file;
-                }
-                errors.AddRange(fileErrors);
-            }
-
-            // Again, the AST is likely broken if there were any syntax errors, so we can't really run our second pass
-            if (syntaxError)
-            {
-                return errors;
-            }
-
-            // Build the CTable after all files have been visited.
-            // The CTable is used for type checking.
-            var (cTable, tableErrors) = cTableBuilder.BuildCtable();
-            errors.AddRange(tableErrors);
-
-            // Typecheck each file separately.
-            // Identifiers from other files are known because the CTable is built from all files.
-            foreach (var file in filenames)
-            {
-                var fileErrors = RunSecondPassChecks(startNodes[file], cTable);
-
-                foreach (var error in fileErrors)
-                {
-                    error.Filename = file;
-                }
-
-                errors.AddRange(fileErrors);
-            }
+            // The second pass of the typechecker
+            var secondPassErrors = RunSecondPassChecks(ast, table);
+            errors.AddRange(secondPassErrors);
 
             return errors;
         }
@@ -249,8 +210,8 @@ namespace Sct
          */
         private static void Run(Assembly assembly, IRuntimeContext initialContext)
         {
-            var globalClassName = $"{SctTranslator.GeneratedNamespace}.{SctTranslator.GeneratedGlobalClass}";
-            _ = assembly.GetType(globalClassName)?.GetMethod(SctTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
+            var globalClassName = $"{SctAstTranslator.GeneratedNamespace}.{SctAstTranslator.GeneratedGlobalClass}";
+            _ = assembly.GetType(globalClassName)?.GetMethod(SctAstTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
         }
 
         /**
@@ -264,7 +225,6 @@ namespace Sct
         {
             var (outputText, errors) = CompileSct(filenames);
 
-            // TODO: Handle errors from ANTLR. They are not currently being passed to the errors list.
             if (errors.Any() || outputText is null)
             {
                 Console.Error.WriteLine("Compilation failed:");
@@ -288,8 +248,5 @@ namespace Sct
 
             return [];
         }
-
-        private static string ConcatenateFiles(IEnumerable<string> filenames)
-            => filenames.Select(File.ReadAllText).Aggregate((acc, next) => acc + next);
     }
 }

@@ -46,7 +46,7 @@ namespace Sct.Compiler.Typechecker
 
             foreach (var parameter in node.Parameters)
             {
-                MakeChildrenAccept(parameter);
+                _ = parameter.Accept(this);
             }
             _ = node.ReturnType.Accept(this);
             _ = node.Block.Accept(this);

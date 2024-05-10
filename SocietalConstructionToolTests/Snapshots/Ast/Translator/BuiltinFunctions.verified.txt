@@ -22,6 +22,11 @@
 
             private bool __sct_Bar(IRuntimeContext ctx)
             {
+                {
+                    Enter(ctx, "__sct_Bar");
+                    return true;
+                }
+
                 return false;
             }
 

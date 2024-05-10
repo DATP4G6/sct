@@ -36,7 +36,7 @@ namespace Sct.Compiler.Typechecker
 
         public bool TryStartClass(string className)
         {
-            if (_classes.ContainsKey(className))
+            if (IDExistsGlobal(className))
             {
                 return false;
             }
@@ -86,6 +86,6 @@ namespace Sct.Compiler.Typechecker
             return _currentClass.Value.AddDecorator(name);
         }
 
-        private bool IDExistsGlobal(string name) => _globalClass.Value?.LookupFunctionType(name) is not null;
+        private bool IDExistsGlobal(string name) => _globalClass.Value?.LookupFunctionType(name) is not null || _classes.ContainsKey(name);
     }
 }

@@ -1,8 +1,0 @@
-﻿[
-  {
-    Message: Duplicate argument 'townId' in predicate.,
-    Line: 12,
-    Column: 19,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/PredDuplicateArgument.sct
-  }
-]

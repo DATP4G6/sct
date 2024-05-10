@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Binary expression must be numeric types,
+    Line: 6,
+    Column: 14,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.Sct
+  },
+  {
+    Message: Binary expression must be numeric types,
+    Line: 7,
+    Column: 8,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.Sct
+  }
+]

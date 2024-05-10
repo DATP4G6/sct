@@ -4,20 +4,15 @@ using Antlr4.Runtime;
 
 namespace Sct.Compiler.Syntax
 {
-    public class SctSyntaxContext
+    public class SctSyntaxContext(ParserRuleContext context)
     {
-        public int Line { get; }
-        public int Column { get; }
+        public int Line { get; } = context.Start.Line;
+        public int Column { get; } = context.Start.Column;
+        public string? Filename { get; set; }
 
-        public ParserRuleContext OriginalContext { get; }
-
-        public SctSyntaxContext(ParserRuleContext context)
-        {
-            OriginalContext = context;
-            Line = context.Start.Line;
-            Column = context.Start.Column;
-        }
+        public ParserRuleContext OriginalContext { get; } = context;
     }
+
     public abstract class SctSyntax
     {
         public T Accept<T>(SctBaseSyntaxVisitor<T> visitor) => visitor.Visit(this);

@@ -1,6 +1,6 @@
 class Foo() {
     state Bar {
-
+        enter Bar;
     }
 }
 
