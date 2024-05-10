@@ -53,16 +53,16 @@ namespace Sct
         private static IEnumerable<string> StdLibFilename =>
             Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources"));
 
-        private static void AddFilenameToContext(IEnumerable<SctProgramSyntax>  astList, IEnumerable<string> filenames)
+        private static List<SctProgramSyntax> AddFilenameToContext(IEnumerable<SctProgramSyntax> astList, IEnumerable<string> filenames)
         {
+            List<SctProgramSyntax> newAstList = [];
             foreach (var (ast, filename) in astList.Zip(filenames))
             {
                 var filenameVisitor = new AstFilenameVisitor(filename);
-                _ = ast.Accept(filenameVisitor);
-                Console.WriteLine("filename is: " + ast.Context.Filename);
-
-                Console.WriteLine("filename child: " + astList.First().Context.Filename);
+                var newAst = ast.Accept(filenameVisitor);
+                newAstList.Add((SctProgramSyntax)newAst);
             }
+            return newAstList;
         }
 
         private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList, string rootNode)
@@ -87,9 +87,7 @@ namespace Sct
 
             var astList = filenames.Select(GetAst).ToList();
 
-            AddFilenameToContext(astList, filenames);
-
-            Console.WriteLine("filename is this on outside " + astList.First().Context.Filename);
+            astList = AddFilenameToContext(astList, filenames);
 
             var ast = GetMergedAst(astList, filenames.First());
 
@@ -111,7 +109,6 @@ namespace Sct
             // tries to traverse the tree. As far as I can tell, the error we get isn't very telling, so for now we just deal with it.
             var outputText = tree.NormalizeWhitespace().ToFullString();
 
-            Console.WriteLine(outputText);
             return (outputText, []);
         }
 
@@ -228,7 +225,6 @@ namespace Sct
         {
             var (outputText, errors) = CompileSct(filenames);
 
-            // TODO: Handle errors from ANTLR. They are not currently being passed to the errors list.
             if (errors.Any() || outputText is null)
             {
                 Console.Error.WriteLine("Compilation failed:");

@@ -37,7 +37,6 @@ namespace Sct.Compiler
 
         public CompilerError(string message, SctSyntaxContext context)
         {
-            Console.WriteLine(context.Filename);
             Message = message;
             Filename = context.Filename;
             Line = context.Line;
