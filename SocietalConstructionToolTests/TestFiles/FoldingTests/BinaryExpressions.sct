@@ -1,0 +1,44 @@
+function Setup() -> void {
+    // Arithmetic
+    int x = 1 + (2*3)/(1-0.3)
+
+    // Mod
+    int mod = 55 % 5;
+
+    // Typecasts
+    int two = 5/2;
+    two = 5/(int)2.5;
+    int twohalf = 5/(float)2;
+
+    // Unary minus
+    int neg = -(5+3);
+
+    // Booleans
+    int b = (1 < 3)/(1-1);
+
+    // Booleans exhaustive
+    b = 1 == 1;
+    b = 1 == 2;
+    b = 1 != 1;
+    b = 1 != 2;
+    b = 1 < 1;
+    b = 1 < 2;
+    b = 1 <= 0;
+    b = 1 <= 1;
+    b = 1 <= 2;
+    b = 1 > 1;
+    b = 1 > 2;
+    b = 1 >= 0;
+    b = 1 >= 1;
+    b = 1 >= 2;
+    b = 1 && 1;
+    b = 1 && 0;
+    b = 0 && 1;
+    b = 0 && 0;
+    b = 1 || 1;
+    b = 1 || 0;
+    b = 0 || 1;
+    b = 0 || 0;
+    b = !1;
+    b = !0;
+}

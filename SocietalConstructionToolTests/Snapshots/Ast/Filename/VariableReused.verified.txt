@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Variable 'x' is already defined in this scope.,
+    Line: 3,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VariableReused.Sct
+  },
+  {
+    Message: Variable 'x' is already defined in this scope.,
+    Line: 4,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VariableReused.Sct
+  }
+]

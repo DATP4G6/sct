@@ -4,7 +4,7 @@ namespace Sct.Compiler.Typechecker
     {
         private readonly StackAdapter<VTableEntry> _entries = new();
 
-        public bool AddEntry(string name, SctType type)
+        public bool AddEntry(string name, Syntax.SctType type)
         {
             if (_entries.Any(x => x.Name == name))
             {
@@ -14,16 +14,16 @@ namespace Sct.Compiler.Typechecker
             return true;
         }
 
-        public SctType? Lookup(string name) => _entries.FirstOrDefault(x => x.Name == name)?.Type;
+        public Syntax.SctType? Lookup(string name) => _entries.FirstOrDefault(x => x.Name == name)?.Type;
 
         public void EnterScope() => _entries.PushMarker();
 
         public void ExitScope() => _ = _entries.PopUntilMarker();
 
-        private sealed class VTableEntry(string name, SctType type)
+        private sealed class VTableEntry(string name, Syntax.SctType type)
         {
             public string Name { get; } = name;
-            public SctType Type { get; } = type;
+            public Syntax.SctType Type { get; } = type;
         }
     }
 }

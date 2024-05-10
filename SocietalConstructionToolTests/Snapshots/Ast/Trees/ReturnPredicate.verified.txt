@@ -1,0 +1,171 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: getChildPredicate,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int
+              },
+              Id: id
+            }
+          ]
+        },
+        ReturnType: {
+          Type: Predicate
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctReturnStatementSyntax,
+                Expression: {
+                  $type: SctPredicateExpressionSyntax,
+                  ClassName: Citizen,
+                  StateName: Child,
+                  Fields: {
+                    $type: IEnumerable<SctNamedArgumentSyntax>,
+                    $values: [
+                      {
+                        Id: townId,
+                        Expression: {
+                          $type: SctIdExpressionSyntax,
+                          Id: id
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: townId,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<long>,
+                  Value: 5,
+                  Type: Int
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: childrenCount,
+                Expression: {
+                  $type: SctCallExpressionSyntax,
+                  Target: count,
+                  Expressions: {
+                    $type: IEnumerable<SctExpressionSyntax>,
+                    $values: [
+                      {
+                        $type: SctCallExpressionSyntax,
+                        Target: getChildPredicate,
+                        Expressions: {
+                          $type: IEnumerable<SctExpressionSyntax>,
+                          $values: [
+                            {
+                              $type: SctIdExpressionSyntax,
+                              Id: townId
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Citizen,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int
+              },
+              Id: townId
+            }
+          ]
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Child,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              Id: Adult,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctEnterStatementSyntax,
+                      Id: Adult
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Type mismatch in function call. Expected int, or compatible type, but got float,
+    Line: 6,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FunctionArguments.sct
+  },
+  {
+    Message: Type mismatch in function call. Expected int, or compatible type, but got float,
+    Line: 7,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/FunctionArguments.sct
+  }
+]

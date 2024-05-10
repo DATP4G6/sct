@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Setup function must return void and take no arguments,
+    Line: null,
+    Column: null,
+    Filename: null
+  }
+]

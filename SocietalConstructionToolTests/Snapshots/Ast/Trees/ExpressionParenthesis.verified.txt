@@ -1,0 +1,61 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 16,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctParenthesisExpressionSyntax,
+                    Expression: {
+                      $type: SctBinaryExpressionSyntax,
+                      Left: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 1,
+                        Type: Int
+                      },
+                      Right: {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 3,
+                        Type: Int
+                      },
+                      Op: Plus
+                    }
+                  },
+                  Op: Div
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

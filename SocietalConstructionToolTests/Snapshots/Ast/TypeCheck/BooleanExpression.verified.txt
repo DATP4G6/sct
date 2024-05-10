@@ -1,0 +1,32 @@
+﻿[
+  {
+    Message: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.,
+    Line: 6,
+    Column: 12,
+    Filename: null
+  },
+  {
+    Message: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.,
+    Line: 7,
+    Column: 8,
+    Filename: null
+  },
+  {
+    Message: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.,
+    Line: 8,
+    Column: 8,
+    Filename: null
+  },
+  {
+    Message: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.,
+    Line: 8,
+    Column: 24,
+    Filename: null
+  },
+  {
+    Message: Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.,
+    Line: 11,
+    Column: 8,
+    Filename: null
+  }
+]

@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Not all code paths specify an end condition (`enter`, `destroy`, `exit`) in state D,
+    Line: 14,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/NoEnterOrExit.Sct
+  }
+]

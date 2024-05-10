@@ -1,8 +1,5 @@
 using System.Collections;
 
-using Sct.Compiler.Exceptions;
-using Sct.Extensions;
-
 namespace Sct.Compiler
 {
     public class StackAdapter<TBase> : IEnumerable<TBase>
@@ -14,102 +11,22 @@ namespace Sct.Compiler
             _stack.Push(new StackItem<TBase>(node));
         }
 
-        public T Pop<T>() where T : TBase
-        {
-            var node = _stack.Pop();
-            if (node.Value is T t)
-            {
-                return t;
-            }
-            throw new UnrecognizedNodeException(typeof(T).GenericName(), (node?.Value?.GetType().Name) ?? "null");
-        }
-
-        public bool TryPop<T>(out T? poppedValue) where T : TBase
-        {
-            if (_stack.Peek().Value is T value)
-            {
-                poppedValue = value;
-                _ = _stack.Pop();
-                return true;
-            }
-            poppedValue = default;
-            return false;
-        }
-
-        public T[] ToArray<T>() where T : TBase
-        {
-            var typedArr = _stack.Select(x => x.Value).OfType<T>().ToArray();
-            if (_stack.Count != typedArr.Length)
-            {
-                throw new UnrecognizedNodeException("Not all children were of type " + typeof(T).GenericName());
-            }
-            return typedArr;
-        }
-
-        public TItem[] PopUntil<TParent, TItem>(out TParent parent)
-            where TParent : TBase
-            where TItem : TBase
-        {
-            List<TItem> items = [];
-            while (TryPop(out TItem? item))
-            {
-                items.Add(item!);
-            }
-
-            var node = _stack.Pop().Value;
-            if (node is TParent parentNode)
-            {
-                parent = parentNode;
-            }
-            else
-            {
-                throw new UnrecognizedNodeException(typeof(TParent).GenericName(), (node?.GetType().Name) ?? "null");
-            }
-
-            // Popping stack reversed order of items
-            items.Reverse();
-            return items.ToArray();
-        }
-
-        public TItem[] PopWhile<TItem>() where TItem : TBase
-        {
-            List<TItem> items = [];
-            while (TryPop(out TItem? item))
-            {
-                items.Add(item!);
-            }
-
-            // Popping stack reversed order of items
-            items.Reverse();
-            return items.ToArray();
-        }
-
         public void PushMarker() => _stack.Push(new StackItem<TBase>());
 
-        public TBase[] PopUntilMarker() => PopUntilMarker<TBase>();
-        public T[] PopUntilMarker<T>() where T : TBase
+        public TBase[] PopUntilMarker()
         {
-            List<T> items = [];
-            while (TryPop(out T? item))
+            List<TBase> items = [];
+            while (!_stack.Peek().IsMarker)
             {
-                items.Add(item!);
+                items.Add(_stack.Pop().Value!);
             }
 
-            var node = _stack.Pop();
-            if (!node.IsMarker)
-            {
-                throw new UnrecognizedNodeException("Marker", (node?.Value?.GetType().Name) ?? "null");
-            }
+            // pop the marker itself
+            _ = _stack.Pop();
 
             // Popping stack reversed order of items
             items.Reverse();
             return items.ToArray();
-        }
-
-        // only used for debugging
-        public override string ToString()
-        {
-            return string.Join("\n", _stack.Select(x => x.Value?.GetType().Name ?? (x.IsMarker ? "Marker" : "null")));
         }
 
         private sealed class StackItem<T>

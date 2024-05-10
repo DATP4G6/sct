@@ -1,0 +1,42 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public static void __sct_Setup(IRuntimeContext ctx)
+        {
+            if ((1L) != 0L)
+            {
+            }
+            else
+            {
+                if ((((3L < 2L) ? 1L : 0L)) != 0L)
+                {
+                }
+            }
+
+            if ((1L) != 0L)
+            {
+            }
+            else
+            {
+                if ((((4L > 5L) ? 1L : 0L)) != 0L)
+                {
+                }
+                else
+                {
+                }
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

@@ -1,0 +1,14 @@
+﻿[
+  {
+    Message: Function 'test' expects 3 arguments, but got 2,
+    Line: 4,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongArgumentAmount.Sct
+  },
+  {
+    Message: Function 'test' expects 3 arguments, but got 4,
+    Line: 6,
+    Column: 4,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongArgumentAmount.Sct
+  }
+]

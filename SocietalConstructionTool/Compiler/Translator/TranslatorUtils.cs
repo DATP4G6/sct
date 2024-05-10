@@ -4,6 +4,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using Sct.Compiler.Exceptions;
+using Sct.Compiler.Syntax;
 using Sct.Extensions;
 using Sct.Runtime;
 
@@ -12,14 +14,14 @@ namespace Sct.Compiler.Translator
     public static class TranslatorUtils
     {
         private const string NAME_MANGLE_PREFIX = "__sct_";
-        private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(SctTranslator.RunSimulationFunctionName);
-        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(SctTranslator.ContextIdentifier);
+        private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(SctAstTranslator.RunSimulationFunctionName);
+        private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(SctAstTranslator.ContextIdentifier);
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
         private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
 
         // boolean values are either 0 or 1
-        public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1));
-        public static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0));
+        public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1L));
+        public static readonly LiteralExpressionSyntax SctFalse = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(0L));
 
         // Due to the way static fields are initialized, this field MUST be placed after the identifiers
         // A full day has gone to waste debugging this...
@@ -27,9 +29,21 @@ namespace Sct.Compiler.Translator
         {
             { "rand", BuildAccessor(nameof(Stdlib.Rand), StdlibIdentifier) },
             { "seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
-            { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
-            { "count", BuildAccessor(nameof(IQueryHandler.Count), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
+            { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctAstTranslator.ContextIdentifier, QueryHandlerIdentifier) },
+            { "count", BuildAccessor(nameof(IQueryHandler.Count), SctAstTranslator.ContextIdentifier, QueryHandlerIdentifier) },
         };
+
+        public static TypeSyntax GetType(SctTypeSyntax type)
+        {
+            return type.Type switch
+            {
+                Syntax.SctType.Int => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.LongKeyword)),
+                Syntax.SctType.Float => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.DoubleKeyword)),
+                Syntax.SctType.Predicate => SyntaxFactory.ParseTypeName(nameof(QueryPredicate)),
+                Syntax.SctType.Void => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
+                _ => throw new InvalidTypeException($"Type {type.Type} does not exist"),
+            };
+        }
 
         public static MemberAccessExpressionSyntax BuildAccessor(string accessor, params SyntaxToken[] members)
         {
@@ -119,7 +133,7 @@ namespace Sct.Compiler.Translator
             return SyntaxFactory.ParameterList(
                 SyntaxFactory.SeparatedList(
                     p.Prepend( // prepend context to the original parameters
-                        SyntaxFactory.Parameter(SctTranslator.ContextIdentifier)
+                        SyntaxFactory.Parameter(SctAstTranslator.ContextIdentifier)
                         .WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)))
                     )
                 )
@@ -128,7 +142,7 @@ namespace Sct.Compiler.Translator
 
         public static ArgumentListSyntax WithContextArgument(IEnumerable<ArgumentSyntax> a) => SyntaxFactory.ArgumentList(
                 SyntaxFactory.SeparatedList(a.Prepend(
-                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(SctTranslator.ContextIdentifier))
+                        SyntaxFactory.Argument(SyntaxFactory.IdentifierName(SctAstTranslator.ContextIdentifier))
                     ))
                 );
         public static ArgumentListSyntax WithContextArgument(ArgumentListSyntax a) => WithContextArgument(a.Arguments);
@@ -246,7 +260,7 @@ namespace Sct.Compiler.Translator
                 )
             );
 
-            var runtimeParameter = SyntaxFactory.Parameter(SctTranslator.ContextIdentifier).WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)));
+            var runtimeParameter = SyntaxFactory.Parameter(SctAstTranslator.ContextIdentifier).WithType(SyntaxFactory.ParseTypeName(nameof(IRuntimeContext)));
 
             var runMethod = SyntaxFactory.MethodDeclaration(
                 SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.VoidKeyword)),

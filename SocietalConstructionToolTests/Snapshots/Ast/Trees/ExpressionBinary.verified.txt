@@ -1,0 +1,4243 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Div
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Mod
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Mult
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Mod
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Mult
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Div
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Minus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBinaryExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Plus
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Neq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lt
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Gte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Lte
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Eq
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Op: And
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 1,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Op: And
+                  },
+                  Right: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 3,
+                    Type: Int
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mult
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Div
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Mod
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Plus
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBinaryExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Minus
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Gt
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Lt
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Gte
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Lte
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Eq
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: Neq
+                  },
+                  Op: Or
+                }
+              },
+              {
+                $type: SctAssignmentStatementSyntax,
+                Id: a,
+                Expression: {
+                  $type: SctBooleanExpressionSyntax,
+                  Left: {
+                    $type: SctLiteralExpressionSyntax<long>,
+                    Value: 1,
+                    Type: Int
+                  },
+                  Right: {
+                    $type: SctBooleanExpressionSyntax,
+                    Left: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 2,
+                      Type: Int
+                    },
+                    Right: {
+                      $type: SctLiteralExpressionSyntax<long>,
+                      Value: 3,
+                      Type: Int
+                    },
+                    Op: And
+                  },
+                  Op: Or
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

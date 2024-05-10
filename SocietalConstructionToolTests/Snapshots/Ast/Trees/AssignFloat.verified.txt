@@ -1,0 +1,64 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: Setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Float
+                },
+                Id: pi,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Value: 3.14159,
+                  Type: Float
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Float
+                },
+                Id: a,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Value: 1.5,
+                  Type: Float
+                }
+              },
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Float
+                },
+                Id: b,
+                Expression: {
+                  $type: SctLiteralExpressionSyntax<double>,
+                  Value: 2.0,
+                  Type: Float
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

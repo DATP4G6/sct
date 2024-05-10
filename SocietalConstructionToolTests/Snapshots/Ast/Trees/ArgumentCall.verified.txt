@@ -1,0 +1,79 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: testFunction,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctExpressionStatementSyntax,
+                Expression: {
+                  $type: SctCallExpressionSyntax,
+                  Target: testFunctionArgs,
+                  Expressions: {
+                    $type: IEnumerable<SctExpressionSyntax>,
+                    $values: [
+                      {
+                        $type: SctLiteralExpressionSyntax<long>,
+                        Value: 1,
+                        Type: Int
+                      },
+                      {
+                        $type: SctLiteralExpressionSyntax<double>,
+                        Value: 1.5,
+                        Type: Float
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        Id: testFunctionArgs,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: [
+            {
+              Type: {
+                Type: Int
+              },
+              Id: intArgument
+            },
+            {
+              Type: {
+                Type: Float
+              },
+              Id: floatArgument
+            }
+          ]
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: []
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: []
+  }
+}

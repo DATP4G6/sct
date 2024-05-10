@@ -1,0 +1,64 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public static QueryPredicate __sct_getChildPredicate(IRuntimeContext ctx, long __sct_id)
+        {
+            return new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", __sct_id) }));
+        }
+
+        public static void __sct_Setup(IRuntimeContext ctx)
+        {
+            long __sct_townId = 5L;
+            long __sct_childrenCount = ctx.QueryHandler.Count(ctx, __sct_getChildPredicate(ctx, __sct_townId));
+        }
+
+        public class __sct_Citizen : BaseAgent
+        {
+            private long __sct_townId { get => Fields["__sct_townId"]; set => Fields["__sct_townId"] = value; }
+
+            public __sct_Citizen(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Child(IRuntimeContext ctx)
+            {
+                {
+                    Enter(ctx, "__sct_Adult");
+                    return true;
+                }
+
+                return false;
+            }
+
+            private bool __sct_Adult(IRuntimeContext ctx)
+            {
+                {
+                    Enter(ctx, "__sct_Adult");
+                    return true;
+                }
+
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Child" => __sct_Child(ctx),
+                    "__sct_Adult" => __sct_Adult(ctx)};
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_Setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}
