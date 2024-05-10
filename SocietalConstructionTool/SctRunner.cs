@@ -46,25 +46,30 @@ namespace Sct
         public static SctProgramSyntax GetAst(string filename)
         {
             var parser = GetParser(filename);
-            var listener = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(listener);
-        }
-
-        public static async Task<SctProgramSyntax> GetAstAsync(string filename)
-        {
-            var parser = await GetParserAsync(filename);
-            var listener = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(listener);
+            var visitor = new AstBuilderVisitor();
+            return (SctProgramSyntax)parser.start().Accept(visitor);
         }
 
         private static IEnumerable<string> StdLibFilename =>
             Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources"));
 
-        private static SctProgramSyntax GetMergedAst(IEnumerable<string> filenames)
+        private static void AddFilenameToContext(IEnumerable<SctProgramSyntax>  astList, IEnumerable<string> filenames)
         {
-            IEnumerable<SctClassSyntax> classes = filenames.Select(GetAst).SelectMany(ast => ast.Classes);
-            IEnumerable<SctFunctionSyntax> functions = filenames.Select(GetAst).SelectMany(ast => ast.Functions);
-            var context = GetParser(filenames.First()).start();
+            foreach (var (ast, filename) in astList.Zip(filenames))
+            {
+                var filenameVisitor = new AstFilenameVisitor(filename);
+                _ = ast.Accept(filenameVisitor);
+                Console.WriteLine("filename is: " + ast.Context.Filename);
+
+                Console.WriteLine("filename child: " + astList.First().Context.Filename);
+            }
+        }
+
+        private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList, string rootNode)
+        {
+            IEnumerable<SctClassSyntax> classes = astList.SelectMany(ast => ast.Classes);
+            IEnumerable<SctFunctionSyntax> functions = astList.SelectMany(ast => ast.Functions);
+            var context = GetParser(rootNode).start();
             return new SctProgramSyntax(context, functions, classes);
         }
 
@@ -80,7 +85,13 @@ namespace Sct
             // Add stdlib to the list of files to compile
             filenames = filenames.Concat(StdLibFilename);
 
-            var ast = GetMergedAst(filenames);
+            var astList = filenames.Select(GetAst).ToList();
+
+            AddFilenameToContext(astList, filenames);
+
+            Console.WriteLine("filename is this on outside " + astList.First().Context.Filename);
+
+            var ast = GetMergedAst(astList, filenames.First());
 
             var errors = RunStaticChecks(ast);
 

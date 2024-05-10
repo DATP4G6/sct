@@ -8,6 +8,7 @@ namespace Sct.Compiler.Syntax
     {
         public int Line { get; }
         public int Column { get; }
+        public string? Filename { get; set; }
 
         public ParserRuleContext OriginalContext { get; }
 
@@ -16,6 +17,16 @@ namespace Sct.Compiler.Syntax
             OriginalContext = context;
             Line = context.Start.Line;
             Column = context.Start.Column;
+        }
+
+        public void AddFilename(string filename)
+        {
+            Console.WriteLine(filename);
+            if (Filename is null) // Check if the value is already set
+            {
+                Console.WriteLine("added");
+                Filename = filename;
+            }
         }
     }
     public abstract class SctSyntax
