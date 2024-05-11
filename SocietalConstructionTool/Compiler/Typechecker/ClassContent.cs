@@ -1,3 +1,5 @@
+using Sct.Compiler.Syntax;
+
 namespace Sct.Compiler.Typechecker
 {
     public class ClassContent(string name)
@@ -6,7 +8,7 @@ namespace Sct.Compiler.Typechecker
         public FTable FTable { get; } = new();
         public HashSet<string> STable { get; } = new();
         public HashSet<string> DTable { get; } = new();
-        public Dictionary<string, Syntax.SctType> Fields { get; } = new();
+        public Dictionary<string, SctType> Fields { get; } = new();
 
         public bool AddFunction(string name, FunctionType functionType)
         {
@@ -37,7 +39,7 @@ namespace Sct.Compiler.Typechecker
             return true;
         }
 
-        public bool AddField(string name, Syntax.SctType type)
+        public bool AddField(string name, SctType type)
         {
             if (IDExists(name))
             {

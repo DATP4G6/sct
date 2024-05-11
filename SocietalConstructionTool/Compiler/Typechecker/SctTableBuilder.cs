@@ -2,15 +2,15 @@ using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctTableBuilder(CTableBuilder cTableBuilder) : SctBaseSyntaxVisitor<Syntax.SctType>
+    public class SctTableBuilder(CTableBuilder cTableBuilder) : SctBaseSyntaxVisitor<SctType>
     {
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;
         private readonly CTableBuilder _ctableBuilder = cTableBuilder;
 
-        protected override Syntax.SctType DefaultResult => Syntax.SctType.Ok;
+        protected override SctType DefaultResult => SctType.Ok;
 
-        public override Syntax.SctType Visit(SctClassSyntax node)
+        public override SctType Visit(SctClassSyntax node)
         {
             string className = node.Id;
 
@@ -36,10 +36,10 @@ namespace Sct.Compiler.Typechecker
 
             _ctableBuilder.FinishClass();
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctFunctionSyntax node)
+        public override SctType Visit(SctFunctionSyntax node)
         {
             var returnType = node.ReturnType.Accept(this);
             var argsTypes = node.Parameters.Select(arg => arg.Type.Accept(this)).ToList();
@@ -53,27 +53,27 @@ namespace Sct.Compiler.Typechecker
 
             _ = node.Block.Accept(this);
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctTypeSyntax node) => node.Type;
+        public override SctType Visit(SctTypeSyntax node) => node.Type;
 
-        public override Syntax.SctType Visit(SctStateSyntax node)
+        public override SctType Visit(SctStateSyntax node)
         {
             if (!_ctableBuilder.TryAddState(node.Id))
             {
                 _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context));
             }
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctDecoratorSyntax node)
+        public override SctType Visit(SctDecoratorSyntax node)
         {
             if (!_ctableBuilder.TryAddDecorator(node.Id))
             {
                 _errors.Add(new CompilerError($"ID {node.Id} already exists", node.Context));
             }
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
     }
 }

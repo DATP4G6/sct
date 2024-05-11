@@ -11,7 +11,7 @@ namespace Sct.Compiler.StaticChecks
         {
             var returns = node.ReturnType.Type switch
             {
-                Syntax.SctType.Void => true,
+                SctType.Void => true,
                 _ => node.Block.Accept(this)
             };
 
