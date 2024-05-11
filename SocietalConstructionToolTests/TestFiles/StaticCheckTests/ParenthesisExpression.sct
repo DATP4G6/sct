@@ -1,4 +1,4 @@
-class Test(int id) {
+species Test(int id) {
     state Exiting {
         exit;
     }

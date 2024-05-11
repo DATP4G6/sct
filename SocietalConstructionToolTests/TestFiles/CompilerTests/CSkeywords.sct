@@ -11,7 +11,7 @@ function Setup() -> void {
     int catch = 1;
     int char = 1;
     int checked = 1;
-    // int class = 1;
+    // int species = 1;
     int const = 1;
     // int continue = 1;
     int decimal = 1;

@@ -1,4 +1,4 @@
-class stdCounter(int x) {
+species stdCounter(int x) {
     state Counting {
         if (x <= 0) {
             exit;
@@ -8,7 +8,7 @@ class stdCounter(int x) {
     }
 }
 
-class stdPredicateExists(Predicate p) {
+species stdPredicateExists(Predicate p) {
     state ExitWhen {
         if (exists(p)) {
             exit;
@@ -24,7 +24,7 @@ class stdPredicateExists(Predicate p) {
     }
 }
 
-class stdPredicateAmount(Predicate p, int x) {
+species stdPredicateAmount(Predicate p, int x) {
     state ExitLessThan {
         if (count(p) < x) {
             exit;

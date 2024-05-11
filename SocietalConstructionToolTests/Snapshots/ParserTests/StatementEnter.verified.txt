@@ -1,1 +1,1 @@
-﻿(start (class_def class Citizen ( args_def ) { (class_body (state state Child { (statement_list (statement (enter enter Adult ;))) }) (state state Adult { statement_list })) }) <EOF>)
+﻿(start (class_def species Citizen ( args_def ) { (class_body (state state Child { (statement_list (statement (enter enter Adult ;))) }) (state state Adult { statement_list })) }) <EOF>)

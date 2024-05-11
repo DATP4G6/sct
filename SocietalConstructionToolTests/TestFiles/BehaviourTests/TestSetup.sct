@@ -1,4 +1,4 @@
-class Citizen() {
+species Citizen() {
     state Adult {
         enter Child;
     }
@@ -8,7 +8,7 @@ class Citizen() {
     }
 }
 
-class Town(int townId) {
+species Town(int townId) {
     state Stable {
         townId = townId + 1;
         enter Critical;

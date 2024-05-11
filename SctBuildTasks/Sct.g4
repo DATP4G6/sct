@@ -122,7 +122,7 @@ GTE: '>=';
 LTE: '<=';
 NOT: '!';
 
-CLASS: 'class';
+CLASS: 'species';
 STATE: 'state';
 DECORATOR: 'decorator';
 AT: '@';

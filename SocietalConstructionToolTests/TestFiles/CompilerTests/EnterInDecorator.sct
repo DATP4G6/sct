@@ -1,4 +1,4 @@
-class C() {
+species C() {
     decorator D {
         enter S;
     }

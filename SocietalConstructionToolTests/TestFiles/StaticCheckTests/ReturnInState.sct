@@ -1,4 +1,4 @@
-class A() {
+species A() {
     state B {
         return;
     }

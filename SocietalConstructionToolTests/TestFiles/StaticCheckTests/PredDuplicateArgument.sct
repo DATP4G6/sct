@@ -1,4 +1,4 @@
-class Citizen(int townId, int age) {
+species Citizen(int townId, int age) {
     state Child {
         enter Adult;
     }

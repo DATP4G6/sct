@@ -1,4 +1,4 @@
-class Citizen(int townId) {
+species Citizen(int townId) {
 
     decorator deathCheck {
 
@@ -27,7 +27,7 @@ class Citizen(int townId) {
     }
 }
 
-class Town(int id) {
+species Town(int id) {
 
     decorator checkExit {
         if (countCitizens() < 2) {
@@ -75,7 +75,7 @@ class Town(int id) {
     }
 }
 
-class GenerationCounter(int generation, int seed) {
+species GenerationCounter(int generation, int seed) {
     state Counting {
         generation = generation + 1;
         enter Counting;

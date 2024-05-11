@@ -1,1 +1,1 @@
-﻿(start (class_def class Citizen ( (args_def (type int) townId , (type float) latitude) ) { class_body }) <EOF>)
+﻿(start (class_def species Citizen ( (args_def (type int) townId , (type float) latitude) ) { class_body }) <EOF>)
