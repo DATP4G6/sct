@@ -2,7 +2,7 @@ using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctAstTypeChecker : SctBaseSyntaxVisitor<Syntax.SctType>
+    public class SctTypeChecker : SctBaseSyntaxVisitor<Syntax.SctType>
     {
         private readonly CTable _ctable;
         private readonly VTable _vtable = new();
@@ -10,7 +10,7 @@ namespace Sct.Compiler.Typechecker
         private FunctionType _currentFunctionType = new(Syntax.SctType.Void, []);
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;
-        public SctAstTypeChecker(CTable cTable)
+        public SctTypeChecker(CTable cTable)
         {
             _ctable = cTable;
             _currentClass = _ctable.GlobalClass;

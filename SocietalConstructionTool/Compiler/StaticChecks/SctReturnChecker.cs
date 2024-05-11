@@ -1,8 +1,8 @@
 using Sct.Compiler.Syntax;
 
-namespace Sct.Compiler.Typechecker
+namespace Sct.Compiler.StaticChecks
 {
-    public class SctReturnCheckAstVisitor : SctBaseSyntaxVisitor<bool>, IErrorReporter
+    public class SctReturnChecker : SctBaseSyntaxVisitor<bool>, IErrorReporter
     {
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;

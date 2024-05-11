@@ -7,6 +7,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 
 using Sct.Compiler;
+using Sct.Compiler.StaticChecks;
 using Sct.Compiler.Syntax;
 using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
@@ -98,7 +99,7 @@ namespace Sct
                 return (null, errors);
             }
 
-            var translator = new SctAstTranslator();
+            var translator = new SctTranslator();
             var tree = ast.Accept(translator);
 
             // HACK: We do something bad in our translator somewhere that means that we produce a syntax tree that is not valid,
@@ -115,7 +116,7 @@ namespace Sct
         private static (List<CompilerError>, CTable) RunFirstPassChecks(SctProgramSyntax startNode)
         {
             var cTableBuilder = new CTableBuilder();
-            var visitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            var visitor = new SctTableBuilder(cTableBuilder);
             _ = startNode.Accept(visitor);
             var (table, errors) = cTableBuilder.BuildCtable();
             errors.AddRange(visitor.Errors);
@@ -124,7 +125,7 @@ namespace Sct
 
         private static List<CompilerError> RunSecondPassChecks(SctProgramSyntax startNode, CTable table)
         {
-            var typeChecker = new SctAstTypeChecker(table);
+            var typeChecker = new SctTypeChecker(table);
             _ = startNode.Accept(typeChecker);
             return typeChecker.Errors.ToList();
         }
@@ -133,11 +134,11 @@ namespace Sct
         {
             var errors = new List<CompilerError>();
 
-            KeywordContextCheckSyntaxVisitor keywordChecker = new();
+            SctKeywordContextChecker keywordChecker = new();
             var keywordErrors = ast.Accept(keywordChecker).ToList();
             errors.AddRange(keywordErrors);
 
-            var returnVisitor = new SctReturnCheckAstVisitor();
+            var returnVisitor = new SctReturnChecker();
             _ = ast.Accept(returnVisitor);
             errors.AddRange(returnVisitor.Errors);
 
@@ -210,8 +211,8 @@ namespace Sct
          */
         private static void Run(Assembly assembly, IRuntimeContext initialContext)
         {
-            var globalClassName = $"{SctAstTranslator.GeneratedNamespace}.{SctAstTranslator.GeneratedGlobalClass}";
-            _ = assembly.GetType(globalClassName)?.GetMethod(SctAstTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
+            var globalClassName = $"{SctTranslator.GeneratedNamespace}.{SctTranslator.GeneratedGlobalClass}";
+            _ = assembly.GetType(globalClassName)?.GetMethod(SctTranslator.RunSimulationFunctionName)?.Invoke(null, [initialContext]);
         }
 
         /**

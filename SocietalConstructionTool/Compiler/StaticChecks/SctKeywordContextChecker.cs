@@ -1,12 +1,12 @@
 using Sct.Compiler.Syntax;
 
-namespace Sct.Compiler.Typechecker
+namespace Sct.Compiler.StaticChecks
 {
     /// <summary>
     /// Checks that keywords are in the correct context,
     /// e.g. that break is only used within loops
     /// </summary>
-    public class KeywordContextCheckSyntaxVisitor : SctBaseSyntaxVisitor<IEnumerable<CompilerError>>
+    public class SctKeywordContextChecker : SctBaseSyntaxVisitor<IEnumerable<CompilerError>>
     {
 
         private Context LocationContext { get; init; }
@@ -56,12 +56,12 @@ namespace Sct.Compiler.Typechecker
             public string ContextName { get; init; }
         }
 
-        private static KeywordContextCheckSyntaxVisitor WithContext(Context ctx) => new()
+        private static SctKeywordContextChecker WithContext(Context ctx) => new()
         {
             LocationContext = ctx,
         };
 
-        private KeywordContextCheckSyntaxVisitor WithStateContext() => WithContext(LocationContext with
+        private SctKeywordContextChecker WithStateContext() => WithContext(LocationContext with
         {
             CanControlState = true,
             CanExit = true,
@@ -70,7 +70,7 @@ namespace Sct.Compiler.Typechecker
             ContextName = "state",
         });
 
-        private KeywordContextCheckSyntaxVisitor WithDecoratorContext() => WithContext(LocationContext with
+        private SctKeywordContextChecker WithDecoratorContext() => WithContext(LocationContext with
         {
             CanControlState = true,
             CanExit = true,
@@ -79,7 +79,7 @@ namespace Sct.Compiler.Typechecker
             ContextName = "decorator",
         });
 
-        private KeywordContextCheckSyntaxVisitor WithFunctionContext() => WithContext(LocationContext with
+        private SctKeywordContextChecker WithFunctionContext() => WithContext(LocationContext with
         {
             CanControlState = false,
             CanExit = false,
@@ -88,7 +88,7 @@ namespace Sct.Compiler.Typechecker
             ContextName = "function",
         });
 
-        private KeywordContextCheckSyntaxVisitor WithLoopContext() => WithContext(LocationContext with
+        private SctKeywordContextChecker WithLoopContext() => WithContext(LocationContext with
         {
             CanUseLoopControl = true,
         });
