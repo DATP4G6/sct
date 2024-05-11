@@ -1,3 +1,5 @@
+using Sct.Compiler.Syntax;
+
 namespace Sct.Compiler.Typechecker
 {
     public class CTableBuilder
@@ -10,10 +12,10 @@ namespace Sct.Compiler.Typechecker
         {
             _globalClass = new KeyValuePair<string, ClassContent>("Global", new ClassContent("Global"));
             _currentClass = _globalClass;
-            _ = TryAddFunction("count", new FunctionType(Syntax.SctType.Int, [Syntax.SctType.Predicate]));
-            _ = TryAddFunction("exists", new FunctionType(Syntax.SctType.Int, [Syntax.SctType.Predicate]));
-            _ = TryAddFunction("rand", new FunctionType(Syntax.SctType.Float, []));
-            _ = TryAddFunction("seed", new FunctionType(Syntax.SctType.Void, [Syntax.SctType.Int]));
+            _ = TryAddFunction("count", new FunctionType(SctType.Int, [SctType.Predicate]));
+            _ = TryAddFunction("exists", new FunctionType(SctType.Int, [SctType.Predicate]));
+            _ = TryAddFunction("rand", new FunctionType(SctType.Float, []));
+            _ = TryAddFunction("seed", new FunctionType(SctType.Void, [SctType.Int]));
         }
 
         public (CTable cTable, List<CompilerError> errors) BuildCtable()
@@ -26,7 +28,7 @@ namespace Sct.Compiler.Typechecker
             {
                 errors.Add(new CompilerError("No setup function found"));
             }
-            else if (setupType.ReturnType != Syntax.SctType.Void || setupType.ParameterTypes.Count != 0)
+            else if (setupType.ReturnType != SctType.Void || setupType.ParameterTypes.Count != 0)
             {
                 errors.Add(new CompilerError("Setup function must return void and take no arguments"));
             }
@@ -50,7 +52,7 @@ namespace Sct.Compiler.Typechecker
             _currentClass = _globalClass;
         }
 
-        public bool TryAddField(string name, Syntax.SctType type)
+        public bool TryAddField(string name, SctType type)
         {
             if (_currentClass.Value.Fields.ContainsKey(name))
             {

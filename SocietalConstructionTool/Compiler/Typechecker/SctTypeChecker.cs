@@ -2,12 +2,12 @@ using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctTypeChecker : SctBaseSyntaxVisitor<Syntax.SctType>
+    public class SctTypeChecker : SctBaseSyntaxVisitor<SctType>
     {
         private readonly CTable _ctable;
         private readonly VTable _vtable = new();
         private ClassContent _currentClass;
-        private FunctionType _currentFunctionType = new(Syntax.SctType.Void, []);
+        private FunctionType _currentFunctionType = new(SctType.Void, []);
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;
         public SctTypeChecker(CTable cTable)
@@ -24,13 +24,13 @@ namespace Sct.Compiler.Typechecker
             }
         }
 
-        public override Syntax.SctType Visit(SctProgramSyntax node)
+        public override SctType Visit(SctProgramSyntax node)
         {
             MakeChildrenAccept(node);
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctFunctionSyntax node)
+        public override SctType Visit(SctFunctionSyntax node)
         {
             var functionName = node.Id;
             _currentFunctionType = GetFunctionType(functionName, node);
@@ -40,7 +40,7 @@ namespace Sct.Compiler.Typechecker
             // but need this, to be able to continue typechecking
             if (_currentFunctionType.ReturnType != node.ReturnType.Accept(this))
             {
-                return Syntax.SctType.Void;
+                return SctType.Void;
             }
             _vtable.EnterScope();
 
@@ -51,20 +51,20 @@ namespace Sct.Compiler.Typechecker
             _ = node.ReturnType.Accept(this);
             _ = node.Block.Accept(this);
             _vtable.ExitScope();
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctIdExpressionSyntax node)
+        public override SctType Visit(SctIdExpressionSyntax node)
         {
             return LookupVariable(node.Id, node);
         }
 
-        public override Syntax.SctType Visit(SctTypeSyntax node)
+        public override SctType Visit(SctTypeSyntax node)
         {
             return node.Type;
         }
 
-        public override Syntax.SctType Visit(SctClassSyntax node)
+        public override SctType Visit(SctClassSyntax node)
         {
             // can never be null, as SctTableVisitor created the class
             _currentClass = _ctable.GetClassContent(node.Id)!;
@@ -72,10 +72,10 @@ namespace Sct.Compiler.Typechecker
             MakeChildrenAccept(node);
             _vtable.ExitScope();
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctEnterStatementSyntax node)
+        public override SctType Visit(SctEnterStatementSyntax node)
         {
             var stateName = node.Id;
 
@@ -84,10 +84,10 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"State '{stateName}' does not exist.", node.Context));
             }
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctStateSyntax node)
+        public override SctType Visit(SctStateSyntax node)
         {
             for (var i = 0; i < node.Decorations.Count(); i++)
             {
@@ -99,10 +99,10 @@ namespace Sct.Compiler.Typechecker
 
             MakeChildrenAccept(node);
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctDecoratorSyntax node)
+        public override SctType Visit(SctDecoratorSyntax node)
         {
             if (!_currentClass.HasDecorator(node.Id))
             {
@@ -110,16 +110,16 @@ namespace Sct.Compiler.Typechecker
 
             }
             MakeChildrenAccept(node);
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctParameterSyntax node)
+        public override SctType Visit(SctParameterSyntax node)
         {
             _ = _vtable.AddEntry(node.Id, node.Type.Accept(this));
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctCallExpressionSyntax node)
+        public override SctType Visit(SctCallExpressionSyntax node)
         {
             var functionType = GetFunctionType(node.Target, node);
             if (functionType.ParameterTypes.Count == node.Expressions.Count())
@@ -143,19 +143,19 @@ namespace Sct.Compiler.Typechecker
             return functionType.ReturnType;
         }
 
-        public override Syntax.SctType Visit(SctUnaryMinusExpressionSyntax node)
+        public override SctType Visit(SctUnaryMinusExpressionSyntax node)
         {
             var expressionType = node.Expression.Accept(this);
 
             if (!TypeIsNumeric(expressionType))
             {
                 _errors.Add(new CompilerError("Unary minus expression must be numeric type", node.Context));
-                expressionType = Syntax.SctType.Int;
+                expressionType = SctType.Int;
             }
             return expressionType;
         }
 
-        public override Syntax.SctType Visit(SctReturnStatementSyntax node)
+        public override SctType Visit(SctReturnStatementSyntax node)
         {
 
             var returnType = _currentFunctionType.ReturnType;
@@ -163,11 +163,11 @@ namespace Sct.Compiler.Typechecker
             if (node.Expression is null)
             {
 
-                if (returnType != Syntax.SctType.Void)
+                if (returnType != SctType.Void)
                 {
                     _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType.TypeName()} but got void", node.Context));
                 }
-                return Syntax.SctType.Void;
+                return SctType.Void;
             }
 
             var expressionType = node.Expression.Accept(this);
@@ -179,7 +179,7 @@ namespace Sct.Compiler.Typechecker
             return expressionType;
         }
 
-        public override Syntax.SctType Visit(SctBinaryExpressionSyntax node)
+        public override SctType Visit(SctBinaryExpressionSyntax node)
         {
 
             var leftType = node.Left.Accept(this);
@@ -188,14 +188,14 @@ namespace Sct.Compiler.Typechecker
             if (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
             {
                 _errors.Add(new CompilerError("Binary expression must be numeric types", node.Context));
-                leftType = Syntax.SctType.Int;
-                rightType = Syntax.SctType.Int;
+                leftType = SctType.Int;
+                rightType = SctType.Int;
             }
 
-            return (leftType == rightType) ? leftType : Syntax.SctType.Float; // If we have two different types (int and float), we return float.
+            return (leftType == rightType) ? leftType : SctType.Float; // If we have two different types (int and float), we return float.
         }
 
-        public override Syntax.SctType Visit(SctAssignmentStatementSyntax node)
+        public override SctType Visit(SctAssignmentStatementSyntax node)
         {
 
             var targetType = LookupVariable(node.Id, node);
@@ -210,7 +210,7 @@ namespace Sct.Compiler.Typechecker
             return targetType;
         }
 
-        public override Syntax.SctType Visit(SctBooleanExpressionSyntax node)
+        public override SctType Visit(SctBooleanExpressionSyntax node)
         {
 
             var leftType = node.Left.Accept(this);
@@ -219,17 +219,17 @@ namespace Sct.Compiler.Typechecker
             if (// Types are not numeric
                 (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
                 // Types are not predicates or operators do not allow it
-                && !(leftType == rightType && leftType == Syntax.SctType.Predicate
+                && !(leftType == rightType && leftType == SctType.Predicate
                     && node.Op is Syntax.SctBooleanOperator.Eq or Syntax.SctBooleanOperator.Neq)
                 )
             {
                 _errors.Add(new CompilerError("Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.", node.Context));
             }
 
-            return Syntax.SctType.Int;
+            return SctType.Int;
         }
 
-        public override Syntax.SctType Visit(SctTypecastExpressionSyntax node)
+        public override SctType Visit(SctTypecastExpressionSyntax node)
         {
             var targetType = node.Type.Accept(this);
             var expressionType = node.Expression.Accept(this);
@@ -242,7 +242,7 @@ namespace Sct.Compiler.Typechecker
             return targetType;
         }
 
-        public override Syntax.SctType Visit(SctPredicateExpressionSyntax node)
+        public override SctType Visit(SctPredicateExpressionSyntax node)
         {
             var target = _ctable.GetClassContent(node.ClassName);
 
@@ -250,14 +250,14 @@ namespace Sct.Compiler.Typechecker
             if (target is null)
             {
                 _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
-                return Syntax.SctType.Predicate;
+                return SctType.Predicate;
             }
 
             // Check if state exists in predicate and target class
             if (node.StateName is not null && !target.HasState(node.StateName))
             {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
-                return Syntax.SctType.Predicate;
+                return SctType.Predicate;
             }
 
             // Check if all fields exist in target class
@@ -287,12 +287,12 @@ namespace Sct.Compiler.Typechecker
                 }
             }
 
-            return Syntax.SctType.Predicate;
+            return SctType.Predicate;
         }
 
-        public override Syntax.SctType Visit(SctIfStatementSyntax node)
+        public override SctType Visit(SctIfStatementSyntax node)
         {
-            if (node.Expression.Accept(this) != Syntax.SctType.Int)
+            if (node.Expression.Accept(this) != SctType.Int)
             {
                 _errors.Add(new CompilerError($"Type mismatch in if statement. Condition must be boolean", node.Context));
             }
@@ -307,71 +307,71 @@ namespace Sct.Compiler.Typechecker
                 _ = node.Else.Accept(this);
             }
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctElseStatementSyntax node)
+        public override SctType Visit(SctElseStatementSyntax node)
         {
             MakeChildrenAccept(node);
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctWhileStatementSyntax node)
+        public override SctType Visit(SctWhileStatementSyntax node)
         {
-            if (node.Expression.Accept(this) != Syntax.SctType.Int)
+            if (node.Expression.Accept(this) != SctType.Int)
             {
                 _errors.Add(new CompilerError($"Type mismatch in while statement. Condition must be numerical", node.Context));
             }
 
             _ = node.Block.Accept(this);
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
 
-        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<long> node)
+        public override SctType Visit(SctLiteralExpressionSyntax<long> node)
         {
-            if (GetCompatibleType(Syntax.SctType.Int, node.Type) is null)
+            if (GetCompatibleType(SctType.Int, node.Type) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Int} but got {node.Type.TypeName()}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {SctType.Int} but got {node.Type.TypeName()}", node.Context));
             }
 
-            return Syntax.SctType.Int;
+            return SctType.Int;
         }
 
-        public override Syntax.SctType Visit(SctBreakStatementSyntax node)
+        public override SctType Visit(SctBreakStatementSyntax node)
         {
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
-        public override Syntax.SctType Visit(SctLiteralExpressionSyntax<double> node)
+        public override SctType Visit(SctLiteralExpressionSyntax<double> node)
         {
-            if (GetCompatibleType(Syntax.SctType.Float, node.Type) is null)
+            if (GetCompatibleType(SctType.Float, node.Type) is null)
             {
-                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {Syntax.SctType.Float} but got {node.Type.TypeName()}", node.Context));
+                _errors.Add(new CompilerError($"Type mismatch in literal expression. Expected {SctType.Float} but got {node.Type.TypeName()}", node.Context));
             }
 
-            return Syntax.SctType.Float;
+            return SctType.Float;
         }
 
-        public override Syntax.SctType Visit(SctDeclarationStatementSyntax node)
+        public override SctType Visit(SctDeclarationStatementSyntax node)
         {
             var type = node.Type.Accept(this);
-            if (type == Syntax.SctType.Void)
+            if (type == SctType.Void)
             {
                 _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type.TypeName()}", node.Context));
-                return Syntax.SctType.Int;
+                return SctType.Int;
             }
 
             if (node.Expression != null)
             {
-                Syntax.SctType expressionType = node.Expression.Accept(this);
+                SctType expressionType = node.Expression.Accept(this);
                 if (GetCompatibleType(type, expressionType) is null)
                 {
                     _errors.Add(new CompilerError($"Type mismatch in declaration of variable {node.Id}. Expected {node.Type.Type.TypeName()} but got {expressionType.TypeName()}", node.Context));
                 }
-                else if (type == Syntax.SctType.Void)
+                else if (type == SctType.Void)
                 {
                     _errors.Add(new CompilerError($"Variable {node.Id} cannot be of type {type.TypeName()}", node.Context));
                 }
@@ -390,18 +390,18 @@ namespace Sct.Compiler.Typechecker
             return type;
         }
 
-        public override Syntax.SctType Visit(SctBlockStatementSyntax node)
+        public override SctType Visit(SctBlockStatementSyntax node)
         {
 
             _vtable.EnterScope();
             MakeChildrenAccept(node);
             _vtable.ExitScope();
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
         // This is the "create Agent::State(FieldID: Expression, ...)" syntax, not to be confused with the definition of an agent.
-        public override Syntax.SctType Visit(SctAgentExpressionSyntax node)
+        public override SctType Visit(SctAgentExpressionSyntax node)
         {
 
             var target = _ctable.GetClassContent(node.ClassName);
@@ -409,13 +409,13 @@ namespace Sct.Compiler.Typechecker
             if (target is null)
             {
                 _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
-                return Syntax.SctType.Ok;
+                return SctType.Ok;
             }
 
             if (!target.HasState(node.StateName))
             {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
-                return Syntax.SctType.Ok;
+                return SctType.Ok;
             }
 
             var targetClassFields = target.Fields;
@@ -455,7 +455,7 @@ namespace Sct.Compiler.Typechecker
                 }
             }
 
-            return Syntax.SctType.Ok;
+            return SctType.Ok;
         }
 
         private FunctionType GetFunctionType(string functionName, SctSyntax node)
@@ -469,36 +469,36 @@ namespace Sct.Compiler.Typechecker
                 return globalFunctionType;
             }
             _errors.Add(new CompilerError($"Function '{functionName}' does not exist.", node.Context));
-            return new FunctionType(Syntax.SctType.Void, []);
+            return new FunctionType(SctType.Void, []);
         }
 
-        public static bool TypeIsNumeric(Syntax.SctType type) => type is Syntax.SctType.Int or Syntax.SctType.Float;
+        public static bool TypeIsNumeric(SctType type) => type is SctType.Int or SctType.Float;
 
-        public static bool IsTypeCastable(Syntax.SctType from, Syntax.SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
+        public static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
 
-        public static Syntax.SctType? GetCompatibleType(Syntax.SctType left, Syntax.SctType right)
+        public static SctType? GetCompatibleType(SctType left, SctType right)
         {
             if (left == right)
             {
                 return left;
             }
-            else if (left == Syntax.SctType.Float && right == Syntax.SctType.Int)
+            else if (left == SctType.Float && right == SctType.Int)
             {
-                return Syntax.SctType.Float;
+                return SctType.Float;
             }
             return null;
         }
 
-        private Syntax.SctType LookupVariable(string variableName, SctSyntax node)
+        private SctType LookupVariable(string variableName, SctSyntax node)
         {
-            Syntax.SctType? variableType = _vtable.Lookup(variableName);
+            SctType? variableType = _vtable.Lookup(variableName);
 
             if (variableType is null)
             {
                 _errors.Add(new CompilerError($"Variable '{variableName}' does not exist.", node.Context));
-                return Syntax.SctType.Int;
+                return SctType.Int;
             }
-            return (Syntax.SctType)variableType!;
+            return (SctType)variableType!;
         }
     }
 }
