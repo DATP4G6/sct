@@ -16,7 +16,7 @@
             return 0L;
         }
 
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_setup(IRuntimeContext ctx)
         {
             QueryPredicate __sct_x = new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", 1L) }));
             if ((__sct_duplicate(ctx, __sct_x)) != 0L)
@@ -89,7 +89,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

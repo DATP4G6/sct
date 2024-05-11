@@ -4,7 +4,7 @@ species Citizen(int townId) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     int x = count(Citizen::Child(townId: 5));
     x = exists(Citizen::Child(townId: 5));
     float y = rand();

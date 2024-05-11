@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     float x = 7;
     x = 9;
 }

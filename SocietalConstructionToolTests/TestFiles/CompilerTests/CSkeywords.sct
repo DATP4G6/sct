@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
     // C# keywords
     int abstract = 1;

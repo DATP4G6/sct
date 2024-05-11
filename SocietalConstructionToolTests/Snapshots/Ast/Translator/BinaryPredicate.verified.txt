@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_setup(IRuntimeContext ctx)
         {
             QueryPredicate __sct_fullEqual = new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 1L), new KeyValuePair<String, dynamic>("__sct_b", 2L) }));
             QueryPredicate __sct_fullEqual2 = new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", 1L), new KeyValuePair<String, dynamic>("__sct_b", 2L) }));
@@ -165,7 +165,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

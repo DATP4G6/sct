@@ -2,7 +2,7 @@ species Town(int id, int space) {}
 
 function test() -> void {}
 
-function Setup() -> void {
+function setup() -> void {
     int x = 5 <= test();
     x = 5 == Town::?();
     x = test() != 10 && Town::?() == 0;

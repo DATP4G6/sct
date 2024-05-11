@@ -4,7 +4,7 @@ species Foo(int a, int b) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     create Foo::Bar(a: 5, a: 10, b: -4);
     create Foo::Bar(a: 5, b: -4, a: 10);
 }

@@ -21,7 +21,7 @@ namespace Sct.Compiler.Typechecker
             CTable cTable = new(_classes, _globalClass.Value);
             var errors = new List<CompilerError>();
 
-            var setupType = cTable.GlobalClass.LookupFunctionType("Setup");
+            var setupType = cTable.GlobalClass.LookupFunctionType("setup");
             if (setupType is null)
             {
                 errors.Add(new CompilerError("No setup function found"));

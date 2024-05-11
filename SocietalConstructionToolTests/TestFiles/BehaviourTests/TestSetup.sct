@@ -19,7 +19,7 @@ species Town(int townId) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     create Citizen::Adult();
     create Town::Stable(townId: 0);
 }

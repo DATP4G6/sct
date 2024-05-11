@@ -246,7 +246,7 @@ namespace Sct.Compiler.Translator
             );
 
             var setup = SyntaxFactory.ExpressionStatement(
-                GetFunction("Setup",
+                GetFunction("setup",
                     SyntaxFactory.Argument(ContextIdentifierName)
                 )
             );

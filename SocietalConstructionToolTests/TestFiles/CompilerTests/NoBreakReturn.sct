@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     int x = 2;
     x = x + 2;
 }

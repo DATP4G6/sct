@@ -52,7 +52,7 @@
             Int
           ]
         },
-        Setup: {
+        setup: {
           ReturnType: Void,
           ParameterTypes: null
         },

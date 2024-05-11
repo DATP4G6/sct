@@ -54,7 +54,7 @@ species Terminator(int generationLimit, int generationCount) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     create Manager::Managing(startCount: 0);
     create Terminator::Charging(generationLimit: 30, generationCount: 0);
 }

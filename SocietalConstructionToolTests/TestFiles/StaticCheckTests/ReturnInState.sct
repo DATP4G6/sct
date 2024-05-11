@@ -4,5 +4,5 @@ species A() {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
 }

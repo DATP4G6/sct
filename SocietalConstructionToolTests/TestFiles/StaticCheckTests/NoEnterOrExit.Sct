@@ -16,4 +16,4 @@ species Foo() {
     }
 }
 
-function Setup() -> void {}
+function setup() -> void {}

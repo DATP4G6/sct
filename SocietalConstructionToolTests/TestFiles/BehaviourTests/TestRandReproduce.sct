@@ -82,7 +82,7 @@ species GenerationCounter(int generation, int seed) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     seed(123);
     create GenerationCounter::Counting(generation: 0, seed: 123);
     create Town::Small(id: 1);

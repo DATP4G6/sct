@@ -1,1 +1,1 @@
-function Setup(int var) -> void {}
+function setup(int var) -> void {}

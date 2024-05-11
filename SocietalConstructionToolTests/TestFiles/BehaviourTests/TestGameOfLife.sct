@@ -53,7 +53,7 @@ function countNeighboors(int x, int y) -> int {
     return alive;
 }
 
-function Setup() -> void {
+function setup() -> void {
 
     int height = 10;
     int width = 10;

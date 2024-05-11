@@ -2,4 +2,4 @@ species Town(int id, int space) {}
 
 species Town(int id) {}
 
-function Setup() -> void {}
+function setup() -> void {}

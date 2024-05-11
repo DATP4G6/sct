@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     if (1) {
 
     }

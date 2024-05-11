@@ -15,7 +15,7 @@ function duplicate(Predicate p) -> int{
     return 0;
 }
 
-function Setup() -> void {
+function setup() -> void {
     Predicate x = Citizen::Child(townId:1);
     if (duplicate(x)) {
         create Exiter::Exiting();

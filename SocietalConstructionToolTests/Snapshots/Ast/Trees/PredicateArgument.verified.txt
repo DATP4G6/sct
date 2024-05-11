@@ -76,7 +76,7 @@
         }
       },
       {
-        Id: Setup,
+        Id: setup,
         Parameters: {
           $type: IEnumerable<SctParameterSyntax>,
           $values: []

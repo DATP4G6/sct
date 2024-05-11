@@ -7,7 +7,7 @@ species Foo() {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     create Foo::Bar();
     create Foo::Baz();
     create Foo::Baz();
