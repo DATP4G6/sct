@@ -1,227 +1,227 @@
 ﻿[
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 0,
       "everyCalled": 0,
       "everyOtherCalled": 0
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 0
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 1,
       "everyCalled": 1,
       "everyOtherCalled": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 1
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 2,
       "everyCalled": 2,
       "everyOtherCalled": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 2
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 3,
       "everyCalled": 3,
       "everyOtherCalled": 2
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 3
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 4,
       "everyCalled": 4,
       "everyOtherCalled": 2
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 4
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 5,
       "everyCalled": 5,
       "everyOtherCalled": 3
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 5
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 6,
       "everyCalled": 6,
       "everyOtherCalled": 3
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 6
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 7,
       "everyCalled": 7,
       "everyOtherCalled": 4
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 7
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 8,
       "everyCalled": 8,
       "everyOtherCalled": 4
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 8
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 9,
       "everyCalled": 9,
       "everyOtherCalled": 5
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 9
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 10,
       "everyCalled": 10,
       "everyOtherCalled": 5
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 10
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Odd",
     "Fields": {
       "generationCount": 11,
       "everyCalled": 11,
       "everyOtherCalled": 6
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Terminating",
     "Fields": {
       "generationLimit": 10,
       "generationCount": 10
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Even",
     "Fields": {
       "generationCount": 12,
       "everyCalled": 12,
       "everyOtherCalled": 6
-    },
-    "ClassName": "Town"
+    }
   }
 ]

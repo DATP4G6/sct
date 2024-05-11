@@ -1,10 +1,11 @@
 ﻿[
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitMoreThan",
     "Fields": {
       "p": {
@@ -13,16 +14,16 @@
         "Fields": {}
       },
       "x": 1
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitMoreThan",
     "Fields": {
       "p": {
@@ -31,21 +32,21 @@
         "Fields": {}
       },
       "x": 1
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitMoreThan",
     "Fields": {
       "p": {
@@ -54,26 +55,26 @@
         "Fields": {}
       },
       "x": 1
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitMoreThan",
     "Fields": {
       "p": {
@@ -82,33 +83,32 @@
         "Fields": {}
       },
       "x": 1
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   }
 ]

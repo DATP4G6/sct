@@ -1,20 +1,21 @@
 ﻿[
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitLessThan",
     "Fields": {
       "p": {
@@ -23,16 +24,16 @@
         "Fields": {}
       },
       "x": 2
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateAmount",
     "State": "ExitLessThan",
     "Fields": {
       "p": {
@@ -41,7 +42,6 @@
         "Fields": {}
       },
       "x": 2
-    },
-    "ClassName": "stdPredicateAmount"
+    }
   }
 ][]

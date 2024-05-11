@@ -1,249 +1,249 @@
 ﻿[
   {
+    "Species": "GenerationCounter",
     "State": "Counting",
     "Fields": {
       "generation": 0,
       "seed": 123
-    },
-    "ClassName": "GenerationCounter"
+    }
   },
   {
+    "Species": "Town",
     "State": "Small",
     "Fields": {
       "id": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Child",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Child",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Child",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Child",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Child",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   }
 ][
   {
+    "Species": "GenerationCounter",
     "State": "Counting",
     "Fields": {
       "generation": 1,
       "seed": 123
-    },
-    "ClassName": "GenerationCounter"
+    }
   },
   {
+    "Species": "Town",
     "State": "Small",
     "Fields": {
       "id": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   }
 ][
   {
+    "Species": "GenerationCounter",
     "State": "Counting",
     "Fields": {
       "generation": 2,
       "seed": 123
-    },
-    "ClassName": "GenerationCounter"
+    }
   },
   {
+    "Species": "Town",
     "State": "Small",
     "Fields": {
       "id": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   }
 ][
   {
+    "Species": "GenerationCounter",
     "State": "Counting",
     "Fields": {
       "generation": 3,
       "seed": 123
-    },
-    "ClassName": "GenerationCounter"
+    }
   },
   {
+    "Species": "Town",
     "State": "Small",
     "Fields": {
       "id": 1
-    },
-    "ClassName": "Town"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   }
 ][
   {
+    "Species": "GenerationCounter",
     "State": "Counting",
     "Fields": {
       "generation": 4,
       "seed": 123
-    },
-    "ClassName": "GenerationCounter"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Adult",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   },
   {
+    "Species": "Citizen",
     "State": "Dead",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Citizen"
+    }
   }
 ]
