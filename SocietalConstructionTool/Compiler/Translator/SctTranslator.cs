@@ -8,7 +8,7 @@ using Sct.Runtime;
 
 namespace Sct.Compiler.Translator
 {
-    public class SctAstTranslator : SctBaseSyntaxVisitor<CSharpSyntaxNode>
+    public class SctTranslator : SctBaseSyntaxVisitor<CSharpSyntaxNode>
     {
         public const string GeneratedNamespace = "SctGenerated";
         public const string GeneratedGlobalClass = "GlobalClass";

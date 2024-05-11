@@ -3,7 +3,7 @@ using System.Text.Json;
 using Microsoft.CodeAnalysis;
 
 using Sct;
-using Sct.Compiler;
+using Sct.Compiler.StaticChecks;
 using Sct.Compiler.Syntax;
 using Sct.Compiler.Translator;
 using Sct.Compiler.Typechecker;
@@ -49,7 +49,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/Ast/ReturnCheck"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
-            var visitor = new SctReturnCheckAstVisitor();
+            var visitor = new SctReturnChecker();
             _ = ast.Accept(visitor);
             var errors = visitor.Errors;
 
@@ -88,7 +88,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Translator"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
-            var visitor = new SctAstTranslator();
+            var visitor = new SctTranslator();
             var tree = ast.Accept(visitor);
 
             _ = await Verify(tree.NormalizeWhitespace().ToFullString())
@@ -122,7 +122,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Folding"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
-            var visitor = new AstFolderSyntaxVisitor();
+            var visitor = new SctFolder();
             var foldedAst = (SctProgramSyntax)ast.Accept(visitor);
 
             _ = await Verify(foldedAst, IgnoreContext)
@@ -138,7 +138,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/Ast/FoldingErrors"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
-            var visitor = new AstFolderSyntaxVisitor();
+            var visitor = new SctFolder();
             var foldedAst = (SctProgramSyntax)ast.Accept(visitor);
             foldedAst.ForceEvaluation();
 
@@ -156,7 +156,7 @@ namespace SocietalConstructionToolTests
             UseProjectRelativeDirectory("Snapshots/Ast/Table"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
             var cTableBuilder = new CTableBuilder();
-            var visitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            var visitor = new SctTableBuilder(cTableBuilder);
             _ = ast.Accept(visitor);
 
             var (table, errors) = cTableBuilder.BuildCtable();
@@ -188,13 +188,13 @@ namespace SocietalConstructionToolTests
             var ast = TestFileUtils.BuildAst(testFile);
 
             var cTableBuilder = new CTableBuilder();
-            var tableVisitor = new SctAstTableBuilderVisitor(cTableBuilder);
+            var tableVisitor = new SctTableBuilder(cTableBuilder);
             _ = ast.Accept(tableVisitor);
 
             var (table, _) = cTableBuilder.BuildCtable();
 
             // Type check the AST
-            var typeChecker = new SctAstTypeChecker(table);
+            var typeChecker = new SctTypeChecker(table);
             _ = typeChecker.Visit(ast);
             var typeErrors = typeChecker.Errors;
 
@@ -211,7 +211,7 @@ namespace SocietalConstructionToolTests
         {
             UseProjectRelativeDirectory("Snapshots/Ast/Keywords"); // Save snapshots here
             var ast = TestFileUtils.BuildAst(testFile);
-            var visitor = new KeywordContextCheckSyntaxVisitor();
+            var visitor = new SctKeywordContextChecker();
             var errors = ast.Accept(visitor);
 
             _ = await Verify(errors)

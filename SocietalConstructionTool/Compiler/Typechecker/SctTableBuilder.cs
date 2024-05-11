@@ -2,7 +2,7 @@ using Sct.Compiler.Syntax;
 
 namespace Sct.Compiler.Typechecker
 {
-    public class SctAstTableBuilderVisitor(CTableBuilder cTableBuilder) : SctBaseSyntaxVisitor<Syntax.SctType>
+    public class SctTableBuilder(CTableBuilder cTableBuilder) : SctBaseSyntaxVisitor<Syntax.SctType>
     {
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;

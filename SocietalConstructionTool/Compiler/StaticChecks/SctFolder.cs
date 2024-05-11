@@ -2,9 +2,9 @@ using System.Numerics;
 
 using Sct.Compiler.Syntax;
 
-namespace Sct.Compiler
+namespace Sct.Compiler.StaticChecks
 {
-    public class AstFolderSyntaxVisitor : SctBaseBuilderSyntaxVisitor, IErrorReporter
+    public class SctFolder : SctBaseBuilderSyntaxVisitor, IErrorReporter
     {
         public IEnumerable<CompilerError> Errors => _errors;
         private readonly List<CompilerError> _errors = [];
