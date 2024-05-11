@@ -1,32 +1,32 @@
 ﻿[
   {
+    "Species": "Output",
     "State": "Equal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   },
   {
+    "Species": "Output",
     "State": "Equal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   },
   {
+    "Species": "Output",
     "State": "Equal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   },
   {
+    "Species": "Output",
     "State": "Unequal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   },
   {
+    "Species": "Output",
     "State": "Unequal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   },
   {
+    "Species": "Output",
     "State": "Unequal",
-    "Fields": {},
-    "ClassName": "Output"
+    "Fields": {}
   }
 ][]

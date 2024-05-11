@@ -1,619 +1,619 @@
 ﻿[
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 0
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 0
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 1
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 1
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 2
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 2
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 3
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 3
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 3
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 4
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 4
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Buzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 5
-    },
-    "ClassName": "Buzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 5
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 5
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 6
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 6
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 6
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 7
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 7
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 8
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 8
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 9
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 9
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 9
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Buzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 10
-    },
-    "ClassName": "Buzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 10
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 10
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 11
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 11
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 12
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 12
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 12
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 13
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 13
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 14
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 14
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "FizzBuzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 15
-    },
-    "ClassName": "FizzBuzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 15
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 15
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 16
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 16
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 17
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 17
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 18
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 18
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 18
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 19
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 19
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Buzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 20
-    },
-    "ClassName": "Buzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 20
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 20
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 21
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 21
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 21
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 22
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 22
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 23
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 23
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 24
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 24
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 24
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Buzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 25
-    },
-    "ClassName": "Buzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 25
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 25
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 26
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 26
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Fizz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 27
-    },
-    "ClassName": "Fizz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 27
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 27
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 28
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 28
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 29
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 29
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "FizzBuzz",
     "State": "Triggered",
     "Fields": {
       "triggerNumber": 30
-    },
-    "ClassName": "FizzBuzz"
+    }
   },
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 30
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Charging",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 30
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 31
-    },
-    "ClassName": "Manager"
+    }
   },
   {
+    "Species": "Terminator",
     "State": "Terminating",
     "Fields": {
       "generationLimit": 30,
       "generationCount": 30
-    },
-    "ClassName": "Terminator"
+    }
   }
 ][
   {
+    "Species": "Manager",
     "State": "Managing",
     "Fields": {
       "startCount": 32
-    },
-    "ClassName": "Manager"
+    }
   }
 ]

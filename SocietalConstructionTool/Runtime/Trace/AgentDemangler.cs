@@ -1,8 +1,13 @@
-namespace Sct.Runtime.Trace;
+using Sct.Compiler.Translator;
 
-public class AgentDemangler(BaseAgent agents)
+namespace Sct.Runtime.Trace
 {
-    public string State { get; } = agents.State.Remove(0, 6);
-    public IDictionary<string, dynamic> Fields { get; } = agents.Fields.ToDictionary(k => k.Key.Remove(0, 6), v => v.Value);
-    public string ClassName { get; } = agents.ClassName.Remove(0, 6);
+    public class AgentDemangler(BaseAgent agents)
+    {
+        private static readonly int PrefixLength = TranslatorUtils.MangleNamePrefix.Length;
+
+        public string Species { get; } = agents.ClassName.Remove(0, PrefixLength);
+        public string State { get; } = agents.State.Remove(0, PrefixLength);
+        public IDictionary<string, dynamic> Fields { get; } = agents.Fields.ToDictionary(k => k.Key.Remove(0, PrefixLength), v => v.Value);
+    }
 }

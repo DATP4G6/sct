@@ -1,10 +1,11 @@
 ﻿[
   {
+    "Species": "Foo",
     "State": "Bar",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateExists",
     "State": "ExitWhen",
     "Fields": {
       "p": {
@@ -12,16 +13,16 @@
         "State": "__sct_Baz",
         "Fields": {}
       }
-    },
-    "ClassName": "stdPredicateExists"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   },
   {
+    "Species": "stdPredicateExists",
     "State": "ExitWhen",
     "Fields": {
       "p": {
@@ -29,13 +30,12 @@
         "State": "__sct_Baz",
         "Fields": {}
       }
-    },
-    "ClassName": "stdPredicateExists"
+    }
   }
 ][
   {
+    "Species": "Foo",
     "State": "Baz",
-    "Fields": {},
-    "ClassName": "Foo"
+    "Fields": {}
   }
 ]

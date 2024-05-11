@@ -1,33 +1,33 @@
 ﻿[
   {
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
       "x": 3
-    },
-    "ClassName": "stdCounter"
+    }
   }
 ][
   {
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
       "x": 2
-    },
-    "ClassName": "stdCounter"
+    }
   }
 ][
   {
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
       "x": 1
-    },
-    "ClassName": "stdCounter"
+    }
   }
 ][
   {
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
       "x": 0
-    },
-    "ClassName": "stdCounter"
+    }
   }
 ][]

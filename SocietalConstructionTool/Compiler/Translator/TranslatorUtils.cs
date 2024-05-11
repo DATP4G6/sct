@@ -13,7 +13,7 @@ namespace Sct.Compiler.Translator
 {
     public static class TranslatorUtils
     {
-        private const string NAME_MANGLE_PREFIX = "__sct_";
+        public const string MangleNamePrefix = "__sct_";
         private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(SctTranslator.RunSimulationFunctionName);
         private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(SctTranslator.ContextIdentifier);
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
@@ -82,7 +82,7 @@ namespace Sct.Compiler.Translator
             );
         }
 
-        public static string GetMangledStringName(string n) => NAME_MANGLE_PREFIX + n;
+        public static string GetMangledStringName(string n) => MangleNamePrefix + n;
 
         /// <summary>
         /// Get the mangled name of a identifier

@@ -1,35 +1,35 @@
 ﻿[
   {
+    "Species": "Citizen",
     "State": "Adult",
-    "Fields": {},
-    "ClassName": "Citizen"
+    "Fields": {}
   },
   {
+    "Species": "Town",
     "State": "Stable",
     "Fields": {
       "townId": 0
-    },
-    "ClassName": "Town"
+    }
   }
 ][
   {
+    "Species": "Citizen",
     "State": "Child",
-    "Fields": {},
-    "ClassName": "Citizen"
+    "Fields": {}
   },
   {
+    "Species": "Town",
     "State": "Critical",
     "Fields": {
       "townId": 1
-    },
-    "ClassName": "Town"
+    }
   }
 ][
   {
+    "Species": "Town",
     "State": "Stable",
     "Fields": {
       "townId": 2
-    },
-    "ClassName": "Town"
+    }
   }
 ]

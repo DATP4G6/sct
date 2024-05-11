@@ -1,484 +1,484 @@
 ﻿[
   {
+    "Species": "EqualTest",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "EqualTest"
+    }
   },
   {
+    "Species": "EqualTest",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 5
-    },
-    "ClassName": "EqualTest"
+    }
   },
   {
+    "Species": "NotEqualTest",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 2,
       "b": 3
-    },
-    "ClassName": "NotEqualTest"
+    }
   },
   {
+    "Species": "NotEqualTest",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 2
-    },
-    "ClassName": "NotEqualTest"
+    }
   },
   {
+    "Species": "GreaterThan",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 5,
       "b": 2
-    },
-    "ClassName": "GreaterThan"
+    }
   },
   {
+    "Species": "GreaterThan",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 5
-    },
-    "ClassName": "GreaterThan"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 6,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "LesserThan",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "LesserThan"
+    }
   },
   {
+    "Species": "LesserThan",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 5,
       "b": 4
-    },
-    "ClassName": "LesserThan"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 6,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "Or",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 1,
       "b": 0
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 1,
       "b": 1
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 0,
       "b": 1
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 0
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Not",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 0
-    },
-    "ClassName": "Not"
+    }
   },
   {
+    "Species": "Not",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 1
-    },
-    "ClassName": "Not"
+    }
   },
   {
+    "Species": "And",
     "State": "Testing",
     "Fields": {
       "expected": 1,
       "got": 0,
       "a": 1,
       "b": 1
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 0
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 1,
       "b": 0
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Testing",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 1
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "Tester",
     "State": "Testing",
-    "Fields": {},
-    "ClassName": "Tester"
+    "Fields": {}
   }
 ][
   {
+    "Species": "EqualTest",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "EqualTest"
+    }
   },
   {
+    "Species": "EqualTest",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 5
-    },
-    "ClassName": "EqualTest"
+    }
   },
   {
+    "Species": "NotEqualTest",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 2,
       "b": 3
-    },
-    "ClassName": "NotEqualTest"
+    }
   },
   {
+    "Species": "NotEqualTest",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 2
-    },
-    "ClassName": "NotEqualTest"
+    }
   },
   {
+    "Species": "GreaterThan",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 5,
       "b": 2
-    },
-    "ClassName": "GreaterThan"
+    }
   },
   {
+    "Species": "GreaterThan",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 2,
       "b": 5
-    },
-    "ClassName": "GreaterThan"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 6,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "GreaterThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "GreaterThanEqual"
+    }
   },
   {
+    "Species": "LesserThan",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "LesserThan"
+    }
   },
   {
+    "Species": "LesserThan",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 5,
       "b": 4
-    },
-    "ClassName": "LesserThan"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 4,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 5,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "LesserThanEqual",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 6,
       "b": 5
-    },
-    "ClassName": "LesserThanEqual"
+    }
   },
   {
+    "Species": "Or",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 1,
       "b": 0
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 1,
       "b": 1
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 0,
       "b": 1
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Or",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 0
-    },
-    "ClassName": "Or"
+    }
   },
   {
+    "Species": "Not",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 0
-    },
-    "ClassName": "Not"
+    }
   },
   {
+    "Species": "Not",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 1
-    },
-    "ClassName": "Not"
+    }
   },
   {
+    "Species": "And",
     "State": "Pass",
     "Fields": {
       "expected": 1,
       "got": 1,
       "a": 1,
       "b": 1
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 0
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 1,
       "b": 0
-    },
-    "ClassName": "And"
+    }
   },
   {
+    "Species": "And",
     "State": "Pass",
     "Fields": {
       "expected": 0,
       "got": 0,
       "a": 0,
       "b": 1
-    },
-    "ClassName": "And"
+    }
   }
 ]
