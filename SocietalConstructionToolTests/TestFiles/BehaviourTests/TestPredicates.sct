@@ -1,11 +1,11 @@
-class Citizen(int townId) {
+species Citizen(int townId) {
 
     state Alive {
         enter Alive;
     }
 }
 
-class Town(int id, int citizenCount) {
+species Town(int id, int citizenCount) {
 
     decorator updateCitizenCount {
         citizenCount = count(Citizen::?(townId: id));
@@ -18,7 +18,7 @@ class Town(int id, int citizenCount) {
     }
 }
 
-class Counter(int generation) {
+species Counter(int generation) {
     state Counting {
         generation = generation + 1;
         if (generation > 2) {

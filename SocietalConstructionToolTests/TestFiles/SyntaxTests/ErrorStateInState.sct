@@ -1,7 +1,7 @@
-class Town() {
+species Town() {
     state Stable {
         state foo {
-            
+
         }
     }
 }

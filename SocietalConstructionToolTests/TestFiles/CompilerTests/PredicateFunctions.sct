@@ -5,7 +5,7 @@ function Setup() -> void {
     int d = exists(TestAgent::?());
 }
 
-class TestAgent() {
+species TestAgent() {
     state A {
         exit;
     }

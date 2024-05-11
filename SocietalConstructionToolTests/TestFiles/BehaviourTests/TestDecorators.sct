@@ -1,4 +1,4 @@
-class Terminator(int generationLimit, int generationCount) {
+species Terminator(int generationLimit, int generationCount) {
     state Charging {
         if (generationCount == generationLimit) {
             enter Terminating;
@@ -12,7 +12,7 @@ class Terminator(int generationLimit, int generationCount) {
     }
 }
 
-class Town(int generationCount, int everyCalled, int everyOtherCalled) {
+species Town(int generationCount, int everyCalled, int everyOtherCalled) {
 
     decorator shouldBeCalledEveryGeneration {
         everyCalled = everyCalled + 1;

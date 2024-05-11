@@ -1,1 +1,1 @@
-﻿(start (class_def class Town ( args_def ) { (class_body (decorator decorator decor { (statement_list (statement (destroy destroy ;))) }) (state (state_decorator @ decor) state Stable { statement_list })) }) <EOF>)
+﻿(start (class_def species Town ( args_def ) { (class_body (decorator decorator decor { (statement_list (statement (destroy destroy ;))) }) (state (state_decorator @ decor) state Stable { statement_list })) }) <EOF>)

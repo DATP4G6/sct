@@ -1,4 +1,4 @@
-class Town(int id, int space) {
+species Town(int id, int space) {
     state Growing {
         if (1) {
             enter End;

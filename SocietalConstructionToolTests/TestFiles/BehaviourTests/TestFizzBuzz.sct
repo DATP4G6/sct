@@ -1,22 +1,22 @@
-class Fizz(int triggerNumber) {
+species Fizz(int triggerNumber) {
     state Triggered {
         destroy;
     }
 }
 
-class Buzz(int triggerNumber) {
+species Buzz(int triggerNumber) {
     state Triggered {
         destroy;
     }
 }
 
-class FizzBuzz(int triggerNumber) {
+species FizzBuzz(int triggerNumber) {
     state Triggered {
         destroy;
     }
 }
 
-class Manager(int startCount) {
+species Manager(int startCount) {
 
     decorator Increment {
         startCount = startCount + 1;
@@ -40,7 +40,7 @@ class Manager(int startCount) {
     }
 }
 
-class Terminator(int generationLimit, int generationCount) {
+species Terminator(int generationLimit, int generationCount) {
     state Charging {
         if (generationCount == generationLimit) {
             enter Terminating;

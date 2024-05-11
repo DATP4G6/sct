@@ -1,4 +1,4 @@
-class Foo(int a, int b) {
+species Foo(int a, int b) {
     state Bar {
         enter Bar;
     }

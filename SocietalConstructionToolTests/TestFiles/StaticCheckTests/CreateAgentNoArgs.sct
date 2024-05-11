@@ -1,4 +1,4 @@
-class Foo() {
+species Foo() {
     state Bar {
         exit;
     }

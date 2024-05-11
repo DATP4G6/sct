@@ -1,5 +1,5 @@
-class Citizen() {
-    state Adult 
+species Citizen() {
+    state Adult
         create Citizen::Adult();
     }
 }

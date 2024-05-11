@@ -1,4 +1,4 @@
-class Agent007() {}
+species Agent007() {}
 
 function MI6() -> float {
     Predicate x = Agent007::?();

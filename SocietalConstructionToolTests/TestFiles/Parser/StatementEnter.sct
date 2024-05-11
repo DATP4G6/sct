@@ -1,4 +1,4 @@
-class Citizen() {
+species Citizen() {
     state Child {
         enter Adult;
     }
