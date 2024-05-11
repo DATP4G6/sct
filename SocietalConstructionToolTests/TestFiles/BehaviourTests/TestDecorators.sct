@@ -36,7 +36,7 @@ species Town(int generationCount, int everyCalled, int everyOtherCalled) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     create Town::Even(generationCount: 0, everyCalled: 0, everyOtherCalled: 0);
     create Terminator::Charging(generationLimit: 10, generationCount: 0);
 }

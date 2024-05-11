@@ -8,5 +8,5 @@ species C() {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
 }

@@ -11,7 +11,7 @@
             return new QueryPredicate("__sct_Citizen", "__sct_Child", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_townId", __sct_id) }));
         }
 
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_setup(IRuntimeContext ctx)
         {
             long __sct_townId = 5L;
             long __sct_childrenCount = ctx.QueryHandler.Count(ctx, __sct_getChildPredicate(ctx, __sct_townId));
@@ -57,7 +57,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

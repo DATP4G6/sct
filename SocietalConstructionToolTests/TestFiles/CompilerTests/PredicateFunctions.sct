@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     int a = count(TestAgent::A());
     int b = count(TestAgent::?());
     int c = exists(TestAgent::A());

@@ -14,7 +14,7 @@ species Output() {
     state Unequal { exit; }
 }
 
-function Setup() -> void {
+function setup() -> void {
     // Arrange
     Predicate fullEqual = Foo::Bar(a: 1, b: 2);
     Predicate fullEqual2 = Foo::Bar(a: 1, b: 2);

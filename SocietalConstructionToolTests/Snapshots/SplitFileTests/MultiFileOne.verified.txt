@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_setup(IRuntimeContext ctx)
         {
             ctx.AgentHandler.CreateAgent(new __sct_Town("__sct_Growing", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_id", 1L), new KeyValuePair<String, dynamic>("__sct_space", 50L) })));
         }
@@ -227,7 +227,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

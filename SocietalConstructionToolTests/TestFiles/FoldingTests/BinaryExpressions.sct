@@ -1,4 +1,4 @@
-function Setup() -> void {
+function setup() -> void {
     // Arithmetic
     int x = 1 + (2*3)/(1-0.3)
 

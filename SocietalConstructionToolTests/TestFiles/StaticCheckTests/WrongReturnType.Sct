@@ -22,4 +22,4 @@ function baz() -> Predicate {
 }
 
 
-function Setup() -> void {}
+function setup() -> void {}

@@ -1,6 +1,6 @@
 species Town(int id, int space) {}
 
-function Setup() -> void {
+function setup() -> void {
     float x = 5.0;
     x = 10;
     int y = 5;

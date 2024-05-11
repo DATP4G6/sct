@@ -23,7 +23,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

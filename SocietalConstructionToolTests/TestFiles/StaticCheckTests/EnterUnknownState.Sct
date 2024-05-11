@@ -8,4 +8,4 @@ species Citizen(int townId) {
     }
 }
 
-function Setup() -> void {}
+function setup() -> void {}

@@ -1,1 +1,1 @@
-﻿(start (function function Setup ( args_def ) -> (type void) { (statement_list (statement (while while ( (expression (literal 1)) ) { (statement_list (statement (break break ;))) }))) }) <EOF>)
+﻿(start (function function setup ( args_def ) -> (type void) { (statement_list (statement (while while ( (expression (literal 1)) ) { (statement_list (statement (break break ;))) }))) }) <EOF>)

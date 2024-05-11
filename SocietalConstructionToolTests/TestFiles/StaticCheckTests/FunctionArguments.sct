@@ -1,6 +1,6 @@
 function test(int var1, float var2) -> void {}
 
-function Setup() -> void {
+function setup() -> void {
     test(5, 5.0);
     test(2, 5);
     test(2.0, 5.0);

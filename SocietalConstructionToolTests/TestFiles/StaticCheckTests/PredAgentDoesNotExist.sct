@@ -8,6 +8,6 @@ species Citizen(int townId) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     int x = exists(Town::Child(townId: 5, townId: 13));
 }

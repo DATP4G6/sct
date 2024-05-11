@@ -4,7 +4,7 @@ species Test(int id) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     int a = (2-1);
     create Test::Exiting(id: a);
 }

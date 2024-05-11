@@ -6,7 +6,7 @@
 
     public class GlobalClass
     {
-        public static void __sct_Setup(IRuntimeContext ctx)
+        public static void __sct_setup(IRuntimeContext ctx)
         {
             double __sct_x = 2;
         }
@@ -14,7 +14,7 @@
         public static void RunSimulation(IRuntimeContext ctx)
         {
             Runtime runtime = new Runtime();
-            __sct_Setup(ctx);
+            __sct_setup(ctx);
             runtime.Run(ctx);
         }
     }

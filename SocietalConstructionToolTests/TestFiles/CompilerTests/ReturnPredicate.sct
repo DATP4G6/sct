@@ -12,7 +12,7 @@ function getChildPredicate(int id) -> Predicate {
     return Citizen::Child(townId: id);
 }
 
-function Setup() -> void {
+function setup() -> void {
     int townId = 5;
     int childrenCount = count(getChildPredicate(townId));
 }

@@ -8,6 +8,6 @@ species Citizen(int townId, int age) {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
     int x = exists(Citizen::Child(townId: 5, townId: 13));
 }

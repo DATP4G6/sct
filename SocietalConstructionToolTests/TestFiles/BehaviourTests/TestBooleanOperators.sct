@@ -202,7 +202,7 @@ species Tester() {
     }
 }
 
-function Setup() -> void {
+function setup() -> void {
 
     create EqualTest::Testing(expected: 1, got: 0, a: 5, b: 5);
     create EqualTest::Testing(expected: 0, got: 0, a: 2, b: 5);
