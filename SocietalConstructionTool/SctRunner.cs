@@ -223,6 +223,16 @@ namespace Sct
          */
         public static IEnumerable<CompilerError> CompileAndRun(IEnumerable<string> filenames, IOutputLogger? logger)
         {
+            var fileErrors = filenames
+                .Where(file => !File.Exists(file))
+                .Select(file => new CompilerError($"Error: File '{file}' does not exist"));
+
+            if (fileErrors.Any())
+            {
+                Console.Error.WriteLine(string.Join('\n', fileErrors));
+                return fileErrors;
+            }
+
             var (outputText, errors) = CompileSct(filenames);
 
             if (errors.Any() || outputText is null)
