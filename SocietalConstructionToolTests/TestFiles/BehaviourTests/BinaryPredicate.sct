@@ -1,5 +1,5 @@
 // Add behavour which tests if stuff is equal
-class Foo(int a, int b) {
+species Foo(int a, int b) {
     state Bar {
         exit;
     }
@@ -9,7 +9,7 @@ class Foo(int a, int b) {
     }
 }
 
-class Output() {
+species Output() {
     state Equal { exit; }
     state Unequal { exit; }
 }

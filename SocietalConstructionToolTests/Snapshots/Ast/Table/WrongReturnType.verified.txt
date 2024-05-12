@@ -1,5 +1,5 @@
 ﻿{
-  Classes: {
+  Species: {
     Agent007: {
       Name: Agent007,
       FTable: {
@@ -10,7 +10,7 @@
       Fields: null
     }
   },
-  GlobalClass: {
+  GlobalContent: {
     Name: Global,
     FTable: {
       Functions: {

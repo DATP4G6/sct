@@ -1,4 +1,4 @@
-class Citizen() {
+species Citizen() {
     state Adult {
         int age = 5;
         age = 10;

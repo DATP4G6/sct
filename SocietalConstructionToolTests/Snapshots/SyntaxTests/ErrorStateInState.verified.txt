@@ -6,7 +6,7 @@
     Filename: null
   },
   {
-    Message: extraneous input '}' expecting {<EOF>, 'function', 'class'},
+    Message: extraneous input '}' expecting {<EOF>, 'function', 'species'},
     Line: 7,
     Column: 0,
     Filename: null

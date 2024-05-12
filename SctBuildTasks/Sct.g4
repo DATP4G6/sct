@@ -1,6 +1,6 @@
 grammar Sct;
 
-start: (function | class_def)* EOF;
+start: (function | species_def)* EOF;
 
 // Functions
 function:
@@ -72,10 +72,10 @@ expression:
 
 call_expression: ID LPAREN args_call RPAREN #CallExpression;
 
-// Class
-class_def:
-    CLASS ID LPAREN args_def RPAREN LCURLY class_body RCURLY;
-class_body: (state | function | decorator)*;
+// species
+species_def:
+    SPECIES ID LPAREN args_def RPAREN LCURLY species_body RCURLY;
+species_body: (state | function | decorator)*;
 
 decorator: DECORATOR ID LCURLY statement_list RCURLY;
 state: (state_decorator)* STATE ID LCURLY statement_list RCURLY;
@@ -122,7 +122,7 @@ GTE: '>=';
 LTE: '<=';
 NOT: '!';
 
-CLASS: 'class';
+SPECIES: 'species';
 STATE: 'state';
 DECORATOR: 'decorator';
 AT: '@';

@@ -96,7 +96,7 @@
                 Id: x,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Citizen,
+                  SpeciesName: Citizen,
                   StateName: Child,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -135,7 +135,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Exiter,
+                          SpeciesName: Exiter,
                           StateName: Exiting,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -154,8 +154,8 @@
       }
     ]
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Citizen,

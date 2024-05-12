@@ -2,31 +2,31 @@
   {
     "State": "Equal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   },
   {
     "State": "Equal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   },
   {
     "State": "Equal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   },
   {
     "State": "Unequal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   },
   {
     "State": "Unequal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   },
   {
     "State": "Unequal",
     "Fields": {},
-    "ClassName": "Output"
+    "SpeciesName": "Output"
   }
 ][]

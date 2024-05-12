@@ -10,13 +10,13 @@ namespace Sct.Compiler.Typechecker
 
         protected override Syntax.SctType DefaultResult => Syntax.SctType.Ok;
 
-        public override Syntax.SctType Visit(SctClassSyntax node)
+        public override Syntax.SctType Visit(SctSpeciesSyntax node)
         {
-            string className = node.Id;
+            string speciesName = node.Id;
 
-            if (!_ctableBuilder.TryStartClass(className))
+            if (!_ctableBuilder.TryStartSpecies(speciesName))
             {
-                _errors.Add(new CompilerError($"ID {className} already exists", node.Context));
+                _errors.Add(new CompilerError($"ID {speciesName} already exists", node.Context));
             }
 
             foreach (var parameter in node.Parameters)
@@ -34,7 +34,7 @@ namespace Sct.Compiler.Typechecker
             // Converting to a list forces the enumerable to be evaluated
             _ = node.Body.Select(m => m.Accept(this)).ToList();
 
-            _ctableBuilder.FinishClass();
+            _ctableBuilder.FinishSpecies();
 
             return Syntax.SctType.Ok;
         }

@@ -2,40 +2,40 @@
   {
     "State": "Bar",
     "Fields": {},
-    "ClassName": "Foo"
+    "SpeciesName": "Foo"
   },
   {
     "State": "ExitWhenNo",
     "Fields": {
       "p": {
-        "ClassName": "__sct_Foo",
+        "SpeciesName": "__sct_Foo",
         "State": "__sct_Bar",
         "Fields": {}
       }
     },
-    "ClassName": "stdPredicateExists"
+    "SpeciesName": "stdPredicateExists"
   }
 ][
   {
     "State": "Baz",
     "Fields": {},
-    "ClassName": "Foo"
+    "SpeciesName": "Foo"
   },
   {
     "State": "ExitWhenNo",
     "Fields": {
       "p": {
-        "ClassName": "__sct_Foo",
+        "SpeciesName": "__sct_Foo",
         "State": "__sct_Bar",
         "Fields": {}
       }
     },
-    "ClassName": "stdPredicateExists"
+    "SpeciesName": "stdPredicateExists"
   }
 ][
   {
     "State": "Baz",
     "Fields": {},
-    "ClassName": "Foo"
+    "SpeciesName": "Foo"
   }
 ]

@@ -9,8 +9,8 @@ namespace Sct.Compiler.Syntax
         public override SctSyntax VisitStart([NotNull] SctParser.StartContext context)
         {
             var functions = context.function().Select(f => f.Accept(this)).Cast<SctFunctionSyntax>();
-            var classes = context.class_def().Select(c => c.Accept(this)).Cast<SctClassSyntax>();
-            return new SctProgramSyntax(context, functions, classes);
+            var species = context.species_def().Select(c => c.Accept(this)).Cast<SctSpeciesSyntax>();
+            return new SctProgramSyntax(context, functions, species);
         }
 
         public override SctSyntax VisitFunction([NotNull] SctParser.FunctionContext context)
@@ -23,16 +23,16 @@ namespace Sct.Compiler.Syntax
             return new SctFunctionSyntax(context, name, parameters, type, body);
         }
 
-        public override SctSyntax VisitClass_def([NotNull] SctParser.Class_defContext context)
+        public override SctSyntax VisitSpecies_def([NotNull] SctParser.Species_defContext context)
         {
             var name = context.ID().GetText();
             var parameters = ParseParameters(context.args_def());
 
-            var body = context.class_body();
+            var body = context.species_body();
             var states = body.state().Select(s => s.Accept(this)).Cast<SctStateSyntax>();
             var functions = body.function().Select(f => f.Accept(this)).Cast<SctFunctionSyntax>();
             var decorators = body.decorator().Select(d => d.Accept(this)).Cast<SctDecoratorSyntax>();
-            return new SctClassSyntax(context, name, parameters, decorators, functions, states);
+            return new SctSpeciesSyntax(context, name, parameters, decorators, functions, states);
         }
 
         public override SctSyntax VisitState([NotNull] SctParser.StateContext context)
@@ -245,18 +245,18 @@ namespace Sct.Compiler.Syntax
 
         public override SctSyntax VisitAgent_create([NotNull] SctParser.Agent_createContext context)
         {
-            var classId = context.ID(0).GetText();
+            var speciesId = context.ID(0).GetText();
             var stateId = context.ID(1).GetText();
             var fields = ParseArgsAgent(context.args_agent());
-            return new SctAgentExpressionSyntax(context, classId, stateId, fields);
+            return new SctAgentExpressionSyntax(context, speciesId, stateId, fields);
         }
 
         public override SctSyntax VisitAgent_predicate([NotNull] SctParser.Agent_predicateContext context)
         {
-            var classId = context.ID(0).GetText();
+            var speciesId = context.ID(0).GetText();
             var stateId = context.QUESTION() != null ? null : context.ID(1).GetText();
             var fields = ParseArgsAgent(context.args_agent());
-            return new SctPredicateExpressionSyntax(context, classId, stateId, fields);
+            return new SctPredicateExpressionSyntax(context, speciesId, stateId, fields);
         }
 
         public override SctSyntax VisitType([NotNull] SctParser.TypeContext context)

@@ -25,7 +25,7 @@
                     $values: [
                       {
                         $type: SctPredicateExpressionSyntax,
-                        ClassName: Foo,
+                        SpeciesName: Foo,
                         StateName: Bar,
                         Fields: {
                           $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -63,7 +63,7 @@
                     $values: [
                       {
                         $type: SctPredicateExpressionSyntax,
-                        ClassName: Foo,
+                        SpeciesName: Foo,
                         StateName: Bar,
                         Fields: {
                           $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -84,7 +84,7 @@
                     $values: [
                       {
                         $type: SctPredicateExpressionSyntax,
-                        ClassName: Foo,
+                        SpeciesName: Foo,
                         StateName: null,
                         Fields: {
                           $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -114,7 +114,7 @@
                     $values: [
                       {
                         $type: SctPredicateExpressionSyntax,
-                        ClassName: Foo,
+                        SpeciesName: Foo,
                         StateName: null,
                         Fields: {
                           $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -131,8 +131,8 @@
       }
     ]
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Foo,

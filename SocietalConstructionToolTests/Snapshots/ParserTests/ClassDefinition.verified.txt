@@ -1,1 +1,1 @@
-﻿(start (class_def class TestClass ( args_def ) { class_body }) <EOF>)
+﻿(start (species_def species TestClass ( args_def ) { species_body }) <EOF>)

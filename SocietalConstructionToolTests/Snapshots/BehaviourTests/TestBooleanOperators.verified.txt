@@ -7,7 +7,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "EqualTest"
+    "SpeciesName": "EqualTest"
   },
   {
     "State": "Testing",
@@ -17,7 +17,7 @@
       "a": 2,
       "b": 5
     },
-    "ClassName": "EqualTest"
+    "SpeciesName": "EqualTest"
   },
   {
     "State": "Testing",
@@ -27,7 +27,7 @@
       "a": 2,
       "b": 3
     },
-    "ClassName": "NotEqualTest"
+    "SpeciesName": "NotEqualTest"
   },
   {
     "State": "Testing",
@@ -37,7 +37,7 @@
       "a": 2,
       "b": 2
     },
-    "ClassName": "NotEqualTest"
+    "SpeciesName": "NotEqualTest"
   },
   {
     "State": "Testing",
@@ -47,7 +47,7 @@
       "a": 5,
       "b": 2
     },
-    "ClassName": "GreaterThan"
+    "SpeciesName": "GreaterThan"
   },
   {
     "State": "Testing",
@@ -57,7 +57,7 @@
       "a": 2,
       "b": 5
     },
-    "ClassName": "GreaterThan"
+    "SpeciesName": "GreaterThan"
   },
   {
     "State": "Testing",
@@ -67,7 +67,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Testing",
@@ -77,7 +77,7 @@
       "a": 6,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Testing",
@@ -87,7 +87,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Testing",
@@ -97,7 +97,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "LesserThan"
+    "SpeciesName": "LesserThan"
   },
   {
     "State": "Testing",
@@ -107,7 +107,7 @@
       "a": 5,
       "b": 4
     },
-    "ClassName": "LesserThan"
+    "SpeciesName": "LesserThan"
   },
   {
     "State": "Testing",
@@ -117,7 +117,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Testing",
@@ -127,7 +127,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Testing",
@@ -137,7 +137,7 @@
       "a": 6,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Testing",
@@ -147,7 +147,7 @@
       "a": 1,
       "b": 0
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Testing",
@@ -157,7 +157,7 @@
       "a": 1,
       "b": 1
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Testing",
@@ -167,7 +167,7 @@
       "a": 0,
       "b": 1
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Testing",
@@ -177,7 +177,7 @@
       "a": 0,
       "b": 0
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Testing",
@@ -186,7 +186,7 @@
       "got": 0,
       "a": 0
     },
-    "ClassName": "Not"
+    "SpeciesName": "Not"
   },
   {
     "State": "Testing",
@@ -195,7 +195,7 @@
       "got": 0,
       "a": 1
     },
-    "ClassName": "Not"
+    "SpeciesName": "Not"
   },
   {
     "State": "Testing",
@@ -205,7 +205,7 @@
       "a": 1,
       "b": 1
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Testing",
@@ -215,7 +215,7 @@
       "a": 0,
       "b": 0
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Testing",
@@ -225,7 +225,7 @@
       "a": 1,
       "b": 0
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Testing",
@@ -235,12 +235,12 @@
       "a": 0,
       "b": 1
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Testing",
     "Fields": {},
-    "ClassName": "Tester"
+    "SpeciesName": "Tester"
   }
 ][
   {
@@ -251,7 +251,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "EqualTest"
+    "SpeciesName": "EqualTest"
   },
   {
     "State": "Pass",
@@ -261,7 +261,7 @@
       "a": 2,
       "b": 5
     },
-    "ClassName": "EqualTest"
+    "SpeciesName": "EqualTest"
   },
   {
     "State": "Pass",
@@ -271,7 +271,7 @@
       "a": 2,
       "b": 3
     },
-    "ClassName": "NotEqualTest"
+    "SpeciesName": "NotEqualTest"
   },
   {
     "State": "Pass",
@@ -281,7 +281,7 @@
       "a": 2,
       "b": 2
     },
-    "ClassName": "NotEqualTest"
+    "SpeciesName": "NotEqualTest"
   },
   {
     "State": "Pass",
@@ -291,7 +291,7 @@
       "a": 5,
       "b": 2
     },
-    "ClassName": "GreaterThan"
+    "SpeciesName": "GreaterThan"
   },
   {
     "State": "Pass",
@@ -301,7 +301,7 @@
       "a": 2,
       "b": 5
     },
-    "ClassName": "GreaterThan"
+    "SpeciesName": "GreaterThan"
   },
   {
     "State": "Pass",
@@ -311,7 +311,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Pass",
@@ -321,7 +321,7 @@
       "a": 6,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Pass",
@@ -331,7 +331,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "GreaterThanEqual"
+    "SpeciesName": "GreaterThanEqual"
   },
   {
     "State": "Pass",
@@ -341,7 +341,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "LesserThan"
+    "SpeciesName": "LesserThan"
   },
   {
     "State": "Pass",
@@ -351,7 +351,7 @@
       "a": 5,
       "b": 4
     },
-    "ClassName": "LesserThan"
+    "SpeciesName": "LesserThan"
   },
   {
     "State": "Pass",
@@ -361,7 +361,7 @@
       "a": 4,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Pass",
@@ -371,7 +371,7 @@
       "a": 5,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Pass",
@@ -381,7 +381,7 @@
       "a": 6,
       "b": 5
     },
-    "ClassName": "LesserThanEqual"
+    "SpeciesName": "LesserThanEqual"
   },
   {
     "State": "Pass",
@@ -391,7 +391,7 @@
       "a": 1,
       "b": 0
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Pass",
@@ -401,7 +401,7 @@
       "a": 1,
       "b": 1
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Pass",
@@ -411,7 +411,7 @@
       "a": 0,
       "b": 1
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Pass",
@@ -421,7 +421,7 @@
       "a": 0,
       "b": 0
     },
-    "ClassName": "Or"
+    "SpeciesName": "Or"
   },
   {
     "State": "Pass",
@@ -430,7 +430,7 @@
       "got": 1,
       "a": 0
     },
-    "ClassName": "Not"
+    "SpeciesName": "Not"
   },
   {
     "State": "Pass",
@@ -439,7 +439,7 @@
       "got": 0,
       "a": 1
     },
-    "ClassName": "Not"
+    "SpeciesName": "Not"
   },
   {
     "State": "Pass",
@@ -449,7 +449,7 @@
       "a": 1,
       "b": 1
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Pass",
@@ -459,7 +459,7 @@
       "a": 0,
       "b": 0
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Pass",
@@ -469,7 +469,7 @@
       "a": 1,
       "b": 0
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   },
   {
     "State": "Pass",
@@ -479,6 +479,6 @@
       "a": 0,
       "b": 1
     },
-    "ClassName": "And"
+    "SpeciesName": "And"
   }
 ]

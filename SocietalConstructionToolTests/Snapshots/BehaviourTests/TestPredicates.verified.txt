@@ -5,21 +5,21 @@
       "id": 1,
       "citizenCount": 0
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Counting",
     "Fields": {
       "generation": 0
     },
-    "ClassName": "Counter"
+    "SpeciesName": "Counter"
   }
 ][
   {
@@ -27,7 +27,7 @@
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Stable",
@@ -35,21 +35,21 @@
       "id": 1,
       "citizenCount": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Counting",
     "Fields": {
       "generation": 1
     },
-    "ClassName": "Counter"
+    "SpeciesName": "Counter"
   }
 ][
   {
@@ -57,14 +57,14 @@
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Stable",
@@ -72,21 +72,21 @@
       "id": 1,
       "citizenCount": 2
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Counting",
     "Fields": {
       "generation": 2
     },
-    "ClassName": "Counter"
+    "SpeciesName": "Counter"
   }
 ][
   {
@@ -94,21 +94,21 @@
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Stable",
@@ -116,13 +116,13 @@
       "id": 1,
       "citizenCount": 3
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Alive",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ]

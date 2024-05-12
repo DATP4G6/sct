@@ -3,8 +3,8 @@
     $type: IEnumerable<SctFunctionSyntax>,
     $values: []
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Town,

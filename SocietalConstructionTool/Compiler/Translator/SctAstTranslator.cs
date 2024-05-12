@@ -66,7 +66,7 @@ namespace Sct.Compiler.Translator
             return method;
         }
 
-        public override CSharpSyntaxNode Visit(SctClassSyntax node)
+        public override CSharpSyntaxNode Visit(SctSpeciesSyntax node)
         {
             _isInAgent = true;
 
@@ -276,11 +276,11 @@ namespace Sct.Compiler.Translator
         public override CSharpSyntaxNode Visit(SctCreateStatementSyntax node)
         {
             var state = TranslatorUtils.GetMangledStringName(node.Agent.StateName);
-            var type = TranslatorUtils.GetMangledStringName(node.Agent.ClassName);
+            var type = TranslatorUtils.GetMangledStringName(node.Agent.SpeciesName);
             var fields = (ObjectCreationExpressionSyntax)node.Agent.Accept(this);
 
             var agentFields = SyntaxFactory.ObjectCreationExpression(
-                SyntaxFactory.ParseTypeName(TranslatorUtils.GetMangledStringName(node.Agent.ClassName))
+                SyntaxFactory.ParseTypeName(TranslatorUtils.GetMangledStringName(node.Agent.SpeciesName))
             )
             .WithArgumentList(
                 SyntaxFactory.ArgumentList(
@@ -313,7 +313,7 @@ namespace Sct.Compiler.Translator
         {
             var className = SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(node.ClassName))
+                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(node.SpeciesName))
             );
             var stateName = SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
@@ -380,7 +380,7 @@ namespace Sct.Compiler.Translator
 
             var className = SyntaxFactory.Argument(SyntaxFactory.LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
-                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(node.ClassName))
+                SyntaxFactory.Literal(TranslatorUtils.GetMangledStringName(node.SpeciesName))
             ));
 
             var state = node.StateName switch

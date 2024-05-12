@@ -3,6 +3,6 @@
     Message: Decorator 'someDecorator' does not exist.,
     Line: 8,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/UnknownDecorator.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/UnknownDecorator.sct
   }
 ]

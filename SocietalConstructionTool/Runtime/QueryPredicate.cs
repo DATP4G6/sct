@@ -1,16 +1,16 @@
 namespace Sct.Runtime
 {
-    public class QueryPredicate(string className, string? state, IDictionary<string, dynamic> fields) : IQueryPredicate
+    public class QueryPredicate(string speciesName, string? state, IDictionary<string, dynamic> fields) : IQueryPredicate
     {
 
-        public string ClassName => className;
+        public string SpeciesName => speciesName;
         public string? State => state;
         public IDictionary<string, dynamic> Fields => fields;
 
         public bool Test(BaseAgent agent)
         {
-            // Match the class name
-            if (agent.GetType().Name != ClassName)
+            // Match the species name
+            if (agent.GetType().Name != SpeciesName)
             {
                 return false;
             }
@@ -26,7 +26,7 @@ namespace Sct.Runtime
 
         public static bool operator ==(QueryPredicate a, QueryPredicate b)
         {
-            if (a.ClassName != b.ClassName)
+            if (a.SpeciesName != b.SpeciesName)
                 return false;
             if (a.State != b.State)
                 return false;

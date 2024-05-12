@@ -6,7 +6,7 @@ function test(int var1) -> int {
     return 1;
 }
 
-class Citizen(int townId) {
+species Citizen(int townId) {
     function test(int var1) -> int {
         return 1;
     }

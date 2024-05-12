@@ -1,5 +1,5 @@
 ﻿{
-  Classes: {
+  Species: {
     Town: {
       Name: Town,
       FTable: {
@@ -13,7 +13,7 @@
       }
     }
   },
-  GlobalClass: {
+  GlobalContent: {
     Name: Global,
     FTable: {
       Functions: {

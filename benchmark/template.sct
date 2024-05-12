@@ -7,7 +7,7 @@ function Setup() -> void {
     create Counter::Counting(time: 0);
 }
 
-class TestAgent() {
+species TestAgent() {
     state A {
         enter A;
     }
@@ -16,7 +16,7 @@ class TestAgent() {
     }
 }
 
-class Counter(int time) {
+species Counter(int time) {
     state Counting {
         time = time + 1;
         if ((time > 10000) + (!exists(TestAgent::?()))) {

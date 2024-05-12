@@ -1,1 +1,1 @@
-﻿(start (class_def class Town ( args_def ) { (class_body (state state Stable { statement_list })) }) <EOF>)
+﻿(start (species_def species Town ( args_def ) { (species_body (state state Stable { statement_list })) }) <EOF>)

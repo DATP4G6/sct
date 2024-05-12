@@ -2,10 +2,10 @@ using Antlr4.Runtime;
 
 namespace Sct.Compiler.Syntax
 {
-    public class SctProgramSyntax(ParserRuleContext context, IEnumerable<SctFunctionSyntax> functions, IEnumerable<SctClassSyntax> classes) : SctSyntax(context)
+    public class SctProgramSyntax(ParserRuleContext context, IEnumerable<SctFunctionSyntax> functions, IEnumerable<SctSpeciesSyntax> species) : SctSyntax(context)
     {
         public IEnumerable<SctFunctionSyntax> Functions { get; } = functions;
-        public IEnumerable<SctClassSyntax> Classes { get; } = classes;
-        public override IEnumerable<SctSyntax> Children => [.. Functions, .. Classes];
+        public IEnumerable<SctSpeciesSyntax> Species { get; } = species;
+        public override IEnumerable<SctSyntax> Children => [.. Functions, .. Species];
     }
 }

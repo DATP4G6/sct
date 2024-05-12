@@ -5,49 +5,49 @@
       "generation": 0,
       "seed": 123
     },
-    "ClassName": "GenerationCounter"
+    "SpeciesName": "GenerationCounter"
   },
   {
     "State": "Small",
     "Fields": {
       "id": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Child",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Child",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Child",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Child",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Child",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ][
   {
@@ -56,49 +56,49 @@
       "generation": 1,
       "seed": 123
     },
-    "ClassName": "GenerationCounter"
+    "SpeciesName": "GenerationCounter"
   },
   {
     "State": "Small",
     "Fields": {
       "id": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ][
   {
@@ -107,49 +107,49 @@
       "generation": 2,
       "seed": 123
     },
-    "ClassName": "GenerationCounter"
+    "SpeciesName": "GenerationCounter"
   },
   {
     "State": "Small",
     "Fields": {
       "id": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ][
   {
@@ -158,49 +158,49 @@
       "generation": 3,
       "seed": 123
     },
-    "ClassName": "GenerationCounter"
+    "SpeciesName": "GenerationCounter"
   },
   {
     "State": "Small",
     "Fields": {
       "id": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ][
   {
@@ -209,41 +209,41 @@
       "generation": 4,
       "seed": 123
     },
-    "ClassName": "GenerationCounter"
+    "SpeciesName": "GenerationCounter"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Adult",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Dead",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   }
 ]

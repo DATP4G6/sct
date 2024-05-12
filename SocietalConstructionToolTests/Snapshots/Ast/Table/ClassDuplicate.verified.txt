@@ -1,5 +1,5 @@
 ﻿{
-  Classes: {
+  Species: {
     Global: {
       Name: Global,
       FTable: {
@@ -51,7 +51,7 @@
       }
     }
   },
-  GlobalClass: {
+  GlobalContent: {
     Name: Global,
     FTable: {
       Functions: {

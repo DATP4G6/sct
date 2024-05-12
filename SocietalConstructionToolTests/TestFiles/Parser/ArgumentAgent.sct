@@ -1,4 +1,4 @@
-class Citizen(int id, float height) {
+species Citizen(int id, float height) {
     state Adult {
         create Citizen::Adult(id: 5, height: 20.5);
     }

@@ -1,6 +1,6 @@
 namespace Sct.Compiler.Typechecker
 {
-    public class ClassContent(string name)
+    public class SpeciesContent(string name)
     {
         public string Name { get; } = name;
         public FTable FTable { get; } = new();

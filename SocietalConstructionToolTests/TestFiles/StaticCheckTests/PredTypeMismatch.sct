@@ -1,4 +1,4 @@
-class Citizen(int townId, float weight) {}
+species Citizen(int townId, float weight) {}
 
 function Setup() -> void {
     int x = exists(Citizen::?(townId: 5, weight: 62.3));

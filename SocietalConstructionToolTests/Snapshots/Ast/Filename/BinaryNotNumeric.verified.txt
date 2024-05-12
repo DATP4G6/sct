@@ -3,12 +3,12 @@
     Message: Binary expression must be numeric types,
     Line: 6,
     Column: 14,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.sct
   },
   {
     Message: Binary expression must be numeric types,
     Line: 7,
     Column: 8,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/BinaryNotNumeric.sct
   }
 ]

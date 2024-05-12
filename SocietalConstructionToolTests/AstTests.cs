@@ -24,7 +24,7 @@ namespace SocietalConstructionToolTests
                 var settings = new VerifySettings();
                 settings.IgnoreMember<SctSyntax>(x => x.Context);
                 settings.IgnoreMember<SctSyntax>(x => x.Children);
-                settings.IgnoreMember<SctClassSyntax>(x => x.Body);
+                settings.IgnoreMember<SctSpeciesSyntax>(x => x.Body);
                 return settings;
             }
         }
@@ -164,7 +164,7 @@ namespace SocietalConstructionToolTests
 
             var settings = IgnoreContext;
             // Include CTable classes
-            settings.AlwaysIncludeMembersWithType(typeof(Dictionary<string, ClassContent>));
+            settings.AlwaysIncludeMembersWithType(typeof(Dictionary<string, SpeciesContent>));
             settings.AlwaysIncludeMembersWithType(typeof(Dictionary<string, FunctionType>));
 
             _ = await Verify(table, settings)

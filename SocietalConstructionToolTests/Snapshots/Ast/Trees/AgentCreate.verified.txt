@@ -3,8 +3,8 @@
     $type: IEnumerable<SctFunctionSyntax>,
     $values: []
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Citizen,
@@ -29,7 +29,7 @@
                     {
                       $type: SctCreateStatementSyntax,
                       Agent: {
-                        ClassName: Citizen,
+                        SpeciesName: Citizen,
                         StateName: Adult,
                         Fields: {
                           $type: IEnumerable<SctNamedArgumentSyntax>,

@@ -5,14 +5,14 @@ namespace Sct.Runtime
         public string State { get; set; }
         public IDictionary<string, dynamic> Fields { get; set; }
 
-        // This makes it so that the class name shows up in serialization
-        public string ClassName { get; }
+        // This makes it so that the species name shows up in serialization
+        public string SpeciesName { get; }
 
         public BaseAgent(string state, IDictionary<string, dynamic> fields)
         {
             State = state;
             Fields = fields.ToDictionary(entry => entry.Key, entry => entry.Value);
-            ClassName = GetType().Name;
+            SpeciesName = GetType().Name;
         }
 
         public abstract void Update(IRuntimeContext ctx);

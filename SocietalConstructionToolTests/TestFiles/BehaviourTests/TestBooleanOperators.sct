@@ -1,4 +1,4 @@
-class EqualTest(int expected, int got, int a, int b) {
+species EqualTest(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -20,7 +20,7 @@ class EqualTest(int expected, int got, int a, int b) {
     }
 }
 
-class NotEqualTest(int expected, int got, int a, int b) {
+species NotEqualTest(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -42,7 +42,7 @@ class NotEqualTest(int expected, int got, int a, int b) {
     }
 }
 
-class GreaterThan(int expected, int got, int a, int b) {
+species GreaterThan(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -64,7 +64,7 @@ class GreaterThan(int expected, int got, int a, int b) {
     }
 }
 
-class GreaterThanEqual(int expected, int got, int a, int b) {
+species GreaterThanEqual(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -86,7 +86,7 @@ class GreaterThanEqual(int expected, int got, int a, int b) {
     }
 }
 
-class LesserThan(int expected, int got, int a, int b) {
+species LesserThan(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -108,7 +108,7 @@ class LesserThan(int expected, int got, int a, int b) {
     }
 }
 
-class LesserThanEqual(int expected, int got, int a, int b) {
+species LesserThanEqual(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -130,7 +130,7 @@ class LesserThanEqual(int expected, int got, int a, int b) {
     }
 }
 
-class Or(int expected, int got, int a, int b) {
+species Or(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -152,7 +152,7 @@ class Or(int expected, int got, int a, int b) {
     }
 }
 
-class Not(int expected, int got, int a) {
+species Not(int expected, int got, int a) {
 
     state Testing {
 
@@ -174,7 +174,7 @@ class Not(int expected, int got, int a) {
     }
 }
 
-class And(int expected, int got, int a, int b) {
+species And(int expected, int got, int a, int b) {
 
     state Testing {
 
@@ -196,7 +196,7 @@ class And(int expected, int got, int a, int b) {
     }
 }
 
-class Tester() {
+species Tester() {
     state Testing {
         exit;
     }

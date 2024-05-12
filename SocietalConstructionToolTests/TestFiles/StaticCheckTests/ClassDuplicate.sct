@@ -1,5 +1,5 @@
-class Town(int id, int space) {}
+species Town(int id, int space) {}
 
-class Town(int id) {}
+species Town(int id) {}
 
 function Setup() -> void {}

@@ -3,6 +3,6 @@
     Message: Variable x cannot be of type void,
     Line: 2,
     Column: 3,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VoidVariable.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/VoidVariable.sct
   }
 ]

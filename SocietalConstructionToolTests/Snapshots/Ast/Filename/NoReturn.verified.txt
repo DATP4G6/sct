@@ -3,12 +3,12 @@
     Message: Not all code paths return a value in function foo,
     Line: 1,
     Column: 0,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/NoReturn.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/NoReturn.sct
   },
   {
     Message: Not all code paths return a value in function bar,
     Line: 3,
     Column: 0,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/NoReturn.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/NoReturn.sct
   }
 ]

@@ -67,10 +67,10 @@ namespace Sct
 
         private static SctProgramSyntax GetMergedAst(IEnumerable<SctProgramSyntax> astList)
         {
-            IEnumerable<SctClassSyntax> classes = astList.SelectMany(ast => ast.Classes);
+            IEnumerable<SctSpeciesSyntax> species = astList.SelectMany(ast => ast.Species);
             IEnumerable<SctFunctionSyntax> functions = astList.SelectMany(ast => ast.Functions);
             var context = astList.First().Context.OriginalContext;
-            return new SctProgramSyntax(context, functions, classes);
+            return new SctProgramSyntax(context, functions, species);
         }
 
         /**

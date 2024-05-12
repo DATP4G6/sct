@@ -1,5 +1,5 @@
 ﻿{
-  Classes: {
+  Species: {
     Citizen: {
       Name: Citizen,
       FTable: {
@@ -14,7 +14,7 @@
       }
     }
   },
-  GlobalClass: {
+  GlobalContent: {
     Name: Global,
     FTable: {
       Functions: {

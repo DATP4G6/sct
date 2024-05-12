@@ -3,30 +3,30 @@
     Message: Type mismatch in return statement. Expected float but got Predicate,
     Line: 5,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.sct
   },
   {
     Message: Type mismatch in return statement. Expected void but got int,
     Line: 9,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.sct
   },
   {
     Message: Type mismatch in return statement. Expected int but got void,
     Line: 13,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.sct
   },
   {
     Message: Type mismatch in return statement. Expected float but got void,
     Line: 17,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.sct
   },
   {
     Message: Type mismatch in return statement. Expected Predicate but got void,
     Line: 21,
     Column: 4,
-    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.Sct
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongReturnType.sct
   }
 ]

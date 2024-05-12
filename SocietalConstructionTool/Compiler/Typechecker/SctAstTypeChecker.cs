@@ -6,14 +6,14 @@ namespace Sct.Compiler.Typechecker
     {
         private readonly CTable _ctable;
         private readonly VTable _vtable = new();
-        private ClassContent _currentClass;
+        private SpeciesContent _currentSpecies;
         private FunctionType _currentFunctionType = new(Syntax.SctType.Void, []);
         private readonly List<CompilerError> _errors = [];
         public IEnumerable<CompilerError> Errors => _errors;
         public SctAstTypeChecker(CTable cTable)
         {
             _ctable = cTable;
-            _currentClass = _ctable.GlobalClass;
+            _currentSpecies = _ctable.GlobalContent;
         }
 
         private void MakeChildrenAccept(SctSyntax node)
@@ -64,10 +64,10 @@ namespace Sct.Compiler.Typechecker
             return node.Type;
         }
 
-        public override Syntax.SctType Visit(SctClassSyntax node)
+        public override Syntax.SctType Visit(SctSpeciesSyntax node)
         {
-            // can never be null, as SctTableVisitor created the class
-            _currentClass = _ctable.GetClassContent(node.Id)!;
+            // can never be null, as SctTableVisitor created the species
+            _currentSpecies = _ctable.GetSpeciesContent(node.Id)!;
             _vtable.EnterScope();
             MakeChildrenAccept(node);
             _vtable.ExitScope();
@@ -79,7 +79,7 @@ namespace Sct.Compiler.Typechecker
         {
             var stateName = node.Id;
 
-            if (!_currentClass.HasState(stateName) && !(_currentClass == _ctable.GlobalClass))
+            if (!_currentSpecies.HasState(stateName) && !(_currentSpecies == _ctable.GlobalContent))
             {
                 _errors.Add(new CompilerError($"State '{stateName}' does not exist.", node.Context));
             }
@@ -91,7 +91,7 @@ namespace Sct.Compiler.Typechecker
         {
             for (var i = 0; i < node.Decorations.Count(); i++)
             {
-                if (!_currentClass.HasDecorator(node.Decorations.ElementAt(i)))
+                if (!_currentSpecies.HasDecorator(node.Decorations.ElementAt(i)))
                 {
                     _errors.Add(new CompilerError($"Decorator '{node.Decorations.ElementAt(i)}' does not exist.", node.Context));
                 }
@@ -104,7 +104,7 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctDecoratorSyntax node)
         {
-            if (!_currentClass.HasDecorator(node.Id))
+            if (!_currentSpecies.HasDecorator(node.Id))
             {
                 _errors.Add(new CompilerError($"Decorator '{node.Id}' does not exist.", node.Context));
 
@@ -244,23 +244,23 @@ namespace Sct.Compiler.Typechecker
 
         public override Syntax.SctType Visit(SctPredicateExpressionSyntax node)
         {
-            var target = _ctable.GetClassContent(node.ClassName);
+            var target = _ctable.GetSpeciesContent(node.SpeciesName);
 
-            // Check if target class exists
+            // Check if target species exists
             if (target is null)
             {
-                _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
+                _errors.Add(new CompilerError($"Species '{node.SpeciesName}' does not exist.", node.Context));
                 return Syntax.SctType.Predicate;
             }
 
-            // Check if state exists in predicate and target class
+            // Check if state exists in predicate and target species
             if (node.StateName is not null && !target.HasState(node.StateName))
             {
-                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
+                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in species '{node.SpeciesName}'.", node.Context));
                 return Syntax.SctType.Predicate;
             }
 
-            // Check if all fields exist in target class
+            // Check if all fields exist in target species
 
             var seenFields = new HashSet<string>();
 
@@ -268,7 +268,7 @@ namespace Sct.Compiler.Typechecker
             {
                 if (!target.Fields.ContainsKey(field.Id))
                 {
-                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
+                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in species '{node.SpeciesName}'.", field.Context));
                     continue;
                 }
 
@@ -278,12 +278,12 @@ namespace Sct.Compiler.Typechecker
                     continue;
                 }
 
-                var targetClassFieldType = target.Fields[field.Id];
+                var targetSpeciesFieldType = target.Fields[field.Id];
                 var targetFieldExpressionType = field.Expression.Accept(this);
 
-                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
+                if (GetCompatibleType(targetSpeciesFieldType, targetFieldExpressionType) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in predicate. Expected {targetClassFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in predicate. Expected {targetSpeciesFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
                 }
             }
 
@@ -404,31 +404,31 @@ namespace Sct.Compiler.Typechecker
         public override Syntax.SctType Visit(SctAgentExpressionSyntax node)
         {
 
-            var target = _ctable.GetClassContent(node.ClassName);
+            var target = _ctable.GetSpeciesContent(node.SpeciesName);
 
             if (target is null)
             {
-                _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
+                _errors.Add(new CompilerError($"Species '{node.SpeciesName}' does not exist.", node.Context));
                 return Syntax.SctType.Ok;
             }
 
             if (!target.HasState(node.StateName))
             {
-                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
+                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in species '{node.SpeciesName}'.", node.Context));
                 return Syntax.SctType.Ok;
             }
 
-            var targetClassFields = target.Fields;
-            var classArgumentIds = node.Fields.Select(field => field.Id);
+            var targetSpeciesFields = target.Fields;
+            var speciesArgumentIds = node.Fields.Select(field => field.Id);
 
             var seenFields = new HashSet<string>();
 
             foreach (var field in node.Fields)
             {
 
-                if (!targetClassFields.ContainsKey(field.Id))
+                if (!targetSpeciesFields.ContainsKey(field.Id))
                 {
-                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
+                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in species '{node.SpeciesName}'.", field.Context));
                     continue;
                 }
 
@@ -438,16 +438,16 @@ namespace Sct.Compiler.Typechecker
                     continue;
                 }
 
-                var targetClassFieldType = targetClassFields[field.Id];
+                var targetSpeciesFieldType = targetSpeciesFields[field.Id];
                 var targetFieldExpressionType = field.Expression.Accept(this);
 
-                if (GetCompatibleType(targetClassFieldType, targetFieldExpressionType) is null)
+                if (GetCompatibleType(targetSpeciesFieldType, targetFieldExpressionType) is null)
                 {
-                    _errors.Add(new CompilerError($"Type mismatch in agent expression. Expected {targetClassFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
+                    _errors.Add(new CompilerError($"Type mismatch in agent expression. Expected {targetSpeciesFieldType.TypeName()}, or compatible type, but got {targetFieldExpressionType.TypeName()}", field.Context));
                 }
             }
 
-            foreach (var field in targetClassFields)
+            foreach (var field in targetSpeciesFields)
             {
                 if (!seenFields.Contains(field.Key))
                 {
@@ -460,11 +460,11 @@ namespace Sct.Compiler.Typechecker
 
         private FunctionType GetFunctionType(string functionName, SctSyntax node)
         {
-            if (_currentClass.LookupFunctionType(functionName) is FunctionType functionType)
+            if (_currentSpecies.LookupFunctionType(functionName) is FunctionType functionType)
             {
                 return functionType;
             }
-            else if (_ctable.GlobalClass.LookupFunctionType(functionName) is FunctionType globalFunctionType)
+            else if (_ctable.GlobalContent.LookupFunctionType(functionName) is FunctionType globalFunctionType)
             {
                 return globalFunctionType;
             }

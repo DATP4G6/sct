@@ -85,8 +85,8 @@
       }
     ]
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: []
   }
 }

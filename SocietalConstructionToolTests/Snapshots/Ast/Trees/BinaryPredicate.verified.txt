@@ -23,7 +23,7 @@
                 Id: fullEqual,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -56,7 +56,7 @@
                 Id: fullEqual2,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -89,7 +89,7 @@
                 Id: fullDifferent,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -122,7 +122,7 @@
                 Id: partialEqual,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -147,7 +147,7 @@
                 Id: partialEqual2,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -172,7 +172,7 @@
                 Id: partialDifferent,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: Bar,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -197,7 +197,7 @@
                 Id: wildcardEqual,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: null,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -230,7 +230,7 @@
                 Id: wildcardEqual2,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: null,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -263,7 +263,7 @@
                 Id: wildcardDifferent,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Foo,
+                  SpeciesName: Foo,
                   StateName: null,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -320,7 +320,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -339,7 +339,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -381,7 +381,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -400,7 +400,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -442,7 +442,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -461,7 +461,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -509,7 +509,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -528,7 +528,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -573,7 +573,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -592,7 +592,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -637,7 +637,7 @@
                       {
                         $type: SctCreateStatementSyntax,
                         Agent: {
-                          ClassName: Output,
+                          SpeciesName: Output,
                           StateName: Equal,
                           Fields: {
                             $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -656,7 +656,7 @@
                         {
                           $type: SctCreateStatementSyntax,
                           Agent: {
-                            ClassName: Output,
+                            SpeciesName: Output,
                             StateName: Unequal,
                             Fields: {
                               $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -675,8 +675,8 @@
       }
     ]
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Foo,

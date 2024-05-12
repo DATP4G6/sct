@@ -26,7 +26,7 @@
                 $type: SctReturnStatementSyntax,
                 Expression: {
                   $type: SctPredicateExpressionSyntax,
-                  ClassName: Citizen,
+                  SpeciesName: Citizen,
                   StateName: Child,
                   Fields: {
                     $type: IEnumerable<SctNamedArgumentSyntax>,
@@ -106,8 +106,8 @@
       }
     ]
   },
-  Classes: {
-    $type: IEnumerable<SctClassSyntax>,
+  Species: {
+    $type: IEnumerable<SctSpeciesSyntax>,
     $values: [
       {
         Id: Citizen,

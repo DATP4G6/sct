@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: Class 'Town' does not exist.,
+    Message: Species 'Town' does not exist.,
     Line: 12,
     Column: 19,
     Filename: null

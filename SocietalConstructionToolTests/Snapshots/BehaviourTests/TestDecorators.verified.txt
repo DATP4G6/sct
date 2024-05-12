@@ -6,7 +6,7 @@
       "everyCalled": 0,
       "everyOtherCalled": 0
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -14,7 +14,7 @@
       "generationLimit": 10,
       "generationCount": 0
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -24,7 +24,7 @@
       "everyCalled": 1,
       "everyOtherCalled": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -32,7 +32,7 @@
       "generationLimit": 10,
       "generationCount": 1
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -42,7 +42,7 @@
       "everyCalled": 2,
       "everyOtherCalled": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -50,7 +50,7 @@
       "generationLimit": 10,
       "generationCount": 2
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -60,7 +60,7 @@
       "everyCalled": 3,
       "everyOtherCalled": 2
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -68,7 +68,7 @@
       "generationLimit": 10,
       "generationCount": 3
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -78,7 +78,7 @@
       "everyCalled": 4,
       "everyOtherCalled": 2
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -86,7 +86,7 @@
       "generationLimit": 10,
       "generationCount": 4
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -96,7 +96,7 @@
       "everyCalled": 5,
       "everyOtherCalled": 3
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -104,7 +104,7 @@
       "generationLimit": 10,
       "generationCount": 5
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -114,7 +114,7 @@
       "everyCalled": 6,
       "everyOtherCalled": 3
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -122,7 +122,7 @@
       "generationLimit": 10,
       "generationCount": 6
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -132,7 +132,7 @@
       "everyCalled": 7,
       "everyOtherCalled": 4
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -140,7 +140,7 @@
       "generationLimit": 10,
       "generationCount": 7
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -150,7 +150,7 @@
       "everyCalled": 8,
       "everyOtherCalled": 4
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -158,7 +158,7 @@
       "generationLimit": 10,
       "generationCount": 8
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -168,7 +168,7 @@
       "everyCalled": 9,
       "everyOtherCalled": 5
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -176,7 +176,7 @@
       "generationLimit": 10,
       "generationCount": 9
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -186,7 +186,7 @@
       "everyCalled": 10,
       "everyOtherCalled": 5
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Charging",
@@ -194,7 +194,7 @@
       "generationLimit": 10,
       "generationCount": 10
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -204,7 +204,7 @@
       "everyCalled": 11,
       "everyOtherCalled": 6
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   },
   {
     "State": "Terminating",
@@ -212,7 +212,7 @@
       "generationLimit": 10,
       "generationCount": 10
     },
-    "ClassName": "Terminator"
+    "SpeciesName": "Terminator"
   }
 ][
   {
@@ -222,6 +222,6 @@
       "everyCalled": 12,
       "everyOtherCalled": 6
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   }
 ]

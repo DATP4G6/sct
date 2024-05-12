@@ -1,6 +1,6 @@
 ﻿{
-  Classes: null,
-  GlobalClass: {
+  Species: null,
+  GlobalContent: {
     Name: Global,
     FTable: {
       Functions: {

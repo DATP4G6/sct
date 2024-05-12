@@ -5,8 +5,8 @@ namespace Sct.Compiler.Syntax
         public override SctSyntax Visit(SctProgramSyntax node)
         {
             var functions = node.Functions.Select(f => f.Accept(this)).Cast<SctFunctionSyntax>();
-            var classes = node.Classes.Select(c => c.Accept(this)).Cast<SctClassSyntax>();
-            return new SctProgramSyntax(node.Context.OriginalContext, functions, classes);
+            var species = node.Species.Select(c => c.Accept(this)).Cast<SctSpeciesSyntax>();
+            return new SctProgramSyntax(node.Context.OriginalContext, functions, species);
         }
 
         public override SctSyntax Visit(SctFunctionSyntax node)
@@ -17,13 +17,13 @@ namespace Sct.Compiler.Syntax
             return new SctFunctionSyntax(node.Context.OriginalContext, node.Id, parameters, type, body);
         }
 
-        public override SctSyntax Visit(SctClassSyntax node)
+        public override SctSyntax Visit(SctSpeciesSyntax node)
         {
             var parameters = node.Parameters.Select(f => f.Accept(this)).Cast<SctParameterSyntax>();
             var states = node.States.Select(s => s.Accept(this)).Cast<SctStateSyntax>();
             var functions = node.Functions.Select(m => m.Accept(this)).Cast<SctFunctionSyntax>();
             var decorators = node.Decorators.Select(d => d.Accept(this)).Cast<SctDecoratorSyntax>();
-            return new SctClassSyntax(node.Context.OriginalContext, node.Id, parameters, decorators, functions, states);
+            return new SctSpeciesSyntax(node.Context.OriginalContext, node.Id, parameters, decorators, functions, states);
         }
 
         public override SctSyntax Visit(SctParameterSyntax node)
@@ -192,13 +192,13 @@ namespace Sct.Compiler.Syntax
         public override SctSyntax Visit(SctAgentExpressionSyntax node)
         {
             var arguments = node.Fields.Select(a => a.Accept(this)).Cast<SctNamedArgumentSyntax>();
-            return new SctAgentExpressionSyntax(node.Context.OriginalContext, node.ClassName, node.StateName, arguments);
+            return new SctAgentExpressionSyntax(node.Context.OriginalContext, node.SpeciesName, node.StateName, arguments);
         }
 
         public override SctSyntax Visit(SctPredicateExpressionSyntax node)
         {
             var arguments = node.Fields.Select(a => a.Accept(this)).Cast<SctNamedArgumentSyntax>();
-            return new SctPredicateExpressionSyntax(node.Context.OriginalContext, node.ClassName, node.StateName, arguments);
+            return new SctPredicateExpressionSyntax(node.Context.OriginalContext, node.SpeciesName, node.StateName, arguments);
         }
 
         public override SctSyntax Visit(SctNamedArgumentSyntax node)

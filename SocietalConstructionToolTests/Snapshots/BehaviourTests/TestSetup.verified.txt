@@ -2,27 +2,27 @@
   {
     "State": "Adult",
     "Fields": {},
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Stable",
     "Fields": {
       "townId": 0
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   }
 ][
   {
     "State": "Child",
     "Fields": {},
-    "ClassName": "Citizen"
+    "SpeciesName": "Citizen"
   },
   {
     "State": "Critical",
     "Fields": {
       "townId": 1
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   }
 ][
   {
@@ -30,6 +30,6 @@
     "Fields": {
       "townId": 2
     },
-    "ClassName": "Town"
+    "SpeciesName": "Town"
   }
 ]

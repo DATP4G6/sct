@@ -2,7 +2,7 @@ using Antlr4.Runtime;
 
 namespace Sct.Compiler.Syntax
 {
-    public class SctClassSyntax(
+    public class SctSpeciesSyntax(
             ParserRuleContext context,
             string id,
             IEnumerable<SctParameterSyntax> parameters,
