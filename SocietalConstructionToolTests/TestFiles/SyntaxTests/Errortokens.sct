@@ -1,0 +1,5 @@
+function setup() -> void {
+    float € = 3.14159;
+    float a§§ = 1.5;
+    float b = 2.0˜;
+}
