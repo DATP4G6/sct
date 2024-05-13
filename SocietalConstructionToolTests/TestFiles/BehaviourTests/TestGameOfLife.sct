@@ -26,16 +26,6 @@ species Cell(int x, int y) {
     }
 }
 
-// Stop the game if all cells are dead
-species Observer() {
-    state Observing {
-        if (exists(Cell::Alive())) {
-            enter Observing;
-        }
-        exit;
-    }
-}
-
 // Count how many neighboors are alive
 function countNeighboors(int x, int y) -> int {
     int alive = 0;
@@ -43,7 +33,7 @@ function countNeighboors(int x, int y) -> int {
     while (nx < x+2) {
         int ny = y-1;
         while (ny < y+2) {
-            if (nx != x && ny != y) {
+            if (nx != x || ny != y) {
                 alive = alive + exists(Cell::Alive(x:nx, y:ny));
             }
             ny = ny+1;
@@ -69,9 +59,6 @@ function setup() -> void {
         x = x+1;
     }
 
-    // Create observer to stop the game if all cells die
-    create Observer::Observing();
-
     // Draw initial configuration
     // This example draws the glider
     //
@@ -89,4 +76,7 @@ function setup() -> void {
     create Cell::Alive(x:2, y:0);
     create Cell::Alive(x:2, y:1);
     create Cell::Alive(x:2, y:2);
+
+    ExitWhenNoLongerExists(Cell::Alive());
+    ExitAfterTicks(50);
 }
