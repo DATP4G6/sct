@@ -144,7 +144,5 @@ literal: INT | FLOAT;
 INT: [0-9]+;
 FLOAT: [0-9]+ '.' [0-9]+;
 
-//These tokens are not used, they are here so we get an error if you attempt to make an array
-//Should be unecessary when/if we fix antlr ignoring unknown tokens
-LSQUARE: '[';
-RSQUARE: ']';
+//Catches all tokens not specified above
+UNIDENTIFIED:.;
