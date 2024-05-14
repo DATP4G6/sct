@@ -122,6 +122,7 @@ if args.titles:
     plt.legend(args.titles.split(","))
 
 if args.output:
+    plt.rc("font", size=12)
     plt.savefig(args.output)
 else:
     plt.show()
