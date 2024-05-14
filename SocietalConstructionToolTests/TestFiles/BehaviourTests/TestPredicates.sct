@@ -1,12 +1,10 @@
 species Citizen(int townId) {
-
     state Alive {
         enter Alive;
     }
 }
 
 species Town(int id, int citizenCount) {
-
     decorator updateCitizenCount {
         citizenCount = count(Citizen::?(townId: id));
     }
@@ -18,22 +16,8 @@ species Town(int id, int citizenCount) {
     }
 }
 
-species Counter(int generation) {
-    state Counting {
-        generation = generation + 1;
-        if (generation > 2) {
-            exit;
-        }
-        enter Counting;
-    }
-}
-
 function setup() -> void {
     create Town::Stable(id: 1, citizenCount: 0);
     create Citizen::Alive(townId: 1);
-    create Counter::Counting(generation: 0);
+    ExitAfterTicks(2);
 }
-
-
-
-

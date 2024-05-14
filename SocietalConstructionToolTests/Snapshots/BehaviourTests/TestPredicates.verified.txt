@@ -15,10 +15,10 @@
     }
   },
   {
-    "Species": "Counter",
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
-      "generation": 0
+      "x": 2
     }
   }
 ][
@@ -45,10 +45,10 @@
     }
   },
   {
-    "Species": "Counter",
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
-      "generation": 1
+      "x": 1
     }
   }
 ][
@@ -82,10 +82,10 @@
     }
   },
   {
-    "Species": "Counter",
+    "Species": "stdCounter",
     "State": "Counting",
     "Fields": {
-      "generation": 2
+      "x": 0
     }
   }
 ][
