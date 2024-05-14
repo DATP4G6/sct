@@ -1,22 +1,27 @@
-species Fizz(int triggerNumber) {
-    state Triggered {
-        destroy;
-    }
-}
+species Output(int i) {
 
-species Buzz(int triggerNumber) {
-    state Triggered {
-        destroy;
+    decorator Print {
+        print(Output::?());
     }
-}
 
-species FizzBuzz(int triggerNumber) {
-    state Triggered {
-        destroy;
-    }
+    @Print
+    state Other { destroy; }
+
+    @Print
+    state Fizz { destroy; }
+
+    @Print
+    state Buzz { destroy; }
+
+    @Print
+    state FizzBuzz { destroy; }
 }
 
 species Manager(int startCount) {
+
+    function countMod(int i) -> int {
+        return startCount % i == 0;
+    }
 
     decorator Increment {
         startCount = startCount + 1;
@@ -24,37 +29,24 @@ species Manager(int startCount) {
 
     @Increment
     state Managing {
-        if (startCount % 3 == 0 && startCount % 5 == 0) {
-            create FizzBuzz::Triggered(triggerNumber: startCount);
-            enter Managing;
-        }
-        if (startCount % 3 == 0) {
-            create Fizz::Triggered(triggerNumber: startCount);
-            enter Managing;
-        }
-        if (startCount % 5 == 0) {
-            create Buzz::Triggered(triggerNumber: startCount);
-            enter Managing;
+        if (countMod(3)) {
+            if (countMod(5)) {
+                create Output::FizzBuzz(i : startCount);
+            } else {
+                create Output::Fizz(i : startCount);
+            }
+        } else if (countMod(5)) {
+            create Output::Buzz(i : startCount);
+        } else {
+            create Output::Other(i : startCount);
         }
         enter Managing;
     }
 }
 
-species Terminator(int generationLimit, int generationCount) {
-    state Charging {
-        if (generationCount == generationLimit) {
-            enter Terminating;
-        }
-        generationCount = generationCount + 1;
-        enter Charging;
-    }
-
-    state Terminating {
-        exit;
-    }
-}
-
 function setup() -> void {
     create Manager::Managing(startCount: 0);
-    create Terminator::Charging(generationLimit: 30, generationCount: 0);
+    seed(7);
+    int terminateAfter = (int)(rand() * 6 * 10);
+    ExitAfterTicks(terminateAfter);
 }

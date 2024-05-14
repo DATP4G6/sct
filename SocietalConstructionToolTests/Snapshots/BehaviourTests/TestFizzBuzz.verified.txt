@@ -7,14 +7,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 0
+      "x": 22
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 1
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -23,14 +29,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 1
+      "x": 21
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 2
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -39,19 +51,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 2
+      "x": 20
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 3
+      "i": 3
     }
   },
   {
@@ -62,14 +73,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 3
+      "x": 19
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 4
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -78,19 +95,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 4
+      "x": 18
     }
   }
 ][
   {
-    "Species": "Buzz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Buzz",
     "Fields": {
-      "triggerNumber": 5
+      "i": 5
     }
   },
   {
@@ -101,19 +117,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 5
+      "x": 17
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 6
+      "i": 6
     }
   },
   {
@@ -124,14 +139,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 6
+      "x": 16
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 7
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -140,14 +161,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 7
+      "x": 15
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 8
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -156,19 +183,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 8
+      "x": 14
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 9
+      "i": 9
     }
   },
   {
@@ -179,19 +205,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 9
+      "x": 13
     }
   }
 ][
   {
-    "Species": "Buzz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Buzz",
     "Fields": {
-      "triggerNumber": 10
+      "i": 10
     }
   },
   {
@@ -202,14 +227,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 10
+      "x": 12
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 11
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -218,19 +249,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 11
+      "x": 11
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 12
+      "i": 12
     }
   },
   {
@@ -241,14 +271,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 12
+      "x": 10
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 13
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -257,14 +293,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 13
+      "x": 9
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 14
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -273,19 +315,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 14
+      "x": 8
     }
   }
 ][
   {
-    "Species": "FizzBuzz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "FizzBuzz",
     "Fields": {
-      "triggerNumber": 15
+      "i": 15
     }
   },
   {
@@ -296,14 +337,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 15
+      "x": 7
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 16
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -312,14 +359,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 16
+      "x": 6
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 17
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -328,19 +381,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 17
+      "x": 5
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 18
+      "i": 18
     }
   },
   {
@@ -351,14 +403,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 18
+      "x": 4
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 19
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -367,19 +425,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 19
+      "x": 3
     }
   }
 ][
   {
-    "Species": "Buzz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Buzz",
     "Fields": {
-      "triggerNumber": 20
+      "i": 20
     }
   },
   {
@@ -390,19 +447,18 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 20
+      "x": 2
     }
   }
 ][
   {
-    "Species": "Fizz",
-    "State": "Triggered",
+    "Species": "Output",
+    "State": "Fizz",
     "Fields": {
-      "triggerNumber": 21
+      "i": 21
     }
   },
   {
@@ -413,14 +469,20 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 21
+      "x": 1
     }
   }
 ][
+  {
+    "Species": "Output",
+    "State": "Other",
+    "Fields": {
+      "i": 22
+    }
+  },
   {
     "Species": "Manager",
     "State": "Managing",
@@ -429,191 +491,25 @@
     }
   },
   {
-    "Species": "Terminator",
-    "State": "Charging",
+    "Species": "stdCounter",
+    "State": "Counting",
     "Fields": {
-      "generationLimit": 30,
-      "generationCount": 22
+      "x": 0
     }
   }
 ][
   {
-    "Species": "Manager",
-    "State": "Managing",
+    "Species": "Output",
+    "State": "Other",
     "Fields": {
-      "startCount": 23
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 23
-    }
-  }
-][
-  {
-    "Species": "Fizz",
-    "State": "Triggered",
-    "Fields": {
-      "triggerNumber": 24
+      "i": 23
     }
   },
   {
     "Species": "Manager",
     "State": "Managing",
     "Fields": {
-      "startCount": 24
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 24
-    }
-  }
-][
-  {
-    "Species": "Buzz",
-    "State": "Triggered",
-    "Fields": {
-      "triggerNumber": 25
-    }
-  },
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 25
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 25
-    }
-  }
-][
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 26
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 26
-    }
-  }
-][
-  {
-    "Species": "Fizz",
-    "State": "Triggered",
-    "Fields": {
-      "triggerNumber": 27
-    }
-  },
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 27
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 27
-    }
-  }
-][
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 28
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 28
-    }
-  }
-][
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 29
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 29
-    }
-  }
-][
-  {
-    "Species": "FizzBuzz",
-    "State": "Triggered",
-    "Fields": {
-      "triggerNumber": 30
-    }
-  },
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 30
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Charging",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 30
-    }
-  }
-][
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 31
-    }
-  },
-  {
-    "Species": "Terminator",
-    "State": "Terminating",
-    "Fields": {
-      "generationLimit": 30,
-      "generationCount": 30
-    }
-  }
-][
-  {
-    "Species": "Manager",
-    "State": "Managing",
-    "Fields": {
-      "startCount": 32
+      "startCount": 23
     }
   }
 ]

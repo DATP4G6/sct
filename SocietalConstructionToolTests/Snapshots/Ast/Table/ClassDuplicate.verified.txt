@@ -16,6 +16,18 @@
               Predicate
             ]
           },
+          print: {
+            ReturnType: Void,
+            ParameterTypes: [
+              Predicate
+            ]
+          },
+          printCount: {
+            ReturnType: Void,
+            ParameterTypes: [
+              Predicate
+            ]
+          },
           rand: {
             ReturnType: Float,
             ParameterTypes: null
@@ -63,6 +75,18 @@
         },
         exists: {
           ReturnType: Int,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        print: {
+          ReturnType: Void,
+          ParameterTypes: [
+            Predicate
+          ]
+        },
+        printCount: {
+          ReturnType: Void,
           ParameterTypes: [
             Predicate
           ]
