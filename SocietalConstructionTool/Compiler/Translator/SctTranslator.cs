@@ -16,7 +16,7 @@ namespace Sct.Compiler.Translator
 
         public static readonly SyntaxToken ContextIdentifier = SyntaxFactory.Identifier("ctx");
 
-        private bool _isInAgent = false;
+        private bool _isInSpecies = false;
 
         public override CSharpSyntaxNode Visit(SctProgramSyntax node)
         {
@@ -58,7 +58,7 @@ namespace Sct.Compiler.Translator
                 .WithParameterList(TranslatorUtils.WithContextParameter(parameters))
                 .WithBody(body);
 
-            if (!_isInAgent) // all global functions are static
+            if (!_isInSpecies) // all global functions are static
             {
                 method = method.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
             }
@@ -68,7 +68,7 @@ namespace Sct.Compiler.Translator
 
         public override CSharpSyntaxNode Visit(SctClassSyntax node)
         {
-            _isInAgent = true;
+            _isInSpecies = true;
 
             var decorators = node.Decorators
                 .Select(d => d.Accept(this))
@@ -105,7 +105,7 @@ namespace Sct.Compiler.Translator
                 .AddMembers(members)
                 .AddMembers(TranslatorUtils.CreateUpdateMethod(stateNames));
 
-            _isInAgent = false;
+            _isInSpecies = false;
 
             return @class;
         }

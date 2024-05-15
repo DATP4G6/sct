@@ -2,7 +2,7 @@ using Sct.Runtime.Trace;
 
 namespace Sct.Runtime
 {
-    public static class Stdlib
+    public static class Intrinsics
     {
         private static Random s_random = new();
         public static double Rand(IRuntimeContext _)
@@ -20,7 +20,7 @@ namespace Sct.Runtime
             var matches = ctx.QueryHandler.Filter(predicate);
             foreach (var agent in matches)
             {
-                Console.WriteLine(new AgentDemangler(agent));
+                Console.WriteLine(new DemangledAgent(agent));
             }
         }
 

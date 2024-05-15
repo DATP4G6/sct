@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: State 'Baz' does not exist in class 'Foo'.,
+    Message: State 'Baz' does not exist in species 'Foo'.,
     Line: 8,
     Column: 11,
     Filename: {CurrentDirectory}TestFiles/StaticCheckTests/CreateAgentStateDoesNotExist.sct

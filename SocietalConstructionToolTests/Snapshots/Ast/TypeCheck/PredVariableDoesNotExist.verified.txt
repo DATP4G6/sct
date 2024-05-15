@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: Field 'weight' does not exist in class 'Citizen'.,
+    Message: Field 'weight' does not exist in species 'Citizen'.,
     Line: 4,
     Column: 30,
     Filename: null

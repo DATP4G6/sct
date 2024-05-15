@@ -47,18 +47,7 @@ namespace Sct.Compiler
             }
         }
 
-        public IEnumerator<TBase> GetEnumerator()
-        {
-            for (int i = _stack.Count - 1; i >= 0; i--)
-            {
-                if (_stack.ElementAt(i).IsMarker)
-                {
-                    continue;
-                }
-                yield return _stack.ElementAt(i).Value ?? throw new InvalidOperationException("Stack item is null");
-            }
-        }
-
+        public IEnumerator<TBase> GetEnumerator() => _stack.Where(i => !i.IsMarker).Select(i => i.Value!).GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

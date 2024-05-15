@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: Field 'b' does not exist in class 'Foo'.,
+    Message: Field 'b' does not exist in species 'Foo'.,
     Line: 8,
     Column: 20,
     Filename: null
@@ -12,7 +12,7 @@
     Filename: null
   },
   {
-    Message: Field 'b' does not exist in class 'Foo'.,
+    Message: Field 'b' does not exist in species 'Foo'.,
     Line: 9,
     Column: 20,
     Filename: null

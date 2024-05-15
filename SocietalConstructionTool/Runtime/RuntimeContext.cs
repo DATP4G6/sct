@@ -13,11 +13,7 @@ namespace Sct.Runtime
         public RuntimeContext() : this(new AgentHandler(), new QueryHandler([]), null)
         { }
 
-        public void ExitRuntime()
-        {
-            ShouldExit = true;
-        }
-
+        public void ExitRuntime() => ShouldExit = true;
         public IRuntimeContext GetNextContext() => RuntimeContextFactory.CreateNext(this);
     }
 }

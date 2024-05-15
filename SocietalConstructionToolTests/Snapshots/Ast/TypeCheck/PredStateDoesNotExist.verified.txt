@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: State 'Dead' does not exist in class 'Citizen'.,
+    Message: State 'Dead' does not exist in species 'Citizen'.,
     Line: 12,
     Column: 19,
     Filename: null
