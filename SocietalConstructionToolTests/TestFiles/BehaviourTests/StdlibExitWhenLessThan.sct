@@ -11,6 +11,6 @@ function setup() -> void {
     create Foo::Bar();
     create Foo::Baz();
     create Foo::Baz();
-    ExitWhenLessThan(Foo::?(), 2);
+    exitWhenLessThan(Foo::?(), 2);
 }
 

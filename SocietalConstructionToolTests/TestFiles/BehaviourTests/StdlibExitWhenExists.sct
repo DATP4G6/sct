@@ -9,5 +9,5 @@ species Foo() {
 
 function setup() -> void {
     create Foo::Bar();
-    ExitWhenExists(Foo::Baz());
+    exitWhenExists(Foo::Baz());
 }

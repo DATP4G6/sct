@@ -10,5 +10,5 @@ species Foo() {
 
 function setup() -> void {
     create Foo::Bar();
-    ExitWhenMoreThan(Foo::Baz(), 1);
+    exitWhenMoreThan(Foo::Baz(), 1);
 }

@@ -19,5 +19,5 @@ species Town(int id, int citizenCount) {
 function setup() -> void {
     create Town::Stable(id: 1, citizenCount: 0);
     create Citizen::Alive(townId: 1);
-    ExitAfterTicks(2);
+    exitAfterTicks(2);
 }
