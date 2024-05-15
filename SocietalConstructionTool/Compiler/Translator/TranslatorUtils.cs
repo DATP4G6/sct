@@ -31,6 +31,8 @@ namespace Sct.Compiler.Translator
             { "seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
             { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
             { "count", BuildAccessor(nameof(IQueryHandler.Count), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
+            { "print", BuildAccessor(nameof(Stdlib.PrintPredicate), StdlibIdentifier) },
+            { "printCount", BuildAccessor(nameof(Stdlib.PrintPredicateCount), StdlibIdentifier) }
         };
 
         public static TypeSyntax GetType(SctTypeSyntax type)

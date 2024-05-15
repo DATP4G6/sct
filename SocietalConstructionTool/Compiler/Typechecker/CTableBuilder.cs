@@ -16,6 +16,8 @@ namespace Sct.Compiler.Typechecker
             _ = TryAddFunction("exists", new FunctionType(SctType.Int, [SctType.Predicate]));
             _ = TryAddFunction("rand", new FunctionType(SctType.Float, []));
             _ = TryAddFunction("seed", new FunctionType(SctType.Void, [SctType.Int]));
+            _ = TryAddFunction("print", new FunctionType(SctType.Void, [SctType.Predicate]));
+            _ = TryAddFunction("printCount", new FunctionType(SctType.Void, [SctType.Predicate]));
         }
 
         public (CTable cTable, List<CompilerError> errors) BuildCtable()
