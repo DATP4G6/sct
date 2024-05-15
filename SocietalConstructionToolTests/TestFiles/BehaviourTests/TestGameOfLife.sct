@@ -9,7 +9,7 @@
 // For more info, see https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 species Cell(int x, int y) {
     state Alive {
-        int alive = countNeighboors(x, y);
+        int alive = countNeighbours(x, y);
 
         // Die if less than 2 or more than 3 neighboors.
         if (alive < 2 || alive > 3) {
@@ -19,7 +19,7 @@ species Cell(int x, int y) {
     }
 
     state Dead {
-        if (countNeighboors(x, y) == 3) {
+        if (countNeighbours(x, y) == 3) {
             enter Alive;
         }
         enter Dead;
@@ -27,7 +27,7 @@ species Cell(int x, int y) {
 }
 
 // Count how many neighboors are alive
-function countNeighboors(int x, int y) -> int {
+function countNeighbours(int x, int y) -> int {
     int alive = 0;
     int nx = x-1;
     while (nx < x+2) {

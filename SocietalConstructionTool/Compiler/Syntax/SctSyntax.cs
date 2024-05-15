@@ -21,7 +21,7 @@ namespace Sct.Compiler.Syntax
         public abstract IEnumerable<SctSyntax> Children { get; }
 
         [JsonIgnore]
-        public SctSyntaxContext Context { get; set; }
+        public SctSyntaxContext Context { get; }
 
         protected SctSyntax(ParserRuleContext context)
         {

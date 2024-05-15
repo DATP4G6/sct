@@ -5,6 +5,8 @@ namespace Sct.Compiler.Typechecker
     public class CTable(Dictionary<string, ClassContent> classes, ClassContent globalClass)
     {
         private readonly Dictionary<string, ClassContent> _classes = classes;
+
+        // this is only used for the snapshot testing
         public ImmutableDictionary<string, ClassContent> Classes => _classes.ToImmutableDictionary();
         public ClassContent GlobalClass { get; } = globalClass;
 

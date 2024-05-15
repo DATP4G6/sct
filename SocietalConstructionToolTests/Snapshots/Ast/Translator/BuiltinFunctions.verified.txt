@@ -10,8 +10,8 @@
         {
             ctx.QueryHandler.Exists(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
             ctx.QueryHandler.Count(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
-            Stdlib.Rand(ctx);
-            Stdlib.Seed(ctx, 123L);
+            Intrinsics.Rand(ctx);
+            Intrinsics.Seed(ctx, 123L);
         }
 
         public class __sct_Foo : BaseAgent

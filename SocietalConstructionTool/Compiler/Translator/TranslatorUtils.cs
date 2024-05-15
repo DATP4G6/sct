@@ -17,7 +17,7 @@ namespace Sct.Compiler.Translator
         private static readonly SyntaxToken RunSimulationIdentifier = SyntaxFactory.Identifier(SctTranslator.RunSimulationFunctionName);
         private static readonly IdentifierNameSyntax ContextIdentifierName = SyntaxFactory.IdentifierName(SctTranslator.ContextIdentifier);
         private static readonly SyntaxToken QueryHandlerIdentifier = SyntaxFactory.Identifier(nameof(IRuntimeContext.QueryHandler));
-        private static readonly SyntaxToken StdlibIdentifier = SyntaxFactory.Identifier(nameof(Stdlib));
+        private static readonly SyntaxToken IntrinsicsIdentifier = SyntaxFactory.Identifier(nameof(Intrinsics));
 
         // boolean values are either 0 or 1
         public static readonly LiteralExpressionSyntax SctTrue = SyntaxFactory.LiteralExpression(SyntaxKind.NumericLiteralExpression, SyntaxFactory.Literal(1L));
@@ -27,12 +27,12 @@ namespace Sct.Compiler.Translator
         // A full day has gone to waste debugging this...
         private static readonly Dictionary<string, MemberAccessExpressionSyntax> Types = new()
         {
-            { "rand", BuildAccessor(nameof(Stdlib.Rand), StdlibIdentifier) },
-            { "seed", BuildAccessor(nameof(Stdlib.Seed), StdlibIdentifier) },
+            { "rand", BuildAccessor(nameof(Intrinsics.Rand), IntrinsicsIdentifier) },
+            { "seed", BuildAccessor(nameof(Intrinsics.Seed), IntrinsicsIdentifier) },
             { "exists", BuildAccessor(nameof(IQueryHandler.Exists), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
             { "count", BuildAccessor(nameof(IQueryHandler.Count), SctTranslator.ContextIdentifier, QueryHandlerIdentifier) },
-            { "print", BuildAccessor(nameof(Stdlib.PrintPredicate), StdlibIdentifier) },
-            { "printCount", BuildAccessor(nameof(Stdlib.PrintPredicateCount), StdlibIdentifier) }
+            { "print", BuildAccessor(nameof(Intrinsics.PrintPredicate), IntrinsicsIdentifier) },
+            { "printCount", BuildAccessor(nameof(Intrinsics.PrintPredicateCount), IntrinsicsIdentifier) }
         };
 
         public static TypeSyntax GetType(SctTypeSyntax type)

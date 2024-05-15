@@ -14,7 +14,7 @@ namespace Sct.Runtime.Trace
         public void OnTick(IRuntimeContext context)
             => _builder.Append(
                 JsonSerializer.Serialize(
-                    context.AgentHandler.Agents.Select(a => new AgentDemangler(a)
+                    context.AgentHandler.Agents.Select(a => new DemangledAgent(a)
                 ), SerializerOptions));
     }
 }

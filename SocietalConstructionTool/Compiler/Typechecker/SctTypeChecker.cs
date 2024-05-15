@@ -16,13 +16,7 @@ namespace Sct.Compiler.Typechecker
             _currentClass = _ctable.GlobalClass;
         }
 
-        private void MakeChildrenAccept(SctSyntax node)
-        {
-            foreach (var child in node.Children)
-            {
-                _ = child.Accept(this);
-            }
-        }
+        private void MakeChildrenAccept(SctSyntax node) => _ = node.Children.Select(c => c.Accept(this)).ToList();
 
         public override SctType Visit(SctProgramSyntax node)
         {
@@ -89,26 +83,20 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType Visit(SctStateSyntax node)
         {
-            for (var i = 0; i < node.Decorations.Count(); i++)
+            foreach (var decorator in node.Decorations)
             {
-                if (!_currentClass.HasDecorator(node.Decorations.ElementAt(i)))
+                if (!_currentClass.HasDecorator(decorator))
                 {
-                    _errors.Add(new CompilerError($"Decorator '{node.Decorations.ElementAt(i)}' does not exist.", node.Context));
+                    _errors.Add(new CompilerError($"Decorator '{decorator}' does not exist.", node.Context));
                 }
             }
 
             MakeChildrenAccept(node);
-
             return SctType.Ok;
         }
 
         public override SctType Visit(SctDecoratorSyntax node)
         {
-            if (!_currentClass.HasDecorator(node.Id))
-            {
-                _errors.Add(new CompilerError($"Decorator '{node.Id}' does not exist.", node.Context));
-
-            }
             MakeChildrenAccept(node);
             return SctType.Ok;
         }
@@ -157,12 +145,10 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType Visit(SctReturnStatementSyntax node)
         {
-
             var returnType = _currentFunctionType.ReturnType;
 
             if (node.Expression is null)
             {
-
                 if (returnType != SctType.Void)
                 {
                     _errors.Add(new CompilerError($"Type mismatch in return statement. Expected {returnType.TypeName()} but got void", node.Context));
@@ -181,7 +167,6 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType Visit(SctBinaryExpressionSyntax node)
         {
-
             var leftType = node.Left.Accept(this);
             var rightType = node.Right.Accept(this);
 
@@ -197,7 +182,6 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType Visit(SctAssignmentStatementSyntax node)
         {
-
             var targetType = LookupVariable(node.Id, node);
             var expressionType = node.Expression.Accept(this);
 
@@ -206,13 +190,11 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"Type mismatch in assignment. Cannot assign {expressionType.TypeName()} to {targetType.TypeName()}", node.Context));
             }
 
-
             return targetType;
         }
 
         public override SctType Visit(SctBooleanExpressionSyntax node)
         {
-
             var leftType = node.Left.Accept(this);
             var rightType = node.Right.Accept(this);
 
@@ -220,7 +202,7 @@ namespace Sct.Compiler.Typechecker
                 (!TypeIsNumeric(leftType) || !TypeIsNumeric(rightType))
                 // Types are not predicates or operators do not allow it
                 && !(leftType == rightType && leftType == SctType.Predicate
-                    && node.Op is Syntax.SctBooleanOperator.Eq or Syntax.SctBooleanOperator.Neq)
+                    && node.Op is SctBooleanOperator.Eq or SctBooleanOperator.Neq)
                 )
             {
                 _errors.Add(new CompilerError("Boolean expression must be numeric types or predicate comparisons. For predicates, only (in)equality is allowed.", node.Context));
@@ -249,26 +231,25 @@ namespace Sct.Compiler.Typechecker
             // Check if target class exists
             if (target is null)
             {
-                _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
+                _errors.Add(new CompilerError($"Species '{node.ClassName}' does not exist.", node.Context));
                 return SctType.Predicate;
             }
 
             // Check if state exists in predicate and target class
             if (node.StateName is not null && !target.HasState(node.StateName))
             {
-                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
+                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in species '{node.ClassName}'.", node.Context));
                 return SctType.Predicate;
             }
 
             // Check if all fields exist in target class
-
             var seenFields = new HashSet<string>();
 
             foreach (var field in node.Fields)
             {
                 if (!target.Fields.ContainsKey(field.Id))
                 {
-                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
+                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in species '{node.ClassName}'.", field.Context));
                     continue;
                 }
 
@@ -313,7 +294,6 @@ namespace Sct.Compiler.Typechecker
         public override SctType Visit(SctElseStatementSyntax node)
         {
             MakeChildrenAccept(node);
-
             return SctType.Ok;
         }
 
@@ -325,7 +305,6 @@ namespace Sct.Compiler.Typechecker
             }
 
             _ = node.Block.Accept(this);
-
             return SctType.Ok;
         }
 
@@ -392,7 +371,6 @@ namespace Sct.Compiler.Typechecker
 
         public override SctType Visit(SctBlockStatementSyntax node)
         {
-
             _vtable.EnterScope();
             MakeChildrenAccept(node);
             _vtable.ExitScope();
@@ -403,18 +381,17 @@ namespace Sct.Compiler.Typechecker
         // This is the "create Agent::State(FieldID: Expression, ...)" syntax, not to be confused with the definition of an agent.
         public override SctType Visit(SctAgentExpressionSyntax node)
         {
-
             var target = _ctable.GetClassContent(node.ClassName);
 
             if (target is null)
             {
-                _errors.Add(new CompilerError($"Class '{node.ClassName}' does not exist.", node.Context));
+                _errors.Add(new CompilerError($"Species '{node.ClassName}' does not exist.", node.Context));
                 return SctType.Ok;
             }
 
             if (!target.HasState(node.StateName))
             {
-                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in class '{node.ClassName}'.", node.Context));
+                _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in species '{node.ClassName}'.", node.Context));
                 return SctType.Ok;
             }
 
@@ -428,7 +405,7 @@ namespace Sct.Compiler.Typechecker
 
                 if (!targetClassFields.ContainsKey(field.Id))
                 {
-                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in class '{node.ClassName}'.", field.Context));
+                    _errors.Add(new CompilerError($"Field '{field.Id}' does not exist in species '{node.ClassName}'.", field.Context));
                     continue;
                 }
 
@@ -472,11 +449,11 @@ namespace Sct.Compiler.Typechecker
             return new FunctionType(SctType.Void, []);
         }
 
-        public static bool TypeIsNumeric(SctType type) => type is SctType.Int or SctType.Float;
+        private static bool TypeIsNumeric(SctType type) => type is SctType.Int or SctType.Float;
 
-        public static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
+        private static bool IsTypeCastable(SctType from, SctType to) => from == to || (TypeIsNumeric(from) && TypeIsNumeric(to));
 
-        public static SctType? GetCompatibleType(SctType left, SctType right)
+        private static SctType? GetCompatibleType(SctType left, SctType right)
         {
             if (left == right)
             {
@@ -498,7 +475,7 @@ namespace Sct.Compiler.Typechecker
                 _errors.Add(new CompilerError($"Variable '{variableName}' does not exist.", node.Context));
                 return SctType.Int;
             }
-            return (SctType)variableType!;
+            return (SctType)variableType;
         }
     }
 }
