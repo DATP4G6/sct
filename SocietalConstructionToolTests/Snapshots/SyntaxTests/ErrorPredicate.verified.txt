@@ -10,5 +10,17 @@
     Line: 3,
     Column: 31,
     Filename: null
+  },
+  {
+    Message: mismatched input ',' expecting '=>',
+    Line: 3,
+    Column: 34,
+    Filename: null
+  },
+  {
+    Message: mismatched input ')' expecting '=>',
+    Line: 3,
+    Column: 48,
+    Filename: null
   }
 ]

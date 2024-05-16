@@ -20,6 +20,7 @@ statement:
     | if                        # StatementTag
     | while                     # StatementTag
     | enter                     # StatementTag
+    | conditional_enter         # StatementTag
     | return                    # StatementTag
     | create                    # StatementTag
     | destroy                   # StatementTag
@@ -47,6 +48,7 @@ else: ELSE LCURLY statement_list RCURLY;
 while:
     WHILE LPAREN expression RPAREN LCURLY statement_list RCURLY;
 enter: ENTER ID SEMI;
+conditional_enter: expression DOUBLE_RIGHT_ARROW ID SEMI;
 return: RETURN expression? SEMI;
 create: CREATE agent_create SEMI;
 destroy: DESTROY SEMI;
@@ -68,7 +70,9 @@ expression:
     | expression op = (GT | LT | GTE | LTE | EQ | NEQ) expression   # BooleanExpression
     | expression op = AND expression                                # BooleanExpression
     | expression op = OR expression                                 # BooleanExpression
-    | agent_predicate                                               # AgentPredicateExpression;
+    | agent_predicate                                               # AgentPredicateExpression
+    | HASH expression                                               # HashPredicateExpression
+    ;
 
 call_expression: ID LPAREN args_call RPAREN #CallExpression;
 
@@ -88,6 +92,7 @@ agent_predicate:
 
 FUNCTION: 'function';
 RIGHT_ARROW: '->';
+DOUBLE_RIGHT_ARROW: '=>';
 
 type: T_INT | T_FLOAT | T_VOID | T_PREDICATE;
 T_INT: 'int';
@@ -130,6 +135,7 @@ AT: '@';
 WS: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 
+HASH: '#';
 QUESTION: '?';
 LPAREN: '(';
 RPAREN: ')';

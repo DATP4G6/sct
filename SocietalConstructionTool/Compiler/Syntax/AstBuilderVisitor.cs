@@ -120,6 +120,15 @@ namespace Sct.Compiler.Syntax
             return new SctEnterStatementSyntax(context, id);
         }
 
+        public override SctSyntax VisitConditional_enter([NotNull] SctParser.Conditional_enterContext context)
+        {
+            var id = context.ID().GetText();
+            var condition = (SctExpressionSyntax)context.expression().Accept(this);
+            var enter = new SctEnterStatementSyntax(context, id);
+            var block = new SctBlockStatementSyntax(context, [enter]);
+            return new SctIfStatementSyntax(context, condition, block, null);
+        }
+
         public override SctSyntax VisitExit([NotNull] SctParser.ExitContext context)
         {
             return new SctExitStatementSyntax(context);
@@ -241,6 +250,12 @@ namespace Sct.Compiler.Syntax
                 _ => throw new InvalidOperationException("Invalid boolean operator")
             };
             return new SctBooleanExpressionSyntax(context, left, right, @operator);
+        }
+
+        public override SctSyntax VisitHashPredicateExpression([NotNull] SctParser.HashPredicateExpressionContext context)
+        {
+            var predicate = (SctExpressionSyntax)context.expression().Accept(this);
+            return new SctCallExpressionSyntax(context, "count", [predicate]);
         }
 
         public override SctSyntax VisitAgent_create([NotNull] SctParser.Agent_createContext context)

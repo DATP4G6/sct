@@ -1,0 +1,13 @@
+species C() {
+
+    state S {
+        enter S;
+    }
+}
+
+function setup() -> void {
+    Predicate p = C::S();
+    int x = #p;
+    x = #C::S();
+    x = #1;
+}

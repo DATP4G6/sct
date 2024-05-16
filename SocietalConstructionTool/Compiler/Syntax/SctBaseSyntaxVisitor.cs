@@ -13,10 +13,8 @@ namespace Sct.Compiler.Syntax
         public virtual T Visit(SctParameterSyntax node) => VisitChildren(node);
         public virtual T Visit(SctProgramSyntax node) => VisitChildren(node);
         public virtual T Visit(SctTypeSyntax node) => VisitChildren(node);
-        public virtual T Visit(SctExpressionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctClassSyntax node) => VisitChildren(node);
         public virtual T Visit(SctDecoratorSyntax node) => VisitChildren(node);
-        public virtual T Visit(SctDefinitionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctFunctionSyntax node) => VisitChildren(node);
         public virtual T Visit(SctStateSyntax node) => VisitChildren(node);
         public virtual T Visit(SctAgentExpressionSyntax node) => VisitChildren(node);
@@ -44,7 +42,6 @@ namespace Sct.Compiler.Syntax
         public virtual T Visit(SctExpressionStatementSyntax node) => VisitChildren(node);
         public virtual T Visit(SctIfStatementSyntax node) => VisitChildren(node);
         public virtual T Visit(SctReturnStatementSyntax node) => VisitChildren(node);
-        public virtual T Visit(SctStatementSyntax node) => VisitChildren(node);
         public virtual T Visit(SctWhileStatementSyntax node) => VisitChildren(node);
     }
 }

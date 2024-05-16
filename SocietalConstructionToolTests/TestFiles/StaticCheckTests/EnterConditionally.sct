@@ -1,0 +1,10 @@
+species C() {
+
+    state S {
+        #C::S() => S;
+        enter S;
+    }
+}
+
+function setup() -> void {
+}

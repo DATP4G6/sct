@@ -1,0 +1,41 @@
+﻿namespace SctGenerated
+{
+    using Sct.Runtime;
+    using System;
+    using System.Collections.Generic;
+
+    public class GlobalClass
+    {
+        public static void __sct_setup(IRuntimeContext ctx)
+        {
+            long __sct_x = ctx.QueryHandler.Count(ctx, new QueryPredicate("__sct_Foo", "__sct_Bar", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { })));
+        }
+
+        public class __sct_Foo : BaseAgent
+        {
+            public __sct_Foo(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_Bar(IRuntimeContext ctx)
+            {
+                return true;
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_Bar" => __sct_Bar(ctx)};
+            }
+        }
+
+        public static void RunSimulation(IRuntimeContext ctx)
+        {
+            Runtime runtime = new Runtime();
+            __sct_setup(ctx);
+            runtime.Run(ctx);
+        }
+    }
+}

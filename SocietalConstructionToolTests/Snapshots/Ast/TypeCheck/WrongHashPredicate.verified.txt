@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: Type mismatch in function call. Expected Predicate, or compatible type, but got int,
+    Line: 12,
+    Column: 8,
+    Filename: null
+  }
+]

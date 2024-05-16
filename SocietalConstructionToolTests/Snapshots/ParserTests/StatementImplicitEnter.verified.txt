@@ -1,0 +1,1 @@
+﻿(start (class_def species Citizen ( args_def ) { (class_body (state state Child { (statement_list (statement (conditional_enter (expression (literal 1)) => Adult ;)) (statement (enter enter Child ;))) }) (state state Adult { (statement_list (statement (enter enter Adult ;))) })) }) <EOF>)

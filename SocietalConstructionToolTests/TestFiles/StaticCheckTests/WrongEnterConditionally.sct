@@ -1,0 +1,10 @@
+species C() {
+
+    state S {
+        1 => A;
+        enter S;
+    }
+}
+
+function setup() -> void {
+}

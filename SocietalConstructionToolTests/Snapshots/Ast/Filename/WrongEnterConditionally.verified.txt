@@ -1,0 +1,8 @@
+﻿[
+  {
+    Message: State 'A' does not exist.,
+    Line: 4,
+    Column: 8,
+    Filename: {CurrentDirectory}TestFiles/StaticCheckTests/WrongEnterConditionally.sct
+  }
+]
