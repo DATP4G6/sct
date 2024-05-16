@@ -43,6 +43,12 @@ rootCommand.SetHandler((sourceFiles, outputToConsole, outputFile) =>
             {
                 Console.WriteLine("Warning: No output specified");
             }
+
+            if (sourceFiles.Count == 0)
+            {
+                Console.Error.WriteLine("Error: No source files specified");
+                return;
+            }
             _ = SctRunner.CompileAndRun(sourceFiles.Select(f => f.FullName), logger);
         }, sourceFilesArgument, outputToConsoleOption, outputFileOption);
 
