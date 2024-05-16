@@ -43,26 +43,26 @@ species stdPredicateAmount(Predicate p, int x) {
 
 
 // exit the simulation after the specified amount of ticks
-function ExitAfterTicks(int ticks) -> void {
+function exitAfterTicks(int ticks) -> void {
     create stdCounter::Counting(x: ticks);
 }
 
 // exit the simulation when there exists an agent fulfilling `pred`
-function ExitWhenExists(Predicate pred) -> void {
+function exitWhenExists(Predicate pred) -> void {
     create stdPredicateExists::ExitWhen(p: pred);
 }
 
 // exit the simulation when there no longer exists any agents fulfilling `pred`
-function ExitWhenNoLongerExists(Predicate pred) -> void {
+function exitWhenNoLongerExists(Predicate pred) -> void {
     create stdPredicateExists::ExitWhenNo(p: pred);
 }
 
 // exit the simulation when there exists `amount` agents fulfilling `pred`
-function ExitWhenMoreThan(Predicate pred, int amount) -> void {
+function exitWhenMoreThan(Predicate pred, int amount) -> void {
     create stdPredicateAmount::ExitMoreThan(p: pred, x: amount);
 }
 
 // exit the simulation when there are less than `amount` agents fulfilling `pred`
-function ExitWhenLessThan(Predicate pred, int amount) -> void {
+function exitWhenLessThan(Predicate pred, int amount) -> void {
     create stdPredicateAmount::ExitLessThan(p: pred, x: amount);
 }

@@ -48,5 +48,5 @@ function setup() -> void {
     create Manager::Managing(startCount: 0);
     seed(7);
     int terminateAfter = (int)(rand() * 6 * 10);
-    ExitAfterTicks(terminateAfter);
+    exitAfterTicks(terminateAfter);
 }

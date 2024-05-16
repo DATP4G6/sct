@@ -77,6 +77,6 @@ function setup() -> void {
     create Cell::Alive(x:2, y:1);
     create Cell::Alive(x:2, y:2);
 
-    ExitWhenNoLongerExists(Cell::Alive());
-    ExitAfterTicks(50);
+    exitWhenNoLongerExists(Cell::Alive());
+    exitAfterTicks(50);
 }
