@@ -38,16 +38,17 @@ To run tests:
 dotnet test
 ```
 
-To run the project, current code structure doesn't handle paths from the project root, so a directory change is required
+To run the project:
 
 ```sh
-cd SocietalConstructionTool
-dotnet run
+dotnet run --project SocietalConstructionTool -- -c <path-to-sct-file-1> <...> <path-to-sct-file-n>
 ```
+
+Alternatively, the `-o <output-file>` flag can be used to redirect the output to a file for further analysis.
 
 Or with Nix with flakes enabled:
 ```sh
-nix run
+nix run .# -- -c <path-to-sct-file-1> <...> <path-to-sct-file-n>
 ```
 
 ## Benchmarking
