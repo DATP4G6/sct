@@ -1,0 +1,9 @@
+species Foo() {
+    state Bar {
+        destroy;
+    }
+}
+
+function setup() -> void {
+    int x = #Foo::Bar();
+}

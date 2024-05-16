@@ -6,7 +6,7 @@
     Filename: null
   },
   {
-    Message: extraneous input '[' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Message: extraneous input '[' expecting {'-', '!', '#', '(', ID, INT, FLOAT},
     Line: 2,
     Column: 19,
     Filename: null
@@ -15,6 +15,18 @@
     Message: mismatched input ',' expecting ';',
     Line: 2,
     Column: 21,
+    Filename: null
+  },
+  {
+    Message: mismatched input ',' expecting '=>',
+    Line: 2,
+    Column: 23,
+    Filename: null
+  },
+  {
+    Message: mismatched input ']' expecting '=>',
+    Line: 2,
+    Column: 25,
     Filename: null
   }
 ]

@@ -6,7 +6,12 @@ species Citizen(int townId) {
 
 species Town(int id, int citizenCount) {
     decorator updateCitizenCount {
-        citizenCount = count(Citizen::?(townId: id));
+        Predicate citizens = Citizen::?(townId: id);
+        citizenCount = count(citizens);
+        if (citizenCount != #citizens) {
+            // Crash to force different behaviour
+            int x = 1/(citizenCount - citizenCount);
+        }
     }
 
     @updateCitizenCount

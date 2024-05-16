@@ -1,6 +1,6 @@
 ﻿[
   {
-    Message: extraneous input '{' expecting {'-', '!', '(', ID, INT, FLOAT},
+    Message: extraneous input '{' expecting {'-', '!', '#', '(', ID, INT, FLOAT},
     Line: 2,
     Column: 17,
     Filename: null

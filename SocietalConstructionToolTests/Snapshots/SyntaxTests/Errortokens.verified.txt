@@ -6,9 +6,21 @@
     Filename: null
   },
   {
+    Message: mismatched input ';' expecting '=>',
+    Line: 2,
+    Column: 21,
+    Filename: null
+  },
+  {
     Message: mismatched input '§' expecting '=',
     Line: 3,
     Column: 11,
+    Filename: null
+  },
+  {
+    Message: mismatched input ';' expecting '=>',
+    Line: 3,
+    Column: 19,
     Filename: null
   },
   {

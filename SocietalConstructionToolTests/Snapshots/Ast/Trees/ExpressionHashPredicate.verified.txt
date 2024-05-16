@@ -1,0 +1,88 @@
+﻿{
+  Functions: {
+    $type: IEnumerable<SctFunctionSyntax>,
+    $values: [
+      {
+        Id: setup,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        ReturnType: {
+          Type: Void
+        },
+        Block: {
+          Statements: {
+            $type: IEnumerable<SctStatementSyntax>,
+            $values: [
+              {
+                $type: SctDeclarationStatementSyntax,
+                Type: {
+                  Type: Int
+                },
+                Id: x,
+                Expression: {
+                  $type: SctCallExpressionSyntax,
+                  Target: count,
+                  Expressions: {
+                    $type: IEnumerable<SctExpressionSyntax>,
+                    $values: [
+                      {
+                        $type: SctPredicateExpressionSyntax,
+                        ClassName: Foo,
+                        StateName: Bar,
+                        Fields: {
+                          $type: IEnumerable<SctNamedArgumentSyntax>,
+                          $values: []
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  Classes: {
+    $type: IEnumerable<SctClassSyntax>,
+    $values: [
+      {
+        Id: Foo,
+        Parameters: {
+          $type: IEnumerable<SctParameterSyntax>,
+          $values: []
+        },
+        Decorators: {
+          $type: IEnumerable<SctDecoratorSyntax>,
+          $values: []
+        },
+        States: {
+          $type: IEnumerable<SctStateSyntax>,
+          $values: [
+            {
+              Id: Bar,
+              Decorations: null,
+              Block: {
+                Statements: {
+                  $type: IEnumerable<SctStatementSyntax>,
+                  $values: [
+                    {
+                      $type: SctDestroyStatementSyntax
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        Functions: {
+          $type: IEnumerable<SctFunctionSyntax>,
+          $values: []
+        }
+      }
+    ]
+  }
+}

@@ -12,16 +12,12 @@ species Cell(int x, int y) {
         int alive = countNeighbours(x, y);
 
         // Die if less than 2 or more than 3 neighboors.
-        if (alive < 2 || alive > 3) {
-            enter Dead;
-        }
+        alive < 2 || alive > 3 => Dead;
         enter Alive;
     }
 
     state Dead {
-        if (countNeighbours(x, y) == 3) {
-            enter Alive;
-        }
+        countNeighbours(x,y) == 3 => Alive;
         enter Dead;
     }
 }

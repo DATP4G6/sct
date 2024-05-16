@@ -1,0 +1,10 @@
+species Citizen() {
+    state Child {
+        1 => Adult;
+        enter Child;
+    }
+
+    state Adult {
+        enter Adult;
+    }
+}

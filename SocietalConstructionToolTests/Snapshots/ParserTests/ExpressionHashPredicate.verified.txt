@@ -1,0 +1,1 @@
+﻿(start (class_def species Foo ( args_def ) { (class_body (state state Bar { (statement_list (statement (destroy destroy ;))) })) }) (function function setup ( args_def ) -> (type void) { (statement_list (statement (declaration (type int) x = (expression # (expression (agent_predicate Foo :: Bar ( args_agent )))) ;))) }) <EOF>)
