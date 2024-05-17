@@ -44,11 +44,15 @@ namespace Sct
             return parser;
         }
 
-        public static SctProgramSyntax GetAst(string filename)
+        public static (SctProgramSyntax astRoot, IEnumerable<CompilerError> errors) GetAst(string filename)
         {
             var parser = GetParser(filename);
+            var errorListener = new SctErrorListener();
+            parser.AddErrorListener(errorListener);
             var visitor = new AstBuilderVisitor();
-            return (SctProgramSyntax)parser.start().Accept(visitor);
+            // Calling `parser.start()` causes the text to be parsed, which emits any syntax errors to the error listener
+            var astRoot = parser.start().Accept(visitor);
+            return ((SctProgramSyntax)astRoot, errorListener.Errors);
         }
 
         private static IEnumerable<string> StdLibFilename =>
@@ -86,7 +90,17 @@ namespace Sct
             // Add stdlib to the list of files to compile
             filenames = filenames.Concat(StdLibFilename);
 
-            var astList = filenames.Select(GetAst).ToList();
+            var parserResults = filenames.Select(GetAst).ToList();
+
+            var astList = parserResults.Select(pair => pair.astRoot);
+            var parserErrors = parserResults.SelectMany(pair => pair.errors);
+
+            // Don't continue if the syntax has errors, as the parse tree then might have nodes that are null, which can cause crashes later in the compiler
+            if (parserErrors.Any())
+            {
+                return (null, parserErrors);
+            }
+
 
             astList = AddFilenameToContext(astList, filenames);
 
