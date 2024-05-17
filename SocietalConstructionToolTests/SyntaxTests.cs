@@ -1,7 +1,5 @@
 using Sct;
 
-using Sct.Compiler;
-
 namespace SocietalConstructionToolTests
 {
     [TestClass]
@@ -16,12 +14,9 @@ namespace SocietalConstructionToolTests
             UseProjectRelativeDirectory("Snapshots/SyntaxTests"); // save snapshots here
             var snapshotFileName = Path.GetFileNameWithoutExtension(testFile);
 
-            var parser = await SctRunner.GetParserAsync(testFile);
-            var errorListener = new SctErrorListener();
-            parser.AddErrorListener(errorListener);
-            _ = parser.start();
+            var (_, errors) = SctRunner.CompileSct([testFile]);
 
-            _ = await Verify(errorListener.Errors)
+            _ = await Verify(errors)
                 .UseFileName(snapshotFileName);
         }
     }
