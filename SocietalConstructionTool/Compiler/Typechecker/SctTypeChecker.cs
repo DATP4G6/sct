@@ -239,7 +239,6 @@ namespace Sct.Compiler.Typechecker
             if (node.StateName is not null && !target.HasState(node.StateName))
             {
                 _errors.Add(new CompilerError($"State '{node.StateName}' does not exist in species '{node.ClassName}'.", node.Context));
-                return SctType.Predicate;
             }
 
             // Check if all fields exist in target class
