@@ -1,0 +1,40 @@
+name: Releases
+
+on:
+  push:
+    tags:
+    - 'v1.**'
+    branches:
+    - release/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+          dotnet-version: 8.0.x
+    - name: Setup Antlr4
+      uses: siacodelabs/setup-antlr4@v2
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -warnaserror
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Create linux release
+      run: dotnet publish -r linux-x64 /p:PublishSingleFile=true SocietalConstructionTool -o SctLinux
+    - name: Move releases
+      run: |
+        mkdir releases
+        mv SctLinux/SocietalConstructionTool releases/sct-linux
+    - name: Publish release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "releases/*"
+        commit: "$GITHUB_REF"
+        artifactErrorsFailBuild: true
