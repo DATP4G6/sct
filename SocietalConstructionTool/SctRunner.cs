@@ -74,8 +74,7 @@ namespace Sct
         {
             IEnumerable<SctClassSyntax> classes = astList.SelectMany(ast => ast.Classes);
             IEnumerable<SctFunctionSyntax> functions = astList.SelectMany(ast => ast.Functions);
-            var context = astList.First().Context.OriginalContext;
-            return new SctProgramSyntax(context, functions, classes);
+            return new SctProgramSyntax(astList.First().Context, functions, classes);
         }
 
         /**
@@ -100,7 +99,6 @@ namespace Sct
             {
                 return (null, parserErrors);
             }
-
 
             astList = AddFilenameToContext(astList, filenames);
 
@@ -148,20 +146,27 @@ namespace Sct
         {
             var errors = new List<CompilerError>();
 
+            SctFolder folder = new();
+            var foldedAst = (SctProgramSyntax)ast.Accept(folder);
+            // tree is lazily evaluated, as it uses IEnumerable,
+            // this forces the tree to evaluate to catch all errors
+            foldedAst.ForceEvaluation();
+            errors.AddRange(folder.Errors);
+
             SctKeywordContextChecker keywordChecker = new();
-            var keywordErrors = ast.Accept(keywordChecker).ToList();
+            var keywordErrors = foldedAst.Accept(keywordChecker).ToList();
             errors.AddRange(keywordErrors);
 
             var returnVisitor = new SctReturnChecker();
-            _ = ast.Accept(returnVisitor);
+            _ = foldedAst.Accept(returnVisitor);
             errors.AddRange(returnVisitor.Errors);
 
             // The first pass of the typechecker that populates the tables using the CTableBuilder.
-            var (firstPassErrors, table) = RunFirstPassChecks(ast);
+            var (firstPassErrors, table) = RunFirstPassChecks(foldedAst);
             errors.AddRange(firstPassErrors);
 
             // The second pass of the typechecker
-            var secondPassErrors = RunSecondPassChecks(ast, table);
+            var secondPassErrors = RunSecondPassChecks(foldedAst, table);
             errors.AddRange(secondPassErrors);
 
             return errors;

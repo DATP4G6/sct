@@ -1,9 +1,7 @@
-using Antlr4.Runtime;
-
 namespace Sct.Compiler.Syntax
 {
     public class SctFunctionSyntax(
-        ParserRuleContext context,
+        SctSyntaxContext context,
         string id,
         IEnumerable<SctParameterSyntax> parameters,
         SctTypeSyntax returnType,

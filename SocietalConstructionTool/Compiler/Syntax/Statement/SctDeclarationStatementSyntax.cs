@@ -1,9 +1,7 @@
-using Antlr4.Runtime;
-
 namespace Sct.Compiler.Syntax
 {
     public class SctDeclarationStatementSyntax(
-        ParserRuleContext context,
+        SctSyntaxContext context,
         SctTypeSyntax type,
         string id,
         SctExpressionSyntax expression

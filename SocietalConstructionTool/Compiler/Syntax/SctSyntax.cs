@@ -10,10 +10,14 @@ namespace Sct.Compiler.Syntax
         public int Column { get; } = context.Start.Column;
         public string? Filename { get; set; }
 
-        public ParserRuleContext OriginalContext { get; } = context;
+        // add implicit typecast from antlr context to our own context
+        public static implicit operator SctSyntaxContext(ParserRuleContext context)
+        {
+            return new SctSyntaxContext(context);
+        }
     }
 
-    public abstract class SctSyntax
+    public abstract class SctSyntax(SctSyntaxContext context)
     {
         public T Accept<T>(SctBaseSyntaxVisitor<T> visitor) => visitor.Visit(this);
 
@@ -21,17 +25,7 @@ namespace Sct.Compiler.Syntax
         public abstract IEnumerable<SctSyntax> Children { get; }
 
         [JsonIgnore]
-        public SctSyntaxContext Context { get; }
-
-        protected SctSyntax(ParserRuleContext context)
-        {
-            Context = new SctSyntaxContext(context);
-        }
-
-        protected SctSyntax(SctSyntaxContext context)
-        {
-            Context = context;
-        }
+        public SctSyntaxContext Context { get; } = context;
 
         /// <summary>
         /// Forces evaluation of the abstract syntax tree
