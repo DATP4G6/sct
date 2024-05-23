@@ -212,6 +212,48 @@ namespace Sct
             return MetadataReference.CreateFromFile(refLocation);
         }
 
+        public static EmitResult EmitStandalone(string sourceText, Stream outputStream)
+        {
+            string generatedAssemblyName = "sctGenerated";
+            var tree = SyntaxFactory.ParseSyntaxTree(sourceText);
+
+            var references = GetStandaloneReferences();
+            var compilation = CSharpCompilation.Create(generatedAssemblyName)
+                .WithOptions(
+                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+                        .WithOptimizationLevel(OptimizationLevel.Release)
+                )
+                .AddReferences(references)
+                .AddSyntaxTrees(tree);
+
+            return compilation.Emit(outputStream);
+        }
+
+        private static List<PortableExecutableReference> GetStandaloneReferences()
+        {
+            // all assemblies added in resources
+            var assemblies = new List<string>
+            {
+                "System.Private.CoreLib.dll",
+                "System.Runtime.dll",
+                "Microsoft.CSharp.dll",
+                "System.Linq.Expressions.dll",
+                "sct.dll",
+            };
+
+            var references = new List<PortableExecutableReference>();
+            foreach (var asm in assemblies)
+            {
+                using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"SocietalConstructionTool.Resources.{asm}")!;
+                var assemblyBytes = new byte[stream.Length];
+                _ = stream.Read(assemblyBytes, 0, assemblyBytes.Length);
+                stream.Position = 0;
+                references.Add(MetadataReference.CreateFromStream(stream));
+            }
+            return references;
+        }
+
+
         /**
          * <summary>
          * Run a generated SCT assembly
@@ -268,7 +310,7 @@ namespace Sct
 
             // Write the compiled C# into memory
             MemoryStream memoryStream = new();
-            var result = Emit(outputText, memoryStream);
+            var result = EmitStandalone(outputText, memoryStream);
 
             if (!result.Success)
             {

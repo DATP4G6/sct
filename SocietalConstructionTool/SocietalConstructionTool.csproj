@@ -21,7 +21,7 @@
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="Resources/Stdlib.sct" />
+        <EmbeddedResource Include="Resources/*" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../SctBuildTasks/SctBuildTasks.csproj" />
