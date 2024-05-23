@@ -1,0 +1,72 @@
+species Output(int i) {
+    // print whatever output was made this tick
+    // This makes the console actually show FizzBuzz and the number accordingly
+    decorator Print {
+        printCount(Output::?());
+    }
+
+    // These states are only here to show up in the output
+    @Print
+    state Other { destroy; }
+
+    @Print
+    state Fizz { destroy; }
+
+    @Print
+    state Buzz { destroy; }
+
+    @Print
+    state FizzBuzz { destroy; }
+}
+
+// species responsible for creating the correct output
+species Manager(int startCount) {
+
+    // local function, can only be used inside this species
+    function countMod(int i) -> int {
+        return startCount % i == 0;
+    }
+
+    decorator Increment {
+        startCount = startCount + 1;
+    }
+
+    // always start the state by incrementing `startCount`.
+    @Increment
+    state Managing {
+
+        // the FizzBuzz logic
+        if (countMod(3)) {
+            if (countMod(5)) {
+                create Output::FizzBuzz(i : startCount);
+            }
+            else {
+                create Output::Fizz(i : startCount);
+            }
+        }
+
+        else if (countMod(5)) {
+            create Output::Buzz(i : startCount);
+        }
+
+        else {
+            create Output::Other(i : startCount);
+        }
+
+        // run this state every tick
+        enter Managing;
+    }
+}
+
+function setup() -> void {
+    // create a single instance of Manager in Managing state, with startCount = 0
+    create Manager::Managing(startCount: 0);
+
+    // create reproducible simulation
+    seed(7);
+
+    // random number between 0 and 60
+    int terminateAfter = (int)(rand() * 6 * 10);
+    // function defined in the stdlib
+    exitAfterTicks(terminateAfter);
+}
