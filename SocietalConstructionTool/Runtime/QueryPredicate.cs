@@ -37,5 +37,7 @@ namespace Sct.Runtime
         {
             return !(a == b);
         }
+
+        public override string ToString() => $"{ClassName}::{State ?? "?"}({string.Join(',', Fields.Select(x => $"{x.Key}: {x.Value}"))})";
     }
 }
