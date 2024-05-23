@@ -44,9 +44,8 @@ namespace Sct
             return parser;
         }
 
-        public static (SctProgramSyntax astRoot, IEnumerable<CompilerError> errors) GetAst(string filename)
+        private static (SctProgramSyntax astRoot, IEnumerable<CompilerError> errors) GetAst(SctParser parser)
         {
-            var parser = GetParser(filename);
             var errorListener = new SctErrorListener();
             parser.AddErrorListener(errorListener);
             var visitor = new AstBuilderVisitor();
@@ -55,8 +54,14 @@ namespace Sct
             return ((SctProgramSyntax)astRoot, errorListener.Errors);
         }
 
-        private static IEnumerable<string> StdLibFilename =>
-            Directory.GetFiles(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "Resources"));
+        // this allows us to include the stdlib compile-time
+        private static string StdLib()
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            using Stream stream = asm.GetManifestResourceStream("SocietalConstructionTool.Resources.Stdlib.sct")!;
+            using StreamReader source = new(stream);
+            return source.ReadToEnd();
+        }
 
         private static List<SctProgramSyntax> AddFilenameToContext(IEnumerable<SctProgramSyntax> astList, IEnumerable<string> filenames)
         {
@@ -87,9 +92,8 @@ namespace Sct
         public static (string? outputText, IEnumerable<CompilerError> errors) CompileSct(IEnumerable<string> filenames)
         {
             // Add stdlib to the list of files to compile
-            filenames = filenames.Concat(StdLibFilename);
-
-            var parserResults = filenames.Select(GetAst).ToList();
+            var parsers = filenames.Select(GetParser).Append(GetSctParser(StdLib()));
+            var parserResults = parsers.Select(GetAst).ToList();
 
             var astList = parserResults.Select(pair => pair.astRoot);
             var parserErrors = parserResults.SelectMany(pair => pair.errors);
@@ -100,7 +104,7 @@ namespace Sct
                 return (null, parserErrors);
             }
 
-            astList = AddFilenameToContext(astList, filenames);
+            astList = AddFilenameToContext(astList, filenames.Append("stdlib"));
 
             var ast = GetMergedAst(astList);
 

@@ -12,6 +12,7 @@
         <NoWarn>$(NoWarn);CA1720</NoWarn>
         <NoWarn>$(NoWarn);CS0660</NoWarn>
         <NoWarn>$(NoWarn);CS0661</NoWarn>
+        <AssemblyName>sct</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,9 +21,7 @@
         <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="Resources\**">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        <EmbeddedResource Include="Resources/Stdlib.sct" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../SctBuildTasks/SctBuildTasks.csproj" />

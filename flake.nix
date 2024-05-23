@@ -43,13 +43,14 @@
         default = pkgs.buildDotnetModule {
           inherit version dotnet-sdk dotnet-runtime;
           projectFile = "./sct.sln";
-          pname = "SocietalConstructionTool";
+          pname = "sct";
           src = ./.;
           doCheck = true;
           nugetDeps = ./nix/deps.nix;
           nativeBuildInputs = with pkgs; [
             antlr4
           ];
+          executables = [ "sct" ];
         };
       };
       devShells.default = import ./nix/shell.nix { inherit pkgs; };
