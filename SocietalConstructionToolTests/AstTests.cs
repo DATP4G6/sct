@@ -106,6 +106,7 @@ namespace SocietalConstructionToolTests
             var ast = TestFileUtils.BuildAst(testFile);
             var filenameVisitor = new AstFilenameVisitor(testFile);
             var tree = ast.Accept(filenameVisitor);
+            tree.ForceEvaluation();
             var errors = SctRunner.RunStaticChecks((SctProgramSyntax)tree);
 
             _ = await Verify(errors)

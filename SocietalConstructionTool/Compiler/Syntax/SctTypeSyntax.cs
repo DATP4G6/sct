@@ -1,5 +1,3 @@
-using Antlr4.Runtime;
-
 namespace Sct.Compiler.Syntax
 {
     public enum SctType
@@ -21,7 +19,7 @@ namespace Sct.Compiler.Syntax
         };
     }
 
-    public class SctTypeSyntax(ParserRuleContext context, SctType type) : SctDefinitionSyntax(context)
+    public class SctTypeSyntax(SctSyntaxContext context, SctType type) : SctDefinitionSyntax(context)
     {
         public SctType Type => type;
         public override IEnumerable<SctSyntax> Children => [];

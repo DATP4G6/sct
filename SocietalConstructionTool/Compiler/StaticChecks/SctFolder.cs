@@ -80,21 +80,21 @@ namespace Sct.Compiler.StaticChecks
                     ),
                 // One is int, the other is float
                 (SctLiteralExpressionSyntax<long> intLeft, SctLiteralExpressionSyntax<double> floatRight) =>
-                    new SctLiteralExpressionSyntax<double>(
+                    new SctLiteralExpressionSyntax<long>(
                         node.Context,
                         SctType.Int,
                         Calculate(intLeft.Value, floatRight.Value, node.Op)
                     ),
                 // One is float, the other is int
                 (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<long> intRight) =>
-                    new SctLiteralExpressionSyntax<double>(
+                    new SctLiteralExpressionSyntax<long>(
                         node.Context,
                         SctType.Int,
                         Calculate(floatLeft.Value, intRight.Value, node.Op)
                     ),
                 // Both nodes are floats
                 (SctLiteralExpressionSyntax<double> floatLeft, SctLiteralExpressionSyntax<double> floatRight) =>
-                    new SctLiteralExpressionSyntax<double>(
+                    new SctLiteralExpressionSyntax<long>(
                         node.Context,
                         SctType.Int,
                         Calculate(floatLeft.Value, floatRight.Value, node.Op)
@@ -166,7 +166,8 @@ namespace Sct.Compiler.StaticChecks
                         SctType.Float,
                         intNode.Value
                     ),
-                    _ => intNode
+                    SctType.Int => intNode,
+                    _ => node,
                 },
                 SctLiteralExpressionSyntax<double> floatNode => node.Type.Type switch
                 {
@@ -175,7 +176,8 @@ namespace Sct.Compiler.StaticChecks
                         SctType.Int,
                         (long)floatNode.Value
                     ),
-                    _ => floatNode
+                    SctType.Float => floatNode,
+                    _ => node,
                 },
                 _ => base.Visit(node)
             };

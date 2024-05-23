@@ -1,9 +1,7 @@
-using Antlr4.Runtime;
-
 namespace Sct.Compiler.Syntax
 {
     public class SctPredicateExpressionSyntax(
-        ParserRuleContext context,
+        SctSyntaxContext context,
         string className,
         string? stateName,
         IEnumerable<SctNamedArgumentSyntax> fields
