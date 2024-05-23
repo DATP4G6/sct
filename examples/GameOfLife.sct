@@ -1,0 +1,71 @@
+// each cell has a coordinate
+species Cell(int x, int y) {
+
+    state Alive {
+        int alive = countNeighbours(x, y);
+        // conditional enter -- enter if the expression is true
+        alive < 2 || alive > 3 => Dead;
+
+        enter Alive;
+    }
+
+    state Dead {
+        // a dead cell can become alive if they have 3 neighbours that are alive
+        countNeighbours(x, y) == 3 => Alive;
+
+        enter Dead;
+    }
+}
+
+function countNeighbours(int x, int y) -> int {
+    int alive = 0;
+    int nx = x-1;
+
+    // iterate each neighbour
+    while (nx < x+2) {
+        int ny = y-1;
+
+        while (ny < y+2) {
+            if (nx != x || ny != y) {
+                // add 1 to `alive`, based on cell being alive
+                alive = alive + exists(Cell::Alive(x:nx, y:ny));
+            }
+
+            ny = ny+1;
+        }
+
+        nx = nx+1;
+    }
+
+    return alive;
+}
+
+function setup() -> void {
+    int height = 10;
+    int width = 10;
+    int x = 0;
+
+    // create grid of 10x10 dead cells
+    while(x < height) {
+        int y = 0;
+
+        while (y < width) {
+            create Cell::Dead(x:x, y:y);
+            y = y+1;
+        }
+
+        x = x+1;
+    }
+
+    // Draw initial configuration
+    // This is the glider pattern
+    create Cell::Alive(x:0, y:1);
+    create Cell::Alive(x:1, y:2);
+    create Cell::Alive(x:2, y:0);
+    create Cell::Alive(x:2, y:1);
+    create Cell::Alive(x:2, y:2);
+
+    // exit when no cells are alive, or after 50 ticks
+    exitWhenNoLongerExists(Cell::Alive());
+    exitAfterTicks(50);
+}

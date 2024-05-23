@@ -25,8 +25,8 @@ function setup() -> void {
         i = i + 1;
     }
     seed(123);
-    ExitWhenNoLongerExists(Citizen::?());
-    ExitAfterTicks(200);
+    exitWhenNoLongerExists(Citizen::?());
+    exitAfterTicks(200);
 }
 
 species Citizen(int townId) {
