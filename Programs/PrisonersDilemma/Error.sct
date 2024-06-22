@@ -1,0 +1,57 @@
+species Error(int data) {
+
+    // state DuplicateQueue {
+    //     destroy;
+    // }
+
+    // state DoubleDequeue {
+    //     destroy;
+    // }
+
+    state NoMatchup {
+        destroy;
+    }
+
+    state NoGame {
+        destroy;
+    }
+
+    state NoDecision {
+        destroy;
+    }
+}
+
+species ErrorCrasher() {
+    state Crashing {
+        // Print errors and crash the program
+        print(Error::?());
+        exit;
+    }
+}
+
+function crash() -> void {
+    create ErrorCrasher::Crashing();
+}
+
+function raiseNoMatchupError(int data) -> void {
+    create Error::NoMatchup(data: data);
+    crash();
+}
+
+function raiseNoGameError(int data) -> void {
+    create Error::NoGame(data: data);
+    crash();
+}
+
+function raiseNoDecisionError(int data) -> void {
+    create Error::NoDecision(data: data);
+    crash();
+}
+
+// function raiseDoubleDequeueError(int data) -> void {
+//     create Error::DoubleDequeue(data: data, tick: 0);
+// }
+//
+// function raiseDuplicateQueueError(int data) -> void  {
+//     create Error::DuplicateQueue(data: data, tick: 0);
+// }

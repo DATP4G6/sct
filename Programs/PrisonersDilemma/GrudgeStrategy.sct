@@ -1,0 +1,41 @@
+species GrudgeStrategy(int id, int game) {
+
+    decorator Finished {
+        if (exists(Game::Finished(id: game))) {
+            game = game + 1;
+            enter Preparing;
+        }
+    }
+
+    state Preparing {
+        ready(id);
+        enter Ready;
+    }
+
+    state Ready {
+        if (exists(Game::Starting(id: game))) {
+            enter Cooperating;
+        }
+        enter Ready;
+    }
+
+    @Finished
+    state Cooperating {
+        if (opponentDefected(id)) {
+            defect(id);
+            enter HoldingGrudge;
+        }
+        cooperate(id);
+        enter Cooperating;
+    }
+
+    @Finished
+    state HoldingGrudge {
+        defect(id);
+        enter HoldingGrudge;
+    }
+}
+
+function createGrudgeStrategy(int id) -> void {
+    create GrudgeStrategy::Preparing(id: id, game: getGame());
+}

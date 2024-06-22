@@ -1,0 +1,225 @@
+// Games run in four phases
+// Waiting - Waiting for another game to finish before starting
+// Ready - Ready to start when all strategies are ready
+// Starting - Intermediate state to alert strategies that we are starting
+// Active - Game is currently active
+// Finished - Game has finished playing
+species Game(int id, int round) {
+
+    state Idle {
+        // Wait for last game to complete
+        id == 0 || #Game::Finished(id: id - 1) => Ready;
+        enter Idle;
+    }
+
+    state Ready {
+        // Wait for all matchups to be ready
+        #Matchup::?(game: id) == #Matchup::Ready(game: id) => Starting;
+        enter Ready;
+    }
+
+    state Starting {
+        round = 1;
+        enter Active;
+    }
+
+    state Active {
+        // enter Finished;
+        // Average game lasts 100 rounds
+        rand() < 0.01 => Finished;
+        // round == 100 => Finished;
+
+        round = round + 1;
+        enter Active;
+    }
+
+    state Finished {
+        enter Finished;
+    }
+}
+
+species Matchup(int game, int player, int opponent, int points) {
+    state Idle {
+        #Game::Ready(id: game) => Preparing;
+        enter Idle;
+    }
+
+    function isReady(int player) -> int {
+        return exists(PlayerStatus::Ready(player: player));
+    }
+
+    state Preparing {
+        isReady(player) && isReady(opponent) => Ready;
+        enter Preparing;
+    }
+
+    state Ready {
+        #Game::Active(id: game) => Counting;
+        enter Ready;
+    }
+
+    state Counting {
+        int round = getRound(game) - 1;
+
+        if (!exists(Decision::?(game: game, round: round, player: player))) {
+            raiseNoDecisionError(game * 1000000 + round * 1000 + player);
+        }
+
+        if (!exists(Decision::?(game: game, round: round, player: opponent))) {
+            raiseNoDecisionError(game * 1000000 + round * 1000 + opponent);
+        }
+
+        if (exists(Decision::Cooperate(game: game, round: round, player: player))) {
+            if (exists(Decision::Cooperate(game: game, round: round, player: opponent))) {
+                // Both players cooperated, 3 points
+                points = points + 3;
+            }
+            // Opponent defected, no points
+        } else if (exists(Decision::Cooperate(game: game, round: round, player: opponent))) {
+            // Opponent cooperated, 5 points
+            points = points + 5;
+        } else {
+            // Both players defected, 1 point
+            points = points + 1;
+        }
+
+        #Game::Finished(id: game) => Finished;
+        enter Counting;
+    }
+
+    state Finished {
+        enter Finished;
+    }
+}
+
+// Stategies signal their ready status with this species.
+// Once the matchup has registered the player as ready, the status can destroy
+species PlayerStatus(int game, int player) {
+    state Ready {
+        if (exists(Matchup::Ready(game: game, player: player))) {
+            destroy;
+        }
+        enter Ready;
+    }
+}
+
+function ready(int player) -> void {
+    create PlayerStatus::Ready(game: getGame(), player: player);
+}
+
+// Gets the currently active game
+// If no game is active, the next one is returned
+function getGame() -> int {
+    int game = 0;
+    int max = #Game::?();
+    while(game < max && exists(Game::Finished(id: game))) {
+        game = game + 1;
+    }
+    return game;
+}
+
+function getRound(int game) -> int {
+    // Ensure game exists
+    if (!exists(Game::?(id: game))) {
+        raiseNoGameError(game);
+    }
+
+    int round = 0;
+    while(!exists(Game::?(id: game, round: round))) {
+        round = round + 1;
+    }
+    return round;
+}
+
+function getOpponent(int player) -> int {
+    int game = getGame();
+
+    // Ensure matchup exists
+    if (!exists(Matchup::?(game: game, player: player))) {
+        raiseNoMatchupError(game * 1000 + player);
+    }
+
+    // find opponent
+    int opponent = 0;
+    while(!exists(Matchup::?(game: game, player: player, opponent: opponent))) {
+        opponent = opponent + 1;
+    }
+
+    return opponent;
+}
+
+function initialiseGames(int totalStrategies) -> void {
+    int oddStrategies = totalStrategies % 2 == 1;
+    int totalGames = totalStrategies + oddStrategies - 1;
+    int matchupsInGame = (totalStrategies + oddStrategies) / 2;
+
+    // Create games and matchups
+    // Uses a rotating round-robin algorithm
+    // Game 1:      Game 2:     Game 3:     etc.
+    // 0 1 2 3      0 7 1 2     0 6 7 1
+    // 7 6 5 4      6 5 4 3     2 3 4 5
+
+    int game = 0;
+    while (game < totalGames) {
+        create Game::Idle(id: game, round: 0);
+
+        int opponent = totalGames - game;
+        if (opponent < totalStrategies) {
+            create Matchup::Idle(game: game, player: 0, opponent: opponent, points: 0);
+            create Matchup::Idle(game: game, player: opponent, opponent: 0, points: 0);
+        }
+
+        int matchup = 1;
+        while (matchup < matchupsInGame) {
+            int player = matchup - game;
+            if (player < 1) {
+                player = player + totalGames;
+            }
+            opponent = totalGames - matchup - game;
+            if (opponent < 1) {
+                opponent = opponent + totalGames;
+            }
+            create Matchup::Idle(game: game, player: player, opponent: opponent, points: 0);
+            create Matchup::Idle(game: game, player: opponent, opponent: player, points: 0);
+
+            matchup = matchup + 1;
+        }
+
+        game = game + 1;
+    }
+}
+
+function setup() -> void {
+    seed(1);
+
+    // Initialise strategies
+
+    int copies = 2;
+    int totalStrategies = copies * 4;
+
+    int i = 0;
+    while (i < copies) {
+        createCooperateStrategy(i*4);
+        createDefectStrategy(i*4+1);
+        createGrudgeStrategy(i*4+2);
+        createBalancedStrategy(i*4+3);
+        i = i+1;
+    }
+
+    if (0) {
+        // Create a 2-strategy combination of any strategies to see how they match up.
+
+        // createCooperateStrategy(0);
+        // createDefectStrategy(0);
+        // createGrudgeStrategy(0);
+        // createBalancedStrategy(0);
+        // createCooperateStrategy(1);
+        // createDefectStrategy(1);
+        // createGrudgeStrategy(1);
+        // createBalancedStrategy(1);
+    }
+
+
+    initialiseGames(totalStrategies);
+    initialiseTally(totalStrategies);
+}

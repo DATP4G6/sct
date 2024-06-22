@@ -1,0 +1,44 @@
+species Tally(int totalStrategies) {
+    state Idle {
+        #Game::?() == #Game::Finished() => Finalising;
+        enter Idle;
+    }
+
+    state Finalising {
+        int i = 0;
+        while (i < totalStrategies) {
+            int result = 0;
+            int game = 0;
+            while (#Game::?(id: game)) {
+                if (!#Matchup::?(game: game, player: i)) {
+                    continue;
+                }
+
+                int points = 0;
+                while (!#Matchup::?(game: game, player: i, points: points)) {
+                    points = points + 1;
+                }
+                result = result + points;
+                game = game + 1;
+            }
+            create Result::Final(player: i, points: result);
+            i = i+1;
+        }
+        enter Complete;
+    }
+
+    state Complete {
+        print(Result::?());
+        exit;
+    }
+}
+
+species Result(int player, int points) {
+    state Final {
+        destroy;
+    }
+}
+
+function initialiseTally(int totalStrategies) -> void {
+    create Tally::Idle(totalStrategies: totalStrategies);
+}

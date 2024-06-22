@@ -1,0 +1,52 @@
+species QueueDirector(int id, int head, int tail) {
+    state Idle {
+        if (exists(QueueItem::Idle(queueId: id))) {
+
+        }
+    }
+}
+
+species QueueItemDirector(int queueId, int itemId, int next) {
+    state Queue {
+        destroy;
+    }
+
+    state Dequeue {
+        destroy;
+    }
+}
+
+species QueueItem(int id, int queueId, int next, int data) {
+
+    decorator MonitorDequeue {
+        if (exists(QueueItemDirector::Dequeue(queueId: queueId, itemId: id))) {
+            destroy;
+        }
+    }
+
+    @MonitorDequeue
+    state Idle {
+        if (exists(QueueItemDirector::?(queueId: queueId, itemId: id))) {
+            next = getNext();
+            enter Queued;
+        }
+        enter Idle;
+    }
+
+    @MonitorDequeue
+    state Queued {
+        enter Queued;
+    }
+}
+
+function createQueue(int id) -> void {
+    if (exists(QueueHead::?(id: id))) {
+        createDequeueError(id);
+        return;
+    }
+    create QueueHead::(id: id, next: -1);
+}
+
+function pushQueue(int id, int data) {
+    create QueueItem::Idle(id: id, next: -1, data: data);
+}

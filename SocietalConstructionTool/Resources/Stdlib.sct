@@ -25,6 +25,14 @@ species stdPredicateExists(Predicate p) {
 }
 
 species stdPredicateAmount(Predicate p, int x) {
+
+    state ExitEqual {
+        if (count(p) == x) {
+            exit;
+        }
+        enter ExitEqual;
+    }
+
     state ExitLessThan {
         if (count(p) < x) {
             exit;
@@ -40,7 +48,29 @@ species stdPredicateAmount(Predicate p, int x) {
     }
 }
 
+species stdPredicatePredicate(Predicate a, Predicate b) {
 
+    state ExitEqual {
+        if (count(a) == count(b)) {
+            exit;
+        }
+        enter ExitEqual;
+    }
+
+    state ExitLessThan {
+        if (count(a) < count(b)) {
+            exit;
+        }
+        enter ExitLessThan;
+    }
+
+    state ExitMoreThan {
+        if (count(a) > count(b)) {
+            exit;
+        }
+        enter ExitMoreThan;
+    }
+}
 
 // exit the simulation after the specified amount of ticks
 function exitAfterTicks(int ticks) -> void {
@@ -57,7 +87,12 @@ function exitWhenNoLongerExists(Predicate pred) -> void {
     create stdPredicateExists::ExitWhenNo(p: pred);
 }
 
-// exit the simulation when there exists `amount` agents fulfilling `pred`
+// exit the simulation when there exists exactly `amount` agents fulfilling `pred`
+function exitWhenEqual(Predicate pred, int amount) -> void {
+    create stdPredicateAmount::ExitEqual(p: pred, x: amount);
+}
+
+// exit the simulation when there exists more than `amount` agents fulfilling `pred`
 function exitWhenMoreThan(Predicate pred, int amount) -> void {
     create stdPredicateAmount::ExitMoreThan(p: pred, x: amount);
 }
@@ -65,4 +100,21 @@ function exitWhenMoreThan(Predicate pred, int amount) -> void {
 // exit the simulation when there are less than `amount` agents fulfilling `pred`
 function exitWhenLessThan(Predicate pred, int amount) -> void {
     create stdPredicateAmount::ExitLessThan(p: pred, x: amount);
+}
+
+
+
+// exit the simulation when there exists equally many agents fulfilling predicates `a` and `b`
+function exitWhenPredicatesEqual(Predicate a, Predicate b) -> void {
+    create stdPredicatePredicate::ExitEqual(a: a, b: b);
+}
+
+// exit the simulation when there exists more agents fulfilling predicate `a` than `b`
+function exitWhenPredicatesMoreThan(Predicate a, Predicate b) -> void {
+    create stdPredicatePredicate::ExitMoreThan(a: a, b: b);
+}
+
+// exit the simulation when there exists less agents fulfilling predicate `a` than `b`
+function exitWhenPredicatesLessThan(Predicate a, Predicate b) -> void {
+    create stdPredicatePredicate::ExitLessThan(a: a, b: b);
 }

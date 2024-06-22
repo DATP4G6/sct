@@ -26,6 +26,11 @@
             ctx.AgentHandler.CreateAgent(new __sct_stdPredicateExists("__sct_ExitWhenNo", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred) })));
         }
 
+        public static void __sct_exitWhenEqual(IRuntimeContext ctx, QueryPredicate __sct_pred, long __sct_amount)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicateAmount("__sct_ExitEqual", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred), new KeyValuePair<String, dynamic>("__sct_x", __sct_amount) })));
+        }
+
         public static void __sct_exitWhenMoreThan(IRuntimeContext ctx, QueryPredicate __sct_pred, long __sct_amount)
         {
             ctx.AgentHandler.CreateAgent(new __sct_stdPredicateAmount("__sct_ExitMoreThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred), new KeyValuePair<String, dynamic>("__sct_x", __sct_amount) })));
@@ -34,6 +39,21 @@
         public static void __sct_exitWhenLessThan(IRuntimeContext ctx, QueryPredicate __sct_pred, long __sct_amount)
         {
             ctx.AgentHandler.CreateAgent(new __sct_stdPredicateAmount("__sct_ExitLessThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_p", __sct_pred), new KeyValuePair<String, dynamic>("__sct_x", __sct_amount) })));
+        }
+
+        public static void __sct_exitWhenPredicatesEqual(IRuntimeContext ctx, QueryPredicate __sct_a, QueryPredicate __sct_b)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicatePredicate("__sct_ExitEqual", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", __sct_a), new KeyValuePair<String, dynamic>("__sct_b", __sct_b) })));
+        }
+
+        public static void __sct_exitWhenPredicatesMoreThan(IRuntimeContext ctx, QueryPredicate __sct_a, QueryPredicate __sct_b)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicatePredicate("__sct_ExitMoreThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", __sct_a), new KeyValuePair<String, dynamic>("__sct_b", __sct_b) })));
+        }
+
+        public static void __sct_exitWhenPredicatesLessThan(IRuntimeContext ctx, QueryPredicate __sct_a, QueryPredicate __sct_b)
+        {
+            ctx.AgentHandler.CreateAgent(new __sct_stdPredicatePredicate("__sct_ExitLessThan", new Dictionary<String, dynamic>(new KeyValuePair<String, dynamic>[] { new KeyValuePair<String, dynamic>("__sct_a", __sct_a), new KeyValuePair<String, dynamic>("__sct_b", __sct_b) })));
         }
 
         public class __sct_Town : BaseAgent
@@ -179,6 +199,24 @@
             {
             }
 
+            private bool __sct_ExitEqual(IRuntimeContext ctx)
+            {
+                if ((((ctx.QueryHandler.Count(ctx, __sct_p) == __sct_x) ? 1L : 0L)) != 0L)
+                {
+                    {
+                        ctx.ExitRuntime();
+                        return true;
+                    }
+                }
+
+                {
+                    Enter(ctx, "__sct_ExitEqual");
+                    return true;
+                }
+
+                return false;
+            }
+
             private bool __sct_ExitLessThan(IRuntimeContext ctx)
             {
                 if ((((ctx.QueryHandler.Count(ctx, __sct_p) < __sct_x) ? 1L : 0L)) != 0L)
@@ -219,6 +257,80 @@
             {
                 _ = State switch
                 {
+                    "__sct_ExitEqual" => __sct_ExitEqual(ctx),
+                    "__sct_ExitLessThan" => __sct_ExitLessThan(ctx),
+                    "__sct_ExitMoreThan" => __sct_ExitMoreThan(ctx)};
+            }
+        }
+
+        public class __sct_stdPredicatePredicate : BaseAgent
+        {
+            private QueryPredicate __sct_a { get => Fields["__sct_a"]; set => Fields["__sct_a"] = value; }
+            private QueryPredicate __sct_b { get => Fields["__sct_b"]; set => Fields["__sct_b"] = value; }
+
+            public __sct_stdPredicatePredicate(String state, IDictionary<String, dynamic> fields) : base(state, fields)
+            {
+            }
+
+            private bool __sct_ExitEqual(IRuntimeContext ctx)
+            {
+                if ((((ctx.QueryHandler.Count(ctx, __sct_a) == ctx.QueryHandler.Count(ctx, __sct_b)) ? 1L : 0L)) != 0L)
+                {
+                    {
+                        ctx.ExitRuntime();
+                        return true;
+                    }
+                }
+
+                {
+                    Enter(ctx, "__sct_ExitEqual");
+                    return true;
+                }
+
+                return false;
+            }
+
+            private bool __sct_ExitLessThan(IRuntimeContext ctx)
+            {
+                if ((((ctx.QueryHandler.Count(ctx, __sct_a) < ctx.QueryHandler.Count(ctx, __sct_b)) ? 1L : 0L)) != 0L)
+                {
+                    {
+                        ctx.ExitRuntime();
+                        return true;
+                    }
+                }
+
+                {
+                    Enter(ctx, "__sct_ExitLessThan");
+                    return true;
+                }
+
+                return false;
+            }
+
+            private bool __sct_ExitMoreThan(IRuntimeContext ctx)
+            {
+                if ((((ctx.QueryHandler.Count(ctx, __sct_a) > ctx.QueryHandler.Count(ctx, __sct_b)) ? 1L : 0L)) != 0L)
+                {
+                    {
+                        ctx.ExitRuntime();
+                        return true;
+                    }
+                }
+
+                {
+                    Enter(ctx, "__sct_ExitMoreThan");
+                    return true;
+                }
+
+                return false;
+            }
+
+            public override void Update(IRuntimeContext ctx)
+            {
+                _ = State switch
+                {
+                    "__sct_ExitEqual" => __sct_ExitEqual(ctx),
                     "__sct_ExitLessThan" => __sct_ExitLessThan(ctx),
                     "__sct_ExitMoreThan" => __sct_ExitMoreThan(ctx)};
             }

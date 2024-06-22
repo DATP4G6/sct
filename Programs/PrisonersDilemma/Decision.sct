@@ -1,0 +1,41 @@
+// PlayerId is the player making the decision
+species Decision(int game, int round, int player, int ttl) {
+
+    decorator TTL {
+        ttl = ttl - 1;
+        if (!ttl) {
+            destroy;
+        }
+    }
+
+    @TTL
+    state Cooperate {
+        enter Cooperate;
+    }
+
+    @TTL
+    state Defect {
+        enter Defect;
+    }
+}
+
+function defect(int player) -> void {
+    int game = getGame();
+    create Decision::Defect(game: game, round: getRound(game), player: player, ttl: 2);
+}
+
+function cooperate(int player) -> void {
+    int game = getGame();
+    create Decision::Cooperate(game: game, round: getRound(game), player: player, ttl: 2);
+}
+
+function opponentCooperated(int player) -> int {
+    int game = getGame();
+    return exists(Decision::Cooperate(game: game, round: getRound(game) - 1, player: getOpponent(player)));
+}
+
+function opponentDefected(int player) -> int {
+    int game = getGame();
+    return exists(Decision::Defect(game: game, round: getRound(game) - 1, player: getOpponent(player)));
+}
+

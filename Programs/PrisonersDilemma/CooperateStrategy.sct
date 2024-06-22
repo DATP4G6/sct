@@ -1,0 +1,31 @@
+species CooperateStrategy(int id, int game) {
+
+    decorator Finished {
+        if (exists(Game::Finished(id: game))) {
+            game = game + 1;
+            enter Preparing;
+        }
+    }
+
+    state Preparing {
+        ready(id);
+        enter Ready;
+    }
+
+    state Ready {
+        if (exists(Game::Starting(id: game))) {
+            enter Cooperating;
+        }
+        enter Ready;
+    }
+
+    @Finished
+    state Cooperating {
+        cooperate(id);
+        enter Cooperating;
+    }
+}
+
+function createCooperateStrategy(int id) -> void {
+    create CooperateStrategy::Preparing(id: id, game: getGame());
+}

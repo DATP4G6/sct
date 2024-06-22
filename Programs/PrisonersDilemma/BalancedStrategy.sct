@@ -1,0 +1,37 @@
+
+species BalancedStrategy(int id, int game) {
+
+    decorator Finished {
+        if (exists(Game::Finished(id: game))) {
+            game = game + 1;
+            enter Preparing;
+        }
+    }
+
+    state Preparing {
+        ready(id);
+        enter Ready;
+    }
+
+    state Ready {
+        if (exists(Game::Starting(id: game))) {
+            enter Playing;
+        }
+        enter Ready;
+    }
+
+    @Finished
+    state Playing {
+        // Strike back, but forgive 10% of defects
+        if (opponentDefected(id) && rand() > 0.1) {
+            defect(id);
+        } else {
+            cooperate(id);
+        }
+        enter Playing;
+    }
+}
+
+function createBalancedStrategy(int id) -> void {
+    create BalancedStrategy::Preparing(id: id, game: getGame());
+}

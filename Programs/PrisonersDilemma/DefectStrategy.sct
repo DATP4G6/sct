@@ -1,0 +1,31 @@
+species DefectStrategy(int id, int game) {
+
+    decorator Finished {
+        if (exists(Game::Finished(id: game))) {
+            game = game + 1;
+            enter Preparing;
+        }
+    }
+
+    state Preparing {
+        ready(id);
+        enter Ready;
+    }
+
+    state Ready {
+        if (exists(Game::Starting(id: game))) {
+            enter Defecting;
+        }
+        enter Ready;
+    }
+
+    @Finished
+    state Defecting {
+        defect(id);
+        enter Defecting;
+    }
+}
+
+function createDefectStrategy(int id) -> void {
+    create DefectStrategy::Preparing(id: id, game: getGame());
+}
