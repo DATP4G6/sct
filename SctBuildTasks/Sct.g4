@@ -65,13 +65,13 @@ expression:
     | call_expression                                               # Ignore
     | unary_minus = MINUS expression                                # UnaryMinusExpression
     | not = NOT expression                                          # LogicalNotExpression
+    | HASH expression                                               # HashPredicateExpression
     | expression op = (MULT | DIV | MOD) expression                 # BinaryExpression
     | expression op = (PLUS | MINUS) expression                     # BinaryExpression
     | expression op = (GT | LT | GTE | LTE | EQ | NEQ) expression   # BooleanExpression
     | expression op = AND expression                                # BooleanExpression
     | expression op = OR expression                                 # BooleanExpression
     | agent_predicate                                               # AgentPredicateExpression
-    | HASH expression                                               # HashPredicateExpression
     ;
 
 call_expression: ID LPAREN args_call RPAREN #CallExpression;
