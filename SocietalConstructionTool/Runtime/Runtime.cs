@@ -11,7 +11,7 @@ namespace Sct.Runtime
                 IRuntimeContext nextCtx = prevCtx.GetNextContext();
                 foreach (var agent in prevCtx.AgentHandler.Agents)
                 {
-                    agent.Update(nextCtx);
+                    agent.Clone().Update(nextCtx);
                 }
                 prevCtx = nextCtx;
             }

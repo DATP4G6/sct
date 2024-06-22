@@ -20,12 +20,11 @@ namespace Sct.Runtime
         public static string EnterMethodName => nameof(Enter);
         protected void Enter(IRuntimeContext ctx, string state)
         {
-            BaseAgent a = Clone();
-            a.State = state;
-            ctx.AgentHandler.CreateAgent(a);
+            State = state;
+            ctx.AgentHandler.CreateAgent(this);
         }
 
-        private BaseAgent Clone()
+        public BaseAgent Clone()
         {
             BaseAgent a = (BaseAgent)MemberwiseClone();
             a.Fields = new Dictionary<string, dynamic>(Fields);
